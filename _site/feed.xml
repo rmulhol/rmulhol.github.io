@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rob Learns Ruby</title>
+    <description>I&#39;m learning Ruby and sharing insights along the way.
+</description>
+    <link>http://yourdomain.com/</link>
+    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Fri, 12 Sep 2014 00:51:50 -0500</pubDate>
+    <lastBuildDate>Fri, 12 Sep 2014 00:51:50 -0500</lastBuildDate>
+    <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Learning to Code: Taking the First Steps</title>
+        <description>&lt;p&gt;If you’re interested in learning to code, there are a lot of resources out there to help you get started. With so many books, MOOCs, and online tutorials available at the click of a button, it can get almost overwhelming just figuring out where to start. So, in this post, I want to share some of the steps I’ve taken to get moving. Although there are definitely a vast number of ways to begin, hopefully my experiences can be of use to those who find themselves stuck at the starting gate.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 1: Take the Plunge&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;When I was getting started, choosing how to invest my time felt like a pressing concern. With so many options available, it seemed important to pick the correct one so that I could get off on the right foot.&lt;/p&gt;
+
+&lt;p&gt;There’s nothing wrong with doing your due diligence and trying to find the entry point that’s best for you, but what I learned is that choosing which step to take first is far less important than simply choosing to take the first step. Getting the ball rolling builds momentum for future progress better than anything else.&lt;/p&gt;
+
+&lt;p&gt;I ended up starting out by completing the Intro to Ruby tutorial at &lt;a href=&quot;http://codecademy.com&quot;&gt;Codecademy&lt;/a&gt;. I zipped through it a little fast, and probably didn’t retain everything as well as I would have liked to, but simply diving in and working with code helped me get moving. I found myself better motivated and prepared as I began to tackle new and different challenges down the line.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2: Figure Out How You Learn&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Speaking of that first step, I quickly figured out that I can zoom through an online tutorial pretty fast. Tackling chapter after chapter came easy and felt like demonstrable progress, but I recognized a problem: I wasn’t properly retaining what I had learned.&lt;/p&gt;
+
+&lt;p&gt;This experience helped me to figure out that I benefit a lot from applying what I’m learning. Just reading about particular features of a language or completing mini-exercises didn’t quite do the trick; I needed to be putting what I’d learned to use.&lt;/p&gt;
+
+&lt;p&gt;Poking around for other resources better suited to my learning style led me to &lt;a href=&quot;http://theodinproject.com&quot;&gt;The Odin Project&lt;/a&gt;. I really benefited from their curriculum that combines information with relatively open-ended challenges. Instead of writing a line of code to move on to the next challenge in my tutorial, I was writing programs. &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 3: Make a Calendar&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;One of the things I like about coding is that it’s fun. I totally enjoy heading over to &lt;a href=&quot;http://codewars.com&quot;&gt;Codewars&lt;/a&gt; and completing a few challenges just as if I were playing a game. And don’t get me wrong – that site is awesome for practice.&lt;/p&gt;
+
+&lt;p&gt;But I figured out early on that indulging in the fun side of coding can strip the learning process of structure. While doing the stuff you enjoy helps build experience and motivation, it’s also good to set benchmarks and goals.&lt;/p&gt;
+
+&lt;p&gt;For me, making a calendar that outlines what I want to achieve and by when has really helped to keep me on track. Now if I’m ahead of schedule, maybe I’ll indulge in more of the fun stuff. But if I’m slipping, I know I need to double down on the task at hand.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 4: Get Help&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;One of the beliefs I had about learning to code early on is that it was going to come down to self-discipline and self-teaching. And, for sure, those things are invaluable. But, in retrospect, I think I was underestimating how many resources are out there to engage others and grow through interaction.&lt;/p&gt;
+
+&lt;p&gt;For example, I had never really heard of a “meetup” before. Now, I attend meetups almost every week. They’re a great way to meet like-minded individuals and hear about what’s going on in the world of professional software development. And, they even sometimes offer opportunities to do some pair programming.&lt;/p&gt;
+
+&lt;p&gt;I’ve found that talking through what I’m learning and seeing how others think helps me to learn in ways I can’t quite explain. Opportunities to interact with others and share perspectives have helped me to grow in ways I never could have gotten out of solitary study.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 5: Learn the Tools of the Trade&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In my haste to get started, I was initially reluctant to learn things that I sensed would become important down the line. Github? Who needs that when I can save my code and run it in the command line? Vim? That seems much more difficult to use than SublimeText. TDD? I don’t want to write a bunch of specifications before I get down to writing code!&lt;/p&gt;
+
+&lt;p&gt;Wrong!&lt;/p&gt;
+
+&lt;p&gt;Every time I’ve come back to learn something I initially put off, it’s paid dividends. Getting over the hump between strangeness and familiarity might seem daunting, but it yields greater productivity in the long run.&lt;/p&gt;
+
+&lt;p&gt;And getting comfortable with the best tools earlier pays off more, because it means you’re helping to develop familiarity with each subsequent time you practice. Putting that off just means you miss out on lots of practice you could have already accrued.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Final Thoughts&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;As has been pointed out many times before by brighter minds than myself, learning to code is a long journey. I’m sure that if I were to revisit this post a year from now I’d have new and different suggestions, but that’s the nature of the activity. One way or another, the most important things seem to be simply getting started and developing good habits. To get on track, I’ve found taking the plunge, figuring out how I learn, working on a schedule, getting help, and developing familiarity with the tools of the trade to be really important.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 12 Sep 2014 00:00:00 -0500</pubDate>
+        <link>http://yourdomain.com/tips/habits/2014/09/12/learning-to-code.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/tips/habits/2014/09/12/learning-to-code.html</guid>
+        
+        
+        <category>tips</category>
+        
+        <category>habits</category>
+        
+      </item>
+    
+      <item>
+        <title>Hello, World!</title>
+        <description>&lt;p&gt;Hello and welcome to my blog! My name is Rob and I’m working to become a software craftsman. I’ll be using this space to document my learning and share tips I come up with along the way.&lt;/p&gt;
+
+&lt;p&gt;Right now, most of the work I do is in Ruby (but I look forward to learning new languages soon!). So, in the syntax I love for its simplicity:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Hello, World!&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Feel free to check out my &lt;a href=&quot;https://github.com/rmulhol&quot;&gt;Github page&lt;/a&gt; to see what I’m working on now!&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 12 Sep 2014 00:00:00 -0500</pubDate>
+        <link>http://yourdomain.com/me/2014/09/12/hello-world.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/me/2014/09/12/hello-world.html</guid>
+        
+        
+        <category>me</category>
+        
+      </item>
+    
+  </channel>
+</rss>
