@@ -53,7 +53,7 @@ Refactor means shaping things up so that your code is more elegant and maintaina
 
 After picking up some of the tools and getting familiar with the red-green-refactor process, there's still definitely a lot of learning and practice to do. But if you get these two things down, then the rest flows a lot more naturally. 
 
-If you're looking to get some practice in, I would recommend some katas: the prime factors ([instruction][pfinstructions] and [video][pfvideo]) and bowling game ([instructions][bginstructions] and [video][bgvideo]) katas are two of my personal favorites, but I'm sure there's lot of other great ones you could track down as well.
+If you're looking to get some practice in, I would recommend some katas: the prime factors ([instructions][pfinstructions] and [video][pfvideo]) and bowling game ([instructions][bginstructions] and [video][bgvideo]) katas are two of my personal favorites, but I'm sure there's lot of other great ones you could track down as well.
 
 [minitest]: http://ruby-doc.org/stdlib-2.1.2/libdoc/minitest/rdoc/MiniTest.html
 [test_unit]: http://www.ruby-doc.org/stdlib-2.1.2/libdoc/test/unit/rdoc/Test/Unit.html
