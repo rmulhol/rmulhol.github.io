@@ -2,7 +2,7 @@
 layout: post
 title:  "Learning to Code: Taking the First Steps"
 date:   2014-09-12 
-categories: Tips Habits
+categories: Beginning
 ---
 
 If you’re interested in learning to code, there are a lot of resources out there to help you get started. With so many books, MOOCs, and online tutorials available at the click of a button, it can get almost overwhelming just figuring out where to start. So, in this post, I want to share some of the steps I’ve taken to get moving. Although there are definitely a vast number of ways to begin, hopefully my experiences can be of use to those who find themselves stuck at the starting gate.
