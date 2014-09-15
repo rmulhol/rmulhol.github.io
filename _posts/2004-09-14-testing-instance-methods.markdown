@@ -5,7 +5,7 @@ date:   2014-09-14
 categories: TDD
 ---
 
-Once I decided to [get started with TDD in Ruby] {% post_url 2014-09-13-getting-started-with-tdd %}, I developed a premature sense of pride in my ability to use TDD to write methods. Following the red-green-refactor model, I would write a test for a method, write the code to make it pass, revise for elegance and maintainability, and then repeat those steps until the method accomplished everything I wanted. But as soon as I got ambitious and started trying TDD with classes, I ran into some trouble: a NameError telling me of some “undefined local variable or method.”
+Once I decided to [get started with TDD in Ruby]{% post_url 2014-09-13-getting-started-with-tdd %}, I developed a premature sense of pride in my ability to use TDD to write methods. Following the red-green-refactor model, I would write a test for a method, write the code to make it pass, revise for elegance and maintainability, and then repeat those steps until the method accomplished everything I wanted. But as soon as I got ambitious and started trying TDD with classes, I ran into some trouble: a NameError telling me of some “undefined local variable or method.”
 
 What was going wrong? Well, as I progressed from files containing single methods to full classes, I was writing tests for *instance* methods without initializing an instance of that class upon which I would call those methods in my tests.  
 
