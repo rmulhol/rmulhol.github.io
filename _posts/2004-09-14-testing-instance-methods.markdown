@@ -65,7 +65,7 @@ rspec ./spec/hello_world_spec.rb:4 # hello_world returns 'Hello, world!'
 
 How can this be? I haven’t changed the method!
 
-Well, now that I’ve nested my (instance) method inside of a class, the test needs to initialize an instance upon which it can call my method. Changing the tests like so solves our problem:
+Well, now that I’ve nested my (instance) method inside of a class, the test needs to initialize an instance of that class upon which it can call my method. Changing the tests like this solves our problem:
 
 {% highlight ruby %}
 require ‘hello_world’
@@ -78,7 +78,7 @@ describe “hello_world” do
 end
 {% endhighlight %}
 
-So, altogether, not too complicated. Instance methods require tests that initialize instances of the class they intend to test. 
+So, altogether, not too complicated. In order to test an instance methods, your tests need to initialize an instance of the class they intend to test. 
 
 Bonus side note: if you’re testing multiple instance methods, you can DRY up your code by initializing your instance just once like so:
 
