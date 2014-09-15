@@ -14,9 +14,9 @@ So, for example, lets say I wanted to write a method that returns “Hello, worl
 {% highlight ruby linenos %}
 require 'hello_world'
 
-describe “hello_world” do
+describe "hello_world" do
   it "returns 'Hello, World!'" do
-    expect(hello_world).to eq("Hello, world!"")
+    expect(hello_world).to eq("Hello, world!")
   end
 end
 {% endhighlight %}
@@ -71,9 +71,9 @@ Well, now that I’ve nested my (instance) method inside of a class, the test ne
 require 'hello_world'
 
 describe "hello_world" do
-  it "returns 'Hello, World!'"" do
+  it "returns 'Hello, World!'" do
     my_instance = HelloWorld.new
-    expect(my_instance.hello_world).to eq("Hello, world!"")
+    expect(my_instance.hello_world).to eq("Hello, world!")
   end
 end
 {% endhighlight %}
