@@ -11,7 +11,7 @@ What was going wrong? Well, as I progressed from files containing single methods
 
 So, for example, lets say I wanted to write a method that returns “Hello, world!” Simple enough. First, I’d write a test in my project’s spec directory:
 
-{% highlight ruby linenos %}
+{% highlight ruby %}
 require 'hello_world'
 
 describe "hello_world" do
@@ -23,7 +23,7 @@ end
 
 Watch it fail. Generate a blank file in my projects lib directory named hello_world.rb. Watch it fail again. Now add some code:
 
-{% highlight ruby linenos %}
+{% highlight ruby %}
 def hello_world
   "Hello, world!""
 end
@@ -33,7 +33,7 @@ Run the tests again. Everything passes. Grrreat!
 
 But what if I wanted that method to be nested in a class? Well, I’ve already written the tests, so lets add the class and see what happens. Back to the hello_world.rb file:
 
-{% highlight ruby linenos %}
+{% highlight ruby %}
 class HelloWorld
   def hello_world
     "Hello, world!"
@@ -67,7 +67,7 @@ How can this be? I haven’t changed the method!
 
 Well, now that I’ve nested my (instance) method inside of a class, the test needs to initialize an instance of that class upon which it can call my method. Changing the tests like this solves our problem:
 
-{% highlight ruby linenos %}
+{% highlight ruby %}
 require 'hello_world'
 
 describe "hello_world" do
@@ -82,7 +82,7 @@ So, altogether, not too complicated. In order to test an instance methods, your 
 
 Bonus side note: if you’re testing multiple instance methods, you can DRY up your code by initializing your instance just once like so:
 
-{% highlight ruby linenos %}
+{% highlight ruby %}
 require 'hello_world'
 
 describe "hello_world" do
