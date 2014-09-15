@@ -11,21 +11,21 @@ What was going wrong? Well, as I progressed from files containing single methods
 
 So, for example, lets say I wanted to write a method that returns “Hello, world!” Simple enough. First, I’d write a test in my project’s spec directory:
 
-{% highlight ruby %}
-require ‘hello_world’
+{% highlight ruby linenos %}
+require 'hello_world'
 
 describe “hello_world” do
-  it “returns ‘Hello, World!’” do
-    expect(hello_world).to eq(“Hello, world!”)
+  it "returns 'Hello, World!'" do
+    expect(hello_world).to eq("Hello, world!"")
   end
 end
 {% endhighlight %}
 
 Watch it fail. Generate a blank file in my projects lib directory named hello_world.rb. Watch it fail again. Now add some code:
 
-{% highlight ruby %}
+{% highlight ruby linenos %}
 def hello_world
-  “Hello, world!”
+  "Hello, world!""
 end
 {% endhighlight %}
 
@@ -33,15 +33,15 @@ Run the tests again. Everything passes. Grrreat!
 
 But what if I wanted that method to be nested in a class? Well, I’ve already written the tests, so lets add the class and see what happens. Back to the hello_world.rb file:
 
-{% highlight ruby %}
+{% highlight ruby linenos %}
 class HelloWorld
   def hello_world
-    “Hello, world!”
+    "Hello, world!"
   end
 end
 {% endhighlight %}
 
-Run the test:
+Run the test and disaster ensues:
 
 {% highlight ruby %}
 $ rspec spec
@@ -52,8 +52,8 @@ Failures:
   1) hello_world returns 'Hello, world!'
      Failure/Error: expect(hello_world).to eq("Hello, world!")
      NameError:
-       undefined local variable or method `hello_world' for #<RSpec::ExampleGroups::HelloWorld:0x000001011c6ba8>
-     # ./spec/hello_world_spec.rb:5:in `block (2 levels) in <top (required)>'
+       undefined local variable or method 'hello_world' for #<RSpec::ExampleGroups::HelloWorld:0x000001011c6ba8>
+     # ./spec/hello_world_spec.rb:5:in 'block (2 levels) in <top (required)>'
 
 Finished in 0.00071 seconds (files took 0.15835 seconds to load)
 1 example, 1 failure
@@ -67,13 +67,13 @@ How can this be? I haven’t changed the method!
 
 Well, now that I’ve nested my (instance) method inside of a class, the test needs to initialize an instance of that class upon which it can call my method. Changing the tests like this solves our problem:
 
-{% highlight ruby %}
-require ‘hello_world’
+{% highlight ruby linenos %}
+require 'hello_world'
 
-describe “hello_world” do
-  it “returns ‘Hello, World!’” do
+describe "hello_world" do
+  it "returns 'Hello, World!'"" do
     my_instance = HelloWorld.new
-    expect(my_instance.hello_world).to eq(“Hello, world!”)
+    expect(my_instance.hello_world).to eq("Hello, world!"")
   end
 end
 {% endhighlight %}
@@ -82,14 +82,14 @@ So, altogether, not too complicated. In order to test an instance methods, your 
 
 Bonus side note: if you’re testing multiple instance methods, you can DRY up your code by initializing your instance just once like so:
 
-{% highlight ruby %}
-require ‘hello_world’
+{% highlight ruby linenos %}
+require 'hello_world'
 
-describe “hello_world” do
+describe "hello_world" do
   let(:my_instance) {described_class.new}
 
-  it “returns ‘Hello, World!’” do
-    expect(my_instance.hello_world).to eq(“Hello, world!”)
+  it "returns 'Hello, World!'" do
+    expect(my_instance.hello_world).to eq("Hello, world!"")
   end
 end
 {% endhighlight %}
