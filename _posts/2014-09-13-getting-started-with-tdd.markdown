@@ -7,7 +7,7 @@ categories: TDD
 
 One of the things that I've been working on lately is getting more proficient at test driven development (TDD). Though I've known for awhile that TDD is considered a best practice, in the past I've sometimes succumbed to the temptation to try and write a program that does what I want without pausing first to write tests. No mas.
 
-I've decided to invest time in learning TDD for two main reasons: (1) it seems like a pretty fundamental skill. Even if I ultimately move on to some other way of writing maintainable code, I don't think there's any chance I'll regret putting in the time to get some familiarity with TDD at this early point in my learning curve. (2) Tests instill confidence when I start building onto or refactoring my larger programs. Now that I'm getting to a point where I'm producing programs that have more than a few lines of code and multiple features, it's getting a lot scarrier when I go back and mess with things I already did - what if something breaks? Having tests instills confidence that I can isolate and correct errors before they become big problems.
+I've decided to invest time in learning TDD for two main reasons: (1) it seems like a pretty fundamental skill. Even if I ultimately move on to some other way of writing maintainable code, I don't think there's any chance I'll regret putting in the time to get some familiarity with TDD at this early point in my learning curve. (2) Tests instill confidence when I start building onto or refactoring my larger programs. Now that I'm getting to a point where I'm producing programs that have more than a few lines of code and multiple features, it's getting a lot scarrier when I go back and mess with things I already did - what if something breaks? Having tests helps me be rest assured that I'll be able to isolate and correct errors before they become big problems.
 
 But even after I became convinced I should start learning TDD, there were still a couple prerequisites I needed to understand to get started. So, in this post, I wanted to lay those out for any other Ruby beginners that are considering testing the TDD waters.
 
@@ -45,7 +45,7 @@ TDD isn't just about writing tests to double check that your code does what you 
 
 Red means writing tests that fail. It's important to write the test before you write the code that passes the test - and to make sure the test fails - because if you don't, you don't know that your tests could even possibly fail (a possibility you definitely want to retain if your tests are to be of any use later).
 
-Green means writing the minimal amount of code to make the test pass. A passing test confirms that your code does what you want. It is worth emphasizing, though, that you want to write the *minimal* amount of code to make your tests pass. Doing more leaves features untested. Before writing code that does more, write tests that test more.
+Green means writing the minimal amount of code to make the test pass. A passing test confirms that your code does what you want. It is worth emphasizing, though, that you want to write the *minimal* amount of code to make your tests pass. Getting a test to pass by writing code that carries out more than the objectives specified in your tests installs untested features. Before writing code that does more, write tests that test more.
 
 Refactor means shaping things up so that your code is more elegant and maintainable. You can do the revisions with confidence since passing tests will confirm that everything is still working.
 
