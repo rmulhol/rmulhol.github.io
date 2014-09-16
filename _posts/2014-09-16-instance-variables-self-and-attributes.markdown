@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Instance Variables: Self and Attributes"
+title:  "Initializing Instance Variables: Self and Attributes"
 date:   2014-09-16 
-categories: attributes
+categories: class
 ---
 
 Recently, I learned that you can initialize an instance variable in two different ways. I already knew that instance variables were commonly initialized with an @ sign (as in, @instance_variable), but what's new to me is that you can also do so with the prefix self. (as in, self.instance_variable). 
