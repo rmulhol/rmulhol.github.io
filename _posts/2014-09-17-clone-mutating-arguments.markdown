@@ -62,7 +62,7 @@ end
 
 Without deleting the elements we've already counted, our .include? method returns true each time an element in the first array can also be found in the second. The two arrays above only have one thing in common - puppy dogs - but the first array happens to have two of them, so we get a result of two when we go through each element in the first array to check and see if it's included in the second.
 
-Now, clearly there are lots of ways you could re-write your method so that you didn't need a method like delete_at that mutates the arguments you pass in. But if you like your original method and just want it to leave your arguments alone, a nice method to check out is .clone. With it, you can create a copy of the argument you're passing in so that changes to the copy don't change the original argument:
+Now, clearly there are lots of ways you could re-write your method so that you didn't need the delete_at that mutates the arguments you pass in. But if you like your original method and just want it to leave your arguments alone, a nice method to check out is .clone. With it, you can create a copy of the argument you're passing in so that changes to the copy don't change the original argument:
 
 {% highlight ruby %}
 def we_got_something_in_common(array_one, array_two)
