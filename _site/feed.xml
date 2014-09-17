@@ -6,12 +6,92 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 16 Sep 2014 16:42:58 -0500</pubDate>
-    <lastBuildDate>Tue, 16 Sep 2014 16:42:58 -0500</lastBuildDate>
+    <pubDate>Wed, 17 Sep 2014 15:33:21 -0500</pubDate>
+    <lastBuildDate>Wed, 17 Sep 2014 15:33:21 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
     
       <item>
-        <title>Instance Variables: Self and Attributes</title>
+        <title>Clone: How to Avoid Mutating Arguments</title>
+        <description>&lt;p&gt;When you pass arguments to a method, you generally don’t want that method to mutate the arguments you’ve passed in. You want the method to be able to use and evaluate the arguments so that it can return some data, but you don’t want those arguments to be changed as a byproduct of that operation. And yet, in some instances, that’s precisely what happens.&lt;/p&gt;
+
+&lt;p&gt;For example, say we want to write a method comparing two arrays. The goal is to identify how many elements the two arrays share in common. An initial implementation of this method might look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;we_got_something_in_common&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array_one&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array_two&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;in_common&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;array_one&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array_two&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;in_common&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;already_counted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array_two&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;array_two&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;delete_at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;already_counted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;in_common&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you run this method, it works: &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;one_array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;horses&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;bunnies&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;puppy dogs&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;another_array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;turtles&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;unicorns&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;puppy dogs&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;we_got_something_in_common&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;one_array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;another_array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;But there’s a side effect:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;another_array&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;turtles&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;unicorns&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We lost our puppy dogs!! :(&lt;/p&gt;
+
+&lt;p&gt;So what’s happening? Well, in the initial we_got_something_in_common method, we delete those elements from array_two that are already_counted. Even though another_array is just an argument that we’re passing into the method to see how much it has in common with one_array, the former is mutated by this operation. But if we didn’t include the delete_at statement in our method, it would return inaccurate results:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;we_got_something_in_common&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array_one&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array_two&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;in_common&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;array_one&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array_two&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;in_common&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;in_common&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;my_array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;puppy dogs&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;horses&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;puppy dogs&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;your_array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;cats&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;puppy dogs&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;rabbits&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;we_got_something_in_common&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my_array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;your_array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Without deleting the elements we’ve already counted, our .include? method returns true each time an element in the first array can also be found in the second. The two arrays above only have one thing in common - puppy dogs - but the first array happens to have two of them, so we get a result of two when we go through each element in the first array to check and see if it’s included in the second.&lt;/p&gt;
+
+&lt;p&gt;Now, clearly there are lots of ways you could re-write your method so that you didn’t need a method like delete_at that mutates the arguments you pass in. But if you like your original method and just want it to leave your arguments alone, a nice method to check out is .clone. With it, you can create a copy of the argument you’re passing in so that changes to the copy don’t change the original argument:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;we_got_something_in_common&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array_one&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array_two&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;in_common&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;cloned_array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array_two&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clone&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;array_one&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cloned_array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;in_common&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;already_counted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cloned_array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;cloned_array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;delete_at&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;already_counted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;in_common&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Above, cloned_array uses .clone to create a copy of array_two so that the latter doesn’t get mutated. Without the .clone statement, cloned_array would still point to the same value as array_two, so a mutation to one would mutate the other. But with this trick, our original arrays are preserved so that they can be called elsewhere in their original form.&lt;/p&gt;
+
+&lt;p&gt;Alternatively, you can also use .dup instead, which operates similarly but has &lt;a href=&quot;https://coderwall.com/p/1zflyg&quot;&gt;some differences&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 17 Sep 2014 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//mutation/2014/09/17/clone-mutating-arguments.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//mutation/2014/09/17/clone-mutating-arguments.html</guid>
+        
+        
+        <category>mutation</category>
+        
+      </item>
+    
+      <item>
+        <title>Initializing Instance Variables: Self and Attributes</title>
         <description>&lt;p&gt;Recently, I learned that you can initialize an instance variable in two different ways. I already knew that instance variables were commonly initialized with an @ sign (as in, @instance_variable), but what’s new to me is that you can also do so with the prefix self. (as in, self.instance_variable). &lt;/p&gt;
 
 &lt;p&gt;For example, say I want to write a new class, one called Books that will store titles for each instance. &lt;/p&gt;
@@ -151,16 +231,16 @@
 
 </description>
         <pubDate>Tue, 16 Sep 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//attributes/2014/09/16/instance-variables-self-and-attributes.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//attributes/2014/09/16/instance-variables-self-and-attributes.html</guid>
+        <link>http://rmulhol.github.io//class/2014/09/16/initializing-instance-variables.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//class/2014/09/16/initializing-instance-variables.html</guid>
         
         
-        <category>attributes</category>
+        <category>class</category>
         
       </item>
     
       <item>
-        <title>Ruby: Combinations, Permutations, Repeated Combinations, Repeated Permutations</title>
+        <title>Working With Arrays: Combinations, Permutations, Repeated Combinations, Repeated Permutations</title>
         <description>&lt;p&gt;In &lt;a href=&quot;http://chimera.labs.oreilly.com/books/1234000001813/index.html&quot;&gt;Apprenticeship Patterns&lt;/a&gt;, Dave Hoover and Ade Oshineye encourage software apprentices to make breakable toys. Building programs for yourself and for fun, they propose, is a great way to grow, since you can gain experience stretching your skill set in a context where mistakes are of little consequence. &lt;/p&gt;
 
 &lt;p&gt;This advice has really resonated with me, so I’ve jumped at opportunities to build my own breakable toys. I’ve been working for a little while on a &lt;a href=&quot;http://en.wikipedia.org/wiki/Mastermind_(board_game)&quot;&gt;Mastermind&lt;/a&gt; game, and I recently got to try and develop a &lt;a href=&quot;http://en.wikipedia.org/wiki/Candy_Land&quot;&gt;Candy Land&lt;/a&gt; game at a hack night. &lt;/p&gt;
@@ -283,7 +363,7 @@
       </item>
     
       <item>
-        <title>Writing Tests for Instance Methods in Ruby</title>
+        <title>Writing Tests: Moving from Methods to Classes</title>
         <description>&lt;p&gt;Once I decided to &lt;a href=&quot;/tdd/2014/09/13/getting-started-with-tdd.html&quot;&gt;get started with TDD in Ruby&lt;/a&gt;, I developed a perhaps premature sense of pride in my ability to use TDD to write methods. Following the red-green-refactor model, I would write a test for a method, write the code to make it pass, revise for elegance and maintainability, and then repeat those steps until the method accomplished everything I wanted. But as soon as I got ambitious and started trying TDD with classes, I ran into some trouble: a NameError telling me of some “undefined local variable or method.”&lt;/p&gt;
 
 &lt;p&gt;What was going wrong? Well, as I progressed from files containing single methods to full classes, I was writing tests for &lt;em&gt;instance&lt;/em&gt; methods without initializing an instance of that class upon which I would call those methods in my tests.  &lt;/p&gt;
