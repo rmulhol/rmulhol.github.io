@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Ruby: Combinations, Permutations, Repeated Combinations, Repeated Permutations"
+title:  "Working With Arrays: Combinations, Permutations, Repeated Combinations, Repeated Permutations"
 date:   2014-09-15 
 categories: Arrays
 ---

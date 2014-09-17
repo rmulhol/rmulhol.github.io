@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Writing Tests for Instance Methods in Ruby"
+title:  "Writing Tests: Moving from Methods to Classes"
 date:   2014-09-14 
 categories: TDD
 ---
