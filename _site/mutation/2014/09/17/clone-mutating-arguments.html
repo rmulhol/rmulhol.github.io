@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Clone: How to Avoid Mutating Arguments</title>
+    <title>Clone: How to Stop Arguments from Mutating</title>
     <meta name="description" content="I'm learning Ruby and sharing insights along the way.
 ">
 
@@ -69,7 +69,7 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Clone: How to Avoid Mutating Arguments</h1>
+    <h1 class="post-title">Clone: How to Stop Arguments from Mutating</h1>
     <p class="post-meta">Sep 17, 2014</p>
   </header>
 
@@ -123,7 +123,7 @@
 
 <p>Without deleting the elements we’ve already counted, our .include? method returns true each time an element in the first array can also be found in the second. The two arrays above only have one thing in common - puppy dogs - but the first array happens to have two of them, so we get a result of two when we go through each element in the first array to check and see if it’s included in the second.</p>
 
-<p>Now, clearly there are lots of ways you could re-write your method so that you didn’t need a method like delete_at that mutates the arguments you pass in. But if you like your original method and just want it to leave your arguments alone, a nice method to check out is .clone. With it, you can create a copy of the argument you’re passing in so that changes to the copy don’t change the original argument:</p>
+<p>Now, clearly there are lots of ways you could re-write your method so that you didn’t need the delete_at that mutates the arguments you pass in. But if you like your original method and just want it to leave your arguments alone, a nice method to check out is .clone. With it, you can create a copy of the argument you’re passing in so that changes to the copy don’t change the original variable you passed in as an argument:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">we_got_something_in_common</span><span class="p">(</span><span class="n">array_one</span><span class="p">,</span> <span class="n">array_two</span><span class="p">)</span>
   <span class="n">in_common</span> <span class="o">=</span> <span class="mi">0</span>
