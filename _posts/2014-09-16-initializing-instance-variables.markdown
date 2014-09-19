@@ -158,6 +158,10 @@ All the tests still pass.
 
 When you use the self. technique of initializing an instance variable with attr_accessor, you're carrying out a very similar process. The key diffence is that attr_writer is using the argument you pass in when you initialize a new instance of the class.
 
-Bonus: self.instance_variable will return an undefined method error for the instance variable if you include a typo, while @instance_variable with a typo will return nil (but run just fine). Maybe this approach can help isolate and rectify errors more quickly by making them more explicit.
+<s>Bonus: self.instance_variable will return an undefined method error for the instance variable if you include a typo, while @instance_variable with a typo will return nil (but run just fine). Maybe this approach can help isolate and rectify errors more quickly by making them more explicit.</s>
+<br/>
+
+*[See my [newer post][new_post_on_instance_variables] about how to use the @instance_variable naming format with attr_reader to avoid the risks associated with typos, and also avoid unwanted code leaks]*
 
 [diana]: http://calvached.github.io/
+[new_post_on_instance_variables]: {% post_url 2014-09-19-instance-variables-revisited %}
