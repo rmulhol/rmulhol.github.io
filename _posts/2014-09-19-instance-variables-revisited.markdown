@@ -62,7 +62,7 @@ end
 => nil
 {% endhighlight %}
 
-Though the nil return might not seem like that big of a deal here, it can be a real pain to track down if the value gets passed through multiple lines of code before you receive the inevitable 'undefined method for nil: NilClass' error. You'll be wishing you could have seen the error right where you went wrong.
+Though the nil return might not seem like that big of a deal right now, it can be a real pain later if the value gets passed through multiple lines of code before you receive the inevitable 'undefined method for nil: NilClass' error. You'll be wishing you could have seen the error right where you went wrong.
 
 However, there are downsides to the self.instance_variable naming format as well. Being required to use an attr_accessor to get your instance variables up and running risks code leaks and unwanted dependencies, since other objects can now write to that method.
 
