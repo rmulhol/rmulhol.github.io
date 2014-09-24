@@ -6,9 +6,43 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 19 Sep 2014 18:50:32 -0500</pubDate>
-    <lastBuildDate>Fri, 19 Sep 2014 18:50:32 -0500</lastBuildDate>
+    <pubDate>Tue, 23 Sep 2014 22:15:50 -0500</pubDate>
+    <lastBuildDate>Tue, 23 Sep 2014 22:15:50 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Getting Better Feedback: Start with a Readme</title>
+        <description>&lt;p&gt;The other day, I had an opportunity to get some feedback on one of my projects from a more experienced programmer. I was super excited. I always enjoy a good code review, and I felt like this project had gotten to the point where it could really benefit from a mentor’s scrutiny.&lt;/p&gt;
+
+&lt;p&gt;So, we sat down, he cloned my repo, got set to run the tests, and then … lots of error messages.&lt;/p&gt;
+
+&lt;p&gt;What could have gone wrong? I had run my program multiple times on my computer, and everything seemed fine then. Maybe something mysterious and disastrous had taken place in my project’s passage between the local and remote repositories, and some of my data was corrupted?&lt;/p&gt;
+
+&lt;p&gt;No, the problem was much more mundane: I had written my project with Ruby 2.1.2 and Rspec 3.1.3, and the person checking it out was running earlier versions. His machine didn’t recognize some of my syntax, so things were failing all over the place.&lt;/p&gt;
+
+&lt;p&gt;No big deal - versions get upgraded, tests get run, and we get down to the nitty gritty of my code. But, before we did that, this experience provoked a piece of advice I hadn’t considered while tinkering in the minutiae of my project’s implementation: I needed to be containing more information in my Readme.&lt;/p&gt;
+
+&lt;p&gt;I already knew that the Readme has value - why else would github prompt me to create one with every repo? But I didn’t really have a good idea of what to include. I’d put in a small description of my project and leave it there, since a bunch of the details I’d find in Readmes for larger and more advanced projects didn’t seem relevant to my little breakable toy.&lt;/p&gt;
+
+&lt;p&gt;But regardless of project size, it’s useful to tell the user &lt;strong&gt;what versions/gems they need&lt;/strong&gt; to make it run. Though someone might be able to wade through your code to try and deduce what all they’ll need, it’s much easier when this information is made available explicitly and upfront - and the Readme is the place to do that.&lt;/p&gt;
+
+&lt;p&gt;If users are going through the trouble to install and use the versions you’ve laid out, perhaps they should also know &lt;strong&gt;how to run your program&lt;/strong&gt;. This sort of information can seem obvious after working on your project every day for weeks, but it isn’t necessarily so clear to someone who’s just getting aquainted.&lt;/p&gt;
+
+&lt;p&gt;A Readme is also good place to tell your users &lt;strong&gt;how to run the tests&lt;/strong&gt;. Because of a problem I hope to overcome and write about soon, running “rspec individual_spec.rb” in my spec folder doesn’t work; I have to run the tests by entering “rspec” (or “rspec spec”) in the home directory. That’s the sort of thing you might want to know if &lt;em&gt;you&lt;/em&gt; want to run my tests.&lt;/p&gt;
+
+&lt;p&gt;And depending on your project’s size and complexity, there are lots other factors to think about as well: &lt;strong&gt;how to install&lt;/strong&gt;, &lt;strong&gt;known issues&lt;/strong&gt;, and &lt;strong&gt;ways to integrate with other tools&lt;/strong&gt; all come to mind as things your users might want to know. At the very least, you can always include a &lt;strong&gt;basic description of the project&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Ultimately, figuring out what exactly to put into a Readme is less important than just &lt;em&gt;thinking more&lt;/em&gt; about that question. Doing so deliberately not only makes the project more accessible for others, it also forces you to get more familiar with it yourself. And, in doing so, you’re not just creating some afterthought to your code; you’re giving your code its proper introduction.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 23 Sep 2014 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//readme/2014/09/23/start-with-readme.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//readme/2014/09/23/start-with-readme.html</guid>
+        
+        
+        <category>readme</category>
+        
+      </item>
     
       <item>
         <title>Initializing Instance Variables: Revisiting Self and Attributes</title>
@@ -63,7 +97,7 @@
 &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;my_dog&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dogs_name&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Though the nil return might not seem like that big of a deal here, it can be a real pain to track down if the value gets passed through multiple lines of code before you receive the inevitable ‘undefined method for nil: NilClass’ error. You’ll be wishing you could have seen the error right where you went wrong.&lt;/p&gt;
+&lt;p&gt;Though the nil return might not seem like that big of a deal right now, it can be a real pain later if the value gets passed through multiple lines of code before you receive the inevitable ‘undefined method for nil: NilClass’ error. You’ll be wishing you could have seen the error right where you went wrong.&lt;/p&gt;
 
 &lt;p&gt;However, there are downsides to the self.instance_variable naming format as well. Being required to use an attr_accessor to get your instance variables up and running risks code leaks and unwanted dependencies, since other objects can now write to that method.&lt;/p&gt;
 

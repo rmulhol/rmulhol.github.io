@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Rob Learns Ruby</title>
+    <title>Getting Better Feedback: Start with a Readme</title>
     <meta name="description" content="I'm learning Ruby and sharing insights along the way.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//">
+    <link rel="canonical" href="http://rmulhol.github.io//readme/2014/09/23/start-with-readme.html">
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -66,95 +66,38 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home">
+        <div class="post">
 
-  <h1 class="page-heading">Posts</h1>
+  <header class="post-header">
+    <h1 class="post-title">Getting Better Feedback: Start with a Readme</h1>
+    <p class="post-meta">Sep 23, 2014</p>
+  </header>
 
-  <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">Sep 23, 2014</span>
+  <article class="post-content">
+    <p>The other day, I had an opportunity to get some feedback on one of my projects from a more experienced programmer. I was super excited. I always enjoy a good code review, and I felt like this project had gotten to the point where it could really benefit from a mentor’s scrutiny.</p>
 
-        <h2>
-          <a class="post-link" href="/readme/2014/09/23/start-with-readme.html">Getting Better Feedback: Start with a Readme</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Sep 19, 2014</span>
+<p>So, we sat down, he cloned my repo, got set to run the tests, and then … lots of error messages.</p>
 
-        <h2>
-          <a class="post-link" href="/class/2014/09/19/instance-variables-revisited.html">Initializing Instance Variables: Revisiting Self and Attributes</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Sep 18, 2014</span>
+<p>What could have gone wrong? I had run my program multiple times on my computer, and everything seemed fine then. Maybe something mysterious and disastrous had taken place in my project’s passage between the local and remote repositories, and some of my data was corrupted?</p>
 
-        <h2>
-          <a class="post-link" href="/katas/2014/09/18/katas-more-efficient.html">Getting More Efficient at Writing Quality Code: Doing Katas with Vim and Guard</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Sep 17, 2014</span>
+<p>No, the problem was much more mundane: I had written my project with Ruby 2.1.2 and Rspec 3.1.3, and the person checking it out was running earlier versions. His machine didn’t recognize some of my syntax, so things were failing all over the place.</p>
 
-        <h2>
-          <a class="post-link" href="/mutation/2014/09/17/clone-mutating-arguments.html">Clone: How to Stop Arguments from Mutating</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Sep 16, 2014</span>
+<p>No big deal - versions get upgraded, tests get run, and we get down to the nitty gritty of my code. But, before we did that, this experience provoked a piece of advice I hadn’t considered while tinkering in the minutiae of my project’s implementation: I needed to be containing more information in my Readme.</p>
 
-        <h2>
-          <a class="post-link" href="/class/2014/09/16/initializing-instance-variables.html">Initializing Instance Variables: Self and Attributes</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Sep 15, 2014</span>
+<p>I already knew that the Readme has value - why else would github prompt me to create one with every repo? But I didn’t really have a good idea of what to include. I’d put in a small description of my project and leave it there, since a bunch of the details I’d find in Readmes for larger and more advanced projects didn’t seem relevant to my little breakable toy.</p>
 
-        <h2>
-          <a class="post-link" href="/arrays/2014/09/15/combinations-and-permutations.html">Working With Arrays: Combinations, Permutations, Repeated Combinations, Repeated Permutations</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Sep 14, 2014</span>
+<p>But regardless of project size, it’s useful to tell the user <strong>what versions/gems they need</strong> to make it run. Though someone might be able to wade through your code to try and deduce what all they’ll need, it’s much easier when this information is made available explicitly and upfront - and the Readme is the place to do that.</p>
 
-        <h2>
-          <a class="post-link" href="/tdd/2014/09/14/testing-instance-methods.html">Writing Tests: Moving from Methods to Classes</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Sep 13, 2014</span>
+<p>If users are going through the trouble to install and use the versions you’ve laid out, perhaps they should also know <strong>how to run your program</strong>. This sort of information can seem obvious after working on your project every day for weeks, but it isn’t necessarily so clear to someone who’s just getting aquainted.</p>
 
-        <h2>
-          <a class="post-link" href="/tdd/2014/09/13/getting-started-with-tdd.html">Getting Started with Test Driven Development in Ruby</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Sep 12, 2014</span>
+<p>A Readme is also good place to tell your users <strong>how to run the tests</strong>. Because of a problem I hope to overcome and write about soon, running “rspec individual_spec.rb” in my spec folder doesn’t work; I have to run the tests by entering “rspec” (or “rspec spec”) in the home directory. That’s the sort of thing you might want to know if <em>you</em> want to run my tests.</p>
 
-        <h2>
-          <a class="post-link" href="/beginning/2014/09/12/learning-to-code.html">Learning to Code: Taking the First Steps</a>
-        </h2>
-      </li>
-    
-      <li>
-        <span class="post-meta">Sep 12, 2014</span>
+<p>And depending on your project’s size and complexity, there are lots other factors to think about as well: <strong>how to install</strong>, <strong>known issues</strong>, and <strong>ways to integrate with other tools</strong> all come to mind as things your users might want to know. At the very least, you can always include a <strong>basic description of the project</strong>.</p>
 
-        <h2>
-          <a class="post-link" href="/me/2014/09/12/hello-world.html">Hello, World!</a>
-        </h2>
-      </li>
-    
-  </ul>
+<p>Ultimately, figuring out what exactly to put into a Readme is less important than just <em>thinking more</em> about that question. Doing so deliberately not only makes the project more accessible for others, it also forces you to get more familiar with it yourself. And, in doing so, you’re not just creating some afterthought to your code; you’re giving your code its proper introduction.</p>
 
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+
+  </article>
 
 </div>
 
