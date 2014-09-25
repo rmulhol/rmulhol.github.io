@@ -21,7 +21,7 @@ But regardless of project size, it's useful to tell the user **what versions/gem
 
 If users are going through the trouble to install and use the versions you've laid out, perhaps they should also know **how to run your program**. This sort of information can seem obvious after working on your project every day for weeks, but it isn't necessarily so clear to someone who's just getting aquainted.
 
-A Readme is also good place to tell your users **how to run the tests**. Because of a problem I hope to overcome and write about soon, running "rspec individual_spec.rb" in my spec folder doesn't work; I have to run the tests by entering "rspec" (or "rspec spec") in the home directory. That's the sort of thing you might want to know if *you* want to run my tests.
+A Readme is also good place to tell your users **how to run the tests**. Because of a problem I hope to overcome and write about soon, running "rspec individual_spec.rb" in my spec folder doesn't work; I have to run the tests by entering "rspec" (or "rspec spec") in the home directory. That's the sort of thing you might want to know if you want to run my tests.
 
 And depending on your project's size and complexity, there are lots other factors to think about as well: **how to install**, **known issues**, and **ways to integrate with other tools** all come to mind as things your users might want to know. At the very least, you can always include a **basic description of the project**.
 
