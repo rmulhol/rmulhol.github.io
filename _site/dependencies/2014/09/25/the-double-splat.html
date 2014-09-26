@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>The Double Splat: Reduce Argument Order Dependency AND Accept Indefinite Arguments</title>
+    <title>The Double Splat: Reduce Argument Order Dependency AND Accept an Indefinite Number of Arguments</title>
     <meta name="description" content="I'm learning Ruby and sharing insights along the way.
 ">
 
@@ -69,14 +69,14 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">The Double Splat: Reduce Argument Order Dependency AND Accept Indefinite Arguments</h1>
+    <h1 class="post-title">The Double Splat: Reduce Argument Order Dependency AND Accept an Indefinite Number of Arguments</h1>
     <p class="post-meta">Sep 25, 2014</p>
   </header>
 
   <article class="post-content">
     <p>Reading through Sandi Metz’s <a href="http://www.poodr.com/"><em>Practical Object-Oriented Design in Ruby</em></a> has been awesome. She offers a bunch of helpful tips, and they’re supported by examples that are (deceptively?) easy to understand. I plan to revisit and re-read it several times as I keep on learning.</p>
 
-<p>One of the things that really jumped out at me on the first read it is her advice for reducing argument order dependencies. That advice is <a href="http://www.informit.com/articles/article.aspx?p=1946176&amp;seqNum=2">available online</a> and has been extensively <a href="http://www.technicalecstasy.net/removing-argument-order-dependency-in-ruby/">summarized</a> by <a href="http://codequizzes.wordpress.com/2013/10/06/argument-order-dependencies/">others</a>, so I won’t spend a ton of time unpacking  all of the details. But suffice it to say that you’re basically replacing a hard-coded sequence of parameters with a single one - a hash - and then initializing your instance variables by calling the values associated with various keys.</p>
+<p>One of the things that really jumped out at me on the first read is her advice for reducing argument order dependencies. That advice is <a href="http://www.informit.com/articles/article.aspx?p=1946176&amp;seqNum=2">available online</a> and has been extensively <a href="http://www.technicalecstasy.net/removing-argument-order-dependency-in-ruby/">summarized</a> by <a href="http://codequizzes.wordpress.com/2013/10/06/argument-order-dependencies/">others</a>, so I won’t spend a ton of time unpacking  all of the details. But suffice it to say that you’re basically replacing a hard-coded sequence of parameters with a single one - a hash - and then initializing your instance variables by calling the values associated with various keys.</p>
 
 <p>Alright, I can’t help myself. An example - this code is dependent on argument order:</p>
 
@@ -154,6 +154,8 @@
 <p>But, as with so many things, Ruby has a solution to this problem: the double splat. This tool lets you take any number of key-value pairs. Rewrite our earlier program like this:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Box</span>
+  <span class="kp">attr_reader</span> <span class="ss">:length</span><span class="p">,</span> <span class="ss">:width</span><span class="p">,</span> <span class="ss">:height</span>
+
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
     <span class="vi">@length</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="ss">:length</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
     <span class="vi">@width</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="ss">:width</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>

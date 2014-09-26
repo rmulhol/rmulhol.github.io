@@ -6,15 +6,103 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 25 Sep 2014 14:17:15 -0500</pubDate>
-    <lastBuildDate>Thu, 25 Sep 2014 14:17:15 -0500</lastBuildDate>
+    <pubDate>Fri, 26 Sep 2014 15:12:24 -0500</pubDate>
+    <lastBuildDate>Fri, 26 Sep 2014 15:12:24 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
     
       <item>
-        <title>The Double Splat: Reduce Argument Order Dependency AND Accept Indefinite Arguments</title>
+        <title>Working with Rspec: Testing Both Individual Files and Complete Projects</title>
+        <description>&lt;p&gt;In a &lt;a href=&quot;/readme/2014/09/23/start-with-readme.html&quot;&gt;previous post&lt;/a&gt;, I mentioned that it’s good to indicate how to run your project’s tests (among other things) in your Readme. This makes it easier for others to use your file, and it forces you to reflect on whether or not everything is operating the way you originally intended.&lt;/p&gt;
+
+&lt;p&gt;When I did that reflecting for one of my own projects, I was bugged by the fact that I couldn’t test my individual specs; the only way I could run any tests was to run the whole test suite. So, I did some poking around and, ladies and gentleman, I think I’ve found the solution.&lt;/p&gt;
+
+&lt;p&gt;But, before I get there, I want to take this opportunity to describe the process that I went through to get here. I’ll share some of the hiccups I had along the way, and then reveal the (devastatingly) simple solution.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 1: Testing an Individual File&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;When I first began using Rspec, I started trying to write a test for a simple method. I would write a spec like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;addition&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;#addition&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;adds 2 integers&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addition&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then I would navigate to my project’s spec directory, and type &lt;code&gt;rspec addition_spec.rb&lt;/code&gt;. The result looked like this: &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`require&amp;#39;: cannot load such file -- addition (LoadError)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;OK, red-green-refactor, right? That’s red-ish.&lt;/p&gt;
+
+&lt;p&gt;But I simply could not get this error to go away. Creating an addition.rb file in my lib directory did nothing; I couldn’t get the tests to run. &lt;/p&gt;
+
+&lt;p&gt;So it was with supreme satisfaction that I learned a way around my problem: add the file directory path! I changed line 1 from the spec file above to this: &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;../lib/addition.rb&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And everything worked!&lt;/p&gt;
+
+&lt;p&gt;My ‘require’ statement was a little verbose, but the tests were running. I was happy. &lt;/p&gt;
+
+&lt;p&gt;I ran forward with my new knowledge and learned how to &lt;a href=&quot;/tdd/2014/09/14/testing-instance-methods.html&quot;&gt;write tests for instance methods&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2: Testing a Whole Project&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;As time wore on, I began to grow weary of my lengthy ‘require’ statements, and I developed a keen interest in learning better ways of writing tests.&lt;/p&gt;
+
+&lt;p&gt;Acting upon that interest, I decided to strike up a conversation with a more knowledgeable compatriot, and I was rewarded with a helpful bit of knowledge. It turned out that if I navigated to my project’s home directory (rather than the spec directory) and simply typed &lt;code&gt;rspec&lt;/code&gt;, all of my tests would run with the original, less verbose &lt;code&gt;require&lt;/code&gt; syntax (e.g. &lt;code&gt;require &#39;addition&#39;&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;I couldn’t get the old approach to work, but no matter. I was running all of my tests and using the &lt;code&gt;require&lt;/code&gt; syntax I had longed for.&lt;/p&gt;
+
+&lt;p&gt;Traveling along in this fashion, I began to tackle projects made up of multiple files.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 3: Testing Individual Files and the Whole Project (The Wrong Way)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;As had been the pattern previously, I once again grew tired of the seemingly unnecessary limitations I encountered. Though testing the whole project covered all of my bases, I wondered why typing &lt;code&gt;rspec addition_spec.rb&lt;/code&gt; in my spec directory would no longer work (instead raising the familiar &lt;code&gt;LoadError&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;So, I decided to start checking out some &lt;a href=&quot;http://code.tutsplus.com/tutorials/ruby-for-newbies-testing-with-rspec--net-21297&quot;&gt;resources&lt;/a&gt; for Rspec beginners, intending to retrace my steps until I located the crucial mistake that I most certainly must have made. &lt;/p&gt;
+
+&lt;p&gt;One thing that jumped out at me during this process was a suggested use of the spec_helper.rb file.&lt;/p&gt;
+
+&lt;p&gt;Basically, the idea was to refer to all of the files in the lib directory in the spec_helper, and then to require only the spec_helper in every spec. Though I felt some apprehension at the idea that every individual spec would require every file in the lib directory, I was desperate.&lt;/p&gt;
+
+&lt;p&gt;And it worked! Now I could test the whole project (&lt;code&gt;rspec spec&lt;/code&gt; in the project directory) and individual files (&lt;code&gt;rspec addition_spec.rb&lt;/code&gt; in the spec directory), though the tests on individual files weren’t outputting the normal colors I was used to (red output for failures, green output for passing). No matter, I thought.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 4: Testing Individual Files and the Whole Project (The Right Way)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;OK, the lack of colors bothered me. What was up with that? &lt;/p&gt;
+
+&lt;p&gt;I decided to do some more research, and I found &lt;a href=&quot;http://qugstart.com/blog/ruby-and-rails/rspec-running-one-test-at-a-time/&quot;&gt;this&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You have &lt;em&gt;got&lt;/em&gt; to be kidding me.&lt;/p&gt;
+
+&lt;p&gt;Duh! The way to run individual tests is the *stay* in the project directory and *direct* rspec to your intended spec, like so:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;rspec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addition_spec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rb&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now I can test individual files, and I get the colored syntax I’m expecting. And, of course, I can still test the whole project.&lt;/p&gt;
+
+&lt;p&gt;So, that took too long, but I learned how to keep my clean ‘require’ calls, test individual files, also test whole projects, &lt;em&gt;and&lt;/em&gt; keep the nice syntax coloration that lets me know whether I’m in the red or green stage of red-green-refactor.&lt;/p&gt;
+
+&lt;p&gt;Happy coding, y’all.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 26 Sep 2014 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//tdd/2014/09/26/test-individual-and-project.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//tdd/2014/09/26/test-individual-and-project.html</guid>
+        
+        
+        <category>tdd</category>
+        
+      </item>
+    
+      <item>
+        <title>The Double Splat: Reduce Argument Order Dependency AND Accept an Indefinite Number of Arguments</title>
         <description>&lt;p&gt;Reading through Sandi Metz’s &lt;a href=&quot;http://www.poodr.com/&quot;&gt;&lt;em&gt;Practical Object-Oriented Design in Ruby&lt;/em&gt;&lt;/a&gt; has been awesome. She offers a bunch of helpful tips, and they’re supported by examples that are (deceptively?) easy to understand. I plan to revisit and re-read it several times as I keep on learning.&lt;/p&gt;
 
-&lt;p&gt;One of the things that really jumped out at me on the first read it is her advice for reducing argument order dependencies. That advice is &lt;a href=&quot;http://www.informit.com/articles/article.aspx?p=1946176&amp;amp;seqNum=2&quot;&gt;available online&lt;/a&gt; and has been extensively &lt;a href=&quot;http://www.technicalecstasy.net/removing-argument-order-dependency-in-ruby/&quot;&gt;summarized&lt;/a&gt; by &lt;a href=&quot;http://codequizzes.wordpress.com/2013/10/06/argument-order-dependencies/&quot;&gt;others&lt;/a&gt;, so I won’t spend a ton of time unpacking  all of the details. But suffice it to say that you’re basically replacing a hard-coded sequence of parameters with a single one - a hash - and then initializing your instance variables by calling the values associated with various keys.&lt;/p&gt;
+&lt;p&gt;One of the things that really jumped out at me on the first read is her advice for reducing argument order dependencies. That advice is &lt;a href=&quot;http://www.informit.com/articles/article.aspx?p=1946176&amp;amp;seqNum=2&quot;&gt;available online&lt;/a&gt; and has been extensively &lt;a href=&quot;http://www.technicalecstasy.net/removing-argument-order-dependency-in-ruby/&quot;&gt;summarized&lt;/a&gt; by &lt;a href=&quot;http://codequizzes.wordpress.com/2013/10/06/argument-order-dependencies/&quot;&gt;others&lt;/a&gt;, so I won’t spend a ton of time unpacking  all of the details. But suffice it to say that you’re basically replacing a hard-coded sequence of parameters with a single one - a hash - and then initializing your instance variables by calling the values associated with various keys.&lt;/p&gt;
 
 &lt;p&gt;Alright, I can’t help myself. An example - this code is dependent on argument order:&lt;/p&gt;
 
@@ -92,6 +180,8 @@
 &lt;p&gt;But, as with so many things, Ruby has a solution to this problem: the double splat. This tool lets you take any number of key-value pairs. Rewrite our earlier program like this:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Box&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;attr_reader&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:height&lt;/span&gt;
+
   &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;vi&quot;&gt;@length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;vi&quot;&gt;@width&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -131,7 +221,7 @@
 
 &lt;p&gt;If users are going through the trouble to install and use the versions you’ve laid out, perhaps they should also know &lt;strong&gt;how to run your program&lt;/strong&gt;. This sort of information can seem obvious after working on your project every day for weeks, but it isn’t necessarily so clear to someone who’s just getting aquainted.&lt;/p&gt;
 
-&lt;p&gt;A Readme is also good place to tell your users &lt;strong&gt;how to run the tests&lt;/strong&gt;. Because of a problem I hope to overcome and write about soon, running “rspec individual_spec.rb” in my spec folder doesn’t work; I have to run the tests by entering “rspec” (or “rspec spec”) in the home directory. That’s the sort of thing you might want to know if you want to run my tests.&lt;/p&gt;
+&lt;p&gt;A Readme is also good place to tell your users &lt;strong&gt;how to run the tests&lt;/strong&gt;. Because of a problem I’m having (that I hope to overcome and write about soon), running “rspec individual_spec.rb” in my spec folder doesn’t work; I have to run the tests by entering “rspec” (or “rspec spec”) in the home directory. That’s the sort of thing you might want to know if you want to run my tests.&lt;/p&gt;
 
 &lt;p&gt;And depending on your project’s size and complexity, there are lots other factors to think about as well: &lt;strong&gt;how to install&lt;/strong&gt;, &lt;strong&gt;known issues&lt;/strong&gt;, and &lt;strong&gt;ways to integrate with other tools&lt;/strong&gt; all come to mind as things your users might want to know. At the very least, you can always include a &lt;strong&gt;basic description of the project&lt;/strong&gt;.&lt;/p&gt;
 
@@ -784,66 +874,6 @@
         
         
         <category>tdd</category>
-        
-      </item>
-    
-      <item>
-        <title>Learning to Code: Taking the First Steps</title>
-        <description>&lt;p&gt;If you’re interested in learning to code, there are a lot of resources out there to help you get started. With so many books, MOOCs, and online tutorials available at the click of a button, it can get almost overwhelming just figuring out where to start. So, in this post, I want to share some of the steps I’ve taken to get moving. Although there are definitely a vast number of ways to begin, hopefully my experiences can be of use to those who find themselves stuck at the starting gate.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 1: Take the Plunge&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;When I was getting started, choosing how to invest my time felt like a pressing concern. With so many options available, it seemed important to pick the correct one so that I could get off on the right foot.&lt;/p&gt;
-
-&lt;p&gt;There’s nothing wrong with doing your due diligence and trying to find the entry point that’s best for you, but what I learned is that choosing which step to take first is far less important than simply choosing to take the first step. Getting the ball rolling builds momentum for future progress better than anything else.&lt;/p&gt;
-
-&lt;p&gt;I ended up starting out by completing the Intro to Ruby tutorial at &lt;a href=&quot;http://codecademy.com&quot;&gt;Codecademy&lt;/a&gt;. I zipped through it a little fast, and probably didn’t retain everything as well as I would have liked to, but simply diving in and working with code helped me get moving. I found myself better motivated and prepared as I began to tackle new and different challenges down the line.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 2: Figure Out How You Learn&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Speaking of that first step, I quickly figured out that I can zoom through an online tutorial pretty fast. Tackling chapter after chapter came easy and felt like demonstrable progress, but I recognized a problem: I wasn’t properly retaining what I had learned.&lt;/p&gt;
-
-&lt;p&gt;This experience helped me to figure out that I benefit a lot from applying what I’m learning. Just reading about particular features of a language or completing mini-exercises didn’t quite do the trick; I needed to be putting what I’d learned to use.&lt;/p&gt;
-
-&lt;p&gt;Poking around for other resources better suited to my learning style led me to &lt;a href=&quot;http://theodinproject.com&quot;&gt;The Odin Project&lt;/a&gt;. I really benefited from their curriculum that combines information with relatively open-ended challenges. Instead of writing a line of code to move on to the next challenge in my tutorial, I was writing programs. &lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 3: Make a Calendar&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;One of the things I like about coding is that it’s fun. I totally enjoy heading over to &lt;a href=&quot;http://codewars.com&quot;&gt;Codewars&lt;/a&gt; and completing a few challenges just as if I were playing a game. And don’t get me wrong – that site is awesome for practice.&lt;/p&gt;
-
-&lt;p&gt;But I figured out early on that indulging in the fun side of coding can strip the learning process of structure. While doing the stuff you enjoy helps build experience and motivation, it’s also good to set benchmarks and goals.&lt;/p&gt;
-
-&lt;p&gt;For me, making a calendar that outlines what I want to achieve and by when has really helped to keep me on track. Now if I’m ahead of schedule, maybe I’ll indulge in more of the fun stuff. But if I’m slipping, I know I need to double down on the task at hand.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 4: Get Help&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;One of the beliefs I had about learning to code early on is that it was going to come down to self-discipline and self-teaching. And, for sure, those things are invaluable. But, in retrospect, I think I was underestimating how many resources are out there to engage others and grow through interaction.&lt;/p&gt;
-
-&lt;p&gt;For example, I had never really heard of a “meetup” before. Now, I attend meetups almost every week. They’re a great way to meet like-minded individuals and hear about what’s going on in the world of professional software development. And, they even sometimes offer opportunities to do some pair programming.&lt;/p&gt;
-
-&lt;p&gt;I’ve found that talking through what I’m learning and seeing how others think helps me to learn in ways I can’t quite explain. Opportunities to interact with others and share perspectives have helped me to grow in ways I never could have gotten out of solitary study.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 5: Learn the Tools of the Trade&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;In my haste to get started, I was initially reluctant to learn things that I sensed would become important down the line. Github? Who needs that when I can save my code and run it in the command line? Vim? That seems much more difficult to use than SublimeText. TDD? I don’t want to write a bunch of specifications before I get down to writing code!&lt;/p&gt;
-
-&lt;p&gt;Wrong!&lt;/p&gt;
-
-&lt;p&gt;Every time I’ve come back to learn something I initially put off, it’s paid dividends. Getting over the hump between strangeness and familiarity might seem daunting, but it yields greater productivity in the long run.&lt;/p&gt;
-
-&lt;p&gt;And getting comfortable with the best tools earlier pays off more, because it means you’re helping to develop familiarity with each subsequent time you practice. Putting that off just means you miss out on lots of practice you could have already accrued.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Final Thoughts&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;As has been pointed out many times before by brighter minds than myself, learning to code is a long journey. I’m sure that if I were to revisit this post a year from now I’d have new and different suggestions, but that’s the nature of the activity. One way or another, the most important things seem to be simply getting started and developing good habits. To get on track, I’ve found taking the plunge, figuring out how I learn, working on a schedule, getting help, and developing familiarity with the tools of the trade to be really important.&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 12 Sep 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//beginning/2014/09/12/learning-to-code.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//beginning/2014/09/12/learning-to-code.html</guid>
-        
-        
-        <category>beginning</category>
         
       </item>
     
