@@ -6,8 +6,8 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 26 Sep 2014 15:12:24 -0500</pubDate>
-    <lastBuildDate>Fri, 26 Sep 2014 15:12:24 -0500</lastBuildDate>
+    <pubDate>Fri, 26 Sep 2014 20:42:44 -0500</pubDate>
+    <lastBuildDate>Fri, 26 Sep 2014 20:42:44 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
     
       <item>
@@ -66,7 +66,7 @@
 
 &lt;p&gt;One thing that jumped out at me during this process was a suggested use of the spec_helper.rb file.&lt;/p&gt;
 
-&lt;p&gt;Basically, the idea was to refer to all of the files in the lib directory in the spec_helper, and then to require only the spec_helper in every spec. Though I felt some apprehension at the idea that every individual spec would require every file in the lib directory, I was desperate.&lt;/p&gt;
+&lt;p&gt;Basically, the idea was to &lt;code&gt;require_relative&lt;/code&gt; all of the files in the lib directory in my spec_helper, and then to require only the spec_helper in every spec. Though I felt some apprehension at the idea that every individual spec would require every file in the lib directory, I was desperate.&lt;/p&gt;
 
 &lt;p&gt;And it worked! Now I could test the whole project (&lt;code&gt;rspec spec&lt;/code&gt; in the project directory) and individual files (&lt;code&gt;rspec addition_spec.rb&lt;/code&gt; in the spec directory), though the tests on individual files weren’t outputting the normal colors I was used to (red output for failures, green output for passing). No matter, I thought.&lt;/p&gt;
 
@@ -78,11 +78,11 @@
 
 &lt;p&gt;You have &lt;em&gt;got&lt;/em&gt; to be kidding me.&lt;/p&gt;
 
-&lt;p&gt;Duh! The way to run individual tests is the *stay* in the project directory and *direct* rspec to your intended spec, like so:&lt;/p&gt;
+&lt;p&gt;Duh! The way to run individual tests is to *stay* in the project directory and *direct* rspec to your intended spec, like so:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;rspec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addition_spec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rb&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Now I can test individual files, and I get the colored syntax I’m expecting. And, of course, I can still test the whole project.&lt;/p&gt;
+&lt;p&gt;Now I can test individual files, and I get the colored syntax I’m expecting. And, of course, I can still test the whole project. Bonus: no need to use a spec_helper.&lt;/p&gt;
 
 &lt;p&gt;So, that took too long, but I learned how to keep my clean ‘require’ calls, test individual files, also test whole projects, &lt;em&gt;and&lt;/em&gt; keep the nice syntax coloration that lets me know whether I’m in the red or green stage of red-green-refactor.&lt;/p&gt;
 
@@ -95,6 +95,54 @@
         
         
         <category>tdd</category>
+        
+      </item>
+    
+      <item>
+        <title>Working With Arrays: Choose Your Constuctor Wisely</title>
+        <description>&lt;p&gt;One of the projects a friend and I have been pairing on lately is a &lt;a href=&quot;http://en.wikipedia.org/wiki/Candy_Land&quot;&gt;Candyland&lt;/a&gt; game. The game itself is pretty straightforward; it’s meant to be accessible for small children and there’s literally no strategy involved. However, coding out a version of the game is more challenging - it’s been a very pleasant but also intellectually stimulating experience.&lt;/p&gt;
+
+&lt;p&gt;To get started with our the board, we put together an array of arrays. The board (itself an array) contains 100 arrays (one for every space on the board). The spaces are later passed colors and other markings; all pink spaces, for example, get a candycane or gumdrop added in, while five non-pink spaces are labeled sticky, indicating that you lose a turn if you land on them.&lt;/p&gt;
+
+&lt;p&gt;To get started, we create an array of 100 empty arrays. We generated it with the literal constructor:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;make_100_spaces&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;new_board&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt;
+  &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;times&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new_board&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;new_board&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;But after we got everything up and running, we went back to refactor and thought about trying the Array.new constructor:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;make_100_spaces&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This feels like good refactoring. We’re cutting back on lines of code and reducing the number of operations, so the only question is whether it achieves the same result.&lt;/p&gt;
+
+&lt;p&gt;Well, it does not. When we ran the tests, everything was blowing up. A bunch of unexpected outcomes early on, then some &lt;code&gt;NoMethodError&lt;/code&gt; messages referencing the &lt;code&gt;NilClass&lt;/code&gt; toward the end.&lt;/p&gt;
+
+&lt;p&gt;How could this be? I fired up an irb session and tried both approaches manually. Sure enough, our original approach was working as expected, and the Array.new constructor was not. I decided it was time to do some reading.&lt;/p&gt;
+
+&lt;p&gt;Luckily, the answer was easily accessible via &lt;a href=&quot;http://www.ruby-doc.org/core-2.1.3/Array.html&quot;&gt;the Ruby documentation&lt;/a&gt;. It turns out that the Array.new constructor (without a block) points every element that receives the default value at the &lt;em&gt;same&lt;/em&gt; value. When our program later wanted to iterate through the array to give each element a color, it was adding a new color to the same value each time. We ended up with an array of 100 subarrays, where each subarray had an identical sequence of 100 colors.&lt;/p&gt;
+
+&lt;p&gt;The takeaway is not, however, just to stick to the literal constructor. The Array.new constructor can work just fine as written above above when you want the default value to point every element that receives it at the same thing (“natively immutable values”). And, if that’s not what you want, you can pass the Array.new constructor a block:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;make_100_spaces&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;Array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;When our code was refactored with the approach above, all of the tests pass.&lt;/p&gt;
+
+&lt;p&gt;So, brief detour, but the refactoring continues onward, equipped with new knowledge on the importance of choosing your constructors wisely.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 26 Sep 2014 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//arrays/2014/09/26/array-constructors.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//arrays/2014/09/26/array-constructors.html</guid>
+        
+        
+        <category>arrays</category>
         
       </item>
     
@@ -813,64 +861,6 @@
         <pubDate>Sun, 14 Sep 2014 00:00:00 -0500</pubDate>
         <link>http://rmulhol.github.io//tdd/2014/09/14/testing-instance-methods.html</link>
         <guid isPermaLink="true">http://rmulhol.github.io//tdd/2014/09/14/testing-instance-methods.html</guid>
-        
-        
-        <category>tdd</category>
-        
-      </item>
-    
-      <item>
-        <title>Getting Started with Test Driven Development in Ruby</title>
-        <description>&lt;p&gt;One of the things that I’ve been working on lately is getting more proficient at test driven development (TDD). Though I’ve known for awhile that TDD is considered a best practice, in the past I’ve sometimes succumbed to the temptation to try and write a program that does what I want without pausing first to write tests. No mas.&lt;/p&gt;
-
-&lt;p&gt;I’ve decided to invest time in learning TDD for two main reasons: (1) it seems like a pretty fundamental skill. Even if I ultimately move on to some other way of writing maintainable code, I don’t think there’s any chance I’ll regret putting in the time to get some familiarity with TDD at this early point in my learning curve. (2) Tests instill confidence when I start building onto or refactoring my larger programs. Now that I’m getting to a point where I’m producing programs that have more than a few lines of code and multiple features, it’s getting a lot scarrier when I go back and mess with things I already did - what if something breaks? Having tests helps me be rest assured that I’ll be able to isolate and correct errors before they become big problems.&lt;/p&gt;
-
-&lt;p&gt;But even after I became convinced I should start learning TDD, there were still a couple prerequisites I needed to understand to get started. So, in this post, I wanted to lay those out for any other Ruby beginners that are considering testing the TDD waters.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Number 1: The Tools&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;There are a number of tools out there you can use to write tests for Ruby programs. Ruby comes with a testing framework built into its standard library: &lt;a href=&quot;http://ruby-doc.org/stdlib-2.1.2/libdoc/minitest/rdoc/MiniTest.html&quot;&gt;Minitest&lt;/a&gt; (which, as of Ruby 1.9.3 supercedes &lt;a href=&quot;http://www.ruby-doc.org/stdlib-2.1.2/libdoc/test/unit/rdoc/Test/Unit.html&quot;&gt;Test::Unit&lt;/a&gt;), and I’ve heard good things about &lt;a href=&quot;http://cukes.info/&quot;&gt;Cucumber&lt;/a&gt; and &lt;a href=&quot;http://jnicklas.github.io/capybara/&quot;&gt;Capybara&lt;/a&gt;. But the tool that I’ve been focusing on the most is &lt;a href=&quot;http://rspec.info/&quot;&gt;Rspec&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Rspec is great because its code is very readable, running tests is easy, and there’s &lt;a href=&quot;https://pragprog.com/book/achbd/the-rspec-book&quot;&gt;a lot of information&lt;/a&gt; out there to help you get started. My lack of familiarity with other testing frameworks perhaps leaves me open to being accused of manifesting some version of &lt;a href=&quot;http://en.wikipedia.org/wiki/Paul_Graham_(computer_programmer)#Blub&quot;&gt;the blub paradox&lt;/a&gt;, but I’m comfortable saying Rspec is a great place to start for newbies hoping to get started with testing in Ruby.&lt;/p&gt;
-
-&lt;p&gt;Two things you should know, however. First, Rspec uses its own additional syntax (above and beyond what you’ve encountered if you’ve only written programs in Ruby). The first time I looked at a program built with Rspec, I saw all of these “describe” and “context” statements that made no sense to me, and I thought my entire Ruby education to that point had been a failure. It hadn’t; I was just looking at code written with Rspec. Second, Rspec recently &lt;a href=&quot;https://www.relishapp.com/rspec/rspec-expectations/docs/syntax-configuration&quot;&gt;changed some its syntax&lt;/a&gt;. If you’re looking at older files written in Rspec, you’re likely to see a lot of code that looks like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;some method&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;should do what I say&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;some_method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;should&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;what I say&amp;quot;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;But in newer files it’ll look like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;some method&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;should do what I say&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;some_method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;what I say&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;If you write code with the old syntax, you’ll get a deprecation warning. That annoyed me, so I’ve been sticking with the newer stuff. But you definitely want to be able to recognize and understand both.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Number 2: The Process (Red - Green - Refactor)&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;TDD isn’t just about writing tests to double check that your code does what you want and doesn’t break. It’s also a process for building efficient and maintainable code from the outset (test &lt;em&gt;driven&lt;/em&gt; development). Reaping the benefits of that process means following its proper sequence: red, green, refactor.&lt;/p&gt;
-
-&lt;p&gt;Red means writing tests that fail. It’s important to write the test before you write the code that passes the test - and to make sure the test fails - because if you don’t, you don’t know that your tests could even possibly fail (a possibility you definitely want to retain if your tests are to be of any use later).&lt;/p&gt;
-
-&lt;p&gt;Green means writing the minimal amount of code to make the test pass. A passing test confirms that your code does what you want. It is worth emphasizing, though, that you want to write the &lt;em&gt;minimal&lt;/em&gt; amount of code to make your tests pass. Getting a test to pass by writing code that carries out more than the objectives specified in your tests installs untested features. Before writing code that does more, write tests that test more.&lt;/p&gt;
-
-&lt;p&gt;Refactor means shaping things up so that your code is more elegant and maintainable. You can do the revisions with confidence since passing tests will confirm that everything is still working.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Final Thoughts&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;After picking up some of the tools and getting familiar with the red-green-refactor process, there’s still definitely a lot of learning and practice to do. But if you get these two things down, then the rest flows a lot more naturally. &lt;/p&gt;
-
-&lt;p&gt;If you’re looking to get some practice in, I would recommend some katas: the prime factors (&lt;a href=&quot;http://butunclebob.com/ArticleS.UncleBob.ThePrimeFactorsKata&quot;&gt;instructions&lt;/a&gt; and &lt;a href=&quot;http://vimeo.com/7762511&quot;&gt;video&lt;/a&gt;) and bowling game (&lt;a href=&quot;http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata&quot;&gt;instructions&lt;/a&gt; and &lt;a href=&quot;https://www.youtube.com/watch?v=wrr16PdgHPM&quot;&gt;video&lt;/a&gt;) katas are two of my personal favorites, but I’m sure there’s lot of other great ones you could track down as well.&lt;/p&gt;
-
-</description>
-        <pubDate>Sat, 13 Sep 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//tdd/2014/09/13/getting-started-with-tdd.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//tdd/2014/09/13/getting-started-with-tdd.html</guid>
         
         
         <category>tdd</category>

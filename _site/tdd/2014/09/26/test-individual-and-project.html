@@ -128,7 +128,7 @@
 
 <p>One thing that jumped out at me during this process was a suggested use of the spec_helper.rb file.</p>
 
-<p>Basically, the idea was to refer to all of the files in the lib directory in the spec_helper, and then to require only the spec_helper in every spec. Though I felt some apprehension at the idea that every individual spec would require every file in the lib directory, I was desperate.</p>
+<p>Basically, the idea was to <code>require_relative</code> all of the files in the lib directory in my spec_helper, and then to require only the spec_helper in every spec. Though I felt some apprehension at the idea that every individual spec would require every file in the lib directory, I was desperate.</p>
 
 <p>And it worked! Now I could test the whole project (<code>rspec spec</code> in the project directory) and individual files (<code>rspec addition_spec.rb</code> in the spec directory), though the tests on individual files weren’t outputting the normal colors I was used to (red output for failures, green output for passing). No matter, I thought.</p>
 
@@ -140,11 +140,11 @@
 
 <p>You have <em>got</em> to be kidding me.</p>
 
-<p>Duh! The way to run individual tests is the *stay* in the project directory and *direct* rspec to your intended spec, like so:</p>
+<p>Duh! The way to run individual tests is to *stay* in the project directory and *direct* rspec to your intended spec, like so:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">rspec</span> <span class="n">spec</span><span class="o">/</span><span class="n">addition_spec</span><span class="o">.</span><span class="n">rb</span></code></pre></div>
 
-<p>Now I can test individual files, and I get the colored syntax I’m expecting. And, of course, I can still test the whole project.</p>
+<p>Now I can test individual files, and I get the colored syntax I’m expecting. And, of course, I can still test the whole project. Bonus: no need to use a spec_helper.</p>
 
 <p>So, that took too long, but I learned how to keep my clean ‘require’ calls, test individual files, also test whole projects, <em>and</em> keep the nice syntax coloration that lets me know whether I’m in the red or green stage of red-green-refactor.</p>
 
