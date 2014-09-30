@@ -7,9 +7,9 @@ categories: arrays
 
 One of the projects a friend and I have been pairing on lately is a [Candyland][candyland] game. The game itself is pretty straightforward; it's meant to be accessible for small children and there's literally no strategy involved. However, coding out a version of the game is more challenging - it's been a very pleasant but also intellectually stimulating experience.
 
-To get started with our the board, we put together an array of arrays. The board (itself an array) contains 100 arrays (one for every space on the board). The spaces are later passed colors and other markings; all pink spaces, for example, get a candycane or gumdrop added in, while five non-pink spaces are labeled sticky, indicating that you lose a turn if you land on them.
+To get started, we have been working on setting up our board. We need to be able to store a fixed sequence of 100 spaces, where each space has a color and some spaces have other markings as well (e.g. all pink spaces are also marked with either a candycane or a gumdrop, five non-pink spaces are labeled as 'sticky' to indicate that you lose a turn if you land on them, etc.)
 
-To get started, we create an array of 100 empty arrays. We generated it with the literal constructor:
+We decided to tackle this task with an array, and our first step was to create a new array that itself contained 100 empty arrays. We generated it with the literal constructor:
 
 {% highlight ruby %}
 def make_100_spaces

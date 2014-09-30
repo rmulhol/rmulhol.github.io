@@ -6,9 +6,49 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 26 Sep 2014 20:42:44 -0500</pubDate>
-    <lastBuildDate>Fri, 26 Sep 2014 20:42:44 -0500</lastBuildDate>
+    <pubDate>Tue, 30 Sep 2014 10:18:34 -0500</pubDate>
+    <lastBuildDate>Tue, 30 Sep 2014 10:18:34 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Checking A Negative: Using the Logical NOT Operator</title>
+        <description>&lt;p&gt;One of the tools that Ruby offers for evaluating objects is the logical NOT operator (the exclamation point, as in &lt;code&gt;x != y&lt;/code&gt;). While the exclamation point is also used in other contexts to indicate that a method modifies the object it’s called on in place (e.g. &lt;code&gt;gets.chomp!&lt;/code&gt;), the focus of this post is on the use of the exclamation point as a tool for comparison.&lt;/p&gt;
+
+&lt;p&gt;Ruby offers &lt;a href=&quot;http://www.tutorialspoint.com/ruby/ruby_operators.htm&quot;&gt;numerous operators&lt;/a&gt; for accomplishing all sorts of tasks, logical comparison being just one of them. Learning how and when to use these operators can be challenging at first (don’t forget: &lt;code&gt;=&lt;/code&gt; is for assignment, but you must use &lt;code&gt;==&lt;/code&gt; for comparison!), but it quickly becomes second nature. &lt;/p&gt;
+
+&lt;p&gt;As you get more familiar, the logical operators can be especially helpful. Say you want to take one array and return a new array that excludes all of a given element. You could easily do so like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;my_array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element_to_exclude&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Run the code, and an array containing only the elements that do not equal the element you want to exclude will be returned.&lt;/p&gt;
+
+&lt;p&gt;So that’s great. But wouldn’t it be really useful if you could use the logical NOT operator for things other than equivalence? Say, for example, that you want to remove all elements in an array that do not include a given feature. For the inverse, you would obviously write:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;my_array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;feature&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;But to actually check that a feature is not included, this doesn’t work:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;my_array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.!&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;feature_to_exclude&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;So is it hopeless? Does the absence of a &lt;code&gt;.does_not_include?&lt;/code&gt; method doom us?&lt;/p&gt;
+
+&lt;p&gt;Not at all. You &lt;em&gt;can&lt;/em&gt; use the logical NOT operator for this sort of comparison, but its placement differs from how it’s used in the &lt;code&gt;!=&lt;/code&gt; comparison. To check that every element in an array does not include something, you simply write:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;my_array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;feature_to_exclude&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;By placing the logical NOT operator before the check for inclusion, you’re basically saying “I only want to keep elements where it is NOT true that the element includes the feature I want to exclude.” In this context, it makes sense that the logical NOT operator comes before the whole operation. You’re not exactly running a method that checks that something is not included; you’re running the method that checks that something &lt;em&gt;is&lt;/em&gt; included but &lt;em&gt;also&lt;/em&gt; saying you do NOT want those things.&lt;/p&gt;
+
+&lt;p&gt;So, a fairly minor tidbit, but one that opens up even greater utility for the ever useful logical NOT operator.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 30 Sep 2014 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//operators/2014/09/30/logical-not-operator.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//operators/2014/09/30/logical-not-operator.html</guid>
+        
+        
+        <category>operators</category>
+        
+      </item>
     
       <item>
         <title>Working with Rspec: Testing Both Individual Files and Complete Projects</title>
@@ -82,7 +122,7 @@
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;rspec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addition_spec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rb&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Now I can test individual files, and I get the colored syntax I’m expecting. And, of course, I can still test the whole project. Bonus: no need to use a spec_helper.&lt;/p&gt;
+&lt;p&gt;Now I can test individual files (even individual lines), and I get the colored syntax I’m expecting. And, of course, I can still test the whole project. Bonus: no need to use a spec_helper.&lt;/p&gt;
 
 &lt;p&gt;So, that took too long, but I learned how to keep my clean ‘require’ calls, test individual files, also test whole projects, &lt;em&gt;and&lt;/em&gt; keep the nice syntax coloration that lets me know whether I’m in the red or green stage of red-green-refactor.&lt;/p&gt;
 
@@ -102,9 +142,9 @@
         <title>Working With Arrays: Choose Your Constuctor Wisely</title>
         <description>&lt;p&gt;One of the projects a friend and I have been pairing on lately is a &lt;a href=&quot;http://en.wikipedia.org/wiki/Candy_Land&quot;&gt;Candyland&lt;/a&gt; game. The game itself is pretty straightforward; it’s meant to be accessible for small children and there’s literally no strategy involved. However, coding out a version of the game is more challenging - it’s been a very pleasant but also intellectually stimulating experience.&lt;/p&gt;
 
-&lt;p&gt;To get started with our the board, we put together an array of arrays. The board (itself an array) contains 100 arrays (one for every space on the board). The spaces are later passed colors and other markings; all pink spaces, for example, get a candycane or gumdrop added in, while five non-pink spaces are labeled sticky, indicating that you lose a turn if you land on them.&lt;/p&gt;
+&lt;p&gt;To get started, we have been working on setting up our board. We need to be able to store a fixed sequence of 100 spaces, where each space has a color and some spaces have other markings as well (e.g. all pink spaces are also marked with either a candycane or a gumdrop, five non-pink spaces are labeled as ‘sticky’ to indicate that you lose a turn if you land on them, etc.)&lt;/p&gt;
 
-&lt;p&gt;To get started, we create an array of 100 empty arrays. We generated it with the literal constructor:&lt;/p&gt;
+&lt;p&gt;We decided to tackle this task with an array, and our first step was to create a new array that itself contained 100 empty arrays. We generated it with the literal constructor:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;make_100_spaces&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;new_board&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt;
@@ -773,97 +813,6 @@
         
         
         <category>arrays</category>
-        
-      </item>
-    
-      <item>
-        <title>Writing Tests: Moving from Methods to Classes</title>
-        <description>&lt;p&gt;Once I decided to &lt;a href=&quot;/tdd/2014/09/13/getting-started-with-tdd.html&quot;&gt;get started with TDD in Ruby&lt;/a&gt;, I developed a perhaps premature sense of pride in my ability to use TDD to write methods. Following the red-green-refactor model, I would write a test for a method, write the code to make it pass, revise for elegance and maintainability, and then repeat those steps until the method accomplished everything I wanted. But as soon as I got ambitious and started trying TDD with classes, I ran into some trouble: a NameError telling me of some “undefined local variable or method.”&lt;/p&gt;
-
-&lt;p&gt;What was going wrong? Well, as I progressed from files containing single methods to full classes, I was writing tests for &lt;em&gt;instance&lt;/em&gt; methods without initializing an instance of that class upon which I would call those methods in my tests.  &lt;/p&gt;
-
-&lt;p&gt;So, for example, lets say I wanted to write a method that returns “Hello, world!” Simple enough. First, I’d write a test in my project’s spec directory:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;hello_world&amp;#39;&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;hello_world&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;returns &amp;#39;Hello, World!&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hello_world&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Watch it fail. Generate a blank file in my projects lib directory named hello_world.rb. Watch it fail again. Now add some code:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hello_world&lt;/span&gt;
-  &lt;span class=&quot;s2&quot;&gt;&amp;quot;Hello, world!&amp;quot;&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;s2&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Run the tests again. Everything passes. Great!&lt;/p&gt;
-
-&lt;p&gt;But what if I wanted that method to be nested in a class? Well, I’ve already written the tests, so lets add the class and see what happens. Back to the hello_world.rb file:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HelloWorld&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hello_world&lt;/span&gt;
-    &lt;span class=&quot;s2&quot;&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Run the test and disaster ensues:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rspec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spec&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;
-
-&lt;span class=&quot;ss&quot;&gt;Failures&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-
-  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hello_world&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;returns&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Hello, world!&amp;#39;&lt;/span&gt;
-     &lt;span class=&quot;no&quot;&gt;Failure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hello_world&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-     &lt;span class=&quot;ss&quot;&gt;NameError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-       &lt;span class=&quot;n&quot;&gt;undefined&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;variable&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;method&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;hello_world&amp;#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#&amp;lt;RSpec::ExampleGroups::HelloWorld:0x000001011c6ba8&amp;gt;&lt;/span&gt;
-     &lt;span class=&quot;c1&quot;&gt;# ./spec/hello_world_spec.rb:5:in &amp;#39;block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#39;&lt;/span&gt;
-
-&lt;span class=&quot;no&quot;&gt;Finished&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;00071&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;files&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;took&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15835&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;seconds&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;example&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;failure&lt;/span&gt;
-
-&lt;span class=&quot;no&quot;&gt;Failed&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;examples&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;rspec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;/spec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hello_world_spec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# hello_world returns &amp;#39;Hello, world!&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;How can this be? I haven’t changed the method!&lt;/p&gt;
-
-&lt;p&gt;Well, now that I’ve nested my (instance) method inside of a class, the test needs to initialize an instance of that class upon which it can call my method. Changing the test like this solves our problem:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;hello_world&amp;#39;&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;hello_world&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;returns &amp;#39;Hello, World!&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;my_instance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;HelloWorld&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my_instance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hello_world&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;So, altogether, not too complicated. In order to test an instance method, your tests need to initialize an instance that can call that method. &lt;/p&gt;
-
-&lt;p&gt;Bonus side note: if you’re testing multiple instance methods, you can DRY up your code by initializing your instance just once:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;hello_world&amp;#39;&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;hello_world&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;let&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:my_instance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;described_class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;returns &amp;#39;Hello, World!&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my_instance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hello_world&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Hello, world!&amp;quot;&amp;quot;)&lt;/span&gt;
-&lt;span class=&quot;s2&quot;&gt;  end&lt;/span&gt;
-&lt;span class=&quot;s2&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Though, I must advise that you proceed with caution, as I’ve heard that relying on “let” &lt;a href=&quot;http://robots.thoughtbot.com/lets-not&quot;&gt;isn’t necessarily a best practice&lt;/a&gt;.&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 14 Sep 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//tdd/2014/09/14/testing-instance-methods.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//tdd/2014/09/14/testing-instance-methods.html</guid>
-        
-        
-        <category>tdd</category>
         
       </item>
     

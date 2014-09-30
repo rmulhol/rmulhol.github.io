@@ -83,7 +83,7 @@ Duh! The way to run individual tests is to \*stay\* in the project directory and
 rspec spec/addition_spec.rb
 {% endhighlight %} 
 
-Now I can test individual files, and I get the colored syntax I'm expecting. And, of course, I can still test the whole project. Bonus: no need to use a spec_helper.
+Now I can test individual files (even individual lines), and I get the colored syntax I'm expecting. And, of course, I can still test the whole project. Bonus: no need to use a spec_helper.
 
 So, that took too long, but I learned how to keep my clean 'require' calls, test individual files, also test whole projects, *and* keep the nice syntax coloration that lets me know whether I'm in the red or green stage of red-green-refactor.
 
