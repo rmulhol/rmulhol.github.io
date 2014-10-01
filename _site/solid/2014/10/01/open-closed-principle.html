@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Checking A Negative: Using the Logical NOT Operator (!)</title>
+    <title>You Down With OCP? Implementing the Open/Closed Principle</title>
     <meta name="description" content="I'm learning Ruby and sharing insights along the way.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//operators/2014/09/30/logical-not-operator.html">
+    <link rel="canonical" href="http://rmulhol.github.io//solid/2014/10/01/open-closed-principle.html">
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -69,38 +69,40 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Checking A Negative: Using the Logical NOT Operator (!)</h1>
-    <p class="post-meta">Sep 30, 2014</p>
+    <h1 class="post-title">You Down With OCP? Implementing the Open/Closed Principle</h1>
+    <p class="post-meta">Oct 1, 2014</p>
   </header>
 
   <article class="post-content">
-    <p>One of the tools that Ruby offers for evaluating objects is the logical NOT operator (the exclamation point, as in <code>x != y</code>). While the exclamation point is also used in other contexts to indicate that a method modifies the object it’s called on in place (e.g. <code>gets.chomp!</code>), the focus of this post is on the use of the exclamation point as a tool for comparison.</p>
+    <p>Today, I had the privilege of sitting in on a lecture delivered by a more senior colleague that discussed the SOLID principles of object-oriented programming and design (<strong>S</strong>ingle responsibility, <strong>O</strong>pen/closed, <strong>L</strong>iskov substitution, <strong>I</strong>nterface segregation, and <strong>D</strong>ependency inversion). Though the talk touched on several features of SOLID , one of the tidbits I found most helpful was the discussion of the open/closed principle. </p>
 
-<p>Ruby offers <a href="http://www.tutorialspoint.com/ruby/ruby_operators.htm">numerous operators</a> for accomplishing all sorts of tasks, logical comparison being just one of them. Learning how and when to use these operators can be challenging at first (don’t forget: <code>=</code> is for assignment, but you must use <code>==</code> for comparison!), but it quickly becomes second nature. </p>
+<p>Entering the talk, I knew what this principle denotes: software modules should be <em>open</em> for extension but <em>closed</em> for modification. I’d even credit myself with having moved from initially bewildered (I’m supposed to be able to add stuff without changing stuff? Isn’t addition a form of change??) to tentatively self-assured (OK, I should be able to add <em>new</em> stuff without having to change <em>old</em> stuff) in my dealings with it. Still, being able to listen to someone who was intent on clarifying the concept was supremely helpful.</p>
 
-<p>As you get more familiar, the logical operators can be especially helpful. Say you want to take one array and return a new array that excludes all of a given element. You could easily do so like this:</p>
+<p>For me, the most illuminating takeaway was that implementing the OCP has a lot to do with dependency inversion. One of the ways that you make sure an object is closed for modification is by assuring that it can interact with new objects without having to know a bunch of details about the particularities of those additions. Instead of making an object that responds to other objects based on their identity, have it expect those other objects to be able to deal with it.</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span> <span class="o">!=</span> <span class="n">element_to_exclude</span> <span class="p">}</span></code></pre></div>
+<p>An example from the talk — say I’m creating a game that includes both human and computer players. One way I could deal with that is like this:</p>
 
-<p>Run the code, and an array containing only the elements that do not equal the element you want to exclude will be returned.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">next_move</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">is_a?</span> <span class="no">Human</span>
+    <span class="c1"># do this</span>
+  <span class="k">elsif</span> <span class="n">player</span><span class="o">.</span><span class="n">is_a?</span> <span class="no">Computer</span>
+    <span class="c1"># do that</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
 
-<p>So that’s great. But wouldn’t it be really useful if you could use the logical NOT operator for things other than equivalence? Say, for example, that you want to remove all elements in an array that do not include a given feature. For the inverse, you would obviously write:</p>
+<p>That seems like it’ll work fine. But what if I want to add a new type of player (say I want to have several classes of computer players that operate at varying degrees of difficulty, for example)? To make that addition, I’m going to need to add a new <code>elsif</code> statement for the new player(s). And while that change might not seem like that big of a deal right here, imagine if I’ve structured multiple methods - or worse, multiple classes - with this pattern. One addition is going to force changes all over the place.</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span><span class="o">.</span><span class="n">include?</span> <span class="n">feature</span> <span class="p">}</span></code></pre></div>
+<p>If I invert the dependency, and expect all of the different varieties of players to respond to a single method (using what Sandi Metz refers to as ‘duck typing’), then I can turn abstraction to my advantage:</p>
 
-<p>But to actually check that a feature is not included, this doesn’t work:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">next_move</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+  <span class="n">player</span><span class="o">.</span><span class="n">deliver_next_move</span>
+<span class="k">end</span></code></pre></div>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span><span class="o">.!</span><span class="kp">include</span><span class="p">?</span> <span class="n">feature_to_exclude</span> <span class="p">}</span></code></pre></div>
+<p>Now I trust each player to implement a <code>deliver_next_move</code> method, and my original object will work with any added class that does so. I’ll be able to use the new additions without modifying the code I already have. Hence, open for extension, closed for modification.</p>
 
-<p>So is it hopeless? Does the absence of a <code>.does_not_include?</code> method doom us?</p>
+<p>I still have a lot to learn (what’s the difference between the O and the D in SOLID? Is one <a href="http://tech.michaelgroner.com/2009/01/29/openclose-principle-and-dependency-inversion-principle-ndash-two-sides-same-coin/">just a way of implementing the other</a>?), but I’m excited to continue pursuing that knowledge after the talk today. Regardless of how long it takes to figure out the finer details about each of these concepts, it’s clear that what bits I do learn will help me write better and more maintainable code.</p>
 
-<p>Not at all. You <em>can</em> use the logical NOT operator for this sort of comparison, but its placement differs from how it’s used in the <code>!=</code> comparison. To check that every element in an array does not include something, you simply write:</p>
-
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="o">!</span><span class="n">element</span><span class="o">.</span><span class="n">include?</span> <span class="n">feature_to_exclude</span> <span class="p">}</span></code></pre></div>
-
-<p>By placing the logical NOT operator before the check for inclusion, you’re basically saying “I only want to keep elements where it is NOT true that the element includes the feature I want to exclude.” In this context, it makes sense that the logical NOT operator comes before the whole operation. You’re not exactly running a method that checks that something is not included; you’re running the method that checks that something <em>is</em> included but <em>also</em> saying you do NOT want those things.</p>
-
-<p>So, a fairly minor tidbit, but one that opens up even greater utility for the ever useful logical NOT operator.</p>
+<p>If you’re interested in further exploring the topic, I’d recommend checking out <a href="http://blog.8thlight.com/uncle-bob/2014/05/12/TheOpenClosedPrinciple.html">this</a> and <a href="http://www.sandimetz.com/blog/2014/05/28/betting-on-wrong">this</a>.  </p>
 
 
   </article>
