@@ -131,13 +131,15 @@
 
 <p>However, I was still unhappy with some elements of this approach. This may just be germane to errors I was making along the way, but I found that the operations I was performing to make tests pass were resulting in code that wouldn’t actually work as I expected, and I didn’t like that I had to set whatever input I was going to expect when I initialized new instances of the class.</p>
 
-<p>So, I set out to make a mock. This would be an object that I could pass in for my reader and writer not to see that input and output were conforming to expectations, but rather just to see that the appropriate methods were in fact being called. When I initialize my MockIO, I set certain instance variables to false (e.g. <code>@print_was_called</code> or <code>@gets_was_called</code>), and I overwrite the appropriate methods in my mock to toggle those values to true if they are indeed called. When my tests passed, I know that I’m in fact calling the methods I wanted to access, and I can pass in whatever values I like.</p>
+<p>So, I set out to make a mock. This would be an object that I could pass in for my reader and writer not to see that input and output were conforming to expectations, but rather just to see that the appropriate methods were in fact being called. When I initialize my MockIO, <s>I set certain instance variables to false (e.g. `@print_was_called` or `@gets_was_called`), and</s> I overwrite the appropriate methods in my mock to <s>toggle those values to true</s> <em>[edit, see below] return unique identifiers [end edit]</em> if they are indeed called. When my tests passed, I know that I’m in fact calling the methods I wanted to access, and I can pass in whatever values I like.</p>
 
 <p>This approach has the additional benefit of letting me separate out all of the actual text I want to output to the console. I put that stuff a separate class where I have methods that <em>return</em> (rather than <code>puts</code> or <code>print</code>) strings. I can test those methods without using the <code>output</code> matcher, simply expecting returns of those method calls to <code>include("part of the string")</code>. </p>
 
 <p>So, altogether, I have a working test suite where the tests are less brittle and the code operates as expected. </p>
 
 <p>Note: I can tell that there’s a lot left to learn about using mocks in different situations. Some of the resources I’ve found helpful and provactive can be found <a href="http://martinfowler.com/articles/mocksArentStubs.html">here</a>, <a href="http://blog.8thlight.com/uncle-bob/2014/05/14/TheLittleMocker.html">here</a>, <a href="http://www.confreaks.com/videos/659-rubyconf2011-why-you-don-t-get-mock-objects">here</a>, and <a href="http://ngauthier.com/2010/12/everything-that-is-wrong-with-mocking.html">here</a>.</p>
+
+<p><em>[Check out my <a href="/tdd/2014/10/08/revisiting-mocks.html">new post</a> on rolling my own mocks to see more about the implementation details]</em></p>
 
 
   </article>
