@@ -6,9 +6,66 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 08 Oct 2014 13:04:39 -0500</pubDate>
-    <lastBuildDate>Wed, 08 Oct 2014 13:04:39 -0500</lastBuildDate>
+    <pubDate>Thu, 09 Oct 2014 13:09:36 -0500</pubDate>
+    <lastBuildDate>Thu, 09 Oct 2014 13:09:36 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>More on Mocks: Passing in Input</title>
+        <description>&lt;p&gt;In a couple of &lt;a href=&quot;/tdd/2014/10/02/testing-with-mocks.html&quot;&gt;previous&lt;/a&gt; &lt;a href=&quot;/tdd/2014/10/08/revisiting-mocks.html&quot;&gt;posts&lt;/a&gt;, I’ve been documenting my foray into the world of mocks. So far, I’ve been using mocks to verify that outgoing messages get sent without incurring unwanted side effects. To do so, I’ve overridden the methods from my real objects so that their mock versions return a unique identifier. For example, my mockIO looked like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MockIO&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;print was called&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;gets&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;gets was called&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I find this formatting helpful because it does what I want and not more - I test that &lt;code&gt;print&lt;/code&gt; and &lt;code&gt;gets&lt;/code&gt; are called, but I don’t get things printing to the screen and/or prompting for input (as I would with the real versions). As a bonus, the unique identifiers assure me that I’m calling the &lt;em&gt;right&lt;/em&gt; methods; I don’t have to worry about the possibility that my tests are just confirming that &lt;em&gt;a&lt;/em&gt; method was called (i.e. if I set all the methods in my mock to return a boolean, I could get a &lt;code&gt;true&lt;/code&gt; returned even if I called the wrong method).&lt;/p&gt;
+
+&lt;p&gt;Recently, however, I’ve run into a problem: some of the logic of my program relies on taking and using user input. In order to test that, I want to make sure that those methods continue prompting for user input until the get an appropriate response. For example:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_input&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;until&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gets&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Putting aside the numerous refactorings that could make this code better (I’ve put in several responsibilities to clarify the context), the irreducible nature of my problem is that my standard mock is going to break the test. &lt;code&gt;get_input&lt;/code&gt; keeps waiting and waiting for an integer between 0 and 4, but my mock &lt;code&gt;gets&lt;/code&gt; only ever returns “gets was called”.&lt;/p&gt;
+
+&lt;p&gt;So, of course, I could separate out the code following the &lt;code&gt;until&lt;/code&gt; statement and test that, but I’m still going to want some way of verifying that the loop keeps going until it receives valid input (and I’m also going to want that test to eventually &lt;em&gt;provide&lt;/em&gt; valid input, so that the test doesn’t keep waiting indefinitely). &lt;/p&gt;
+
+&lt;p&gt;One way I’ve come up with to do that is to pass in input to my mock. Now the mockIO can look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MockIO&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;vi&quot;&gt;@input&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;gets was called&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&amp;quot;print was called&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;gets&lt;/span&gt;
+    &lt;span class=&quot;vi&quot;&gt;@input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shift&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, when I initialize an instance of my main class in the tests, I can inject in an instance of my mockIO with whatever input I want to execute. For example, if I pass in &lt;code&gt;[&#39;-7&#39;, &#39;13&#39;, &#39;2&#39;]&lt;/code&gt; to my mockIO and run tests on &lt;code&gt;get_input&lt;/code&gt;, I can expect that method to return 2. &lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 09 Oct 2014 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//tdd/2014/10/09/mocks-with-input.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//tdd/2014/10/09/mocks-with-input.html</guid>
+        
+        
+        <category>tdd</category>
+        
+      </item>
     
       <item>
         <title>Working with Rspec: Revisiting Testing With Mocks</title>
@@ -641,48 +698,6 @@
         
         
         <category>class</category>
-        
-      </item>
-    
-      <item>
-        <title>Getting More Efficient at Writing Quality Code: Doing Katas with Vim and Guard</title>
-        <description>&lt;p&gt;Learning to code requires a lot of practice, and one of my favorite ways to practice is by &lt;a href=&quot;http://blog.8thlight.com/micah-martin/2013/05/28/performing-code-katas.html&quot;&gt;completing code katas&lt;/a&gt;. Doing katas helps you learn multiple things at once, since you’re simultaneously writing quality code and developing the muscle memory to do it efficiently.&lt;/p&gt;
-
-&lt;p&gt;My first kata required me to develop a program that would find the &lt;a href=&quot;http://butunclebob.com/ArticleS.UncleBob.ThePrimeFactorsKata&quot;&gt;prime factors&lt;/a&gt; of any integer. Developing the program just once was a learning exercise, since I got to see how following the &lt;a href=&quot;http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd&quot;&gt;three rules of test driven development&lt;/a&gt; yields good design. But the real challenge came when I had to grapple with time constraints; I was assigned to practice until I could complete it in seven minutes.&lt;/p&gt;
-
-&lt;p&gt;In soliciting advice about how to do so (the first run took me thirty minutes), one of the best tips I received was to check out some new tools: vim and guard. Though I initially felt very attached to my text editor and didn’t see much trouble in manually running tests from the terminal, these tools have paid off tremendously - my last run wrapped up in 6 minutes. So, in this post, I want to lay out how I began to develop a familiarity with these tools and what kinds of benefits they’ve provided.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Tool #1: Vim&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;My first encounter with &lt;a href=&quot;http://www.vim.org/&quot;&gt;vim&lt;/a&gt; was not pleasant. After innocently typing ‘vim’ into my terminal, I didn’t even know how to get back out (the answer, by the way, is :q, for ‘quit’). After that, I went back to coding in my text editor until I received a specific recommendation to give vim another try.&lt;/p&gt;
-
-&lt;p&gt;And, luckily, that advice came with a specific pointer: try typing ‘vimtutor’ into the terminal. This takes you into a self-guided tutorial where you deploy most of the basic vim commands and work through a vim program. And, as a bonus, it helps you set up formatting at the end (through the .vimrc file), so that vim begins to look and feel more like your text editor. [Want two space indents for programming in Ruby? &lt;a href=&quot;http://vim.wikia.com/wiki/Indenting_source_code&quot;&gt;No problem&lt;/a&gt;.]&lt;/p&gt;
-
-&lt;p&gt;Beyond just providing another platform for writing code, what really makes vim worth the effort is the way it functionally nullifies the mouse. Once you’re coding in vim, you’re relying pretty much solely on the keyboard to move across and between files. You might not expect it, but this saves a ton of time over the course of writing a program.  &lt;/p&gt;
-
-&lt;p&gt;And the benefits continue to pay off as you learn and practice. Eventually, you stop reaching over to the arrow keys - h, j, k, and l work just fine, and they’re right at your fingertips. You learn the commands for &lt;a href=&quot;http://vim.wikia.com/wiki/Moving_around&quot;&gt;moving around vim files&lt;/a&gt;, and you come to develop an active distaste for anything that requires moving the mouse.&lt;/p&gt;
-
-&lt;p&gt;There are &lt;a href=&quot;https://bentblog.herokuapp.com/entries/77&quot;&gt;numerous&lt;/a&gt; &lt;a href=&quot;https://bentblog.herokuapp.com/entries/78&quot;&gt;tips&lt;/a&gt; out there on how to get started with vim. My central recommendation would just be to give it a try. You may be pleasantly surprised at the dividends it pays.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Tool #2: Guard&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Unlike vim, &lt;a href=&quot;https://github.com/guard/guard&quot;&gt;guard&lt;/a&gt; is a tool that is specifically suited to developing in Ruby (though I imagine there are equivalents in other languages). Its basic purpose is to monitor events in your files as you modify them. For me, its biggest utility has come in automatically running rspec tests. No more switching to another window to run all of my tests; now I see results immediately as I modify files. &lt;/p&gt;
-
-&lt;p&gt;Guard’s maintainers provide &lt;a href=&quot;http://guardgem.org/&quot;&gt;some really helpful tips&lt;/a&gt; for how to get everything up and running, and I’ve seen some helpful intro material from &lt;a href=&quot;http://code.tutsplus.com/tutorials/testing-your-ruby-code-with-guard-rspec-pry--cms-19974&quot;&gt;others&lt;/a&gt; as well. Like vim, it might feel like a bit of a hassle at first, but the payoff is well worth the initial investment. Automating the process of testing has big returns when you’re otherwise pausing to do so manually over the course of a kata, and that effect is magnified when you move on to writing larger programs.&lt;/p&gt;
-
-&lt;p&gt;I do want to mention that getting the most out of guard required me to remove the ‘–warning’ option from my .rspec file. Before I did so, I was getting so many notifications that it was virtually impossible to see how my automatic test runs were turning out.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Recap&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;There are all sorts of skills you can develop to get more efficient at completing katas. Indeed, repetead iterations yield numerous dividends on their own. But if you’re looking to get the most out of the experience, I would highly recommend seeking out all of the tools that are available to you. I’ve found vim and guard to be two really important examples of those tools, and I look forward to learning more.&lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 18 Sep 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//katas/2014/09/18/katas-more-efficient.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//katas/2014/09/18/katas-more-efficient.html</guid>
-        
-        
-        <category>katas</category>
         
       </item>
     
