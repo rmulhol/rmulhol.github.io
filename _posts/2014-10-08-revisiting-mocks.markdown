@@ -2,7 +2,8 @@
 layout: post
 title:  "Working with Rspec: Revisiting Testing With Mocks"
 date:   2014-10-08 
-categories: tdd
+categories: Ruby 
+tags: tdd mocks
 --- 
 
 So you've got most of your project built, tests are passing, and the last task that remains is to piece together all of the public interfaces into a working program. Woohoo! You've come quite a ways! Since you did all of the legwork to get here, it probably feels like  a quick jump to reach that pinnacle that is a working final product. The impulse to spike it - to forego the principles of test-first design in favor of a rapid push to make everything run - may be strong. But you must stick to the path. Veering off now will only reintroduce the complications you've managed to avoid so far by doing things the right way.

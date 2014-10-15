@@ -2,7 +2,8 @@
 layout: post
 title:  "Working with Rspec: Testing Both Individual Files and Complete Projects"
 date:   2014-09-26 
-categories: TDD
+categories: Ruby
+tags: tdd rspec
 ---
 
 In a [previous post][readme_post], I mentioned that it's good to indicate how to run your project's tests (among other things) in your Readme. This makes it easier for others to use your file, and it forces you to reflect on whether or not everything is operating the way you originally intended.

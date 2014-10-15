@@ -2,7 +2,8 @@
 layout: post
 title:  "Getting Started with Test Driven Development in Ruby"
 date:   2014-09-13 
-categories: TDD
+categories: Ruby
+tags: tdd rspec beginning
 ---
 
 One of the things that I've been working on lately is getting more proficient at test driven development (TDD). Though I've known for awhile that TDD is considered a best practice, in the past I've sometimes succumbed to the temptation to try and write a program that does what I want without pausing first to write tests. No mas.

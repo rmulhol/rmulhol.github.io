@@ -2,7 +2,8 @@
 layout: post
 title:  "Writing Tests: Moving from Methods to Classes"
 date:   2014-09-14 
-categories: TDD
+categories: Ruby
+tags: tdd rspec classes
 ---
 
 Once I decided to [get started with TDD in Ruby][get_started], I developed a perhaps premature sense of pride in my ability to use TDD to write methods. Following the red-green-refactor model, I would write a test for a method, write the code to make it pass, revise for elegance and maintainability, and then repeat those steps until the method accomplished everything I wanted. But as soon as I got ambitious and started trying TDD with classes, I ran into some trouble: a NameError telling me of some “undefined local variable or method.”

@@ -2,7 +2,8 @@
 layout: post
 title:  "More on Mocks: Passing in Input"
 date:   2014-10-09 
-categories: tdd
+categories: Ruby 
+tags: tdd mocks
 --- 
 
 In a couple of [previous][using_mocks] [posts][revisiting_mocks], I've been documenting my foray into the world of mocks. So far, I've been using mocks to verify that outgoing messages get sent without incurring unwanted side effects. To do so, I've overridden the methods from my real objects so that their mock versions return a unique identifier. For example, my mockIO looked like this:

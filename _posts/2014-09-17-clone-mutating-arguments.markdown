@@ -2,7 +2,8 @@
 layout: post
 title:  "Clone: How to Stop Arguments from Mutating"
 date:   2014-09-17 
-categories: mutation
+categories: Ruby
+tags: mutation clone
 ---
 
 When you pass arguments to a method, you generally don't want that method to mutate the arguments you've passed in. You want the method to be able to use and evaluate the arguments so that it can return some data, but you don't want those arguments to be changed as a byproduct of that operation. And yet, in some instances, that's precisely what happens.

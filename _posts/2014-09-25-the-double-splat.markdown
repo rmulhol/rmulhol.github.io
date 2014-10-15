@@ -2,7 +2,8 @@
 layout: post
 title:  "The Double Splat: Reduce Argument Order Dependency AND Accept an Indefinite Number of Arguments"
 date:   2014-09-25 
-categories: Dependencies
+categories: Ruby
+tags: dependencies design
 ---
 
 Reading through Sandi Metz's [*Practical Object-Oriented Design in Ruby*][poodr] has been awesome. She offers a bunch of helpful tips, and they're supported by examples that are (deceptively?) easy to understand. I plan to revisit and re-read it several times as I keep on learning.

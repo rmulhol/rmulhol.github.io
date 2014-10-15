@@ -2,7 +2,8 @@
 layout: post
 title:  "Getting Better Feedback: Start with a Readme"
 date:   2014-09-23 
-categories: Readme
+categories: General
+tags: Readme
 ---
 
 The other day, I had an opportunity to get some feedback on one of my projects from a more experienced programmer. I was super excited. I always enjoy a good code review, and I felt like this project had gotten to the point where it could really benefit from a mentor's scrutiny.

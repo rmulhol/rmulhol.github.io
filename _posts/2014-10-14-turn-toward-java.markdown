@@ -3,6 +3,7 @@ layout: post
 title:  "A Turn Toward Java: First Impressions"
 date:   2014-10-14
 categories: Java
+tags: beginning
 --- 
 
 Recently, I started writing code in Java. I certainly haven't finished learning Ruby, but the impulse to stretch out toward other languages is something I could no longer suppress. I'm hoping that working with a 'closer to the metal' object-oriented language will give me some fresh perspective on what I can accomplish, and I'm also looking to get familiar with the process of learning new languages; I suspect that's a skill I'll put to use many times over the next few years.

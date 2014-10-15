@@ -6,15 +6,15 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 14 Oct 2014 17:10:55 -0500</pubDate>
-    <lastBuildDate>Tue, 14 Oct 2014 17:10:55 -0500</lastBuildDate>
+    <pubDate>Wed, 15 Oct 2014 11:13:27 -0500</pubDate>
+    <lastBuildDate>Wed, 15 Oct 2014 11:13:27 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
     
       <item>
         <title>A Turn Toward Java: First Impressions</title>
-        <description>&lt;p&gt;Recently, I’ve started writing code in Java. I certainly haven’t finished learning Ruby, but the impulse to stretch out toward other languages is something I could no longer suppress. I’m hoping that working with a ‘closer to the metal’ object-oriented language will give me fresh perspective on what I can accomplish and how to do it. And I’m also looking to get familiar with the process of learning new languages; I suspect that it’s a skill I’ll put to use many times over the next few years.&lt;/p&gt;
+        <description>&lt;p&gt;Recently, I started writing code in Java. I certainly haven’t finished learning Ruby, but the impulse to stretch out toward other languages is something I could no longer suppress. I’m hoping that working with a ‘closer to the metal’ object-oriented language will give me some fresh perspective on what I can accomplish, and I’m also looking to get familiar with the process of learning new languages; I suspect that’s a skill I’ll put to use many times over the next few years.&lt;/p&gt;
 
-&lt;p&gt;One of the first things that has struck me about Java is its verbosity. In Ruby, the ‘hello world’ program looks like this:&lt;/p&gt;
+&lt;p&gt;One of the first things that struck me about Java is its verbosity. In Ruby, the ‘hello world’ program looks like this:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Hello, world!&amp;#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -28,13 +28,13 @@
 
 &lt;p&gt;While Ruby does a lot of work behind the scenes and lets you accomplish tasks with really elegant and readable code, Java requires a little more legwork. You can’t just execute one command to print “Hello, world!” to the console; you also have to create a class, declare a &lt;code&gt;main&lt;/code&gt; method, use proper opening and closing curly braces, &lt;em&gt;and&lt;/em&gt; be sure to end every statement with a semicolon.&lt;/p&gt;
 
-&lt;p&gt;Another thing that distinguishes Java from Ruby is that it’s a ‘strong static’ language (Ruby is ‘strong dynamic’). What this means is that you must declare types for variables and method returns, and then compile source code into ‘bytecode’ before it can run. While Ruby lets you write code and then immediately run it with the &lt;code&gt;ruby &amp;lt;filename&amp;gt;&lt;/code&gt; command, Java requires you to first enter &lt;code&gt;javac &amp;lt;filename&amp;gt;&lt;/code&gt; (to compile) and then enter &lt;code&gt;java &amp;lt;classname&amp;gt;&lt;/code&gt; (to run). If your source code contains obvious errors, it won’t compile and you can’t run it.&lt;/p&gt;
+&lt;p&gt;Another thing that distinguishes Java from Ruby is that it’s a ‘strong static’ language (Ruby is ‘strong dynamic’). What this means is that you must declare types for variables and method returns, and then compile source code into ‘bytecode’ before it can run. While Ruby lets you write code and then immediately run it with the &lt;code&gt;ruby &amp;lt;filename&amp;gt;&lt;/code&gt; command, Java requires you to first enter &lt;code&gt;javac &amp;lt;filename&amp;gt;&lt;/code&gt; (to compile) and then enter &lt;code&gt;java &amp;lt;classname&amp;gt;&lt;/code&gt; (to run). If your source code contains obvious errors, it won’t compile and (therefore) it won’t run.&lt;/p&gt;
 
 &lt;p&gt;While the above distinctions might make Java sound like more trouble than it’s worth, there are some merits to these features. &lt;/p&gt;
 
 &lt;p&gt;First, all of the verbosity paints a better picture of what’s going on ‘under the hood’. While I’ve encountered some baffling errors in Ruby where the code didn’t do what I expected, it’s hard to even get to those sort of lofty expectations in Java since you’re laying out each step in greater detail.&lt;/p&gt;
 
-&lt;p&gt;Second, the process of compiling is really great for both learning the language and catching errors. While some errors are sure to get through either way, the failed compilations help you to recognize many of them before they impact your code and train you to start writing code the right way (you can only encounter so many compilation errors from failing to include a type or a semicolon before including those things becomes second nature).&lt;/p&gt;
+&lt;p&gt;Second, the process of compiling is really great for both learning the language and catching errors. While some errors are sure to get through either way, the failed compilations help you to recognize many of them before they impact your code. They also train you to start writing code the right way from the outset - you can only encounter so many compilation errors from failing to include a type or a semicolon before including those things becomes second nature.&lt;/p&gt;
 
 &lt;p&gt;Above and beyond the merits of its features, knowing a little bit about Java has certainly yielded some positive dividends for learning about programming more generally. So many of the recommended books I’ve been working through have examples written in Java, and those used to look like Greek to me. Now they’re starting to make more sense, and I’m feeling like previously indecipherable resources are becoming more accessible.&lt;/p&gt;
 
@@ -45,6 +45,8 @@
         <pubDate>Tue, 14 Oct 2014 00:00:00 -0500</pubDate>
         <link>http://rmulhol.github.io//java/2014/10/14/turn-toward-java.html</link>
         <guid isPermaLink="true">http://rmulhol.github.io//java/2014/10/14/turn-toward-java.html</guid>
+        
+        <category>beginning</category>
         
         
         <category>java</category>
@@ -119,17 +121,19 @@
 &lt;p&gt;Though the above examples offer ways to avoid potential errors, the larger takeaway offers more general application. It is: don’t trust your users to do what you expect. It’s good to set up confirmations that guide the user onto the paths you’ve chosen, and to double check that your guidance is being heeded. If you don’t, you’ll be sure to find numerous other instances where users are doing things you don’t expect. And, more than likely, that’ll be causing your program to operate in ways you didn’t expect.&lt;/p&gt;
 </description>
         <pubDate>Sat, 11 Oct 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//io/2014/10/11/problems-with-input.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//io/2014/10/11/problems-with-input.html</guid>
-        
+        <link>http://rmulhol.github.io//ruby/2014/10/11/problems-with-input.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/10/11/problems-with-input.html</guid>
         
         <category>io</category>
+        
+        
+        <category>ruby</category>
         
       </item>
     
       <item>
         <title>More on Mocks: Passing in Input</title>
-        <description>&lt;p&gt;In a couple of &lt;a href=&quot;/tdd/2014/10/02/testing-with-mocks.html&quot;&gt;previous&lt;/a&gt; &lt;a href=&quot;/tdd/2014/10/08/revisiting-mocks.html&quot;&gt;posts&lt;/a&gt;, I’ve been documenting my foray into the world of mocks. So far, I’ve been using mocks to verify that outgoing messages get sent without incurring unwanted side effects. To do so, I’ve overridden the methods from my real objects so that their mock versions return a unique identifier. For example, my mockIO looked like this:&lt;/p&gt;
+        <description>&lt;p&gt;In a couple of &lt;a href=&quot;/ruby/2014/10/02/testing-with-mocks.html&quot;&gt;previous&lt;/a&gt; &lt;a href=&quot;/ruby/2014/10/08/revisiting-mocks.html&quot;&gt;posts&lt;/a&gt;, I’ve been documenting my foray into the world of mocks. So far, I’ve been using mocks to verify that outgoing messages get sent without incurring unwanted side effects. To do so, I’ve overridden the methods from my real objects so that their mock versions return a unique identifier. For example, my mockIO looked like this:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MockIO&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -176,11 +180,15 @@
 
 </description>
         <pubDate>Thu, 09 Oct 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//tdd/2014/10/09/mocks-with-input.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//tdd/2014/10/09/mocks-with-input.html</guid>
-        
+        <link>http://rmulhol.github.io//ruby/2014/10/09/mocks-with-input.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/10/09/mocks-with-input.html</guid>
         
         <category>tdd</category>
+        
+        <category>mocks</category>
+        
+        
+        <category>ruby</category>
         
       </item>
     
@@ -190,7 +198,7 @@
 
 &lt;p&gt;Presuming, then, that you intend to stay on track, how are you to do so? You could migrate over all of the tests for methods from other classes that you’re now introducing into your main class, but that feels pretty suspect (not very DRY, and probably too knowledgeable about what’s going on in the other ‘black boxes’). You could also reserve tests for checking operations that are being introduced for the first time in the main class (e.g. the way that operations are interacting with one another), but that will leave a broad swath of your code untested. There must be a better way.&lt;/p&gt;
 
-&lt;p&gt;One approach that I’ve been working on recently (and &lt;a href=&quot;/tdd/2014/10/02/testing-with-mocks.html&quot;&gt;writing about&lt;/a&gt;) is using mocks. Mocks make it easy to check that your main interface is interacting appropriately with the other classes in your program, without having to know too much about what’s going on inside of them. Using mocks, you can check that outgoing command messages get sent without asking too much about the side effects we encounter when they are.&lt;/p&gt;
+&lt;p&gt;One approach that I’ve been working on recently (and &lt;a href=&quot;/ruby/2014/10/02/testing-with-mocks.html&quot;&gt;writing about&lt;/a&gt;) is using mocks. Mocks make it easy to check that your main interface is interacting appropriately with the other classes in your program, without having to know too much about what’s going on inside of them. Using mocks, you can check that outgoing command messages get sent without asking too much about the side effects we encounter when they are.&lt;/p&gt;
 
 &lt;p&gt;Before proceeding, I should mention two things:&lt;/p&gt;
 
@@ -280,11 +288,15 @@
 
 </description>
         <pubDate>Wed, 08 Oct 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//tdd/2014/10/08/revisiting-mocks.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//tdd/2014/10/08/revisiting-mocks.html</guid>
-        
+        <link>http://rmulhol.github.io//ruby/2014/10/08/revisiting-mocks.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/10/08/revisiting-mocks.html</guid>
         
         <category>tdd</category>
+        
+        <category>mocks</category>
+        
+        
+        <category>ruby</category>
         
       </item>
     
@@ -355,15 +367,21 @@
 
 &lt;p&gt;Note: I can tell that there’s a lot left to learn about using mocks in different situations. Some of the resources I’ve found helpful and provactive can be found &lt;a href=&quot;http://martinfowler.com/articles/mocksArentStubs.html&quot;&gt;here&lt;/a&gt;, &lt;a href=&quot;http://blog.8thlight.com/uncle-bob/2014/05/14/TheLittleMocker.html&quot;&gt;here&lt;/a&gt;, &lt;a href=&quot;http://www.confreaks.com/videos/659-rubyconf2011-why-you-don-t-get-mock-objects&quot;&gt;here&lt;/a&gt;, and &lt;a href=&quot;http://ngauthier.com/2010/12/everything-that-is-wrong-with-mocking.html&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;[Check out my &lt;a href=&quot;/tdd/2014/10/08/revisiting-mocks.html&quot;&gt;new post&lt;/a&gt; on rolling my own mocks to see more about the implementation details]&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;[Check out my &lt;a href=&quot;/ruby/2014/10/08/revisiting-mocks.html&quot;&gt;new post&lt;/a&gt; on rolling my own mocks to see more about the implementation details]&lt;/em&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Thu, 02 Oct 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//tdd/2014/10/02/testing-with-mocks.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//tdd/2014/10/02/testing-with-mocks.html</guid>
-        
+        <link>http://rmulhol.github.io//ruby/2014/10/02/testing-with-mocks.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/10/02/testing-with-mocks.html</guid>
         
         <category>tdd</category>
+        
+        <category>mocks</category>
+        
+        <category>io</category>
+        
+        
+        <category>ruby</category>
         
       </item>
     
@@ -401,11 +419,15 @@
 
 </description>
         <pubDate>Wed, 01 Oct 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//solid/2014/10/01/open-closed-principle.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//solid/2014/10/01/open-closed-principle.html</guid>
+        <link>http://rmulhol.github.io//oop/2014/10/01/open-closed-principle.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//oop/2014/10/01/open-closed-principle.html</guid>
+        
+        <category>SOLID</category>
+        
+        <category>ocp</category>
         
         
-        <category>solid</category>
+        <category>oop</category>
         
       </item>
     
@@ -441,17 +463,19 @@
 
 </description>
         <pubDate>Tue, 30 Sep 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//operators/2014/09/30/logical-not-operator.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//operators/2014/09/30/logical-not-operator.html</guid>
-        
+        <link>http://rmulhol.github.io//ruby/2014/09/30/logical-not-operator.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/09/30/logical-not-operator.html</guid>
         
         <category>operators</category>
+        
+        
+        <category>ruby</category>
         
       </item>
     
       <item>
         <title>Working with Rspec: Testing Both Individual Files and Complete Projects</title>
-        <description>&lt;p&gt;In a &lt;a href=&quot;/readme/2014/09/23/start-with-readme.html&quot;&gt;previous post&lt;/a&gt;, I mentioned that it’s good to indicate how to run your project’s tests (among other things) in your Readme. This makes it easier for others to use your file, and it forces you to reflect on whether or not everything is operating the way you originally intended.&lt;/p&gt;
+        <description>&lt;p&gt;In a &lt;a href=&quot;/general/2014/09/23/start-with-readme.html&quot;&gt;previous post&lt;/a&gt;, I mentioned that it’s good to indicate how to run your project’s tests (among other things) in your Readme. This makes it easier for others to use your file, and it forces you to reflect on whether or not everything is operating the way you originally intended.&lt;/p&gt;
 
 &lt;p&gt;When I did that reflecting for one of my own projects, I was bugged by the fact that I couldn’t test my individual specs; the only way I could run any tests was to run the whole test suite. So, I did some poking around and, ladies and gentleman, I think I’ve found the solution.&lt;/p&gt;
 
@@ -485,7 +509,7 @@
 
 &lt;p&gt;My ‘require’ statement was a little verbose, but the tests were running. I was happy. &lt;/p&gt;
 
-&lt;p&gt;I ran forward with my new knowledge and learned how to &lt;a href=&quot;/tdd/2014/09/14/testing-instance-methods.html&quot;&gt;write tests for instance methods&lt;/a&gt;. &lt;/p&gt;
+&lt;p&gt;I ran forward with my new knowledge and learned how to &lt;a href=&quot;/ruby/2014/09/14/testing-instance-methods.html&quot;&gt;write tests for instance methods&lt;/a&gt;. &lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Step 2: Testing a Whole Project&lt;/strong&gt;&lt;/p&gt;
 
@@ -529,11 +553,15 @@
 
 </description>
         <pubDate>Fri, 26 Sep 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//tdd/2014/09/26/test-individual-and-project.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//tdd/2014/09/26/test-individual-and-project.html</guid>
-        
+        <link>http://rmulhol.github.io//ruby/2014/09/26/test-individual-and-project.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/09/26/test-individual-and-project.html</guid>
         
         <category>tdd</category>
+        
+        <category>rspec</category>
+        
+        
+        <category>ruby</category>
         
       </item>
     
@@ -577,11 +605,13 @@
 
 </description>
         <pubDate>Fri, 26 Sep 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//arrays/2014/09/26/array-constructors.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//arrays/2014/09/26/array-constructors.html</guid>
-        
+        <link>http://rmulhol.github.io//ruby/2014/09/26/array-constructors.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/09/26/array-constructors.html</guid>
         
         <category>arrays</category>
+        
+        
+        <category>ruby</category>
         
       </item>
     
@@ -682,11 +712,15 @@
 
 </description>
         <pubDate>Thu, 25 Sep 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//dependencies/2014/09/25/the-double-splat.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//dependencies/2014/09/25/the-double-splat.html</guid>
-        
+        <link>http://rmulhol.github.io//ruby/2014/09/25/the-double-splat.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/09/25/the-double-splat.html</guid>
         
         <category>dependencies</category>
+        
+        <category>design</category>
+        
+        
+        <category>ruby</category>
         
       </item>
     

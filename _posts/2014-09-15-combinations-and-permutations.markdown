@@ -2,7 +2,8 @@
 layout: post
 title:  "Working With Arrays: Combinations, Permutations, Repeated Combinations, Repeated Permutations"
 date:   2014-09-15 
-categories: Arrays
+categories: Ruby
+tags: arrays combinations permutations
 ---
 
 In [Apprenticeship Patterns][apprenticeship_patterns], Dave Hoover and Ade Oshineye encourage software apprentices to make breakable toys. Building programs for yourself and for fun, they propose, is a great way to grow, since you can gain experience stretching your skill set in a context where mistakes are of little consequence. 

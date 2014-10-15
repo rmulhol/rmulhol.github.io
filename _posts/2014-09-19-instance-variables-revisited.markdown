@@ -2,7 +2,8 @@
 layout: post
 title:  "Initializing Instance Variables: Revisiting Self and Attributes"
 date:   2014-09-19 
-categories: Class
+categories: Ruby
+tags: classes
 ---
 
 In a [previous post][initial_instance_variable_post], I described the process of initializing instance variables with the self.instance_variable naming format. To do so, you have to use an attr_accessor:

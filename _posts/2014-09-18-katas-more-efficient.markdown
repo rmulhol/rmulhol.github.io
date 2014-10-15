@@ -2,7 +2,8 @@
 layout: post
 title:  "Getting More Efficient at Writing Quality Code: Doing Katas with Vim and Guard"
 date:   2014-09-18 
-categories: Katas
+categories: Ruby
+tags: kats gems vim
 ---
 
 Learning to code requires a lot of practice, and one of my favorite ways to practice is by [completing code katas][performing_code_katas]. Doing katas helps you learn multiple things at once, since you're simultaneously writing quality code and developing the muscle memory to do it efficiently.

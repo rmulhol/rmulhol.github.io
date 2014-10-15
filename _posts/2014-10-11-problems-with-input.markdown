@@ -2,7 +2,8 @@
 layout: post
 title:  "Programmer Beware: Potential Problems Getting User Input in Ruby"
 date:   2014-10-11 
-categories: io
+categories: Ruby 
+tags: io
 --- 
 
 Does your program rely on user input? Does it require users to enter an integer? Do you use user input for other calculations in your program? If you've answered yes to any of these questions - or, god forbid, all of them - then there are some things you should be aware of. Your program may not run as you expect. It may crash at times you don't expect.

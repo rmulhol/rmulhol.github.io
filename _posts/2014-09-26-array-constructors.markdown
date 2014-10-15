@@ -2,7 +2,8 @@
 layout: post
 title:  "Working With Arrays: Choose Your Constuctor Wisely"
 date:   2014-09-26 
-categories: arrays
+categories: Ruby
+tags: arrays
 --- 
 
 One of the projects a friend and I have been pairing on lately is a [Candyland][candyland] game. The game itself is pretty straightforward; it's meant to be accessible for small children and there's literally no strategy involved. However, coding out a version of the game is more challenging - it's been a very pleasant but also intellectually stimulating experience.

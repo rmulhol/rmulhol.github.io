@@ -2,7 +2,8 @@
 layout: post
 title:  "You Down With OCP? Implementing the Open/Closed Principle"
 date:   2014-10-01 
-categories: SOLID
+categories: OOP
+tags: SOLID ocp
 --- 
 
 Today, I had the privilege of sitting in on a lecture delivered by a more senior colleague that discussed the SOLID principles of object-oriented programming and design (**S**ingle responsibility, **O**pen/closed, **L**iskov substitution, **I**nterface segregation, and **D**ependency inversion). Though the talk touched on several features of SOLID , one of the tidbits I found most helpful was the discussion of the open/closed principle. 

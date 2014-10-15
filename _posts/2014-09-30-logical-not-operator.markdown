@@ -2,7 +2,8 @@
 layout: post
 title:  "Checking A Negative: Using the Logical NOT Operator (!)"
 date:   2014-09-30 
-categories: operators
+categories: Ruby
+tags: operators
 --- 
 
 One of the tools that Ruby offers for evaluating objects is the logical NOT operator (the exclamation point, as in `x != y`). While the exclamation point is also used in other contexts to indicate that a method modifies the object it's called on in place (e.g. `gets.chomp!`), the focus of this post is on the use of the exclamation point as a tool for comparison.

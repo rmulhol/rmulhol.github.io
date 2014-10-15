@@ -2,7 +2,8 @@
 layout: post
 title:  "Working With Rspec: Testing Input and Output with Mocks"
 date:   2014-10-02 
-categories: tdd
+categories: Ruby 
+tags: tdd mocks io
 --- 
 
 Lately, I've been working on getting more familiar with TDD and Rspec by writing tests first for every method of my programs. Though I've heard some [loud criticisms][tdd_is_dead] of adhering strictly to the test-first design pattern (as well as a [rebuttal][test_first] or [two][response_to_dhh]), I'm mostly interested in giving it a serious try right now so that I can learn all of the techniques and make a more informed judgment about when (not) to test down the line.
