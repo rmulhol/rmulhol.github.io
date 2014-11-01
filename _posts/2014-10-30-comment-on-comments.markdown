@@ -2,8 +2,8 @@
 layout: post
 title:  "Figuring Out Code: A Comment on Comments"
 date:   2014-10-30
-categories: Java
-tags: general
+categories: general
+tags: comments
 --- 
 
 When you begin learning a programming language, one of the first things you come across is how to create comments - blocks of text that explain what surrounding code does but are not processed when the program runs. 
