@@ -6,9 +6,9 @@ categories: general
 tags: variables methods
 --- 
 
-In chapter 2 of [Clean Code][clean_code], Uncle Bob Martin suggests that an important technique for writing quality code is using meaningful names. His rationale is sound. While it might seem like cryptic labels can make code appear more elegant and thus easier to take in, it's likely that those benefits comes at the expense of comprehensibility - as the code grows, it becomes increasingly difficult to understand how all of the various abbreviated identifiers fit together.
+In chapter 2 of [Clean Code][clean_code], Uncle Bob Martin suggests that an important technique for writing quality code is using meaningful names. His rationale is sound. While it might seem like cryptic labels make code more elegant and thus easier to take in, it's likely that those benefits come at the cost of comprehensibility - as the code grows, it becomes increasingly difficult to understand how all of the various abbreviated identifiers fit together.
 
-To operationalize this approach, I've been attempting to use meaningful names while constructing my tic tac toe game. My `getMove()` method, for example, has three parameters: the current state of the board, the move identifier for opponent, and the move identifier for the current player. Instead of writing the method as `getMove(x, y, z)`, it makes sense to label those parameters like so: `getMove(board, opponentMove, myMove)`.
+To make my own code more clean, I've been using meaningful names as I construct my tic tac toe game. My `getMove()` method, for example, has three parameters: the current state of the board, the move identifier for opponent, and the move identifier for the current player. Instead of writing the method as `getMove(x, y, z)`, it makes sense to label those parameters like so: `getMove(board, opponentMove, myMove)`.
 
 Using these names for my parameters allows me to carry out all sorts of evaluations to determine which move is optimal while assuring that those evaluations are unambiguous. I can see whether placing `myMove` in one place on `board` will cause a win (taking it if so), try to block a loss if placing 'opponentMove` somewhere on `board` would cause that and a win is not available, check whether placing either move could cause a fork and take or block it accordingly, etc.
 

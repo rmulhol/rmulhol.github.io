@@ -6,9 +6,110 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 30 Oct 2014 19:28:37 -0500</pubDate>
-    <lastBuildDate>Thu, 30 Oct 2014 19:28:37 -0500</lastBuildDate>
+    <pubDate>Wed, 12 Nov 2014 13:02:26 -0600</pubDate>
+    <lastBuildDate>Wed, 12 Nov 2014 13:02:26 -0600</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Program Like a Debater: Interacting With Clients</title>
+        <description>&lt;p&gt;Before I took up programming, I was a debate coach. Before that, I was a college student studying English and Political Science, but I mostly thought of myself as a debater. Before that, I was a debater in high school. I’ve been involved with &lt;a href=&quot;http://en.wikipedia.org/wiki/Policy_debate&quot;&gt;policy debate&lt;/a&gt; for most of my life (literally: 14/27 years) and, until recently, it’s the main activity by which I’ve defined my work and identity.&lt;/p&gt;
+
+&lt;p&gt;So when a colleague of mine recently asked if my background in debate informs the way I approach programming, the answer was obviously yes. It was just tough to explain exactly how. When you work in one field for over a decade, you pick up skills and habits that implicate how you learn and interact, but that process is largely subconscious. You don’t think, you just do.&lt;/p&gt;
+
+&lt;p&gt;Still, I do have some experience articulating my subconscious habits. Being a debate coach means identifying what helped you and others succeed and then transmitting that knowledge to your students. Being a &lt;em&gt;good&lt;/em&gt; debate coach means identifying what helps you to help others and then re-affirming that to yourself. The knowledge isn’t hidden away, it just requires a little reflection.&lt;/p&gt;
+
+&lt;p&gt;So, after fielding the inquiry, I think it’s time for a little reflection. In this post, and in several others to follow, I want to begin to unpack how my past life in debate informs my current life as a programmer. &lt;/p&gt;
+
+&lt;p&gt;There are a lot of things I could talk about, but to get started I’ll address interacting with clients (or, in my case, interacting with a mentor). Conversations with a client aren’t adversarial in the same way as the exchanges you’d find in a debate, but getting the most out of the exchange often requires you to think like a debater.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 1: Listen&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;One of the things most difficult to communicate to new debaters is that they need to take the time to listen to their opponents. It seems obvious; how can you respond if you don’t have a good idea of what you’re responding to? Still, young debaters are more comfortable waxing poetic about the topics they’ve mastered. Convince the judge they’re an expert on their materials, they think, and the rest will work itself out.&lt;/p&gt;
+
+&lt;p&gt;This makes for some pretty awful debates. In debater parlance, we say that they lack “clash.” The two sides have convinced me they’re each experts on some subset of the topic, but it’s difficult to choose one over the other when there is no central point of contention.&lt;/p&gt;
+
+&lt;p&gt;The mark of a debater’s growth is their traversal down the path marking the inverse relationship between one’s need to prepare and one’s ability to listen. As your listening ability goes up, your need to prepare goes down. Since you can quickly understand and evaluate new materials, you can identify weaknesses and generate counter-arguments with comparatively little preparation.&lt;/p&gt;
+
+&lt;p&gt;The world of programming is a different animal; you’re not trying to expound upon the faults of your clients. But listening is every bit as important. Where you might be tempted to show off all that you can do and channel the workflow toward more of the same, you can usually optimize your output by taking the time to understand what your client is saying and then assuring that those needs are met.&lt;/p&gt;
+
+&lt;p&gt;In my conversations with my mentor, I’ve taken care to soak up every bit of feedback I can extract. While it’s tempting to prove that I’ve addressed previous feedback and demonstrate all that I’ve learned, it’s often more helpful to focus on what I can do better next time. It’s humbling, but also rewarding. Listening is the key to a productive exchange, be it debate or dialogue.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2: Narrow Down Disagreements&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Once young debaters begin to grasp the concept of clash, they have a tendency to take it too far. You say economic collapse would be bad? I say &lt;a href=&quot;http://sdiencyclopedia.wikispaces.com/Dedevelopment+(Dedev)&quot;&gt;economic collapse would be good&lt;/a&gt;! You say that adopting your proposal is necessary to ensure the survival of the human race? I have a &lt;a href=&quot;http://sdiencyclopedia.wikispaces.com/Wipeout&quot;&gt;counterintuitive response to that&lt;/a&gt; as well.&lt;/p&gt;
+
+&lt;p&gt;Young debaters latch onto arguments like these because it lets them fall back into the pattern of not listening without missing out on clash. I don’t have to pay very close attention to what you’re saying if I’m just going to counter that all of the things you think are bad are in fact good. But more mature debaters begin to abandon these arguments.&lt;/p&gt;
+
+&lt;p&gt;The optimal strategy for winning a debate is not to counter every single point leveraged by your opponent, since it’s unlikely that &lt;em&gt;everything&lt;/em&gt; they’ve said is wrong&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;. Instead, it’s best to narrow down the “nexus question” - the central point of contention - as much as possible, and then assure beyond a doubt that you’re on the right side of it. &lt;/p&gt;
+
+&lt;p&gt;In conversations with a client, this means doing everything you can to get on the same page, aligning expectations with deliverables as much as possible, and then picking your spots for disagreement. If I really want to skip a feature or use a different technique, my mentor is much more likely to be amenable if I’ve demonstrated a good faith effort to understand why he wants what he’s asked for and already done most of what he asked. &lt;/p&gt;
+
+&lt;p&gt;Another element of narrowing disagreements is to avoid treating apparently hostile exchanges as truly adversarial. If my client seems unhappy with the work I’ve done and is communicating perceived shortcomings, I have to be careful not to get defensive and reactive. It can be tempting to respond to every single point, but often taking a step back can help to avoid missing the forest for the trees. Find and address the places where there are genuine disagreements, but don’t get bogged down dealing with largely irrelevant sidebars.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 3: Prepare Meticulously&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Participants in policy debate are well known for their preparation. Before &lt;a href=&quot;http://www.nytimes.com/2010/04/18/education/edlife/18debate-t.html?pagewanted=all&amp;amp;_r=0&quot;&gt;the transition to paperless debate&lt;/a&gt;, it was common to see teams carrying around five or six rubbermaid tubs filled with documents students had collected to prepare for every possible argument; now, that information is stored on computers. In either form, students must accumulate and familiarize themselves with vast stockpiles of arguments and evidence.&lt;/p&gt;
+
+&lt;p&gt;I said above that the ability to listen offsets a debater’s need to prepare, but the mark of a truly great debater is their continued commitment to preparation alongside a strong listening ability. Extensive preparation lets you spend more time listening for nuance, since your stock response to the general contours of an opponent’s argument is already at hand.&lt;/p&gt;
+
+&lt;p&gt;Even (perhaps especially) when you’re not dealing with an adversary, preparing for a conversation yields better outcomes. If you know about your client’s objectives and resources, you will be better suited to accomodate their needs. You will enter the conversation ready to get on the same page and get up to speed more quickly.&lt;/p&gt;
+
+&lt;p&gt;Lots of people understand the need to prepare, and of course they do prepare. But participating in debate has taught me the difference between preparing and &lt;em&gt;being prepared&lt;/em&gt;. Glancing at a few documents or running through a practice speech is preparation, but it doesn’t guarantee that you will be prepared. Being prepared means committing the resources at hand to memory, making them second nature.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion: More to Come&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Participating in debate taught me the values of listening well, narrowing disagreements, and preparing meticulously, but it also taught me so much more. While I think that these are the skills most pertinent to interacting with a client, I look forward to expounding further upon what it means to program like a debater in future posts. Stay tuned!&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;As put by Winston Churchill, “The greatest lesson in life is to know that even fools are right sometimes.” &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 12 Nov 2014 00:00:00 -0600</pubDate>
+        <link>http://rmulhol.github.io//general/2014/11/12/debate-client-interact.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//general/2014/11/12/debate-client-interact.html</guid>
+        
+        <category>communication</category>
+        
+        
+        <category>general</category>
+        
+      </item>
+    
+      <item>
+        <title>In the Interest of Transparency: Make Sure Your Meaningful Names Keep Up With Your Code</title>
+        <description>&lt;p&gt;In chapter 2 of &lt;a href=&quot;http://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882&quot;&gt;Clean Code&lt;/a&gt;, Uncle Bob Martin suggests that an important technique for writing quality code is using meaningful names. His rationale is sound. While it might seem like cryptic labels make code more elegant and thus easier to take in, it’s likely that those benefits come at the cost of comprehensibility - as the code grows, it becomes increasingly difficult to understand how all of the various abbreviated identifiers fit together.&lt;/p&gt;
+
+&lt;p&gt;To make my own code more clean, I’ve been using meaningful names as I construct my tic tac toe game. My &lt;code&gt;getMove()&lt;/code&gt; method, for example, has three parameters: the current state of the board, the move identifier for opponent, and the move identifier for the current player. Instead of writing the method as &lt;code&gt;getMove(x, y, z)&lt;/code&gt;, it makes sense to label those parameters like so: &lt;code&gt;getMove(board, opponentMove, myMove)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Using these names for my parameters allows me to carry out all sorts of evaluations to determine which move is optimal while assuring that those evaluations are unambiguous. I can see whether placing &lt;code&gt;myMove&lt;/code&gt; in one place on &lt;code&gt;board&lt;/code&gt; will cause a win (taking it if so), try to block a loss if placing ‘opponentMove&lt;code&gt; somewhere on &lt;/code&gt;board` would cause that and a win is not available, check whether placing either move could cause a fork and take or block it accordingly, etc.&lt;/p&gt;
+
+&lt;p&gt;I proceeded through three AI players writing my method like this: a dumb player that returns random moves, a smart AI player that manually checks for wins, losses, forks, and the middle space, and an abstract AI player using the minimax algorithm to consider, evaluate, and score all possible moves. Everything worked perfectly.&lt;/p&gt;
+
+&lt;p&gt;However, I later added a configuration option. Instead of having the game run in default mode (3x3 board, human vs computer, ‘X’ v ‘O’), I would now allow the user to construct custom versions of the game (variable board sizes, player identities, and move signatures). Things were still working well, with one caveat: the minimax AI player was not functioning properly when it was player 1.&lt;/p&gt;
+
+&lt;p&gt;This problem had me very confused. I spent a number of hours tinkering with my AI player trying to figure out where I had introduced some subtle error into my minimax algorith.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, the error lied elswhere. It turned out that my Runner class, when it was making the call to &lt;code&gt;getMove()&lt;/code&gt;, sent the arguments &lt;code&gt;board, player1Move, player2Move&lt;/code&gt;. Here, I had used meaningful names for my arguments, but they expected to be operating within the game’s default configuration. Once I added the option to customize the game, &lt;code&gt;getMove()&lt;/code&gt; was failing to provide correct moves when the AI player was player 1 because it was always receiving &lt;code&gt;player2Move&lt;/code&gt; as &lt;code&gt;myMove&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;This error is entirely my own, rather than a fault with the practice of using meaningful names. Indeed, the third point in Uncle Bob’s chapter on meaninful names is to avoid disinformation. What I learned, however, is that you must be dilligent with the meaningful names you choose so that the code you write actually expresses your intentions. Over-specifying right now might seem like it makes your names even more meaningful, but it comes at the cost of requiring abstraction when you abstract related features in other parts of your program.&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 01 Nov 2014 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//general/2014/11/01/transparent-meaningful-names.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//general/2014/11/01/transparent-meaningful-names.html</guid>
+        
+        <category>variables</category>
+        
+        <category>methods</category>
+        
+        
+        <category>general</category>
+        
+      </item>
     
       <item>
         <title>Figuring Out Code: A Comment on Comments</title>
@@ -56,13 +157,13 @@
 
 </description>
         <pubDate>Thu, 30 Oct 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//java/2014/10/30/comment-on-comments.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//java/2014/10/30/comment-on-comments.html</guid>
+        <link>http://rmulhol.github.io//general/2014/10/30/comment-on-comments.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//general/2014/10/30/comment-on-comments.html</guid>
         
-        <category>TDD</category>
+        <category>comments</category>
         
         
-        <category>java</category>
+        <category>general</category>
         
       </item>
     
@@ -512,94 +613,6 @@
         <category>mocks</category>
         
         <category>io</category>
-        
-        
-        <category>ruby</category>
-        
-      </item>
-    
-      <item>
-        <title>You Down With OCP? Implementing the Open/Closed Principle</title>
-        <description>&lt;p&gt;Today, I had the privilege of sitting in on a lecture delivered by a more senior colleague that discussed the SOLID principles of object-oriented programming and design (&lt;strong&gt;S&lt;/strong&gt;ingle responsibility, &lt;strong&gt;O&lt;/strong&gt;pen/closed, &lt;strong&gt;L&lt;/strong&gt;iskov substitution, &lt;strong&gt;I&lt;/strong&gt;nterface segregation, and &lt;strong&gt;D&lt;/strong&gt;ependency inversion). Though the talk touched on several features of SOLID , one of the tidbits I found most helpful was the discussion of the open/closed principle. &lt;/p&gt;
-
-&lt;p&gt;Entering the talk, I knew what this principle denotes: software modules should be &lt;em&gt;open&lt;/em&gt; for extension but &lt;em&gt;closed&lt;/em&gt; for modification. I’d even credit myself with having moved from initially bewildered (I’m supposed to be able to add stuff without changing stuff? Isn’t addition a form of change??) to tentatively self-assured (OK, I should be able to add &lt;em&gt;new&lt;/em&gt; stuff without having to change &lt;em&gt;old&lt;/em&gt; stuff) in my dealings with it. Still, being able to listen to someone who was intent on clarifying the concept was supremely helpful.&lt;/p&gt;
-
-&lt;p&gt;For me, the most illuminating takeaway was that implementing the OCP has a lot to do with dependency inversion. One of the ways that you make sure an object is closed for modification is by assuring that it can interact with new objects without having to know a bunch of details about the particularities of those additions. Instead of making an object that responds to other objects based on their identity, have it expect those other objects to be able to deal with it.&lt;/p&gt;
-
-&lt;p&gt;An example from the talk — say I’m creating a game that includes both human and computer players. One way I could deal with that is like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;next_move&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;player&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_a?&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Human&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# do this&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;elsif&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;player&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_a?&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Computer&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# do that&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;That seems like it’ll work fine. But what if I want to add a new type of player (say I want to have several classes of computer players that operate at varying degrees of difficulty, for example)? To make that addition, I’m going to need to add a new &lt;code&gt;elsif&lt;/code&gt; statement for the new player(s). And while that change might not seem like that big of a deal right here, imagine if I’ve structured multiple methods - or worse, multiple classes - with this pattern. One addition is going to force changes all over the place.&lt;/p&gt;
-
-&lt;p&gt;If I invert the dependency, and expect all of the different varieties of players to respond to a single method (using what Sandi Metz refers to as ‘duck typing’), then I can turn abstraction to my advantage:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;next_move&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;player&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;deliver_next_move&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now I trust each player to implement a &lt;code&gt;deliver_next_move&lt;/code&gt; method, and my original object will work with any added class that does so. I’ll be able to use the new additions without modifying the code I already have. Hence, open for extension, closed for modification.&lt;/p&gt;
-
-&lt;p&gt;I’m excited about continuing to play with and learn about these concepts (what’s the difference between the O and the D in SOLID? Is one &lt;a href=&quot;http://tech.michaelgroner.com/2009/01/29/openclose-principle-and-dependency-inversion-principle-ndash-two-sides-same-coin/&quot;&gt;just a way of implementing the other&lt;/a&gt;?), because it’s clear that what bits I do learn will help me write better and more maintainable code.&lt;/p&gt;
-
-&lt;p&gt;If you’re interested in further exploring the topic, I’d recommend checking out &lt;a href=&quot;http://blog.8thlight.com/uncle-bob/2014/05/12/TheOpenClosedPrinciple.html&quot;&gt;this&lt;/a&gt; and &lt;a href=&quot;http://www.sandimetz.com/blog/2014/05/28/betting-on-wrong&quot;&gt;this&lt;/a&gt;.  &lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 01 Oct 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//oop/2014/10/01/open-closed-principle.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//oop/2014/10/01/open-closed-principle.html</guid>
-        
-        <category>SOLID</category>
-        
-        <category>ocp</category>
-        
-        
-        <category>oop</category>
-        
-      </item>
-    
-      <item>
-        <title>Checking A Negative: Using the Logical NOT Operator (!)</title>
-        <description>&lt;p&gt;One of the tools that Ruby offers for evaluating objects is the logical NOT operator (the exclamation point, as in &lt;code&gt;x != y&lt;/code&gt;). While the exclamation point is also used in other contexts to indicate that a method modifies the object it’s called on in place (e.g. &lt;code&gt;gets.chomp!&lt;/code&gt;), the focus of this post is on the use of the exclamation point as a tool for comparison.&lt;/p&gt;
-
-&lt;p&gt;Ruby offers &lt;a href=&quot;http://www.tutorialspoint.com/ruby/ruby_operators.htm&quot;&gt;numerous operators&lt;/a&gt; for accomplishing all sorts of tasks, logical comparison being just one of them. Learning how and when to use these operators can be challenging at first (don’t forget: &lt;code&gt;=&lt;/code&gt; is for assignment, but you must use &lt;code&gt;==&lt;/code&gt; for comparison!), but it quickly becomes second nature. &lt;/p&gt;
-
-&lt;p&gt;As you get more familiar, the logical operators can be especially helpful. Say you want to take one array and return a new array that excludes all of a given element. You could easily do so like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;my_array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element_to_exclude&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Run the code, and an array containing only the elements that do not equal the element you want to exclude will be returned.&lt;/p&gt;
-
-&lt;p&gt;So that’s great. But wouldn’t it be really useful if you could use the logical NOT operator for things other than equivalence? Say, for example, that you want to remove all elements in an array that do not include a given feature. For the inverse, you would obviously write:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;my_array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;feature&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;But to actually check that a feature is not included, this doesn’t work:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;my_array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.!&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;feature_to_exclude&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;So is it hopeless? Does the absence of a &lt;code&gt;.does_not_include?&lt;/code&gt; method doom us?&lt;/p&gt;
-
-&lt;p&gt;Not at all. You &lt;em&gt;can&lt;/em&gt; use the logical NOT operator for this sort of comparison, but its placement differs from how it’s used in the &lt;code&gt;!=&lt;/code&gt; comparison. To check that every element in an array does not include something, you simply write:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;my_array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;include?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;feature_to_exclude&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;By placing the logical NOT operator before the check for inclusion, you’re basically saying “I only want to keep elements where it is NOT true that the element includes the feature I want to exclude.” In this context, it makes sense that the logical NOT operator comes before the whole operation. You’re not exactly running a method that checks that something is not included; you’re running the method that checks that something &lt;em&gt;is&lt;/em&gt; included but &lt;em&gt;also&lt;/em&gt; saying you do NOT want those things.&lt;/p&gt;
-
-&lt;p&gt;So, a fairly minor tidbit, but one that opens up even greater utility for the ever useful logical NOT operator.&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 30 Sep 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//ruby/2014/09/30/logical-not-operator.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/09/30/logical-not-operator.html</guid>
-        
-        <category>operators</category>
         
         
         <category>ruby</category>
