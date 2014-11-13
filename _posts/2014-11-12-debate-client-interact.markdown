@@ -8,9 +8,9 @@ tags: communication
 
 Before I took up programming, I was a debate coach. Before that, I was a college debater. And before that, I was a debater in high school. I’ve been involved with [policy debate][policy] for most of my life (literally: 14/27 years) and, until recently, it’s the main activity by which I’ve defined my work and identity.
 
-So when a colleague of mine asked recently if my background in debate informs the way I approach programming, the answer was obviously yes. It was just tough to explain how exactly. When you work in one field for over a decade, you pick up skills and habits that impact how you learn and interact, but that process is largely subconscious. You don’t think, you just do.
+So when a colleague of mine asked if my background in debate informs the way I approach programming, the answer was obviously yes. It was just tough to explain exactly how. When you work in a field for over a decade, you pick up skills and habits that impact how you learn and interact, but that process is largely subconscious. You don’t think, you just do.
 
-Still, I do have some experience articulating my subconscious habits. Being a debate coach means identifying what helped you succeed and then transmitting that knowledge to your students. Being a *good* debate coach means identifying what helps you to help others and then re-affirming that to yourself. The knowledge isn’t hidden away, it just requires a little reflection.
+Still, I do have some experience articulating what I do. Being a debate coach means identifying what helped you succeed and then transmitting that knowledge to your students. Being a *good* debate coach means identifying what helps you to help others and then re-affirming that to yourself. The knowledge isn’t hidden away, it just requires a little reflection.
 
 So, after fielding the inquiry, I've decided it’s time for a little reflection.
 
