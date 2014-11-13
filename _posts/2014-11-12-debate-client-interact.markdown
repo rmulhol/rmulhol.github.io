@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Program Like a Debater: Client Interaction"
+title:  "Program Like a Debater: Interacting with Clients"
 date:   2014-11-12
 categories: general
 tags: communication

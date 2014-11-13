@@ -6,31 +6,31 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 12 Nov 2014 21:06:50 -0600</pubDate>
-    <lastBuildDate>Wed, 12 Nov 2014 21:06:50 -0600</lastBuildDate>
+    <pubDate>Wed, 12 Nov 2014 23:45:12 -0600</pubDate>
+    <lastBuildDate>Wed, 12 Nov 2014 23:45:12 -0600</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
     
       <item>
-        <title>Program Like a Debater: Interacting With Clients</title>
+        <title>Program Like a Debater: Interacting with Clients</title>
         <description>&lt;p&gt;Before I took up programming, I was a debate coach. Before that, I was a college debater. And before that, I was a debater in high school. I’ve been involved with &lt;a href=&quot;http://en.wikipedia.org/wiki/Policy_debate&quot;&gt;policy debate&lt;/a&gt; for most of my life (literally: 14/27 years) and, until recently, it’s the main activity by which I’ve defined my work and identity.&lt;/p&gt;
 
-&lt;p&gt;So when a colleague of mine asked recently if my background in debate informs the way I approach programming, the answer was obviously yes. It was just tough to explain exactly how. When you work in one field for over a decade, you pick up skills and habits that impact how you learn and interact, but that process is largely subconscious. You don’t think, you just do.&lt;/p&gt;
+&lt;p&gt;So when a colleague of mine asked if my background in debate informs the way I approach programming, the answer was obviously yes. It was just tough to explain exactly how. When you work in a field for over a decade, you pick up skills and habits that impact how you learn and interact, but that process is largely subconscious. You don’t think, you just do.&lt;/p&gt;
 
-&lt;p&gt;Still, I do have some experience articulating my subconscious habits. Being a debate coach means identifying what helped you succeed and then transmitting that knowledge to your students. Being a &lt;em&gt;good&lt;/em&gt; debate coach means identifying what helps you to help others and then re-affirming that to yourself. The knowledge isn’t hidden away, it just requires a little reflection.&lt;/p&gt;
+&lt;p&gt;Still, I do have some experience articulating what I do. Being a debate coach means identifying what helped you succeed and then transmitting that knowledge to your students. Being a &lt;em&gt;good&lt;/em&gt; debate coach means identifying what helps you to help others and then re-affirming that to yourself. The knowledge isn’t hidden away, it just requires a little reflection.&lt;/p&gt;
 
 &lt;p&gt;So, after fielding the inquiry, I’ve decided it’s time for a little reflection.&lt;/p&gt;
 
-&lt;p&gt;To start, I’ll address how my experience with debate informs how I think approach interactions with clients. Conversations with a client aren’t adversarial in the same way as the exchanges you’d find in a debate, but getting the most out of the exchange often requires you to think like a debater.&lt;/p&gt;
+&lt;p&gt;To start, I’ll address how my experience with debate informs how I approach interactions with clients. Conversations with a client aren’t adversarial in the same way as the exchanges you’d find in a debate, but getting the most out of the exchange often requires you to think like a debater.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Step 1: Listen&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;One of the things most difficult to communicate to new debaters is that they need to take the time to listen to their opponents. It seems obvious; how can you respond if you don’t have a good idea of what you’re responding to? Still, young debaters are more comfortable waxing poetic about the topics they’ve mastered than they are with engaging their opponent. They think – if I can convince the judge I’m an expert on my materials, the rest will work itself out.&lt;/p&gt;
+&lt;p&gt;One of the things most difficult to communicate to new debaters is that they need to take the time to listen to their opponents. It seems obvious; how can you respond if you don’t have a good idea of what you’re responding to? Still, young debaters are more comfortable waxing poetic about the topics they’ve mastered than they are with engaging their opponents. They think – if I can convince the judge I’m an expert on my materials, the rest will work itself out.&lt;/p&gt;
 
 &lt;p&gt;This makes for some pretty awful debates. In debater parlance, we say that they lack “clash.” The two sides have convinced me they’re each experts on some subset of the topic, but it’s difficult to choose one over the other when there is no central point of contention.&lt;/p&gt;
 
 &lt;p&gt;I can tell a debater has grown when their ability to listen offsets the time they need to prepare. As their listening ability goes up, they’re able to quickly understand and evaluate new materials, identifying weaknesses and generating counter-arguments with ease.&lt;/p&gt;
 
-&lt;p&gt;The world of programming is a different animal; you’re not trying to expound upon the faults of your clients. But listening is every bit as important. Where you might be tempted to show off all that you can do, you can usually optimize your output by taking the time to understand what your client is saying and addressing their real needs.&lt;/p&gt;
+&lt;p&gt;The world of programming is a different animal; you’re not trying to expound upon the faults of your clients. But listening is every bit as important. While you might be tempted to show off all that you can do, you can usually optimize your output by taking the time to understand what your client is saying and addressing their real needs.&lt;/p&gt;
 
 &lt;p&gt;In my conversations with clients, I’ve taken care to soak up every bit of feedback I can extract. While it’s tempting to prove that I’ve addressed previous feedback and demonstrate all that I’ve learned, it’s often more helpful to focus on what I can do better going forward. It’s humbling, but also rewarding. Listening is the key to a productive exchange, be it debate or dialogue.&lt;/p&gt;
 
@@ -42,7 +42,7 @@
 
 &lt;p&gt;The optimal strategy for winning a debate is not to counter every single point leveraged by your opponent, since it’s unlikely that everything they’ve said is wrong.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; Instead, it’s best to narrow down the “nexus question” - the central point of contention - as much as possible, and then assure beyond a doubt that you’re on the right side of it.&lt;/p&gt;
 
-&lt;p&gt;In conversations with a client, this means doing everything you can to get on the same page, aligning expectations with deliverables as much as possible, and then picking your spots for disagreement. It can be tempting to get defensive and respond to every single piece of feedback, but often taking a step back can help to avoid missing the forest for the trees. Find and address the places where there are genuine disagreements, but don’t get bogged down dealing with largely irrelevant sidebars.&lt;/p&gt;
+&lt;p&gt;In conversations with a client, this means doing everything you can to get on the same page, aligning expectations with deliverables as much as possible, and then picking your spots for disagreement. It can be tempting to get defensive and respond to every single piece of feedback reactively, but often taking a step back and taking a look at the big picture can help you avoid missing the forest for the trees. Find and address the places where there are genuine disagreements, but don’t get bogged down dealing with largely irrelevant sidebars.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Step 3: Prepare Meticulously&lt;/strong&gt;&lt;/p&gt;
 
@@ -54,7 +54,7 @@
 
 &lt;p&gt;Lots of people understand the need to prepare, and of course they do prepare. But participating in debate has taught me the difference between preparing and &lt;em&gt;being prepared&lt;/em&gt;. Glancing at a few documents or running through a practice speech is preparation, but it doesn’t guarantee that you will be prepared. Being prepared means committing the resources at hand to memory and making them second nature.&lt;/p&gt;
 
-&lt;p&gt;You’re not prepared just because you have six rubbermaid tubs filled with documents. You’re prepared when you’re familiar enough with every one of those documents that you know how and when to use each one.&lt;/p&gt;
+&lt;p&gt;You’re not prepared just because you have six rubbermaid tubs filled with documents. You’re prepared when you’re familiar enough with every one of those documents that you know how and when to use each one of them.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Conclusion: More to Come&lt;/strong&gt;&lt;/p&gt;
 
