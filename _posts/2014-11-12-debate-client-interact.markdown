@@ -36,7 +36,7 @@ Young debaters latch onto arguments like these because it lets them fall back in
 
 The optimal strategy for winning a debate is not to counter every single point leveraged by your opponent, since it’s unlikely that everything they’ve said is wrong.[^1] Instead, it’s best to narrow down the “nexus question” - the central point of contention - as much as possible, and then assure beyond a doubt that you’re on the right side of it.
 
-In conversations with a client, this means doing everything you can to get on the same page, aligning expectations with deliverables as much as possible, and then picking your spots for disagreement. It can be tempting to get defensive and respond to every single piece of feedback reactively, but often taking a step back and taking a look at the big picture can help you avoid missing the forest for the trees. Find and address the places where there are genuine disagreements, but don’t get bogged down dealing with largely irrelevant sidebars.
+In conversations with a client, this means doing everything you can to get on the same page, aligning expectations with deliverables as much as possible, and then picking your spots for disagreement. It can be tempting to get defensive and respond to every single piece of feedback reactively, but often taking a step back and looking at the big picture can help you avoid missing the forest for the trees. Find and address the places where there are genuine disagreements, but don’t get bogged down dealing with largely irrelevant sidebars.
 
 **Step 3: Prepare Meticulously**
 

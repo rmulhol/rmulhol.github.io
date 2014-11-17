@@ -6,9 +6,63 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 12 Nov 2014 23:45:12 -0600</pubDate>
-    <lastBuildDate>Wed, 12 Nov 2014 23:45:12 -0600</lastBuildDate>
+    <pubDate>Mon, 17 Nov 2014 16:30:09 -0600</pubDate>
+    <lastBuildDate>Mon, 17 Nov 2014 16:30:09 -0600</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>To Infinity and Beyond: Working through Conway&#39;s Game of Life at Global Day of Coderetreat 2014</title>
+        <description>&lt;p&gt;This past Saturday, I had the opportunity to participate in the &lt;a href=&quot;http://globalday.coderetreat.org/&quot;&gt;Global Day of Coderetreat&lt;/a&gt;. It was the first time I had ever participated in a code retreat, and I had a lot of fun working with new people, operating under a diverse set of constraints, and iteratively re-approaching the same problem from different angles.&lt;/p&gt;
+
+&lt;p&gt;For this event, our challenge was to code &lt;a href=&quot;http://en.wikipedia.org/wiki/Conway&#39;s_Game_of_Life&quot;&gt;Conway’s Game of Life&lt;/a&gt;. I had never worked on this game before, and I found it to be a perfect fit for the event: a larger problem might have been unmanageable and frustrating, but a smaller one could have been too simple and uninteresting.&lt;/p&gt;
+
+&lt;p&gt;What made things really fun was the changing set of constraints. We would spend 45 minutes working with one person to write a version within a particular set of limitations (don’t use conditionals, don’t write methods with more than 3 lines of code, try out &lt;a href=&quot;http://coderetreat.org/facilitating/activities/tdd-as-if-you-meant-it&quot;&gt;TDD as if you meant it&lt;/a&gt;, etc.), then toss out the code, change pairs, and take another shot with a different set of constraints.&lt;/p&gt;
+
+&lt;p&gt;Deleting the code after each session was oddly liberating. I would have expected it to be really frustrating (“I already tackled this task, I want to move onto the next one!”), but in reality, hitting the reset button and starting from the ground up with the accumulated knowledge of what worked and what didn’t yielded better code on each iteration.&lt;/p&gt;
+
+&lt;p&gt;I also appreciated getting a sense for how to work within an infinite two-dimensional field. In the past, when I’ve worked with a grid structured similarly to the one in this game, I’ve made calculations for determining neighboring cells based on the length of the rows and columns. &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# grid of finite width and height:&lt;/span&gt;
+
+ &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;---|---|---&lt;/span&gt;
+ &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;---|---|---&lt;/span&gt;
+ &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This setup is sufficient for me to determine lines. I know that the rows will be sequential sets that begin from the base index and extend as long as the side length ([0, 1, 2], [3, 4, 5], [6, 7, 8]), columns will be cumulative lists that begin at each of the indexes in the first row and add the length of the side ([0, 3, 6], [1, 4, 7], [2, 5, 8]), and diagonals will be cumulative lists that begin at either the first or last index in the first row and then add the length of the side plus 1 or the length of the side minus 1, respectively ([0, 4, 8], [2, 4, 6]).&lt;/p&gt;
+
+&lt;p&gt;With the Conway’s Game of Life, however, using such calculations to assess the neighbors would be to impose finitude on an infinite field. How can we calculate the neighbors for a cell if each row and column stretches out infinitely?&lt;/p&gt;
+
+&lt;p&gt;The answer, I learned, is to work with a &lt;a href=&quot;http://en.wikipedia.org/wiki/Cartesian_coordinate_system&quot;&gt;Cartesian coordinate system&lt;/a&gt;. If we replace some base cell (say, index 4 in the example above) with (0, 0) and work outward from there, we can learn the index of all neighbors simply by toggling the x and y values by one. You can do that pretty easily:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_neighboring_cells&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;increments&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;repeated_permutation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;increments&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;neighbor_row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;neighbor_col&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;neighbor_row&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;neighbor_col&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;neighbor_row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;neighbor_col&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here, we get all repeated permutations of [-1, 0, 1] of length 2 ([[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]), remove [0, 0] (which maps to the index of the cell for which we’re gathering neighbors), and then map those values onto the cell we’ve passed in. The result is an array containing the coordinates for all 8 neighbors:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_neighboring_cells&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Working with coordinates like this isn’t all that tricky, but it’s something you might not think of if you’re continually approaching similar problems in similar ways. As Thanksgiving nears, I’m thankful that I had the opportunity to practice tackling a different problem in different ways at Global Day of Coderetreat 2014.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 17 Nov 2014 00:00:00 -0600</pubDate>
+        <link>http://rmulhol.github.io//general/2014/11/17/coderetreat-infinite-plane.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//general/2014/11/17/coderetreat-infinite-plane.html</guid>
+        
+        <category>coderetreat</category>
+        
+        
+        <category>general</category>
+        
+      </item>
     
       <item>
         <title>Program Like a Debater: Interacting with Clients</title>
@@ -42,7 +96,7 @@
 
 &lt;p&gt;The optimal strategy for winning a debate is not to counter every single point leveraged by your opponent, since it’s unlikely that everything they’ve said is wrong.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; Instead, it’s best to narrow down the “nexus question” - the central point of contention - as much as possible, and then assure beyond a doubt that you’re on the right side of it.&lt;/p&gt;
 
-&lt;p&gt;In conversations with a client, this means doing everything you can to get on the same page, aligning expectations with deliverables as much as possible, and then picking your spots for disagreement. It can be tempting to get defensive and respond to every single piece of feedback reactively, but often taking a step back and taking a look at the big picture can help you avoid missing the forest for the trees. Find and address the places where there are genuine disagreements, but don’t get bogged down dealing with largely irrelevant sidebars.&lt;/p&gt;
+&lt;p&gt;In conversations with a client, this means doing everything you can to get on the same page, aligning expectations with deliverables as much as possible, and then picking your spots for disagreement. It can be tempting to get defensive and respond to every single piece of feedback reactively, but often taking a step back and looking at the big picture can help you avoid missing the forest for the trees. Find and address the places where there are genuine disagreements, but don’t get bogged down dealing with largely irrelevant sidebars.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Step 3: Prepare Meticulously&lt;/strong&gt;&lt;/p&gt;
 
@@ -125,7 +179,7 @@
 
 &lt;p&gt;(1) Comments often don’t get updated as regularly as the source code they explain, so they can begin to actually work against understanding. If a comment says that a block of code does one thing when it’s been upgraded to do something different, that comment can leave you scratching your head wondering how the code that says it does one thing can look like it does something very different (hint: &lt;em&gt;it does&lt;/em&gt;). (Note: You could obviously be dilligent about updating your comments each time you update your code, but this is a sizable burden that many  do not carry throughout the life of a program. If only there were some alternative …)&lt;/p&gt;
 
-&lt;p&gt;(2) There &lt;em&gt;is&lt;/em&gt; a superior alternative. Most of the places where you’d insert a comment, you’d be much better off naming methods and variables in ways that are more transparent. Instead of naming your “Hello, world!” method &lt;code&gt;hw()&lt;/code&gt;, you could name it &lt;code&gt;printHelloWorld()&lt;/code&gt;. When your names leave little ambiguity as to what data or behaviors they contain, there’s little need for explanatory comments &lt;em&gt;and&lt;/em&gt; that lack of ambiguity is more likely to stand the test of time.&lt;/p&gt;
+&lt;p&gt;(2) There &lt;em&gt;is&lt;/em&gt; a superior alternative. Most of the places where you’d insert a comment, you’d be much better off naming methods and variables in ways that are more transparent. Instead of naming your “Hello, world!” method &lt;code&gt;hw()&lt;/code&gt;, you could name it &lt;code&gt;printHelloWorld()&lt;/code&gt;. When your names leave little room for ambiguity, there’s little need for explanatory comments &lt;em&gt;and&lt;/em&gt; that lack of ambiguity is more likely to stand the test of time.&lt;/p&gt;
 
 &lt;p&gt;This seems like an open-and-shut case in favor of the parties who proclaim that we ought to use comments sparingly.&lt;/p&gt;
 
@@ -154,6 +208,8 @@
 &lt;p&gt;You may be above all of this. You may intuitively digest algorithms and output working examples without intermediaries. In that case, please kindly disregard.&lt;/p&gt;
 
 &lt;p&gt;But, if you’re like me, and you find yourself struggling to implement something you understand conceptually and know should work, maybe give comments a try. You don’t need to keep them. You don’t need to tell others you used them. But articulating your thoughts can sometimes help you implement them, and comments helped me do that today.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;[Note: I recently discovered that my personal epiphany described herein is common among programmers and has its own name: &lt;a href=&quot;http://en.wikipedia.org/wiki/Rubber_duck_debugging&quot;&gt;Rubber Duck Debugging&lt;/a&gt;]&lt;/em&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Thu, 30 Oct 2014 00:00:00 -0500</pubDate>
@@ -528,91 +584,6 @@
         <category>tdd</category>
         
         <category>mocks</category>
-        
-        
-        <category>ruby</category>
-        
-      </item>
-    
-      <item>
-        <title>Working With Rspec: Testing Input and Output with Mocks</title>
-        <description>&lt;p&gt;Lately, I’ve been working on getting more familiar with TDD and Rspec by writing tests first for every method of my programs. Though I’ve heard some &lt;a href=&quot;http://david.heinemeierhansson.com/2014/tdd-is-dead-long-live-testing.html&quot;&gt;loud criticisms&lt;/a&gt; of adhering strictly to the test-first design pattern (as well as a &lt;a href=&quot;http://blog.8thlight.com/uncle-bob/2014/05/19/First.html&quot;&gt;rebuttal&lt;/a&gt; or &lt;a href=&quot;http://mikeknep.com/2014/04/23/response-to-dhh.html&quot;&gt;two&lt;/a&gt;), I’m mostly interested in giving it a serious try right now so that I can learn all of the techniques and make a more informed judgment about when (not) to test down the line.&lt;/p&gt;
-
-&lt;p&gt;For the most part, I’ve been applying the standard pattern with which I’m most familiar: &lt;code&gt;expect(some_method).to eq(some_value)&lt;/code&gt;. Making sure my methods behave as I expect, and working through those expectations sequentially, has generally resulted in more elegant code with fewer unnecessary dependencies.&lt;/p&gt;
-
-&lt;p&gt;However, one of the things that I’ve found more tricky is testing input and output. &lt;/p&gt;
-
-&lt;p&gt;At first, I was tripped up by the simple fact that methods which send output to the console always return &lt;code&gt;nil&lt;/code&gt;. How am I supposed to test different instances of output to the console if all of them will &lt;code&gt;eq(nil)&lt;/code&gt;?&lt;/p&gt;
-
-&lt;p&gt;Next, I discovered &lt;a href=&quot;https://www.relishapp.com/rspec/rspec-expectations/docs/built-in-matchers/output-matcher&quot;&gt;the &lt;code&gt;output&lt;/code&gt; matcher&lt;/a&gt;. If I have a method like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;say_hello&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Hello!&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Then I can test it like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;#say_hello&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;says hello&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;say_hello&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Hello!&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_stdout&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;This felt like a glorious solution. Writing tests for all of my output would be a breeze!&lt;/p&gt;
-
-&lt;p&gt;Unfortunately, this approach has some downsides too. &lt;/p&gt;
-
-&lt;p&gt;First of all, it’s a real pain for long strings. I end up with massive tests that are just double checking I’ve correctly copied the exact same text between the spec and lib files - getting very bogged down in the implementation details while verifying very little of my program’s behavior. &lt;/p&gt;
-
-&lt;p&gt;Second, this test is going to fail if I decide to make small, relatively inconsequential changes. Say I’ve written in a typo and want to fix it - now I have to modify my code and my tests. That doesn’t seem like an optimal way of doing things.&lt;/p&gt;
-
-&lt;p&gt;Facing this dilemma, a mentor advised that I separate out what I’m printing to the console from the operations that do the printing. Now I’m using a mock to test that input and output methods are properly being called, and then passing specific strings to those operations. This has made testing both easier and more useful. Here’s how it works:&lt;/p&gt;
-
-&lt;p&gt;I begin with an input/output class. This is the place where specific messages will get sent in order to display in the console. It looks like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;InputOutput&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;attr_reader&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:reader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:writer&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;writer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;vi&quot;&gt;@reader&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reader&lt;/span&gt;
-    &lt;span class=&quot;vi&quot;&gt;@writer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;writer&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_to_stdout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;writer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_input&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;reader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gets&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now I can run this class in my program by passing &lt;code&gt;$stdin&lt;/code&gt; and &lt;code&gt;$stdout&lt;/code&gt; as my arguments for reader and writer, and I can also run tests that don’t depend on those inputs by passing in other arguments.&lt;/p&gt;
-
-&lt;p&gt;At first, I thought I’d test this class by passing in StringIO objects. I had seen that approach &lt;a href=&quot;http://danielirvine.com/blog/2014/05/30/a-better-stringio/&quot;&gt;mentioned&lt;/a&gt; in some &lt;a href=&quot;http://technicalpickles.com/posts/a-pattern-for-using-standard-in-and-out-in-your-ruby-code/&quot;&gt;other posts&lt;/a&gt; while I was reading on the topic, and it seemed like a good place to start. It helped me test that input and output were conforming to what I’d expect given whatever I passed in.&lt;/p&gt;
-
-&lt;p&gt;However, I was still unhappy with some elements of this approach. This may just be germane to errors I was making along the way, but I found that the operations I was performing to make tests pass were resulting in code that wouldn’t actually work as I expected, and I didn’t like that I had to set whatever input I was going to expect when I initialized new instances of the class.&lt;/p&gt;
-
-&lt;p&gt;So, I set out to make a mock. This would be an object that I could pass in for my reader and writer not to see that input and output were conforming to expectations, but rather just to see that the appropriate methods were in fact being called. When I initialize my MockIO, &lt;s&gt;I set certain instance variables to false (e.g. `@print_was_called` or `@gets_was_called`), and&lt;/s&gt; I overwrite the appropriate methods in my mock to &lt;s&gt;toggle those values to true&lt;/s&gt; &lt;em&gt;[edit, see below] return unique identifiers [end edit]&lt;/em&gt; if they are indeed called. When my tests passed, I know that I’m in fact calling the methods I wanted to access, and I can pass in whatever values I like.&lt;/p&gt;
-
-&lt;p&gt;This approach has the additional benefit of letting me separate out all of the actual text I want to output to the console. I put that stuff a separate class where I have methods that &lt;em&gt;return&lt;/em&gt; (rather than &lt;code&gt;puts&lt;/code&gt; or &lt;code&gt;print&lt;/code&gt;) strings. I can test those methods without using the &lt;code&gt;output&lt;/code&gt; matcher, simply expecting returns of those method calls to &lt;code&gt;include(&quot;part of the string&quot;)&lt;/code&gt;. &lt;/p&gt;
-
-&lt;p&gt;So, altogether, I have a working test suite where the tests are less brittle and the code operates as expected. &lt;/p&gt;
-
-&lt;p&gt;Note: I can tell that there’s a lot left to learn about using mocks in different situations. Some of the resources I’ve found helpful and provactive can be found &lt;a href=&quot;http://martinfowler.com/articles/mocksArentStubs.html&quot;&gt;here&lt;/a&gt;, &lt;a href=&quot;http://blog.8thlight.com/uncle-bob/2014/05/14/TheLittleMocker.html&quot;&gt;here&lt;/a&gt;, &lt;a href=&quot;http://www.confreaks.com/videos/659-rubyconf2011-why-you-don-t-get-mock-objects&quot;&gt;here&lt;/a&gt;, and &lt;a href=&quot;http://ngauthier.com/2010/12/everything-that-is-wrong-with-mocking.html&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;[Check out my &lt;a href=&quot;/ruby/2014/10/08/revisiting-mocks.html&quot;&gt;new post&lt;/a&gt; on rolling my own mocks to see more about the implementation details]&lt;/em&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 02 Oct 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//ruby/2014/10/02/testing-with-mocks.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/10/02/testing-with-mocks.html</guid>
-        
-        <category>tdd</category>
-        
-        <category>mocks</category>
-        
-        <category>io</category>
         
         
         <category>ruby</category>

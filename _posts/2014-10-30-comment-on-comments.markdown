@@ -18,7 +18,7 @@ Well, the answer is twofold:
 
 (1) Comments often don't get updated as regularly as the source code they explain, so they can begin to actually work against understanding. If a comment says that a block of code does one thing when it's been upgraded to do something different, that comment can leave you scratching your head wondering how the code that says it does one thing can look like it does something very different (hint: *it does*). (Note: You could obviously be dilligent about updating your comments each time you update your code, but this is a sizable burden that many  do not carry throughout the life of a program. If only there were some alternative ...)
 
-(2) There *is* a superior alternative. Most of the places where you'd insert a comment, you'd be much better off naming methods and variables in ways that are more transparent. Instead of naming your "Hello, world!" method `hw()`, you could name it `printHelloWorld()`. When your names leave little ambiguity as to what data or behaviors they contain, there's little need for explanatory comments *and* that lack of ambiguity is more likely to stand the test of time.
+(2) There *is* a superior alternative. Most of the places where you'd insert a comment, you'd be much better off naming methods and variables in ways that are more transparent. Instead of naming your "Hello, world!" method `hw()`, you could name it `printHelloWorld()`. When your names leave little room for ambiguity, there's little need for explanatory comments *and* that lack of ambiguity is more likely to stand the test of time.
 
 This seems like an open-and-shut case in favor of the parties who proclaim that we ought to use comments sparingly.
 
@@ -48,5 +48,8 @@ You may be above all of this. You may intuitively digest algorithms and output w
 
 But, if you're like me, and you find yourself struggling to implement something you understand conceptually and know should work, maybe give comments a try. You don't need to keep them. You don't need to tell others you used them. But articulating your thoughts can sometimes help you implement them, and comments helped me do that today.
 
+*[Note: I recently discovered that my personal epiphany described herein is common among programmers and has its own name: [Rubber Duck Debugging][rubber_duck]]*
+
 [plea]: http://blog.8thlight.com/dariusz-pasciak/2014/08/13/an-appeal-to-cs-teachers.html
 [minimax]: http://en.wikipedia.org/wiki/Minimax
+[rubber_duck]: http://en.wikipedia.org/wiki/Rubber_duck_debugging
