@@ -6,9 +6,128 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 17 Nov 2014 16:30:09 -0600</pubDate>
-    <lastBuildDate>Mon, 17 Nov 2014 16:30:09 -0600</lastBuildDate>
+    <pubDate>Tue, 30 Dec 2014 17:05:18 -0600</pubDate>
+    <lastBuildDate>Tue, 30 Dec 2014 17:05:18 -0600</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>My Foray into Functional Programming: Getting Started with Erlang</title>
+        <description>&lt;p&gt;One of the things that I’ve been working on lately is wrapping my head around &lt;a href=&quot;http://en.wikipedia.org/wiki/Functional_programming&quot;&gt;functional programming&lt;/a&gt;. Having completed most of my projects so far in Ruby and Java (languages that support the &lt;a href=&quot;http://en.wikipedia.org/wiki/Object-oriented_programming&quot;&gt;object-oriented programming paradigm&lt;/a&gt;), beginning to work with a language that encourages the functional programming style felt like a logical next step. Enter Erlang.&lt;/p&gt;
+
+&lt;p&gt;Erlang is technically an “impure” functional programming language; its methods can have side effects. However, working in Erlang has  introduced me to many of the features that separate functional programming from its object oriented companion. No longer can I reassign variables or tackle problems with my trusty &lt;code&gt;for&lt;/code&gt; loop. Nay, new approaches must now be uncovered.&lt;/p&gt;
+
+&lt;p&gt;So, now that I’ve begun to wrap my head around some of the ways that common problems can be approached using the functional programming style, I wanted to share some of the obstacles I’ve come across along the way as well as how they were overcome. &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Referential Transparency, or: How I Learned to Stop Worrying and Love Single Assignment&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;One of the main things that separates functional from object-oriented programming is immutable data. Once a variable has been assigned a value, that’s it - you can’t change it later.&lt;/p&gt;
+
+&lt;p&gt;This property is rooted in the concept of &lt;a href=&quot;http://en.wikipedia.org/wiki/Referential_transparency_(computer_science)&quot;&gt;referential transparency&lt;/a&gt;; the idea is that when you pass the same argument to the same function, you should always get the same result. Or, &lt;a href=&quot;http://blog.8thlight.com/uncle-bob/2012/12/22/FPBE1-Whats-it-all-about.html&quot;&gt;to quote Uncle Bob&lt;/a&gt;, “it means that you can replace any function call with the value it returns.”&lt;/p&gt;
+
+&lt;p&gt;Variable re-assignment runs counter to refential transparency since the value that a variable references can change. If your function were to rely on a mutable variable, then you could pass in the same argument to the same function and get different return values on each call depending on the current value of that variable.&lt;/p&gt;
+
+&lt;p&gt;Referential transparency sounds nice in theory. It certainly helps align my thinking about programming with the way I thought about functions in math class (high school algebra would have been &lt;em&gt;a lot&lt;/em&gt; more difficult if the same variable in an expression could have had multiple values), but it also introduces a new set of challenges.&lt;/p&gt;
+
+&lt;p&gt;Coming from the world of object-oriented programming, I had grown so used to passing around important values in instance variables and using all sort of loops and iterators to analyze data that operating without variable re-assignment was nigh unthinkable.&lt;/p&gt;
+
+&lt;p&gt;Still, functional programming has been around long enough - and used to do enough - that I knew there had to be an answer, so I kept plugging away. And, as is wholly predictable, it is indeed possible to solve the same problems I had conquered with object-oriented programming, you just have to take a different path to get there.   &lt;/p&gt;
+
+&lt;p&gt;The classic example I’ve run across so far is generating sums. In Java, I could do that like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sumNumbers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Since we can’t use a &lt;code&gt;for&lt;/code&gt; loop that re-assigns &lt;code&gt;i&lt;/code&gt; on each iteration, functional programming languages require us to find a different approach. In Erlang, that’s pretty simple: &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-erlang&quot; data-lang=&quot;erlang&quot;&gt;&lt;span class=&quot;nf&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;Num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nn&quot;&gt;lists&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;lists&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;seq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Well, that’s elegant. I’ve tackled the same problem without immutable data, and it actually made my code shorter.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;So, what’s going on here? Well, my sum function takes an argument, converts that argument into a list of all of the integers from 1 to that argument, and then provides a sum of all of the values in the list. It achieves the same result as my &lt;code&gt;for&lt;/code&gt; loop without iteration or variable reassignment.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Recursion: Did You Mean Recursion?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;While the above solution makes use of Erlang’s built in functions (BIFs) to create and sum the elements of a list, another popular technique for solving this sort of problem in functional programming is to make use of &lt;a href=&quot;http://en.wikipedia.org/wiki/Recursion_%28computer_science%29&quot;&gt;recursion&lt;/a&gt;. In a nutshell, recursion refers to a function that calls itself repeatedly until a base case is reached, at which point a value is returned.&lt;/p&gt;
+
+&lt;p&gt;Recursion isn’t unique to functional programming - I had already used it to make my minimax algorithm for the tic tac toe game I wrote in Java. And yet, recursion makes life a whole lot easier when trying to solve problems in functional programming that would typically, in object-oriented programming, make use of loops and iterators.&lt;/p&gt;
+
+&lt;p&gt;For example, a recursive function written in Erlang to find the sum of all integers up to a given value might look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-erlang&quot; data-lang=&quot;erlang&quot;&gt;&lt;span class=&quot;nf&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;Num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;Num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;Num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here, we make use of &lt;a href=&quot;http://learnyousomeerlang.com/syntax-in-functions&quot;&gt;pattern matching&lt;/a&gt; to declare a function with two clauses. The first clause says, “when the argument passed in is 0, return 0”. The second function clause says, “for any other value, return the sum of the argument with a recursive call to sum where the argument is decremented by 1.”&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; &lt;/p&gt;
+
+&lt;p&gt;With this function declaration, a call to sum(3) would play out like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-erlang&quot; data-lang=&quot;erlang&quot;&gt;&lt;span class=&quot;nf&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; 
+&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The solution works, but, as you can see, it can also take up a lot of memory. Since each recursive call adds a new stack frame to the call stack, there’s a risk that, when generating the sum for a very large number, your stack could get too deep.&lt;/p&gt;
+
+&lt;p&gt;One way to address this problem is to use &lt;a href=&quot;http://en.wikipedia.org/wiki/Tail_call&quot;&gt;tail recursion&lt;/a&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; With tail recursion, you eliminate the need for adding a new stack frame for every call by storing the value up to that point as an argument. For example, we could generate a sum with this function:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-erlang&quot; data-lang=&quot;erlang&quot;&gt;&lt;span class=&quot;nf&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;Num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;Num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;
+
+&lt;span class=&quot;nf&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Acc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Acc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;Num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Acc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;Num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Acc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here, we use pattern matching for a few purposes. If we receive one argument, we call sum with two arguments: the original argument passed in and 0 (which will serve as our accumulator). On subsequent calls, we decrement &lt;code&gt;Num&lt;/code&gt; by one and add the value of &lt;code&gt;Num&lt;/code&gt; to our accumulator (&lt;code&gt;Acc&lt;/code&gt;). Calling sum(3) with this function would play out like this: &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-erlang&quot; data-lang=&quot;erlang&quot;&gt;&lt;span class=&quot;nf&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nf&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Since each call can stand on its own and does not require us to maintain the previous return values up to that point, this solution achieves the same end without creating the same risks to our memory.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion: Just Getting Started&lt;/strong&gt; &lt;/p&gt;
+
+&lt;p&gt;Getting used to immutable data, referential transparency, recursion, and tail-call optimization has made working with Erlang a whole lot easier. I’m no longer at a loss for how to approach problems where I used to reach for variable reassignment, loops, and iterators. But there’s clearly a lot left to learn, and I’m excited to dig deeper. I look forward to posting updates here as I progress with learning the tricks of functional programming.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;This is where some functional programming advocates begin to declare the elegance of functional programming over object-oriented programming. While I’m sure there’s some truth to that in the aggregate, I still appreciate that Ruby comes pretty close: &lt;code&gt;(1..num).to_a.reduce(:+)&lt;/code&gt;. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;This function will not play nicely with negative numbers, though that could be handled with further pattern matching (e.g. &lt;code&gt;sum(Num) when Num &amp;lt; 0 -&amp;gt; io:format(&quot;Can&#39;t sum negative values!~n&quot;, []);&lt;/code&gt;). &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;It should be noted that tail recursion &lt;a href=&quot;http://www.erlang.org/doc/efficiency_guide/myths.html#id59389&quot;&gt;does not necessarily yield better performance&lt;/a&gt; than body recursion, due to optimizations in the Erlang compiler. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Tue, 30 Dec 2014 00:00:00 -0600</pubDate>
+        <link>http://rmulhol.github.io//erlang/2014/12/30/foray-into-functional-erlang.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//erlang/2014/12/30/foray-into-functional-erlang.html</guid>
+        
+        <category>functional</category>
+        
+        
+        <category>erlang</category>
+        
+      </item>
     
       <item>
         <title>To Infinity and Beyond: Working through Conway&#39;s Game of Life at Global Day of Coderetreat 2014</title>
@@ -472,114 +591,6 @@
         <pubDate>Thu, 09 Oct 2014 00:00:00 -0500</pubDate>
         <link>http://rmulhol.github.io//ruby/2014/10/09/mocks-with-input.html</link>
         <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/10/09/mocks-with-input.html</guid>
-        
-        <category>tdd</category>
-        
-        <category>mocks</category>
-        
-        
-        <category>ruby</category>
-        
-      </item>
-    
-      <item>
-        <title>Working with Rspec: Revisiting Testing With Mocks</title>
-        <description>&lt;p&gt;So you’ve got most of your project built, tests are passing, and the last task that remains is to piece together all of the public interfaces into a working program. Woohoo! You’ve come quite a ways! Since you did all of the legwork to get here, it probably feels like  a quick jump to reach that pinnacle that is a working final product. The impulse to spike it - to forego the principles of test-first design in favor of a rapid push to make everything run - may be strong. But you must stick to the path. Veering off now will only reintroduce the complications you’ve managed to avoid so far by doing things the right way.&lt;/p&gt;
-
-&lt;p&gt;Presuming, then, that you intend to stay on track, how are you to do so? You could migrate over all of the tests for methods from other classes that you’re now introducing into your main class, but that feels pretty suspect (not very DRY, and probably too knowledgeable about what’s going on in the other ‘black boxes’). You could also reserve tests for checking operations that are being introduced for the first time in the main class (e.g. the way that operations are interacting with one another), but that will leave a broad swath of your code untested. There must be a better way.&lt;/p&gt;
-
-&lt;p&gt;One approach that I’ve been working on recently (and &lt;a href=&quot;/ruby/2014/10/02/testing-with-mocks.html&quot;&gt;writing about&lt;/a&gt;) is using mocks. Mocks make it easy to check that your main interface is interacting appropriately with the other classes in your program, without having to know too much about what’s going on inside of them. Using mocks, you can check that outgoing command messages get sent without asking too much about the side effects we encounter when they are.&lt;/p&gt;
-
-&lt;p&gt;Before proceeding, I should mention two things:&lt;/p&gt;
-
-&lt;p&gt;(1) I’ve opted to ‘roll my own’ mocks. I know that Rspec and other testing frameworks provide various automated features for constructing test doubles easily and efficiently, but I’ve &lt;a href=&quot;http://blog.8thlight.com/josh-cheek/2011/11/28/three-reasons-to-roll-your-own-mocks.html&quot;&gt;heard&lt;/a&gt; that avoiding those can yield optimal results. Plus, I’m interested in getting a feel for what’s going on beneath the hood before I hop in and start driving the car.&lt;/p&gt;
-
-&lt;p&gt;(2) I’m happily indulging in mocks for now, perhaps too much. Though I’ve encountered some who &lt;a href=&quot;http://ngauthier.com/2010/12/everything-that-is-wrong-with-mocking.html&quot;&gt;claim&lt;/a&gt; that mocks can make tests brittle, and others who &lt;a href=&quot;http://googletesting.blogspot.com/2013/05/testing-on-toilet-dont-overuse-mocks.html&quot;&gt;advise&lt;/a&gt; simply to avoid overusing mocks, I’m using them a lot to aid my learning; using mocks liberally now will make it easier to use them appropriately when I need them down the line.&lt;/p&gt;
-
-&lt;p&gt;So, with that said, how can one write the mocks that let you test that outgoing command messages are sent, and just that?&lt;/p&gt;
-
-&lt;p&gt;At first, I was overwriting methods from my (non-mock) classes so that they would return a boolean. Set an instance variable to &lt;code&gt;false&lt;/code&gt; when the new mock object is initialized, then set it to &lt;code&gt;true&lt;/code&gt; when the appropriate method is called. For example, my MockIO object initially looked like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MockIO&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;attr_reader&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:print_was_called&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initialize&lt;/span&gt;
-    &lt;span class=&quot;vi&quot;&gt;@print_was_called&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;vi&quot;&gt;@print_was_called&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now I can inject my MockIO object in place of my real IO object when I’m testing my main class, and then assure I’m receiving the appropriate boolean after the outgoing command messages are sent. For example, if my main class looked like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Main&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;intialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;vi&quot;&gt;@io&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Then I can test it this test:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;mockio&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;main&amp;#39;&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Main&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;let&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:new_run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;described_class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;MockIO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;#print_message&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;calls print from io&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;printed_message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new_run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-      &lt;span class=&quot;n&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printed_message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;And, there we have it. I’ve now rolled my own mock and I can inject it into my tests to assure that outgoing command messages are being sent without having to do anything more. I don’t have to incur any side effects the commands might have when they’re sent to my real IO, and I don’t have to worry about unexpected outcomes I could see using an automated mocking framework. Cool!&lt;/p&gt;
-
-&lt;p&gt;But, this approach does have some downsides. First of all, I’m going to be intializing a lot of booleans - not a big problem, but something that irks me. Second, and perhaps most importantly, I’m running the risk of verifying that I’ve sent the wrong message. If all of my method calls in the mock object return &lt;code&gt;true&lt;/code&gt;, then a verification that one method has been sent will be indistinguishable from the verification that another method has been sent. I won’t be able to verify that I actually sent the &lt;em&gt;right&lt;/em&gt; method.&lt;/p&gt;
-
-&lt;p&gt;So, I’ve reworked my mocks so that each method returns a unique identifier. Now, instead of returning &lt;code&gt;true&lt;/code&gt;, the &lt;code&gt;print&lt;/code&gt; method returns &lt;code&gt;&quot;print called&quot;&lt;/code&gt;. It looks like this: &lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MockIO&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;s2&quot;&gt;&amp;quot;print called&amp;quot;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;For this MockIO, my test looks like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;mockio&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;main&amp;#39;&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Main&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;let&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:new_run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;described_class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;MockIO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;#print_message&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;calls print from io&amp;quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;printed_message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new_run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-      &lt;span class=&quot;n&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printed_message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;print called&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Everything still works, and I have verification not only that an outgoing command message is being sent, but also that the &lt;em&gt;right&lt;/em&gt; outgoing command message is being sent.&lt;/p&gt;
-
-&lt;p&gt;When I multiply this process for each of the other classes and methods I’m injecting into main, I end up with a nicely tested main class that I’m confident is working properly regardless of what’s going on in the other classes that get injected into it. I don’t have to worry about side effects cluttering up my test suite, and things run more quickly since the various unit tests are isolated from one another.&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 08 Oct 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//ruby/2014/10/08/revisiting-mocks.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/10/08/revisiting-mocks.html</guid>
         
         <category>tdd</category>
         
