@@ -6,9 +6,66 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 30 Dec 2014 17:05:18 -0600</pubDate>
-    <lastBuildDate>Tue, 30 Dec 2014 17:05:18 -0600</lastBuildDate>
+    <pubDate>Wed, 14 Jan 2015 11:19:12 -0600</pubDate>
+    <lastBuildDate>Wed, 14 Jan 2015 11:19:12 -0600</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Learning Data Structures and Algorithms: Implementing Insertion Sort in Java</title>
+        <description>&lt;p&gt;One of the things that I’ve been working on lately is getting more familiar with data structures and algorithms. I’ve had a lot of fun working with different programming languages, styles, and frameworks, but I’ve been itching to develop some of the more foundational knowledge that I would have gotten had I pursued a CS degree in college.&lt;/p&gt;
+
+&lt;p&gt;As a jumping off point, I picked up &lt;a href=&quot;http://www.amazon.com/Introduction-Algorithms-Edition-Thomas-Cormen/dp/0262033844&quot;&gt;Introduction to Algorithms&lt;/a&gt; by Cormen, Leiserson, Rivest, and Stein (CLRS). I’m sure that there are lots of other good places that one could start with to learn about these materials, but this book came &lt;a href=&quot;http://www.forbes.com/sites/quora/2013/07/03/how-do-i-strengthen-my-knowledge-of-data-structures-and-algorithms/&quot;&gt;highly recommended&lt;/a&gt; and I figured it was more important to get started than to find a perfect starting point.&lt;/p&gt;
+
+&lt;p&gt;I’m only a couple chapters in, and I can already see why this book would be considered required reading for someone pursuing a career in software development. The materials are simple enough for the average reader to grasp upon a close read, but challenging enough to keep your interest and stretch your brain.&lt;/p&gt;
+
+&lt;p&gt;One of the first algorithms covered in the book is &lt;a href=&quot;http://en.wikipedia.org/wiki/Insertion_sort&quot;&gt;insertion sort&lt;/a&gt;. A sorting algorithm, insertion sort sequentially examines each element in a list and moves the element it’s looking at into the proper placement among all those that came before. They give the example of a hand of cards: if I’m sorting five cards, I might work through them left to right and move lower cards to the left until the lowest is all the way to the left and the highest is all the way to the right. &lt;/p&gt;
+
+&lt;p&gt;Grokking the algorithm is simple enough; their example makes things really clear. But actually implementing it can be a different matter. Though it’s certainly not (even close to) the most challenging algorithm, you have to know a bit about lists, loops, and iterators, and you have to be able to translate their pseudocode. That’s the subject of this post.&lt;/p&gt;
+
+&lt;p&gt;Their pseudocode for the insertion sort algorithm is as follows:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Alright, simple enough. As the algorithm describes, we’re going through the list, starting with second element, moving it to first if the second is less than the first, and then continuing to shift later elements closer to the beginning until we have a sorted list. Now what if I wanted to implement this pseudocode in Java?&lt;/p&gt;
+
+&lt;p&gt;The first thing to note is that there are no type declarations. We’ll presumably be using this algorithm to sort a list of integers, so we’ll have to note that as we declare variables while translating the pseudocode. Sorting elements of some other type would require some significant changes.&lt;/p&gt;
+
+&lt;p&gt;Second, they’re indexing the second element of the list at index 2 and the first element at index 1. But the indexes for a LinkedList (which I’ll be using) in Java start at 0. This has two consequences: (1) we’ll want to initialize our &lt;code&gt;for&lt;/code&gt; loop at 1 rather than 2, and (2) we’ll want to proceed as long as the index is &lt;em&gt;less than&lt;/em&gt; the length of the list (rather than less than &lt;em&gt;or equal to&lt;/em&gt; the length, which would take us out of bounds).&lt;/p&gt;
+
+&lt;p&gt;Put things together, and an implementation of insertion sort in Java could look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LinkedList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;insertionSort&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LinkedList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;So, much more to learn and many more algorithms with which to get familiar, but that work can now proceed with a proper understanding and way of translating the pseudocode in place.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 14 Jan 2015 00:00:00 -0600</pubDate>
+        <link>http://rmulhol.github.io//java/2015/01/14/java-insertion-sort.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//java/2015/01/14/java-insertion-sort.html</guid>
+        
+        <category>algorithms</category>
+        
+        
+        <category>java</category>
+        
+      </item>
     
       <item>
         <title>My Foray into Functional Programming: Getting Started with Erlang</title>
@@ -344,7 +401,7 @@
     
       <item>
         <title>Conundrums in TDD Land: Improving Elegance vs Reducing Dependencies</title>
-        <description>&lt;p&gt;As I’ve been doing more work with Java, one of the things I’ve focused on is getting my Java TDD abilities up to where they are with Ruby. JUnit is a whole different beast from Rspec, and figuring out how to structure and write test within this framework has been a new and interesting challenge.&lt;/p&gt;
+        <description>&lt;p&gt;As I’ve been doing more work with Java, one of the things I’ve focused on is getting my Java TDD abilities up to where they are with Ruby. JUnit is a whole different beast from Rspec, and figuring out how to structure and write tests within this framework has been a new and interesting challenge.&lt;/p&gt;
 
 &lt;p&gt;One of the things I’ve focused on lately is making sure that my tests for one object don’t depend on other objects. This isn’t by itself a departure from the form of testing I’ve done in Ruby/Rspec - you always want tests of one object to work regardless of changes to other peripheral objects - but figuring out the implementation details has sometimes served to remind me of just how new to this language I still am.&lt;/p&gt;
 
@@ -534,67 +591,6 @@
         <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/10/11/problems-with-input.html</guid>
         
         <category>io</category>
-        
-        
-        <category>ruby</category>
-        
-      </item>
-    
-      <item>
-        <title>More on Mocks: Passing in Input</title>
-        <description>&lt;p&gt;In a couple of &lt;a href=&quot;/ruby/2014/10/02/testing-with-mocks.html&quot;&gt;previous&lt;/a&gt; &lt;a href=&quot;/ruby/2014/10/08/revisiting-mocks.html&quot;&gt;posts&lt;/a&gt;, I’ve been documenting my foray into the world of mocks. So far, I’ve been using mocks to verify that outgoing messages get sent without incurring unwanted side effects. To do so, I’ve overridden the methods from my real objects so that their mock versions return a unique identifier. For example, my mockIO looked like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MockIO&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;s2&quot;&gt;&amp;quot;print was called&amp;quot;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;gets&lt;/span&gt;
-    &lt;span class=&quot;s2&quot;&gt;&amp;quot;gets was called&amp;quot;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;I find this formatting helpful because it does what I want and not more - I test that &lt;code&gt;print&lt;/code&gt; and &lt;code&gt;gets&lt;/code&gt; are called, but I don’t get things printing to the screen and/or prompting for input (as I would with the real versions). As a bonus, the unique identifiers assure me that I’m calling the &lt;em&gt;right&lt;/em&gt; methods; I don’t have to worry about the possibility that my tests are just confirming that &lt;em&gt;a&lt;/em&gt; method was called (i.e. if I set all the methods in my mock to return a boolean, I could get a &lt;code&gt;true&lt;/code&gt; returned even if I called the wrong method).&lt;/p&gt;
-
-&lt;p&gt;Recently, however, I’ve run into a problem: some of the logic of my program relies on taking and using user input. In order to test that, I want to make sure that those methods continue prompting for user input until the get an appropriate response. For example:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_input&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;until&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gets&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Putting aside the numerous refactorings that could make this code better (I’ve put in several responsibilities to clarify the context), the irreducible nature of my problem is that my standard mock is going to break the test. &lt;code&gt;get_input&lt;/code&gt; keeps waiting and waiting for an integer between 0 and 4, but my mock &lt;code&gt;gets&lt;/code&gt; only ever returns “gets was called”.&lt;/p&gt;
-
-&lt;p&gt;So, of course, I could separate out the code following the &lt;code&gt;until&lt;/code&gt; statement and test that, but I’m still going to want some way of verifying that the loop keeps going until it receives valid input (and I’m also going to want that test to eventually &lt;em&gt;provide&lt;/em&gt; valid input, so that the test doesn’t keep waiting indefinitely). &lt;/p&gt;
-
-&lt;p&gt;One way I’ve come up with to do that is to pass in input to my mock. Now the mockIO can look like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MockIO&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;vi&quot;&gt;@input&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;gets was called&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;s2&quot;&gt;&amp;quot;print was called&amp;quot;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;gets&lt;/span&gt;
-    &lt;span class=&quot;vi&quot;&gt;@input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shift&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now, when I initialize an instance of my main class in the tests, I can inject in an instance of my mockIO with whatever input I want to execute. For example, if I pass in &lt;code&gt;[&#39;-7&#39;, &#39;13&#39;, &#39;2&#39;]&lt;/code&gt; to my mockIO and run tests on &lt;code&gt;get_input&lt;/code&gt;, I can expect that method to return 2. &lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 09 Oct 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//ruby/2014/10/09/mocks-with-input.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2014/10/09/mocks-with-input.html</guid>
-        
-        <category>tdd</category>
-        
-        <category>mocks</category>
         
         
         <category>ruby</category>
