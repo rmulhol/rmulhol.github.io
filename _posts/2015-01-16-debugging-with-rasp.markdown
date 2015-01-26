@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Debugging With RASP: Don't Forget to Check Your Work!"
+title:  "Debugging With RASP: Check Your Work!"
 date:   2015-01-16
 categories: Ruby
 tags: rails rasp

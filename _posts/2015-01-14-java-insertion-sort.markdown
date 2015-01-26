@@ -53,6 +53,9 @@ public LinkedList<Integer> insertionSort(LinkedList<Integer> list) {
 
 So, much more to learn and many more algorithms with which to get familiar, but that work can now proceed with a proper understanding and way of translating the pseudocode in place.
 
-[intro_algorithms]: http://www.amazon.com/Introduction-Algorithms-Edition-Thomas-Cormen/dp/0262033844
+**[*UPDATE*: See [my newer post][new_post] on changing the return and parameter types of the code above to improve the algorithm's efficiency with large data sets]**
+
+[intro_algorithms]: http://en.wikipedia.org/wiki/Introduction_to_Algorithms
 [how_to_learn]: http://www.forbes.com/sites/quora/2013/07/03/how-do-i-strengthen-my-knowledge-of-data-structures-and-algorithms/
 [insertion_sort]: http://en.wikipedia.org/wiki/Insertion_sort
+[new_post]: {% post_url 2015-01-26-linked-list-sorting %}
