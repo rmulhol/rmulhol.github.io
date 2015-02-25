@@ -6,9 +6,123 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 10 Feb 2015 16:14:24 -0600</pubDate>
-    <lastBuildDate>Tue, 10 Feb 2015 16:14:24 -0600</lastBuildDate>
+    <pubDate>Wed, 25 Feb 2015 11:50:10 -0600</pubDate>
+    <lastBuildDate>Wed, 25 Feb 2015 11:50:10 -0600</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Object-Oriented JavaScript: Implementing the Revealing Prototype Pattern</title>
+        <description>&lt;p&gt;Coming to JavaScript from a language like Ruby or Java, object-oriented programming feels different. There are some &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript&quot;&gt;great resources&lt;/a&gt; out there to help you make the transition, but it can take some time (and experience) to get used to JavaScript’s prototype-based, rather than class-based, object model. &lt;/p&gt;
+
+&lt;p&gt;One of the things that I found particularly tricky was figuring out how to simultaneously create objects efficiently and incorporate information hiding. &lt;/p&gt;
+
+&lt;p&gt;These two things are not too difficult to achieve on their own: &lt;/p&gt;
+
+&lt;p&gt;– If you want to create objects efficiently, you can place shared functions in a prototype rather than a constructor. That way, the functions aren’t copied for every object; they’re stored in the same prototype that each object (instance) references.&lt;/p&gt;
+
+&lt;p&gt;– If you want to hide information on your objects, you can use the &lt;a href=&quot;http://addyosmani.com/resources/essentialjsdesignpatterns/book/#revealingmodulepatternjavascript&quot;&gt;revealing module pattern&lt;/a&gt;. Creating an object returns a set of public properties that can access private variables and functions that are otherwise not accessible outside of the closure.&lt;/p&gt;
+
+&lt;p&gt;The problem is that these two options don’t play nicely together. Private information stored inside the closure you used to implement the revealing module pattern isn’t accessible to the prototype, and no information in the prototype is hidden. Is there a way to have your cake and eat it too?&lt;/p&gt;
+
+&lt;p&gt;Short answer: yes. Enter the &lt;a href=&quot;http://blog.pluralsight.com/revealing-prototype-pattern-structuring-javascript-code-part-iv&quot;&gt;revealing prototype pattern&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Once you’re familiar with the revealing module pattern, implementing the revealing prototype pattern isn’t a giant leap. Both use something similar to an &lt;a href=&quot;http://benalman.com/news/2010/11/immediately-invoked-function-expression/&quot;&gt;immediately-invoked function expression&lt;/a&gt; to return objects with only those properties that you want exposed.  &lt;/p&gt;
+
+&lt;p&gt;For example, say we’re building an AI player for a tic tac toe game. We know that we want the player to have a move signature and to be able to make a move. To make a move, it might need to implement a few other functions (a minimax algorithm, a function to score the current state of the board, etc.). &lt;/p&gt;
+
+&lt;p&gt;If you just used the revealing module pattern, it might look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AiPlayer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;moveSign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;setMoveSign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moveSign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getMoveSign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;makeMove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;minimax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;myTurn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scoreBoard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;setMoveSign&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;setMoveSign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;getMoveSign&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getMoveSign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;makeMove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;makeMove&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This option effectively hides information so that we’re only exposing three properties (get/set the move signature and make a move), but it doesn’t enable us to create new players efficiently. Any time we call &lt;code&gt;AiPlayer()&lt;/code&gt;, all of the methods will be copied for the new instance.&lt;/p&gt;
+
+&lt;p&gt;Using prototypes, we could rectify this problem:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AiPlayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moveSignature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moveSignature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;moveSignature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;AiPlayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;getMove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;minimax&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;myTurn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;scoreBoard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can create new objects efficiently. Calls to &lt;code&gt;new AiPlayer(moveSignature)&lt;/code&gt; don’t copy all of our functions, just a reference to the prototype where they’re stored. The problem is that we’ve lost our information hiding - the &lt;code&gt;minimax&lt;/code&gt; and &lt;code&gt;scoreBoard&lt;/code&gt; functions are exposed publicly.   &lt;/p&gt;
+
+&lt;p&gt;Using the revealing module pattern, we can get information hiding &lt;em&gt;and&lt;/em&gt; efficient object creation:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AiPlayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moveSignature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moveSignature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;moveSignature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;AiPlayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getMove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;minimax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;myTurn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scoreBoard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;makeMove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;makeMove&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Using the revealing prototype pattern, our constructor creates objects efficiently and private information is hidden. New &lt;code&gt;AiPlayer&lt;/code&gt; objects only store their own &lt;code&gt;moveSignature&lt;/code&gt; and a reference to the prototype, and the prototype only exposes a &lt;code&gt;makeMove()&lt;/code&gt; function.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 25 Feb 2015 00:00:00 -0600</pubDate>
+        <link>http://rmulhol.github.io//javascript/2015/02/25/revealing-prototype-pattern.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/02/25/revealing-prototype-pattern.html</guid>
+        
+        <category>design</category>
+        
+        <category>patterns</category>
+        
+        
+        <category>javascript</category>
+        
+      </item>
     
       <item>
         <title>Sorting Data Of a Non-Predetermined Type: Java&#39;s Comparable Interface</title>
@@ -580,35 +694,6 @@
         
         
         <category>general</category>
-        
-      </item>
-    
-      <item>
-        <title>Conundrums in TDD Land: Improving Elegance vs Reducing Dependencies</title>
-        <description>&lt;p&gt;As I’ve been doing more work with Java, one of the things I’ve focused on is getting my Java TDD abilities up to where they are with Ruby. JUnit is a whole different beast from Rspec, and figuring out how to structure and write tests within this framework has been a new and interesting challenge.&lt;/p&gt;
-
-&lt;p&gt;One of the things I’ve focused on lately is making sure that my tests for one object don’t depend on other objects. This isn’t by itself a departure from the form of testing I’ve done in Ruby/Rspec - you always want tests of one object to work regardless of changes to other peripheral objects - but figuring out the implementation details has sometimes served to remind me of just how new to this language I still am.&lt;/p&gt;
-
-&lt;p&gt;For example, right now I’m working on a tic tac toe game. One component of the game is an AI player. This object is supposed to react to moves chosen by the human player so that it can choose the optimal move for itself. To do so, it looks at the current state of the board and evaluates how likely any given move is to maximize its chances of winning.&lt;/p&gt;
-
-&lt;p&gt;This isn’t a particularly novel challenge for those who are familiar with building a tic tac toe game, but it does create a temptation to inject unwanted dependencies into my testing suite. Since my AI player needs to look at the board to figure out its next move, it seems easiest to inject an instance of the board class into my tests for the AI Player and then just work with that. &lt;/p&gt;
-
-&lt;p&gt;Doing so, however, would result in unsatisfactory tests. The tests in my AI player could break due to unrelated changes in my board, and I wouldn’t really know whether or not there was a problem with my AI player itself. The goal should be to make the tests on the AI player rely only on the logic within that object, and then to trust that messages sent to the board will work fine as long as they are sent.&lt;/p&gt;
-
-&lt;p&gt;To actualize this goal, I’ve learned that I generally want to be passing things like the board into my methods via parameters, rather than initializing them at the top as instance variables. When the board being evaluated is simply an argument received by a method, it’s easy to simulate various configurations of that object for all sorts of different tests. If that board were an instance of the board class that was pre-determined at the top of the tests, then I’d be relying on the sort of dependencies I’m hoping to avoid.&lt;/p&gt;
-
-&lt;p&gt;One problem this has created for me, however, is that it prevents me from using shortcuts that I feel would make my code more elegant. Passing in arguments generally means creating methods with up to three or four parameters numerous times throughout my classes, where many of them could be set by default if I relied upon calls to instance variables. &lt;/p&gt;
-
-&lt;p&gt;This isn’t a huge problem; I’ll take well tested code over elegant code any day. But, one of things I look forward to figuring out as I move ahead is how to have my cake and eat it too. There must be ways to write code that is well tested and elegant, and that’s one of the things I’ll be looking to learn as I continue my journey.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 26 Oct 2014 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//java/2014/10/26/tdd-elegance-dependencies.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//java/2014/10/26/tdd-elegance-dependencies.html</guid>
-        
-        <category>TDD</category>
-        
-        
-        <category>java</category>
         
       </item>
     
