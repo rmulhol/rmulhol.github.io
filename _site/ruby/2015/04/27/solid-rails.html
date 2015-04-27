@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Inheritance in Rails Controllers: SOLID Principles In Practice</title>
+    <meta name="description" content="I'm learning Ruby and sharing insights along the way.
+">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="canonical" href="http://rmulhol.github.io//ruby/2015/04/27/solid-rails.html">
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-54831551-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Rob Learns Ruby</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Inheritance in Rails Controllers: SOLID Principles In Practice</h1>
+    <p class="post-meta">Apr 27, 2015</p>
+  </header>
+
+  <article class="post-content">
+    <p>One habit I’ve picked up in the interest of making sure my programs adhere to good design principles is to generally prefer <a href="http://en.wikipedia.org/wiki/Composition_over_inheritance">composition over inheritance</a>. When I’m seeking to include behavior in a class, I’ll attempt to implement it directly or acquire it via <a href="http://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a> before I opt to inherit it from another class.</p>
+
+<p>But good design is always relative to its context/environment, and sometimes inheritance makes sense. For example, Rails makes use of inheritance to share behavior while keeping code DRY. Following <a href="http://en.wikipedia.org/wiki/Convention_over_configuration">convention over configuration</a>, you’ll get used to class declarations that look like this: </p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span></code></pre></div>
+
+<p>Good design in Rails doesn’t have to come into conflict with good design more generally. But it can be somewhat of a minefield. In this post, I want to walk through a recent design conundrum I encountered in order to situate how good design in Rails can be brought into greater harmony with <a href="http://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29">SOLID design principles</a>.</p>
+
+<p><strong>The Danger Zone: The Application Controller</strong></p>
+
+<p>Recently, I’ve been putting together <a href="https://rocky-ocean-5667.herokuapp.com/">a little Rails app to handle RSVPs</a>. One piece of behavior I’ve wanted to implement is a method to verify that the user attempting to invoke an action actually has access to that action. It would be a problem if one user could modify another user’s profile, so I need to have a filter. On the <code>UsersController</code>, it might look something like this:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="kp">include</span> <span class="no">SessionsHelper</span> <span class="c1"># contains current_user?(user)</span>
+  <span class="n">before_action</span> <span class="ss">:redirect_if_incorrect_user</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="o">[</span><span class="ss">:edit</span><span class="p">,</span> <span class="ss">:update</span><span class="p">,</span> <span class="ss">:destroy</span><span class="o">]</span>
+
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+
+  <span class="kp">private</span>
+    <span class="k">def</span> <span class="nf">redirect_if_incorrect_user</span>
+      <span class="k">unless</span> <span class="n">current_user?</span><span class="p">(</span><span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">))</span>
+        <span class="n">redirect_to</span> <span class="n">root_url</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+<p>But I want to protect actions on other controllers as well. Specifically, a user <code>has_many :events</code>, and I don’t want one user to be able to modify another user’s events. So I can move the before filter to the application controller.</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+  <span class="kp">include</span> <span class="no">SessionsHelper</span>
+  <span class="n">before_action</span> <span class="ss">:redirect_if_incorrect_user</span>
+
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+
+  <span class="k">def</span> <span class="nf">redirect_if_incorrect_user</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span> <span class="p">?</span> <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span><span class="p">)</span> <span class="p">:</span> <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
+    <span class="k">unless</span> <span class="n">current_user?</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+      <span class="n">redirect_to</span> <span class="n">root_url</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+<p>Now my before filter will be inherited by every controller, and I can un-protect individual actions as necessary by <a href="http://en.wikipedia.org/wiki/Whitelist">whitelisting</a>. I had to implement a slightly more tedious way of examining the route, since a route pointing to an action on the events controller will identify the user with <code>params[:user_id]</code> (rather than <code>params[:id]</code>, which will refer to the event itself), but this works for both users and events.</p>
+
+<p><strong>OK, Let’s Just Make Things A Bit Worse</strong></p>
+
+<p>Astute readers will already notice an OCP violation, but let’s dig a bit deeper into the weeds before we clean things up. </p>
+
+<p>In addition to events, a user <code>has_many :guests, through: :events</code>. Routes headed for the guests controller have <code>params[:event_id]</code> and <code>params[:id]</code>. That breaks the method above since it’ll see that there’s no <code>params[:user_id]</code> and try to find a <code>User</code> based on <code>params[:id]</code>, which actually identifies a guest.</p>
+
+<p>Since the <code>before_action</code> filter is inherited, we can implement a better version on the guests controller by overwriting the <code>redirect_if_incorrect_user</code> method:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">GuestsController</span>
+  
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+  
+  <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">redirect_if_incorrect_user</span>
+      <span class="n">event</span> <span class="o">=</span> <span class="no">Event</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:event_id</span><span class="o">]</span><span class="p">)</span>
+      <span class="k">unless</span> <span class="n">current_user</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">redirect_to</span> <span class="n">root_url</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+<p>This will successfully override the method-of-the-same-name defined in the application controller and allow the filter to play nicely with actions on our guests controller, but we’re playing pretty fast and loose with inheritance at this point. This is why we can’t have nice things?</p>
+
+<p><strong>SOLID Salvation: Or, the Open and Shut Case For Liskov</strong></p>
+
+<p>We’ve got two pretty big violations of the SOLID design principles here:</p>
+
+<p>1) <a href="http://en.wikipedia.org/wiki/Liskov_substitution_principle">The Liskov Substitution Principle</a>: According to Robert Martin, this principle boils down to a rule that “subtypes must be substitutable for their base types” (<a href="http://www.amazon.com/Software-Development-Principles-Patterns-Practices/dp/0135974445">PPP</a> 111). In our case, the guests controller’s implementation of <code>redirect_if_incorrect_user</code> violates the Liskov substitution principle because it can’t be substituted for the implementation in the base class (the application controller). If we’re locating the user with the <code>params[:event_id]</code>, we’ll be out of luck when there is no <code>params[:event_id]</code> (e.g. actions on the users and events controllers).</p>
+
+<p>2) <a href="http://en.wikipedia.org/wiki/Open/closed_principle">The Open-Closed Principle</a>: describing the OCP, Martin writes, “Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification” (<a href="http://www.amazon.com/Software-Development-Principles-Patterns-Practices/dp/0135974445">PPP</a> 99). If we want to add new features or classes, we shouldn’t have to go back and modify classes we already had to make the new ones work. That means it’s not an adequate solution to add a new <code>if</code> statement to a method on the application controller each time we’re dealing with a new controller. </p>
+
+<p>To accomodate Liskov, we could make the method on our application controller more universal:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+  <span class="kp">include</span> <span class="no">SessionsHelper</span>
+  <span class="n">before_action</span> <span class="ss">:redirect_if_incorrect_user</span>
+  
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+
+  <span class="k">def</span> <span class="nf">redirect_if_incorrect_user</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">identify_user_in_params</span>
+    <span class="k">unless</span> <span class="n">current_user?</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+      <span class="n">redirect_to</span> <span class="n">root_url</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">identify_user_in_params</span>
+    <span class="k">if</span> <span class="o">!</span><span class="n">params</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">].</span><span class="n">blank?</span>
+      <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span><span class="p">)</span>
+    <span class="k">elsif</span> <span class="o">!</span><span class="n">params</span><span class="o">[</span><span class="ss">:event_id</span><span class="o">].</span><span class="n">blank?</span>
+      <span class="no">Event</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:event_id</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">user</span>
+    <span class="k">else</span>
+      <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+<p>Here, the <code>identify_user_in_params</code> still doesn’t satisfy Open/Closed, since it’ll have to be modified as parameters change. Therefore, a more appropriate decision might be to delegate the work of correctly unpacking parameters to each controller:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+  <span class="kp">include</span> <span class="no">SessionsHelper</span>
+  <span class="n">before_action</span> <span class="ss">:redirect_if_incorrect_user</span>
+  
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+
+  <span class="k">def</span> <span class="nf">redirect_if_incorrect_user</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">identify_user_in_params</span>
+    <span class="k">unless</span> <span class="n">current_user?</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+      <span class="n">redirect_to</span> <span class="n">root_url</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+
+  <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">identify_user_in_params</span>
+      <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">EventsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+
+  <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">identify_user_in_params</span>
+      <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span><span class="p">)</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">GuestsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+
+  <span class="kp">private</span>
+
+    <span class="k">def</span> <span class="nf">identify_user_in_params</span>
+      <span class="no">Event</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:event_id</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">user</span>
+    <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Rob Learns Ruby</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Rob Learns Ruby</li>
+          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/rmulhol">
+              <span class="icon  icon--github">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+              <span class="username">rmulhol</span>
+            </a>
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/robmulholand">
+              <span class="icon  icon--twitter">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                  c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+                </svg>
+              </span>
+
+              <span class="username">robmulholand</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text">I'm learning Ruby and sharing insights along the way.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

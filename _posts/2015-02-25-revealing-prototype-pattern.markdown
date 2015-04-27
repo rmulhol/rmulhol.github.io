@@ -108,7 +108,7 @@ AiPlayer.prototype = (function() {
 })();
 {% endhighlight %}
 
-Using the revealing prototype pattern, our constructor creates objects efficiently and private information is hidden. New `AiPlayer` objects only store their own `moveSignature` and a reference to the prototype, and the prototype only exposes a `makeMove()` function.
+Using the revealing prototype pattern, our constructor creates objects efficiently and hides private information. New `AiPlayer` objects only store their own `moveSignature` and a reference to the prototype, and the prototype only exposes a `makeMove()` function.
 
 [intro_oojs]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript
 [rmp]: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#revealingmodulepatternjavascript
