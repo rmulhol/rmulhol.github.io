@@ -65,7 +65,7 @@ In addition to events, a user `has_many :guests, through: :events`. Routes heade
 Since the `before_action` filter is inherited, we can implement a better version on the guests controller by overwriting the `redirect_if_incorrect_user` method:
 
 {% highlight ruby %}
-class GuestsController
+class GuestsController < Application Controller
   
   ...
   
