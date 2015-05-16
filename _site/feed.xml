@@ -6,9 +6,68 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 15 May 2015 21:38:15 -0500</pubDate>
-    <lastBuildDate>Fri, 15 May 2015 21:38:15 -0500</lastBuildDate>
+    <pubDate>Sat, 16 May 2015 17:47:08 -0500</pubDate>
+    <lastBuildDate>Sat, 16 May 2015 17:47:08 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Making Version Control Useful: Effective Commit Messages</title>
+        <description>&lt;p&gt;Over my time as a programmer, one area where I’ve felt there’s always more to learn is the effective use of version control. Internalizing the basics of &lt;code&gt;git add&lt;/code&gt;, &lt;code&gt;git commit&lt;/code&gt;, and &lt;code&gt;git push&lt;/code&gt; doesn’t take too long, but there’s so many more useful features that become relevant with time and experience.&lt;/p&gt;
+
+&lt;p&gt;Beyond additional features, there’s also the challenge of utilizing the simple tools &lt;em&gt;effectively&lt;/em&gt;. Just because you make regular commits during the development process doesn’t mean you’re setting yourself up to reap the benefits of version control in the event that you need it.&lt;/p&gt;
+
+&lt;p&gt;One of the most important foundations for effective use of version control useful is good commit messages. In the event you need to roll back, you’ll be shaking your fist at yourself (or whoever is responsible for sloppy messages) if you can’t identify which commit correlates to the state you want to reach.&lt;/p&gt;
+
+&lt;p&gt;In this post, I want to share some of the techniques I’ve learned for constructing helpful commit messages. There’s a lot more to be said beyond the scope of what I’ll cover here, so think of these suggestions as the basic foundation from which further improvements can proceed.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Avoid Ambiguity: Deliver Details&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;If I’m working on a project with poor test coverage, one priority is to add tests. As I wrap up tests for one class or namespace, it feels like a natural time to make a commit.&lt;/p&gt;
+
+&lt;p&gt;An earlier version of myself might add the message &lt;code&gt;improve test coverage&lt;/code&gt;. It’s concise and describes what I’ve done, so why not?&lt;/p&gt;
+
+&lt;p&gt;The trouble is that this commit message is too vague. Others looking at my commit history don’t receive any useful information about how test coverage was improved.&lt;/p&gt;
+
+&lt;p&gt;At its most basic, a good commit message should provide a clear explanation for what changes have been made. That means that it needs to include a sufficient level of detail to be understandable without diving into the code.&lt;/p&gt;
+
+&lt;p&gt;A more helpful message might read &lt;code&gt;add tests for all methods on the Users controller&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;DRY Commits: Reduce Repetition&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Imagine you’re satisfied with the &lt;code&gt;improve test coverage&lt;/code&gt; commit message above, and now you want to improve test coverage for the whole project. So you’ve got a series of commits, each sharing the same message.&lt;/p&gt;
+
+&lt;p&gt;This compounds the problems described above. Not only can you not tell what’s happening in the first commit with the vague message, you’re also facing a series of subsequent commits bearing the same problem.&lt;/p&gt;
+
+&lt;p&gt;Duplication among commit messages should be treated like duplication in code: something ripe for elimination. If you’re finding yourself labeling multiple commits with the same message, chances are that you’re not only being overly ambiguous about the changes being made in one instance - you’re extending that ambiguity across your entire commit history.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Being Honest: Don’t Lie&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Sometimes while working on a new feature, you might find yourself revisiting some earlier code. Maybe you decide to refactor a few things.&lt;/p&gt;
+
+&lt;p&gt;When it comes time to commit, you clearly lay out the details of your new feature, giving yourself a pat on the back for putting together such a nice commit message. Push up all the changes, feeling good.&lt;/p&gt;
+
+&lt;p&gt;The trouble with this scenario is that there’s some unrelated (and unclaimed) refactoring going on in the same commit. What if it broke something? Someone reading your commit history has no reason to believe this commit touched the breaking code.&lt;/p&gt;
+
+&lt;p&gt;If you’re making changes unrelated to what’s stated in your commit message, you’re lying. The commit does something totally different than what’s claimed in the message.&lt;/p&gt;
+
+&lt;p&gt;A good commit message should be honest. That means you can’t always rely on the trusty &lt;code&gt;git add .&lt;/code&gt;. Unrelated changes should be broken up into separate commits, so that each message tells the truth about what that commit is doing.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;A good commit message begins with uniquely identifiable details that honestly describe exactly what changes are being made. There’s a lot more you can do to make sure that you’re being as helpful as possible, but sticking to these foundational premises will set you started on the track toward reaping value out of your version control.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 16 May 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//general/2015/05/16/effective-commit-messages.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/05/16/effective-commit-messages.html</guid>
+        
+        <category>git</category>
+        
+        <category>commits</category>
+        
+        
+        <category>general</category>
+        
+      </item>
     
       <item>
         <title>Idiomatic Functional Programming: The Importance of Immersion</title>
@@ -929,70 +988,6 @@
         <pubDate>Tue, 10 Feb 2015 00:00:00 -0600</pubDate>
         <link>http://rmulhol.github.io//java/2015/02/10/java-comparable-interface.html</link>
         <guid isPermaLink="true">http://rmulhol.github.io//java/2015/02/10/java-comparable-interface.html</guid>
-        
-        <category>algorithms</category>
-        
-        
-        <category>java</category>
-        
-      </item>
-    
-      <item>
-        <title>Sort a LinkedList? Revisiting Insertion Sort in Java</title>
-        <description>&lt;p&gt;In a &lt;a href=&quot;/java/2015/01/14/java-insertion-sort.html&quot;&gt;previous post&lt;/a&gt;, I showed a possible implementation of insertion sort written in Java. The code is an almost verbatim translation of pseudocode from &lt;a href=&quot;http://en.wikipedia.org/wiki/Introduction_to_Algorithms&quot;&gt;CLRS&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Almost&lt;/em&gt; verbatim. While the pseudocode doesn’t include any type declarations, my Java code does. Specifically, I chose to work with a &lt;a href=&quot;http://docs.oracle.com/javase/7/docs/api/java/util/LinkedList.html&quot;&gt;LinkedList&lt;/a&gt;, since a data structure that allows for &lt;a href=&quot;http://en.wikipedia.org/wiki/Linked_list#Advantages&quot;&gt;easy &lt;em&gt;insertion&lt;/em&gt; and deletion of elements&lt;/a&gt; felt like a natural fit for an algorithm named &lt;em&gt;insertion&lt;/em&gt; sort. The code ended up looking like this: &lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LinkedList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;mySort&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LinkedList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now imagine my dismay when I read &lt;a href=&quot;http://steve-yegge.blogspot.com.es/2008/03/get-that-job-at-google.html&quot;&gt;this post&lt;/a&gt; about how to succeed in an interview at Google. Specifically, note his comment about my chosen data structure: “For God’s sake, don’t try sorting a linked list during the interview”.&lt;/p&gt;
-
-&lt;p&gt;Don’t try sorting a linked list during the interview? I just tried sorting a linked list &lt;em&gt;on the internet&lt;/em&gt;. My tests said that the algorithm worked, too; what was I doing wrong?&lt;/p&gt;
-
-&lt;p&gt;Upon deeper investigation, I found some &lt;a href=&quot;https://kjellkod.wordpress.com/2012/02/25/why-you-should-never-ever-ever-use-linked-list-in-your-code-again/&quot;&gt;virulent criticism of the linked list&lt;/a&gt;, and decided it was time to revisit my implementation of insertion sort, taking note of a few things:&lt;/p&gt;
-
-&lt;p&gt;– Retrieving elements from a linked list by index, it turns out, is computationally expensive. Specifically, the &lt;code&gt;.get()&lt;/code&gt; operation I use to access values &lt;a href=&quot;http://java-performance.info/linkedlist-performance/&quot;&gt;is an O(n) operation&lt;/a&gt;; since a LinkedList is a &lt;a href=&quot;http://docs.oracle.com/javase/7/docs/api/java/util/AbstractSequentialList.html&quot;&gt;sequential access list&lt;/a&gt;, accessing elements by index &lt;a href=&quot;http://www.cs.rpi.edu/~musser/gp/List/lists1.html&quot;&gt;takes linear time&lt;/a&gt; (i.e. you have to traverse all prior elements in the list until the desired index is reached). &lt;/p&gt;
-
-&lt;p&gt;By contrast, &lt;code&gt;.get()&lt;/code&gt; &lt;a href=&quot;http://beginnersbook.com/2013/12/difference-between-arraylist-and-linkedlist-in-java/&quot;&gt;is an O(1) operation&lt;/a&gt; for an &lt;a href=&quot;http://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html&quot;&gt;ArrayList&lt;/a&gt;; elements can be accessed by index &lt;a href=&quot;http://docs.oracle.com/javase/tutorial/collections/implementations/list.html&quot;&gt;in constant time&lt;/a&gt; since this data structure is a &lt;a href=&quot;http://docs.oracle.com/javase/7/docs/api/java/util/RandomAccess.html&quot;&gt;random access list&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;– My algorithm doesn’t actually require &lt;em&gt;inserting&lt;/em&gt; and &lt;em&gt;deleting&lt;/em&gt; elements. Though the name “insertion sort” might suggest otherwise, what’s really happening is that values are being &lt;em&gt;swapped&lt;/em&gt; (replaced, rather than inserted and deleted). &lt;a href=&quot;http://www.programcreek.com/2013/03/arraylist-vs-linkedlist-vs-vector/&quot;&gt;An ArrayList excels with &lt;code&gt;.get()&lt;/code&gt; and &lt;code&gt;.set()&lt;/code&gt; methods, while a LinkedList excels with &lt;code&gt;.add()&lt;/code&gt; and &lt;code&gt;.remove()&lt;/code&gt;&lt;/a&gt; — and I’m only using the former pair!&lt;/p&gt;
-
-&lt;p&gt;So in the interest of performance, I decided it might be better to use an ArrayList. That’s a quick fix: just change the method return and parameter types from &lt;code&gt;LinkedList&amp;lt;Integer&amp;gt;&lt;/code&gt; to &lt;code&gt;ArrayList&amp;lt;Integer&amp;gt;&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;But, upon reflection, even this data structure felt unnecessary. I don’t need to dynamically modify the size of the input, so I can just work with a simple &lt;a href=&quot;http://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html&quot;&gt;array&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;That code now looks like this: &lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;mySort&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;… and it works just fine. &lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 26 Jan 2015 00:00:00 -0600</pubDate>
-        <link>http://rmulhol.github.io//java/2015/01/26/linked-list-sorting.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//java/2015/01/26/linked-list-sorting.html</guid>
         
         <category>algorithms</category>
         
