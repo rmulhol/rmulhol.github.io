@@ -6,9 +6,85 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 12 May 2015 12:04:52 -0500</pubDate>
-    <lastBuildDate>Tue, 12 May 2015 12:04:52 -0500</lastBuildDate>
+    <pubDate>Fri, 15 May 2015 21:38:15 -0500</pubDate>
+    <lastBuildDate>Fri, 15 May 2015 21:38:15 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Idiomatic Functional Programming: The Importance of Immersion</title>
+        <description>&lt;p&gt;Today, I had the privilege of pairing with a colleague who is also focused on learning Clojure. While I come from a background in object-oriented programming, his is in functional programming. Getting a chance to work together and compare how we would each approach different problems was enlightening.&lt;/p&gt;
+
+&lt;p&gt;For instance, one problem that we worked on involved trying to design a function that packs a sequence:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;nv&quot;&gt;user=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pack&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;;= ((1))&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;user=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pack&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;;= ((1) (2))&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;user=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pack&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;;= &amp;#39;((1 1))&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;user=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pack&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;;= ((1 1) (2) (3 3))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I had already developed a working approach to this problem, but I wasn’t too happy with the result:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pack&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;loop &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;
+         &lt;span class=&quot;nv&quot;&gt;output-list&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+         &lt;span class=&quot;nv&quot;&gt;last-element&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;nil&lt;/span&gt;
+         &lt;span class=&quot;nv&quot;&gt;backlog&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;cond&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;and &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;empty?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;nil? &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;last-element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;output-list&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;and &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;empty?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;empty?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;backlog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;recur&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;concat &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;output-list&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;last-element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;empty?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;recur&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;concat &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;output-list&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;backlog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;nil? &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;last-element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;recur&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;rest &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;output-list&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;first &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;backlog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;and &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;= &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;last-element&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;first &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;empty?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;backlog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;recur&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;rest &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;output-list&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;last-element&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;concat &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;backlog&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;last-element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;first &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]))&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;= &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;last-element&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;first &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;recur&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;rest &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;output-list&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;last-element&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;concat &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;backlog&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;first &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]))&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;empty?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;backlog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;recur&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;rest &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;concat &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;output-list&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;last-element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;first &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;:else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;recur&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;rest &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;concat &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;output-list&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;backlog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;first &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input-list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;It’s so ugly that it doesn’t really merit further comment. Suffice it to say I’m basically replicating a &lt;code&gt;for&lt;/code&gt; loop where a set of variables are slowly pieced together to generate the data I’d like to return.&lt;/p&gt;
+
+&lt;p&gt;Letting my partner do the driving, we came up with a much nicer solution:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;defn &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;find-similar&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cond &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;empty?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;result&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;= &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;first &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;second &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;find-similar&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;rest &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;inc &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+          &lt;span class=&quot;ss&quot;&gt;:else&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;defn &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pack&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;empty?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;similar-elements-count&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;find-similar&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cons &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;take &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;similar-elements-count&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;pack&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;drop &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;similar-elements-count&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The key to this (much more elegant) solution is it’s effective use of the &lt;code&gt;take&lt;/code&gt; and &lt;code&gt;drop&lt;/code&gt; functions - something we found relevant in approaching numerous other problems:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;defn &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;rotate-seq&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;rotate-by&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;rotate-by&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;mod&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;rotate-by&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;count &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;concat &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;drop &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;rotate-by&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;take &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;rotate-by&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;defn &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;my-partition&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;part-by&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;when &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;&amp;lt;= &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;part-by&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;count &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; 
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cons &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;take &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;part-by&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;my-partition&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;part-by&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;drop &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;part-by&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;coll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The lesson I’ve taken away is that learning new things in programming means fully immersing yourself in the idioms of the language/model with which you’re working. With a bit of creativity, it’s usually possible to replicate familiar ways of solving problems - even if they take away your &lt;code&gt;for&lt;/code&gt; loops and mutable data. But replicating old ways of doing things stands in the way of learning other ways that are new and better. In this case, I’m super happy to have had the chance to pair with a colleague able to show me some new and better ways of doing things.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 15 May 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//clojure/2015/05/15/idiomatic-functional-programming.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//clojure/2015/05/15/idiomatic-functional-programming.html</guid>
+        
+        <category>functional</category>
+        
+        <category>idioms</category>
+        
+        
+        <category>clojure</category>
+        
+      </item>
     
       <item>
         <title>Hand-Rolling Flatten: Coming to Grips with Tree-Seq</title>
@@ -922,66 +998,6 @@
         
         
         <category>java</category>
-        
-      </item>
-    
-      <item>
-        <title>Debugging With RASP: Check Your Work!</title>
-        <description>&lt;p&gt;Recently, I encountered a stubborn error message. &lt;/p&gt;
-
-&lt;p&gt;I’ve been working through &lt;a href=&quot;http://www.amazon.com/Agile-Development-Rails-Facets-Ruby/dp/1937785564&quot;&gt;Agile Web Development With Rails&lt;/a&gt;, and I got to the point where I’m instructed to verify that the order information gathered by my depot application is being written to the database (chapter 12 - Task G: Check Out!). Simple enough, I thought, I’ll just enter &lt;code&gt;sqlite3 -line db.development.sqlite3&lt;/code&gt; and run &lt;code&gt;select * from orders;&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;To my dismay, my simple command was met with a daunting error message: &lt;code&gt;Error: no such table: orders&lt;/code&gt;. &lt;/p&gt;
-
-&lt;p&gt;How could this be? Had I failed to run &lt;code&gt;rake db:migrate&lt;/code&gt; at some point? No, that wasn’t it; I ran &lt;code&gt;rake db:rollback&lt;/code&gt; and &lt;code&gt;rake db:migrate&lt;/code&gt; several times just to be sure of that. Did my &lt;code&gt;database.yml&lt;/code&gt; file contain errors? No, not that I could see; everything looked fine. &lt;/p&gt;
-
-&lt;p&gt;Unsure of where to locate my bug, I decided it was time to go through the trusty RASP progression.&lt;/p&gt;
-
-&lt;p&gt;For those who are unfamiliar, RASP instructs you to:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;R&lt;/strong&gt;ead the error message&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;A&lt;/strong&gt;sk a colleague an informed question&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;S&lt;/strong&gt;earch using google, stackoverflow, and so forth&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;P&lt;/strong&gt;ost on stackoverflow, online forums, and so forth&lt;/p&gt;
-
-&lt;p&gt;I had read the error message. The table &lt;code&gt;orders&lt;/code&gt; was clearly not being found in the database under inspection. But why?&lt;/p&gt;
-
-&lt;p&gt;I asked a colleague about the error, but they too were befuddled after a quick review of my &lt;code&gt;db/migrate&lt;/code&gt; folder and the &lt;code&gt;database.yml&lt;/code&gt; file. &lt;/p&gt;
-
-&lt;p&gt;It was time to begin pursuing an answer online. Google had helped me to correct several errors in the past, so there was no reason this should be any different. If I played around with a few search term combinations, I figured, an answer would reveal itself.&lt;/p&gt;
-
-&lt;p&gt;But that was not to be so. Google yielded surprisingly few results for every set of search terms I could come up with. There were several stackoverflow posts about &lt;code&gt;no such table&lt;/code&gt; errors, but none that resembled my problem.&lt;/p&gt;
-
-&lt;p&gt;I was very close to posting online, but I had some hesitation. If this problem was common enough that others had encountered it and knew how to solve it, shouldn’t there be posts about the issue already? I decided to take one final peak under the hood.&lt;/p&gt;
-
-&lt;p&gt;Upon closer inspection, I noticed that my app root directory now contained an empty &lt;code&gt;db.development.sqlite3&lt;/code&gt; file. Where did that come from? I thought my development database was stored as &lt;code&gt;development.sqlite3&lt;/code&gt; in my &lt;code&gt;db&lt;/code&gt; folder (indeed, it was).&lt;/p&gt;
-
-&lt;p&gt;The source of my problem, it turns out, was a typo. Instead of typing &lt;code&gt;sqlite3 -line db.development.sqlite3&lt;/code&gt;, I needed to be typing &lt;code&gt;sqlite3 -line db/development.sqlite3&lt;/code&gt; (note the forward slash, rather than the dot, following db). When I corrected the typo and tried again, everything worked fine.&lt;/p&gt;
-
-&lt;p&gt;So, I propose an addition to the RASP cycle: &lt;strong&gt;C&lt;/strong&gt;heck your work. We can call it CRASP.&lt;/p&gt;
-
-&lt;p&gt;Sure, most people already check their work before searching online. Sometimes an error message will point you right at the typo so that you can fix it without further effort. Sometimes you’ll realize your own error upon a second glance at what you’ve written.&lt;/p&gt;
-
-&lt;p&gt;But other times, you’ll miss the typo. You’ll make it deeper into the RASP cycle before going back to locate what should have been a quick fix. &lt;/p&gt;
-
-&lt;p&gt;In those instances when you find yourself deep into the google with no solutions in sight, go back and check your work one more time. What I’ve found is that as the solution to your problem begins to seem more and more elusive, it becomes more and more likely that it’s closer than you think. If you can’t find information about your error online, it’s almost certainly a simple error you’ve made. &lt;/p&gt;
-
-&lt;p&gt;So, join me in adding an addendum to the RASP process. Check your work before you go search online, and then check it again with closer scrutiny if you can’t find an answer. Embrace CRASP.&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 16 Jan 2015 00:00:00 -0600</pubDate>
-        <link>http://rmulhol.github.io//ruby/2015/01/16/debugging-with-rasp.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2015/01/16/debugging-with-rasp.html</guid>
-        
-        <category>rails</category>
-        
-        <category>rasp</category>
-        
-        
-        <category>ruby</category>
         
       </item>
     
