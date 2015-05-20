@@ -6,9 +6,99 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 18 May 2015 16:47:30 -0500</pubDate>
-    <lastBuildDate>Mon, 18 May 2015 16:47:30 -0500</lastBuildDate>
+    <pubDate>Wed, 20 May 2015 13:34:31 -0500</pubDate>
+    <lastBuildDate>Wed, 20 May 2015 13:34:31 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>To Change the Past: Cleaning Up Your Git Commit History</title>
+        <description>&lt;p&gt;As I’ve been working to improve my Git etiquette, one thing I’ve been doing is revisiting my projects’ histories and cleaning up their commits to be more modular and expressive. Having had a tendency to batch together collections of unrelated modifications under unhelpful commit messages, my work was cut out for me.&lt;/p&gt;
+
+&lt;p&gt;Fortunately, I was able to figure out some techniques for transforming git’s record of the past, and I’m happy with the results. Previously sloppy commits were renamed, broken up, and supplemented as necessary.&lt;/p&gt;
+
+&lt;p&gt;In this post, I’d like to share some of the techniques I found most helpful in rewriting git history. If you’re facing a similar struggle to my own, hopefully you don’t need to suffer the same pain I did along the way.&lt;/p&gt;
+
+&lt;p&gt;A word of caution, though, before we begin: most of these techniques are best left aside if you’re working in a context where other users actively depend on or contribute to your code on Github. While rewriting your git history can make it easier to grasp what you’ve done through previous iterations of your code, it can also make it more difficult to share and merge new contributions going forward if you’re working with an outdated history. &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;From Whence it Begins: Revisiting the Past&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In order to accomplish any of the tasks that follow, it’s necessary to be able to reach back to previous commits. I’ll be discussing three primary strategies for doing so:&lt;/p&gt;
+
+&lt;p&gt;1) &lt;code&gt;git commit --amend&lt;/code&gt; - to modify the most recent commit.&lt;/p&gt;
+
+&lt;p&gt;2) &lt;code&gt;git rebase -i HEAD~...&lt;/code&gt; - to dive deeper into your project’s history. Replace &lt;code&gt;...&lt;/code&gt; with a number specifying how far back into your history you would like to reach.&lt;/p&gt;
+
+&lt;p&gt;3) &lt;code&gt;git rebase -i --root&lt;/code&gt; - to adjust your project’s initial commit.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Control the Message: Renaming Commits&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Perhaps the most pressing task in constructing a solid commit history is simply writing good commit messages. I’ve &lt;a href=&quot;/general/2015/05/16/effective-commit-messages.html&quot;&gt;written previously&lt;/a&gt; of some of the methods for doing so, but what if you want to retroactively map such techniques onto the poorly worded commits of your project’s past?&lt;/p&gt;
+
+&lt;p&gt;This is probably the most simple error to fix. &lt;/p&gt;
+
+&lt;p&gt;To reword your most recent commit message, simply execute &lt;code&gt;git commit --amend&lt;/code&gt;. This will bring up a text editor with the previous message at the beginning of the document. Make your edits, save and close the document, and the log will reflect your changes.&lt;/p&gt;
+
+&lt;p&gt;To rename commits between the root and where you are currently, use &lt;code&gt;git rebase -i HEAD~...&lt;/code&gt;, replacing &lt;code&gt;...&lt;/code&gt; with how many commits back you’d like to reach. This will bring up a text editor listing all of the commits in the range between there and where you are now. Before each one, you’ll see the word &lt;code&gt;pick&lt;/code&gt;. Replace that with &lt;code&gt;reword&lt;/code&gt; for the messages you’d like to change. Save and close the dcoument, and you’ll see a document for each of those commits. Save and close those documents with revised messages, and the log will reflect your changes.&lt;/p&gt;
+
+&lt;p&gt;To rename the root commit message, run &lt;code&gt;git rebase -i --root&lt;/code&gt;. This will take you make to the moment immediately following your initial commit, where &lt;code&gt;git commit --amend&lt;/code&gt; will allow you to edit it as if it were your actual most recent commit. To complete this step, run &lt;code&gt;git rebase --continue&lt;/code&gt;, which will bring you back to the end of your project’s history&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;. &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Modular Code, Modular Commits: Changing Content&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Good for you if all you have to do is reword the commit messages, but chances are that bad commit messages are a canary in the coal mine for bad commit content. And by bad, I mean that the content of the commits exceeds or is incongruous with what’s described in a well-worded commit message.&lt;/p&gt;
+
+&lt;p&gt;Luckily, making revisions here is within your reach.&lt;/p&gt;
+
+&lt;p&gt;If you need to adjust the content of your most recent commit, you can do so as if you were staging a brand new commit. Simply use &lt;code&gt;git add ...&lt;/code&gt; and/or &lt;code&gt;git rm ...&lt;/code&gt; (replacing &lt;code&gt;...&lt;/code&gt; with the paths for files you’d like to add or remove) and then follow it up with &lt;code&gt;git commit --amend&lt;/code&gt;. Saving and closing the document that pops up will revise the previous commit to reflect the changes.&lt;/p&gt;
+
+&lt;p&gt;If you need to alter content between the root and where you are currently, &lt;code&gt;git rebase -i HEAD~...&lt;/code&gt; lets you do so. This time, for the commits you want to modify, replace &lt;code&gt;pick&lt;/code&gt; with &lt;code&gt;edit&lt;/code&gt;. You’ll be taken back to the moment following the earliest commit you marked for edit, where you can make changes just like you were tackling your most recent commit (&lt;code&gt;git add ...&lt;/code&gt;, &lt;code&gt;git rm ...&lt;/code&gt;, and then &lt;code&gt;git commit --amend&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;After you’ve amended commits earlier in your project’s history, you’ll need to run &lt;code&gt;git rebase --continue&lt;/code&gt; to proceed. If you only opted to edit one commit, this should bring you back to the future (the end of your project’s history). Otherwise, it will roll you forward to the next commit marked for edit.&lt;/p&gt;
+
+&lt;p&gt;However, this is where things can get hairy. If you make revisions that conflict with later commits, git will stop in its tracks to ask you what to do. To deal with that, you’ll need to edit the files in question as you see fit (you can see which files encountered a conflict as well as the specific lines in tension by running &lt;code&gt;git diff&lt;/code&gt;), merge the changes (&lt;code&gt;git add ...&lt;/code&gt;), and then proceed with &lt;code&gt;git rebase --continue&lt;/code&gt;&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;To alter the content at the root, &lt;code&gt;git rebase -i --root&lt;/code&gt; to get there, &lt;code&gt;git commit --amend&lt;/code&gt; to edit, and &lt;code&gt;git rebase --continue&lt;/code&gt; to proceed.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Where Once There Was Nothing: Inserting New Commits Into Your Project’s History&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Changing the content of a commit is all well and good until you find yourself wanting to remove content from a particular commit without deleting it entirely from your project’s history. You know it doesn’t belong in &lt;em&gt;this&lt;/em&gt; commit, but you also don’t want to tack it on at the end of your project’s history when lots of intermediary commits assumed it was there. What to do?&lt;/p&gt;
+
+&lt;p&gt;For this one, I’m going to assume you’re not just trying to add a commit after your most recent commit (hopefully you know how to do that if you’ve read this far).&lt;/p&gt;
+
+&lt;p&gt;The good news is, inserting a commit deep in your project’s history isn’t all that different.&lt;/p&gt;
+
+&lt;p&gt;Say you have an earlier commit that you want to break up into several separate commits so as to reflect a number of distinct changes. We know that we can use &lt;code&gt;git rebase -i HEAD~...&lt;/code&gt; (or &lt;code&gt;git rebase -i --root&lt;/code&gt;) to get there. We know you can strip out unwanted content and/or reword the message with &lt;code&gt;git commit --amend&lt;/code&gt;. And we know how to make new commits.&lt;/p&gt;
+
+&lt;p&gt;Put all the pieces together, and you have your answer. Simply adding new commits (literally &lt;code&gt;git commit -m &quot;...&quot;&lt;/code&gt;) before running &lt;code&gt;git rebase --continue&lt;/code&gt; will cause those commits to live at an intermediary point in your project’s history. You can break up a mammoth of a commit into a series of bite-size chunks without losing any of the files we want later commits to know about.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;At first blush, editing your commit history can feel like a weighty endeavor. There’s a lot to dig into, and ample room for error.&lt;/p&gt;
+
+&lt;p&gt;But making the necessary changes doesn’t have to be a headache. Simply following the techniques above should get you where you need to go.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;As I discuss further down, you may need to help git figure out how to merge any changes you make earlier in your history with conflicting changes that follow. This shouldn’t be a problem here, though, if you’re just rewording the commit messages. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;This is, in my experience, the most scary/difficult step to tackle. I’d recommend creating a test repo and practicing this step a few times. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 20 May 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//general/2015/05/20/clean-commit-history.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/05/20/clean-commit-history.html</guid>
+        
+        <category>git</category>
+        
+        <category>commits</category>
+        
+        
+        <category>general</category>
+        
+      </item>
     
       <item>
         <title>Testing Input Validation in Clojure: The Beauty of With-In-Str</title>
@@ -894,120 +984,6 @@
         
         
         <category>ruby</category>
-        
-      </item>
-    
-      <item>
-        <title>Object-Oriented JavaScript: Implementing the Revealing Prototype Pattern</title>
-        <description>&lt;p&gt;Coming to JavaScript from a language like Ruby or Java, object-oriented programming feels different. There are some &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript&quot;&gt;great resources&lt;/a&gt; out there to help you make the transition, but it can take some time (and experience) to get used to JavaScript’s prototype-based, rather than class-based, object model. &lt;/p&gt;
-
-&lt;p&gt;One of the things that I found particularly tricky was figuring out how to simultaneously create objects efficiently and incorporate information hiding. &lt;/p&gt;
-
-&lt;p&gt;These two things are not too difficult to achieve on their own: &lt;/p&gt;
-
-&lt;p&gt;– If you want to create objects efficiently, you can place shared functions in a prototype rather than a constructor. That way, the functions aren’t copied for every object; they’re stored in the same prototype that each object (instance) references.&lt;/p&gt;
-
-&lt;p&gt;– If you want to hide information on your objects, you can use the &lt;a href=&quot;http://addyosmani.com/resources/essentialjsdesignpatterns/book/#revealingmodulepatternjavascript&quot;&gt;revealing module pattern&lt;/a&gt;. Creating an object returns a set of public properties that can access private variables and functions that are otherwise not accessible outside of the closure.&lt;/p&gt;
-
-&lt;p&gt;The problem is that these two options don’t play nicely together. Private information stored inside the closure you used to implement the revealing module pattern isn’t accessible to the prototype, and no information in the prototype is hidden. Is there a way to have your cake and eat it too?&lt;/p&gt;
-
-&lt;p&gt;Short answer: yes. Enter the &lt;a href=&quot;http://blog.pluralsight.com/revealing-prototype-pattern-structuring-javascript-code-part-iv&quot;&gt;revealing prototype pattern&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Once you’re familiar with the revealing module pattern, implementing the revealing prototype pattern isn’t a giant leap. Both use something similar to an &lt;a href=&quot;http://benalman.com/news/2010/11/immediately-invoked-function-expression/&quot;&gt;immediately-invoked function expression&lt;/a&gt; to return objects with only those properties that you want exposed.  &lt;/p&gt;
-
-&lt;p&gt;For example, say we’re building an AI player for a tic tac toe game. We know that we want the player to have a move signature and to be able to make a move. To make a move, it might need to implement a few other functions (a minimax algorithm, a function to score the current state of the board, etc.). &lt;/p&gt;
-
-&lt;p&gt;If you just used the revealing module pattern, it might look like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AiPlayer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;moveSign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;setMoveSign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moveSign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getMoveSign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;makeMove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;minimax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;myTurn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scoreBoard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;setMoveSign&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;setMoveSign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;getMoveSign&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getMoveSign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;makeMove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;makeMove&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;This option effectively hides information so that we’re only exposing three properties (get/set the move signature and make a move), but it doesn’t enable us to create new players efficiently. Any time we call &lt;code&gt;AiPlayer()&lt;/code&gt;, all of the methods will be copied for the new instance.&lt;/p&gt;
-
-&lt;p&gt;Using prototypes, we could rectify this problem:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AiPlayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moveSignature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moveSignature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;moveSignature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;AiPlayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;getMove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;minimax&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;myTurn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;scoreBoard&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now we can create new objects efficiently. Calls to &lt;code&gt;new AiPlayer(moveSignature)&lt;/code&gt; don’t copy all of our functions, just a reference to the prototype where they’re stored. The problem is that we’ve lost our information hiding - the &lt;code&gt;minimax&lt;/code&gt; and &lt;code&gt;scoreBoard&lt;/code&gt; functions are exposed publicly.   &lt;/p&gt;
-
-&lt;p&gt;Using the revealing module pattern, we can get information hiding &lt;em&gt;and&lt;/em&gt; efficient object creation:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AiPlayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moveSignature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;moveSignature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;moveSignature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;AiPlayer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getMove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;minimax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;myTurn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scoreBoard&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;board&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;makeMove&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;makeMove&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Using the revealing prototype pattern, our constructor creates objects efficiently and hides private information. New &lt;code&gt;AiPlayer&lt;/code&gt; objects only store their own &lt;code&gt;moveSignature&lt;/code&gt; and a reference to the prototype, and the prototype only exposes a &lt;code&gt;makeMove()&lt;/code&gt; function.&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 25 Feb 2015 00:00:00 -0600</pubDate>
-        <link>http://rmulhol.github.io//javascript/2015/02/25/revealing-prototype-pattern.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/02/25/revealing-prototype-pattern.html</guid>
-        
-        <category>design</category>
-        
-        <category>patterns</category>
-        
-        
-        <category>javascript</category>
         
       </item>
     
