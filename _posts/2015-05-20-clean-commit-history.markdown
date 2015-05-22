@@ -8,11 +8,11 @@ tags: git commits
 
 As I've been working to improve my Git etiquette, one thing I've been doing is revisiting my projects' histories and cleaning up their commits to be more modular and expressive. Having had a tendency to batch together collections of unrelated modifications under unhelpful commit messages, my work was cut out for me.
 
-Fortunately, I was able to figure out some techniques for transforming git's record of the past, and I'm happy with the results. Previously sloppy commits were renamed, broken up, and supplemented as necessary.
+Fortunately, I was able to figure out some techniques for transforming Git's record of the past, and I'm happy with the results. Previously sloppy commits were renamed, broken up, and supplemented as necessary.
 
-In this post, I'd like to share some of the techniques I found most helpful in rewriting git history. If you're facing a similar struggle to my own, hopefully you don't need to suffer the same pain I did along the way.
+In this post, I'd like to share some of the techniques I found most helpful in rewriting Git history. If you're facing a similar struggle to my own, hopefully you don't need to suffer the same pain I did along the way.
 
-A word of caution, though, before we begin: most of these techniques are best left aside if you're working in a context where other users actively depend on or contribute to your code on Github. While rewriting your git history can make it easier to grasp what you've done through previous iterations of your code, it can also make it more difficult to share and merge new contributions going forward if you're working with an outdated history. 
+A word of caution, though, before we begin: most of these techniques are best left aside if you're working in a context where other users actively depend on or contribute to your code. While rewriting your Git history can make it easier to grasp what you've done through previous iterations of your code, it can also make it more difficult to share and merge new contributions going forward if you're working with an outdated history. 
 
 **From Whence it Begins: Revisiting the Past**
 
@@ -70,6 +70,6 @@ At first blush, editing your commit history can feel like a weighty endeavor. Th
 
 But making the necessary changes doesn't have to be a headache. Simply following the techniques above should get you where you need to go.
 
-[^1]: As I discuss further down, you may need to help git figure out how to merge any changes you make earlier in your history with conflicting changes that follow. This shouldn't be a problem here, though, if you're just rewording the commit messages.
+[^1]: As I discuss further down, you may need to help Git figure out how to merge any changes you make earlier in your history with conflicting changes that follow. This shouldn't be a problem here, though, if you're just rewording the commit messages.
 [^2]: This is, in my experience, the most scary/difficult step to tackle. I'd recommend creating a test repo and practicing this step a few times.
 [last_post]: {% post_url 2015-05-16-effective-commit-messages %}
