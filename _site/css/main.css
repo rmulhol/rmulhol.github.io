@@ -307,6 +307,11 @@ pre {
     @media screen and (max-width: 800px) {
       .post-content h4 {
         font-size: 18px; } }
+  .post-content .footnotes {
+    padding: 1em;
+    border-top: 1px dotted #bbb; }
+  .post-content .footnotes:before {
+    content: "Footnotes "; }
 
 /**
  * Syntax highlighting styles

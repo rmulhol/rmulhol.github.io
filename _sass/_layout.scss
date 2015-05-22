@@ -233,4 +233,13 @@
             font-size: 18px;
         }
     }
+
+    .footnotes {
+        padding: 1em;
+        border-top: 1px dotted #bbb;
+    }
+
+    .footnotes:before {
+        content: "Footnotes "
+    }
 }
