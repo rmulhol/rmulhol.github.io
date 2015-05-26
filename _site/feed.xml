@@ -6,9 +6,85 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 22 May 2015 09:38:49 -0500</pubDate>
-    <lastBuildDate>Fri, 22 May 2015 09:38:49 -0500</lastBuildDate>
+    <pubDate>Tue, 26 May 2015 16:22:36 -0500</pubDate>
+    <lastBuildDate>Tue, 26 May 2015 16:22:36 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Laying the Foundation: On Extreme Programming Explained</title>
+        <description>&lt;p&gt;I just finished Kent Beck’s &lt;a href=&quot;http://www.amazon.com/Extreme-Programming-Explained-Embrace-Edition/dp/0321278658&quot;&gt;&lt;em&gt;Extreme Programming Explained: Embrace Change, 2nd Edition&lt;/em&gt;&lt;/a&gt;, and it was really striking. Not because it came out of left field, nor because it upended all that I had thought previously about what best practices underlie good software development. On the contrary, &lt;em&gt;XP Explained&lt;/em&gt; was striking precisely because of how seemingly self-evident and irrefutable its propositions came across.&lt;/p&gt;
+
+&lt;p&gt;Who among us would dismiss the merits of pair programming? Do you oppose the idea that we ought to use tests to validate that our software does what we expect? How about quick iterations - would it be better to prolong our work cycles so that we only get feedback after months (or years) of potentially wasted effort?&lt;/p&gt;
+
+&lt;p&gt;No, of course not. For most of us, at least, I suspect that each of these inquiries would be met with a response in the negative. We place emphasis on shared collaboration, demonstrable results, and short feedback loops because we know they improve the quality of the software we deliver.&lt;/p&gt;
+
+&lt;p&gt;But how do we know this? Is what appears so self-evident and irrefutable really so? Perhaps not.&lt;/p&gt;
+
+&lt;p&gt;Having come across &lt;em&gt;XP Explained&lt;/em&gt; over 15 years after its initial release, I came to realize that what I saw as self-evident was in fact only so due to this text’s longstanding and far-reaching impact on contemporary literature. Extreme programming has so deeply imbricated itself into much of our daily workflow that we may not notice its profound wisdom, but it is there nonetheless.&lt;/p&gt;
+
+&lt;p&gt;Taking a look at other ways that software engineering could be conceptualized and carried out, one gains a sense for how transformative Beck’s text has really been. And if you look close enough, you can even find places where its insights merit further exploration and application; there is still something there to offer today.&lt;/p&gt;
+
+&lt;p&gt;In this post, then, I’d like to take a moment to dive in and reflect upon some of the elements of &lt;em&gt;XP Explained&lt;/em&gt; that I found most noteworthy. Though the book’s wealth of suggestions eludes quick summary in a brief post like this, it is my hope that highlighting some of the book’s key points can help us to carry forward its contributions here and now, in the spirit of continuous integration. &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The Foundation: Values, Principles, and Practices&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;One of the things that sets &lt;em&gt;XP Explained&lt;/em&gt; apart from some of the more technical programming texts that I’ve picked up is that it starts on the ground floor, laying a foundation of values, principles, and practices that make it possible to develop software in ways that are more productive, efficient, and responsive to change.&lt;/p&gt;
+
+&lt;p&gt;Five core values form the bedrock for extreme programming: communication, simplicity, feedback, courage, and respect. These are the concepts around which we organize our judgments of specific habits and activities; those which act in their spirit are treated as good, while those that run against them are not. &lt;/p&gt;
+
+&lt;p&gt;Principles enable us to build a bridge between abstract values and concrete practices; they put values in the context of our domain in order to yield guidelines that give shape to our day-to-day activities. When we think about how to promote communication, for example, we consider the principle of economics; do practices in the name of communication conform to our business needs?&lt;/p&gt;
+
+&lt;p&gt;Practices, finally, are the actual things we do as we work. Things like pair programming, test-driven development, and quick iterations are practices; they describe how we actually develop software in the vein of extreme programming. We choose which practices to make habitual based upon how well they conform to our principles and thereby actualize our values.&lt;/p&gt;
+
+&lt;p&gt;The values, principles, and practices of extreme programming serve as guideposts. They enable us to take the lessons of extreme programming and apply them in contingent circumstances. One may not be able to implement all of the guidelines that Beck offers, but one can come into harmony with the core insights of extreme programming by heeding its core foundation.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;What Else Could Be? Competing Visions&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;What sorts of contingent circumstances might work against extreme programming? Can we envision plausible circumstances in which we might proceed otherwise?&lt;/p&gt;
+
+&lt;p&gt;In a manner that addresses these inquiries, Beck offers up the method of Taylorism. In this approach, one attempts to improve productivity by segmenting tasks into bite-sized chunks, optimizing the processes by which they are carried out, and then assembling them back together. This manner of engineering has been widely popular in various domains for many years.&lt;/p&gt;
+
+&lt;p&gt;While this process might seem to superficially resemble exteme programming, it also presupposes that work is best carried out through a divide-and-conquer approach. But this is not always the case. As Beck points out with respect to the Toyota Production System (TPS), sometimes it is better to allocate responsibility for the entire product to all workers. &lt;/p&gt;
+
+&lt;p&gt;Extreme programming heeds the lesson of TPS, taking note of the particular social structure of work at play in software development. Rather than segmenting roles and responsibilities, it brings experts and stakeholders from various domains into the fold, trusting that collaboration will yield a whole that’s greater than the sum of its parts.&lt;/p&gt;
+
+&lt;p&gt;This is not to say that there is not space for divide-and-conquer approaches in software development. Surely, that is not the case. The challenge, however, is to strike a balance, to adapt your process to your problem. Sometimes, divide-and-counquer will do. Sometimes, you must conquer-and-divide.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Persisting Value(s): Continuously Integrating XP&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;One of the more interesting sections of &lt;em&gt;XP Explained&lt;/em&gt; came in Chapter 9: Corollary Practices. There, Beck discusses some of the practices of XP that can be very useful but also carry some risk.&lt;/p&gt;
+
+&lt;p&gt;Having a shared codebase, for example, suggests that any contributor should be able to contribute to any part of the codebase at any time. This yields the benefit that various parts of the system can be improved as they are encountered by disparate developers.&lt;/p&gt;
+
+&lt;p&gt;A problem arises, however, if there is a lack of shared responsibility and continuous integration. Left to its own devices, a shared codebase could devolve into a non-functioning heap of poor quality code where nobody claims responsibility for cleaning up the mess.&lt;/p&gt;
+
+&lt;p&gt;This suggests that extreme programming is something that you grow and nurture incrementally, much like the software you create while following its guidelines. Once a team has the trust and procedures in place to adopt a new practice, its adoption can yield a better workflow - even if doing so earlier might have been disastrous.&lt;/p&gt;
+
+&lt;p&gt;Such growth and evolution of extreme programming itself raises questions as to how else we can augment and extend the discipline. What ways can we continue to tinker with the ways that we develop software to deepen and advance XP’s core values? I’ll leave it to the reader to theorize such approaches for now, but it’s a helpful and thought-provoking element of &lt;em&gt;XP Explained&lt;/em&gt; that this door is left open.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;On the final read, &lt;em&gt;XP Explained&lt;/em&gt; is perhaps not quite so self-evident and irrefutable after all. Or perhaps it is, but only because we’ve learned the lessons from when it was not. Either way, the text provokes us to continue thinking about how we might carry on its legacy going forward.&lt;/p&gt;
+
+&lt;p&gt;We know that it begins from a set of values, principles, and practices that give form to our everyday activities. We have a template for jumping in, but we also have the flexibility to choose how to swim once we’re in the pool.&lt;/p&gt;
+
+&lt;p&gt;If we accept the premise that continuous integration helps to improve our process for developing software, perhaps we might also explore the possibility that continuous integration ought to be applied to the process itself.&lt;/p&gt;
+
+&lt;p&gt;How we choose to do so is the challenge that lies ahead.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 26 May 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//general/2015/05/26/extreme-programming-explained.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/05/26/extreme-programming-explained.html</guid>
+        
+        <category>professionalism</category>
+        
+        <category>readings</category>
+        
+        
+        <category>general</category>
+        
+      </item>
     
       <item>
         <title>To Change the Past: Cleaning Up Your Git Commit History</title>
@@ -810,173 +886,6 @@
         <pubDate>Thu, 30 Apr 2015 00:00:00 -0500</pubDate>
         <link>http://rmulhol.github.io//ruby/2015/04/30/rails-template-method.html</link>
         <guid isPermaLink="true">http://rmulhol.github.io//ruby/2015/04/30/rails-template-method.html</guid>
-        
-        <category>rails</category>
-        
-        <category>design</category>
-        
-        
-        <category>ruby</category>
-        
-      </item>
-    
-      <item>
-        <title>Inheritance in Rails Controllers: SOLID Principles In Practice</title>
-        <description>&lt;p&gt;One habit I’ve picked up in the interest of making sure my programs adhere to good design principles is to generally prefer &lt;a href=&quot;http://en.wikipedia.org/wiki/Composition_over_inheritance&quot;&gt;composition over inheritance&lt;/a&gt;. When I’m seeking to include behavior in a class, I’ll attempt to implement it directly or acquire it via &lt;a href=&quot;http://en.wikipedia.org/wiki/Dependency_injection&quot;&gt;dependency injection&lt;/a&gt; before I opt to inherit it from another class.&lt;/p&gt;
-
-&lt;p&gt;But good design is always relative to its context/environment, and sometimes inheritance makes sense. For example, Rails makes use of inheritance to share behavior while keeping code DRY. Following &lt;a href=&quot;http://en.wikipedia.org/wiki/Convention_over_configuration&quot;&gt;convention over configuration&lt;/a&gt;, you’ll get used to class declarations that look like this: &lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UsersController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ApplicationController&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Good design in Rails doesn’t have to come into conflict with good design more generally. But it can be somewhat of a minefield. In this post, I want to walk through a recent design conundrum I encountered in order to situate how good design in Rails can be brought into greater harmony with &lt;a href=&quot;http://en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29&quot;&gt;SOLID design principles&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;The Danger Zone: The Application Controller&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Recently, I’ve been putting together &lt;a href=&quot;https://rocky-ocean-5667.herokuapp.com/&quot;&gt;a little Rails app to handle RSVPs&lt;/a&gt;. One piece of behavior I’ve wanted to implement is a method to verify that the user attempting to invoke an action actually has access to that action. It would be a problem if one user could modify another user’s profile, so I need to have a filter. On the &lt;code&gt;UsersController&lt;/code&gt;, it might look something like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UsersController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ApplicationController&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SessionsHelper&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# contains current_user?(user)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;before_action&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:redirect_if_incorrect_user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:edit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:destroy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
-
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;redirect_if_incorrect_user&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current_user?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;redirect_to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root_url&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;But I want to protect actions on other controllers as well. Specifically, a user &lt;code&gt;has_many :events&lt;/code&gt;, and I don’t want one user to be able to modify another user’s events. So I can move the before filter to the application controller.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApplicationController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActionController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SessionsHelper&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;before_action&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:redirect_if_incorrect_user&lt;/span&gt;
-
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;redirect_if_incorrect_user&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:user_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:user_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current_user?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;redirect_to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root_url&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now my before filter will be inherited by every controller, and I can un-protect individual actions as necessary by &lt;a href=&quot;http://en.wikipedia.org/wiki/Whitelist&quot;&gt;whitelisting&lt;/a&gt;. I had to implement a slightly more tedious way of examining the route, since a route pointing to an action on the events controller will identify the user with &lt;code&gt;params[:user_id]&lt;/code&gt; (rather than &lt;code&gt;params[:id]&lt;/code&gt;, which will refer to the event itself), but this works for both users and events.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;OK, Let’s Just Make Things A Bit Worse&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Astute readers will already notice an OCP violation, but let’s dig a bit deeper into the weeds before we clean things up. &lt;/p&gt;
-
-&lt;p&gt;In addition to events, a user &lt;code&gt;has_many :guests, through: :events&lt;/code&gt;. Routes headed for the guests controller have &lt;code&gt;params[:event_id]&lt;/code&gt; and &lt;code&gt;params[:id]&lt;/code&gt;. That breaks the method above since it’ll see that there’s no &lt;code&gt;params[:user_id]&lt;/code&gt; and try to find a &lt;code&gt;User&lt;/code&gt; based on &lt;code&gt;params[:id]&lt;/code&gt;, which actually identifies a guest.&lt;/p&gt;
-
-&lt;p&gt;Since the &lt;code&gt;before_action&lt;/code&gt; filter is inherited, we can implement a better version on the guests controller by overwriting the &lt;code&gt;redirect_if_incorrect_user&lt;/code&gt; method:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;GuestsController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Application&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Controller&lt;/span&gt;
-  
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
-  
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;redirect_if_incorrect_user&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Event&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:event_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current_user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;redirect_to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root_url&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;This will successfully override the method-of-the-same-name defined in the application controller and allow the filter to play nicely with actions on our guests controller, but we’re playing pretty fast and loose with inheritance at this point. This is why we can’t have nice things?&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;SOLID Salvation: Or, the Open and Shut Case For Liskov&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;We’ve got two pretty big violations of the SOLID design principles here:&lt;/p&gt;
-
-&lt;p&gt;1) &lt;a href=&quot;http://en.wikipedia.org/wiki/Liskov_substitution_principle&quot;&gt;The Liskov Substitution Principle&lt;/a&gt;: According to Robert Martin, this principle boils down to a rule that “subtypes must be substitutable for their base types” (&lt;a href=&quot;http://www.amazon.com/Software-Development-Principles-Patterns-Practices/dp/0135974445&quot;&gt;PPP&lt;/a&gt; 111). In our case, the guests controller’s implementation of &lt;code&gt;redirect_if_incorrect_user&lt;/code&gt; violates the Liskov substitution principle because it can’t be substituted for the implementation in the base class (the application controller). If we’re locating the user with the &lt;code&gt;params[:event_id]&lt;/code&gt;, we’ll be out of luck when there is no &lt;code&gt;params[:event_id]&lt;/code&gt; (e.g. actions on the users and events controllers).&lt;/p&gt;
-
-&lt;p&gt;2) &lt;a href=&quot;http://en.wikipedia.org/wiki/Open/closed_principle&quot;&gt;The Open-Closed Principle&lt;/a&gt;: describing the OCP, Martin writes, “Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification” (&lt;a href=&quot;http://www.amazon.com/Software-Development-Principles-Patterns-Practices/dp/0135974445&quot;&gt;PPP&lt;/a&gt; 99). If we want to add new features or classes, we shouldn’t have to go back and modify classes we already had to make the new ones work. That means it’s not an adequate solution to add a new &lt;code&gt;if&lt;/code&gt; statement to a method on the application controller each time we’re dealing with a new controller. &lt;/p&gt;
-
-&lt;p&gt;To accomodate Liskov, we could make the method on our application controller more universal:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApplicationController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActionController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SessionsHelper&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;before_action&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:redirect_if_incorrect_user&lt;/span&gt;
-  
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;redirect_if_incorrect_user&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;identify_user_in_params&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current_user?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;redirect_to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root_url&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;identify_user_in_params&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:user_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blank?&lt;/span&gt;
-      &lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:user_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;elsif&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:event_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blank?&lt;/span&gt;
-      &lt;span class=&quot;no&quot;&gt;Event&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:event_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
-      &lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Here, the &lt;code&gt;identify_user_in_params&lt;/code&gt; still doesn’t satisfy Open/Closed, since it’ll have to be modified as parameters change. Therefore, a more appropriate decision might be to delegate the work of correctly unpacking parameters to each controller:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApplicationController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActionController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SessionsHelper&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;before_action&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:redirect_if_incorrect_user&lt;/span&gt;
-  
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
-
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;redirect_if_incorrect_user&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;identify_user_in_params&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current_user?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;redirect_to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root_url&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UsersController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ApplicationController&lt;/span&gt;
-
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
-
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;identify_user_in_params&lt;/span&gt;
-      &lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;EventsController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ApplicationController&lt;/span&gt;
-
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
-
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;identify_user_in_params&lt;/span&gt;
-      &lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:user_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;GuestsController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ApplicationController&lt;/span&gt;
-
-  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
-
-  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;identify_user_in_params&lt;/span&gt;
-      &lt;span class=&quot;no&quot;&gt;Event&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:event_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-</description>
-        <pubDate>Mon, 27 Apr 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//ruby/2015/04/27/solid-rails.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//ruby/2015/04/27/solid-rails.html</guid>
         
         <category>rails</category>
         
