@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-My name's Rob and I'm learning Ruby. I hope to eventually become a software craftsman but ... first things first.
+My name's Rob and I'm learning computer programming.
 
 I've spent most of my life so far as a debate coach and an academic in the humanities, but I've been super impressed at the wealth of information out there for people like me who are hoping to become proficient in the world of code. It's my humble desire that this blog might be able to contribute something to that domain.
 

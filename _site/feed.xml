@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Rob Learns Ruby</title>
-    <description>I&#39;m learning Ruby and sharing insights along the way.
+    <title>Rob Learns Programming</title>
+    <description>Notes from a journey on the path toward becoming proficient in computer programming.
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 27 May 2015 11:42:10 -0500</pubDate>
-    <lastBuildDate>Wed, 27 May 2015 11:42:10 -0500</lastBuildDate>
+    <pubDate>Thu, 28 May 2015 11:33:30 -0500</pubDate>
+    <lastBuildDate>Thu, 28 May 2015 11:33:30 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
     
       <item>
