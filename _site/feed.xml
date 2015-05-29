@@ -6,9 +6,63 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 28 May 2015 11:33:30 -0500</pubDate>
-    <lastBuildDate>Thu, 28 May 2015 11:33:30 -0500</lastBuildDate>
+    <pubDate>Thu, 28 May 2015 21:34:12 -0500</pubDate>
+    <lastBuildDate>Thu, 28 May 2015 21:34:12 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Testing Distributed Database Systems: Kyle Kingsbury&#39;s Jepsen</title>
+        <description>&lt;p&gt;The other day, I had the privilege of attending Kyle Kingsbury’s talk “Jepsen IV: Hope Springs Eternal” at the DevOps Chicago meetup group. The presentation was interesting, thought-provoking, and entertaining. I found myself doing all sorts of background research afterward just to make sure I was really digesting what he put out there.&lt;/p&gt;
+
+&lt;p&gt;In this post, I want to take a few moments to reflect on what I’ve learned. I can’t promise anything more than my own interpretation of what he said (you can check out a version of the talk for yourself &lt;a href=&quot;http://www.ustream.tv/recorded/61443262&quot;&gt;here&lt;/a&gt;), but hopefully this post can be of use to those who’re also developing an interest in the topic. &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;What is Jepsen?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Jepsen is a tool developed by Kingsbury for testing the performance of distributed systems undergoing network partitions. It’s basically a generative testing framework for database systems. He’s interested in measuring how well they preserve the consistency of their data when connections between nodes are interrupted.  &lt;/p&gt;
+
+&lt;p&gt;You sort of get a sense for where he’s going right at the beginning of the talk, when he shows a slide portraying the structure that underlies APIs, and the databases are portrayed as a tire fire.&lt;/p&gt;
+
+&lt;p&gt;His research bears out that characterization. Even well reputed databases begin to show cracks under the pressure applied by Jepsen, as data becomes outdated, inaccurate, or lost altogether. &lt;/p&gt;
+
+&lt;p&gt;This talk focused on &lt;a href=&quot;https://www.mongodb.org/&quot;&gt;MongoDB&lt;/a&gt;, &lt;a href=&quot;https://www.elastic.co/products/elasticsearch&quot;&gt;Elasticsearch&lt;/a&gt;, and &lt;a href=&quot;http://www.aerospike.com/&quot;&gt;Aerospike&lt;/a&gt;, but you can see analysis for numerous other systems that have undergone the wrath of Jepsen at &lt;a href=&quot;https://aphyr.com/tags/jepsen&quot;&gt;Kingsbury’s site&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;How Does It Work?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;You can read Kingsbury’s introductory post on how Jepsen works &lt;a href=&quot;https://aphyr.com/posts/281-call-me-maybe-carly-rae-jepsen-and-the-perils-of-network-partitions&quot;&gt;here&lt;/a&gt;, but the basic story is that it spins up a cluster of hosts to serve as a distributed database system, simulates a network partition, then sees how the system manages database operations under such conditions.&lt;/p&gt;
+
+&lt;p&gt;Kingsbury focuses on how well each database lives up to the claims made in its documentation. Given &lt;a href=&quot;http://en.wikipedia.org/wiki/CAP_theorem&quot;&gt;the CAP theorem&lt;/a&gt; (and the &lt;a href=&quot;https://martin.kleppmann.com/2015/05/11/please-stop-calling-databases-cp-or-ap.html&quot;&gt;limitations of thinking in terms of that construct&lt;/a&gt;), we might not expect these databases to offer perfect consistency. But we could expect them to live up to the claims put forward by their marketing departments.&lt;/p&gt;
+
+&lt;p&gt;Or so we thought. Kingsbury’s findings instill a healthy dose of skepticism. He’s found numerous places where databases do not live up to the claims made in their documentation, alongside several other bugs and instances of unexpected behavior. &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So, What Now?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;It’s already a community service to document the ways that widely-used or otherwise attractive software falls short of delivering on the features it claims to provide, but what else can we take away from a talk like this?&lt;/p&gt;
+
+&lt;p&gt;Perhaps the most important lesson Kingsbury delivered was simply to rely on measurement over intuition and guesswork. As with all the other forms of testing we use in software development, it’s necessary to have a way to exercise our systems if we’re going to be confident they behave as expected.&lt;/p&gt;
+
+&lt;p&gt;Another important point is that developers should put serious thought into what kind of consistency they need for their specific systems. There’s usually a gap between the form of consistency you need and the “C” in CAP, and figuring out where that gap lies can enable you to make the optimal compromise in favor of other qualities like availability and performance.&lt;/p&gt;
+
+&lt;p&gt;Finally, Jepsen’s research encourages those who build and maintain databases for distributed systems to stay vigilant. It’s hard to claim that your system delivers certain promises when repeatable tests demonstrate that it does not, and it appears that Kingsbury has provoked some folks to update their documentation and/or squash bugs.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Having been poking around the literature on distributed systems for just a few weeks now, Kingsbury’s talk was a really awesome way to start getting a real sense for how to test and work with such software. I can’t recommend the talk highly enough for those who are interested in this domain. Thanks Kyle!&lt;/p&gt;
+
+&lt;p&gt;I look forward to learning more about his work and the surrounding research in the future, and I’ll keep you posted on further developments as they role in.&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 28 May 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//general/2015/05/28/testing-databases-jepsen.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/05/28/testing-databases-jepsen.html</guid>
+        
+        <category>distributed-systems</category>
+        
+        <category>databases</category>
+        
+        
+        <category>general</category>
+        
+      </item>
     
       <item>
         <title>Refactoring in Clojure: Implementing Polymorphism with Multimethods</title>
@@ -777,86 +831,6 @@
         <category>functional</category>
         
         <category>reductions</category>
-        
-        
-        <category>clojure</category>
-        
-      </item>
-    
-      <item>
-        <title>Tail Call Optimization in Clojure: Using Loop/Recur</title>
-        <description>&lt;p&gt;Recently, I’ve been getting into &lt;a href=&quot;http://clojure.org/&quot;&gt;Clojure&lt;/a&gt;. To get started, I’ve begun working through the &lt;a href=&quot;http://clojurekoans.com/&quot;&gt;Clojure Koans&lt;/a&gt;. They’ve provided a really helpful introduction to the language’s power and syntax.&lt;/p&gt;
-
-&lt;p&gt;One thing that I got stuck on, however, was a problem involving recursion. The objective is to define a function capable of computing the factorial of a really big integer.&lt;/p&gt;
-
-&lt;p&gt;Computing a factorial is relatively straightforward:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;defn &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;zero? &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;     &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dec &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;This will work fine with smaller numbers:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;;= 120&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;But it runs into trouble with bigger numbers:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;;= StackOverflowError   clojure.lang.Numbers.isZero (Numbers.java:90)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The trouble this method is running into is that each recursive call to &lt;code&gt;factorial&lt;/code&gt; is adding a new frame to the stack, as the value of &lt;code&gt;n&lt;/code&gt; at every call has to be retained in memory. &lt;/p&gt;
-
-&lt;p&gt;A standard approach to optimizing this sort of function in functional programming would be to implement some sort of tail call optimization – have the function store the value that it’s reached up to its current point so that it doesn’t have to retain every value it computed before then in memory:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;defn &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;acc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;zero? &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;     &lt;span class=&quot;nv&quot;&gt;acc&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dec &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;acc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;But that will not save us here:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;;= StackOverflowError   clojure.lang.Numbers.isZero (Numbers.java:90)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Clojure, because it runs on the JVM, &lt;a href=&quot;http://clojure.org/functional_programming#Functional%20Programming--Recursive%20Looping&quot;&gt;does not support tail call optimization&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;So what’s a lonely aspiring Clojure programmer to do?&lt;/p&gt;
-
-&lt;p&gt;The answer, it turns out, is &lt;a href=&quot;http://clojure.org/special_forms#Special%20Forms--%28recur%20exprs*%29&quot;&gt;the &lt;code&gt;recur&lt;/code&gt; construct&lt;/a&gt;. When placed at the end of a function, &lt;code&gt;recur&lt;/code&gt; provides the benefits we’d expect from tail call optimization.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;defn &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;acc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;zero? &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;     &lt;span class=&quot;nv&quot;&gt;acc&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;recur&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dec &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;acc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;This method works!&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;;= 2846259680917054518906413212119868890148...(really big number)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;One final hangup in the Clojure Koans is to retain the arity of the original function (&lt;code&gt;factorial&lt;/code&gt; takes only one parameter). Since we need an accumulator to store the value we’ve computed up to the current call, we’re going to need to bind some new values inside our function.&lt;/p&gt;
-
-&lt;p&gt;We can accomplish this with &lt;a href=&quot;https://clojuredocs.org/clojure.core/loop&quot;&gt;the Clojure &lt;code&gt;loop&lt;/code&gt; construct&lt;/a&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;defn &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;factorial&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;loop &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;new-n-for-looping&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;          &lt;span class=&quot;nv&quot;&gt;acc-for-recursion&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;zero? &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;new-n-for-looping&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;       &lt;span class=&quot;nv&quot;&gt;acc-for-recursion&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt;       &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;recur&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dec &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;new-n-for-looping&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;new-n-for-looping&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;acc-for-recursion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Here, we bind the passed value of &lt;code&gt;n&lt;/code&gt; to our &lt;code&gt;new-n-for-looping&lt;/code&gt; and &lt;code&gt;1&lt;/code&gt; to our &lt;code&gt;acc-for-recursion&lt;/code&gt;. The accumulator is multiplied by the current value of &lt;code&gt;new-n-for-looping&lt;/code&gt; in each recursive call until the base case is reached (&lt;code&gt;new-n-for-looping&lt;/code&gt; reaches zero), and we can compute the factorial of very large numbers without that pesky StackOverflowError.&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 05 May 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//clojure/2015/05/05/clojure-loop-recur.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//clojure/2015/05/05/clojure-loop-recur.html</guid>
-        
-        <category>functional</category>
-        
-        <category>recursion</category>
         
         
         <category>clojure</category>
