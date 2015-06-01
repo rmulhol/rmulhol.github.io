@@ -6,9 +6,53 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 28 May 2015 21:34:12 -0500</pubDate>
-    <lastBuildDate>Thu, 28 May 2015 21:34:12 -0500</lastBuildDate>
+    <pubDate>Mon, 01 Jun 2015 15:54:18 -0500</pubDate>
+    <lastBuildDate>Mon, 01 Jun 2015 15:54:18 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Packaging Programs: Building JAR Files With IntelliJ</title>
+        <description>&lt;p&gt;As a software development apprentice, the latest challenge I’ve taken on is to build an HTTP server in Java. To verify that everything is working as expected, I need to run my program against the tests contained in &lt;a href=&quot;https://github.com/8thlight/cob_spec&quot;&gt;the Cob Spec Fitnesse suite&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A lot of work goes in to passing all of the tests, but the first step is simply giving Cob Spec access to my program. It’s hard to run the tests if you can’t access the source. For Cob Spec to access the source, the server needs to be packaged into &lt;a href=&quot;http://en.wikipedia.org/wiki/JAR_%28file_format%29&quot;&gt;a JAR file&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;JAR stands for Java Archive; it’s a format for grouping together all of the necessary Java classes plus any other relevant files into one artifact that contains a whole program. Beyond putting everything in one place, it also offers &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/deployment/jar/&quot;&gt;numerous other benefits&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;So how does one create such a convenient file? When I started poking around, I found several resources that covered how you can &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/deployment/jar/build.html&quot;&gt;do so from the command line&lt;/a&gt;. But I was so used to automating these tasks from my IDE (&lt;a href=&quot;https://www.jetbrains.com/idea/&quot;&gt;IntelliJ&lt;/a&gt;) that I figured that there had to be a simpler way.&lt;/p&gt;
+
+&lt;p&gt;And, indeed there is. Creating a JAR file with IntelliJ requires nothing more than a few clicks and keystrokes.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Building a JAR File in IntelliJ&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Once you’ve got a working Java program built in IntelliJ, packaging it into a JAR file is only a few steps away.&lt;/p&gt;
+
+&lt;p&gt;It begins by opening up the Project Structure menu. You can do so by clicking &lt;code&gt;File =&amp;gt; Project Structure&lt;/code&gt;, or with the keyboard shortcut &lt;code&gt;⌘;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Next, navigate to the &lt;code&gt;Artifacts&lt;/code&gt; option on the left panel. This will open up a menu for building artifacts.&lt;/p&gt;
+
+&lt;p&gt;On that menu, clicking &lt;code&gt;+&lt;/code&gt; prompts you to select what type of artifact you’d like to build.&lt;/p&gt;
+
+&lt;p&gt;After you select &lt;code&gt;JAR&lt;/code&gt;, all that’s left is to fill in the details - give your JAR a name, indicate where to find the &lt;code&gt;main&lt;/code&gt; method, and specify what files to include.&lt;/p&gt;
+
+&lt;p&gt;Clicking &lt;code&gt;OK&lt;/code&gt; in the bottom-right corner of the menu wraps everything up. You can now run &lt;code&gt;java -jar path/to/jar/filename.jar&lt;/code&gt; on the command line to execute your program.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Creating and working with JAR files strikes me as one of those things that becomes virtually automatic after just a little bit of practice. But it can be a bit of a pain when you’re just getting started. Luckily, as with so many other steps that go into working with Java, IntelliJ makes accomplishing this task quick and easy.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 01 Jun 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//java/2015/06/01/package-jar-intellij.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//java/2015/06/01/package-jar-intellij.html</guid>
+        
+        <category>jar</category>
+        
+        <category>packages</category>
+        
+        
+        <category>java</category>
+        
+      </item>
     
       <item>
         <title>Testing Distributed Database Systems: Kyle Kingsbury&#39;s Jepsen</title>
@@ -741,99 +785,6 @@
         
         
         <category>general</category>
-        
-      </item>
-    
-      <item>
-        <title>Reductions in Clojure: Understanding the Coin Changer Kata</title>
-        <description>&lt;p&gt;One of the tasks I’ve been working on lately completing is the coin changer kata in Clojure. The objective is to calculate what coins you should distribute to most efficiently make a given amount of change. &lt;/p&gt;
-
-&lt;p&gt;I’m blessed that there’s &lt;a href=&quot;https://vimeo.com/53519408&quot;&gt;a video out there&lt;/a&gt; of Micah Martin performing this exact task, but being able to perform the kata feels a little bit empty without having a sense for what’s going on under the hood.&lt;/p&gt;
-
-&lt;p&gt;And while the nature of task lends itself pretty well to the understanding (in US currency, simply provide larger coins until their value exceeds the amount you still owe), the implementation in Clojure is a bit complicated:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;defn &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;change-for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;denominations&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;         &lt;span class=&quot;nv&quot;&gt;amounts&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;reductions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;rem &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;%1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;%2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;amount&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;denominations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;         &lt;span class=&quot;nv&quot;&gt;coins&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;/ &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;%1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;%2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;amounts&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;denominations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
-&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mapcat &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;take &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;%1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;repeat &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;%2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;coins&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;denominations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;So let’s try and unpack what’s going on here.&lt;/p&gt;
-
-&lt;p&gt;Lines 1 and 2 aren’t too difficult - we define a function with one parameter and bind the vector &lt;code&gt;[25 10 5 1]&lt;/code&gt; to our &lt;code&gt;denominations&lt;/code&gt; variable. So far, so good.&lt;/p&gt;
-
-&lt;p&gt;But line 3 gets more tricky. What is this &lt;code&gt;reductions&lt;/code&gt;?&lt;/p&gt;
-
-&lt;p&gt;Turns out, nothing all too complicated. &lt;/p&gt;
-
-&lt;p&gt;If you’re (like me) more familiar with Ruby than Clojure, then you might be familiar with &lt;code&gt;.inject&lt;/code&gt; - a handy way to perform operations on collections.&lt;/p&gt;
-
-&lt;p&gt;Say you want to get the sum of an array. You might call:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;If you want to begin your calculation of the sum from an initial value, you can do that too: &lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;As you may know, &lt;code&gt;.inject&lt;/code&gt; also goes by the alias &lt;code&gt;.reduce&lt;/code&gt; - these two methods accomplish the same task.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reduce&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reduce&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Clojure also makes use of &lt;code&gt;reduce&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;reduce &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;+ &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;%1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;%2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;;= 15&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;And it can also take an initial value:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;reduce &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;+ &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;%1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;%2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;;= 20&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;So why the detour? Well, it turns out that &lt;code&gt;reductions&lt;/code&gt; simply provides a sequence of the intermediate values involved in calling &lt;code&gt;reduce&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;reductions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;+ &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;%1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;%2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;;= (5 6 8 11 15 20)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Our sequence contains the initial value &lt;code&gt;5&lt;/code&gt; followed by each of the values computed from adding on the next element in the collection (&lt;code&gt;5 + 1 = 6&lt;/code&gt;, &lt;code&gt;6 + 2 = 8&lt;/code&gt;, &lt;code&gt;8 + 3 = 11&lt;/code&gt;, etc.).&lt;/p&gt;
-
-&lt;p&gt;This means that in the coin changer code above, &lt;code&gt;reductions&lt;/code&gt; is giving us a collection containing the initial amount we owe followed by the amounts we still owe after factoring out larger denominations:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;reductions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;rem &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;%1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;%2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;99&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;;= (99 24 4 4 0)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;We still owe 24 cents after factoring out quarters, 4 cents after factoring out dimes and nickels, and then we’re done after we’ve distributed 4 pennies.&lt;/p&gt;
-
-&lt;p&gt;So, how does this fit into the rest of the solution?&lt;/p&gt;
-
-&lt;p&gt;Line 4 maps the quotients of dividing the &lt;code&gt;amounts&lt;/code&gt; by the &lt;code&gt;denominations&lt;/code&gt; (&lt;code&gt;99 / 25 = 3&lt;/code&gt;, &lt;code&gt;24 / 10 = 2&lt;/code&gt;, &lt;code&gt;4 / 5 = 0&lt;/code&gt;, etc.): &lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;/ &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;%1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;%2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;99&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;;= (3 2 0 4)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;And line 5 concatenates the mapping of the number of each coin with its denominational value:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mapcat &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;take &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;%1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;repeat &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;%2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;;= (25 25 25 10 10 1 1 1 1)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The solution solves the problem, it’s elegant, and it makes sense.&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 06 May 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//clojure/2015/05/06/clojure-reductions.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//clojure/2015/05/06/clojure-reductions.html</guid>
-        
-        <category>functional</category>
-        
-        <category>reductions</category>
-        
-        
-        <category>clojure</category>
         
       </item>
     
