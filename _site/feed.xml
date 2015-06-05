@@ -6,9 +6,44 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 01 Jun 2015 15:54:18 -0500</pubDate>
-    <lastBuildDate>Mon, 01 Jun 2015 15:54:18 -0500</lastBuildDate>
+    <pubDate>Fri, 05 Jun 2015 16:37:35 -0500</pubDate>
+    <lastBuildDate>Fri, 05 Jun 2015 16:37:35 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>To Revisit the Past: Working with the Command Line</title>
+        <description>&lt;p&gt;This week, I was tasked with putting together a presentation about the command line. Having stuck  to the most basic Unix operations (&lt;code&gt;cd&lt;/code&gt;, &lt;code&gt;ls&lt;/code&gt;, &lt;code&gt;mv&lt;/code&gt;, etc.) throughout most of my time developing software, I had to do a bit a research.&lt;/p&gt;
+
+&lt;p&gt;Though I learned a lot of things preparing for the talk, perhaps the most useful tool I picked up is one that helps you reach into your command history quickly and easily: &lt;code&gt;CTRL-R&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Typing &lt;code&gt;CTRL-R&lt;/code&gt; in the command line opens up an interactive search line (with autocomplete) for matching previous commands with the bare minimum of its opening characters. Once you hit enter, it’s immediately executed.&lt;/p&gt;
+
+&lt;p&gt;Of course, you can accomplish the same task with &lt;code&gt;!&amp;lt;str&amp;gt;&lt;/code&gt; (replacing &lt;code&gt;&amp;lt;str&amp;gt;&lt;/code&gt; with whichever opening characters you would search for), but &lt;code&gt;CTRL-R&lt;/code&gt; gives you certainty that you’ll get the right command right away, and the ability to execute it immediately&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;Having located this tool, I’m thinking it will never be necessary to use the up/down arrow keys for toggling through command line history ever again. Good riddance. Using CTRL-R allows faster retrieval with guaranteed precision.&lt;/p&gt;
+
+&lt;p&gt;Finding this tool has also sparked my interest in discovering more sophisticated Unix commands. I’m excited to find out what other operations I can perform to improve my efficiency and productivity as I continue to work with the command line.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;To get certainty, you can run &lt;code&gt;!&amp;lt;str&amp;gt;:p&lt;/code&gt; (to see the command this search found) and then &lt;code&gt;!!&lt;/code&gt; (to excecute) once you’re sure it’s right, but this inserts an extra step.  &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Fri, 05 Jun 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//general/2015/06/05/command-line-history.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/06/05/command-line-history.html</guid>
+        
+        <category>command-line</category>
+        
+        <category>history</category>
+        
+        
+        <category>general</category>
+        
+      </item>
     
       <item>
         <title>Packaging Programs: Building JAR Files With IntelliJ</title>
@@ -717,74 +752,6 @@
         
         
         <category>clojure</category>
-        
-      </item>
-    
-      <item>
-        <title>Professional Programming: Reflections on The Clean Coder</title>
-        <description>&lt;p&gt;Over the past week, I had the pleasure of reading Robert C. Martin’s &lt;em&gt;&lt;a href=&quot;http://www.amazon.com/The-Clean-Coder-Professional-Programmers/dp/0137081073&quot;&gt;The Clean Coder: A Code of Conduct for Professional Programmers&lt;/a&gt;&lt;/em&gt;. The text is an insightful and thought provoking meditation on what it means to be a software professional, one that aggresively challenges many habits and practices that developers might otherwise passively accept if not actively condone. &lt;/p&gt;
-
-&lt;p&gt;Among Martin’s targets: working in “the Zone”, agreeing to “try” to meet a rushed deadline, and foregoing time-consuming procedures to put together a “quick and dirty” solution. Though we could surely envision downsides to all of these practices, I’d wager that most of us are guilty of having partaken in each of them at one point are another.&lt;/p&gt;
-
-&lt;p&gt;Still, the author’s wealth of professional experience and his keen sense for the big picture yields such a compelling case that I’d like to reflect upon it here. Though there are a plethora of other valuable tidbits that probably merit equal consideration, for the sake of space I’ll be sticking with the points listed above in this post.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Speed Kills: Stay Out of “The Zone”&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Most of us are familiar with “the Zone”, the sense of flow that comes from completely immersing yourself in a problem. I think it’s one of the things that first drew me to programming; I knew I was hooked when I found myself losing track of time coding into the night.&lt;/p&gt;
-
-&lt;p&gt;But Martin is explicit in his opposition to this form of coding. He urges us explicitly, “Avoid the Zone” (62). His case: your sense of infallibility in the zone is hubris, it’s accompanied by reduced mental faculties for careful consideration, and it yields technical debt that costs significantly more time later to clean up. &lt;/p&gt;
-
-&lt;p&gt;I’ll admit, I was a little skeptical of his case at first. If my goal as a professional is to produce working software for my clients and I do so more quickly when I’m in the zone, then shouldn’t that be something I strive for?&lt;/p&gt;
-
-&lt;p&gt;What pulled me over to his side was when he brought up pair programming. I know that some of my favorite code has come from pairing - having two minds working on the same problem somehow yields better solutions than either partner would have written on their own. And Martin points out, “it is virtually impossible for a pair to enther the Zone” (62).&lt;/p&gt;
-
-&lt;p&gt;Upon consideration, that’s true. Pairing forces you to constantly communicate what you’re doing, to be deliberate about each decision you make. You can’t immerse yourself fully in the code, because you have to pay attention to the person you’re pairing with.&lt;/p&gt;
-
-&lt;p&gt;If pair programming yields the best code because it’s more considered and deliberate than code produced in the zone, then it stands to reason that carefully put together code is better than code produced in the zone. Professionals should clearly strive to produce the best output that they can, so perhaps our collective affinity for the zone ought to be rethought.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Saying Yes Or Saying No: There Is No Try&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;One of the more striking passages in &lt;em&gt;Clean Coder&lt;/em&gt; comes when Martin is instructing software professionals to never say “try”. In juxtaposition with the more colloquial understanding of the term which sees it as a commitment to a good faith effort, Martin sees “try” as a commitment to results. He writes, “by promising to try you are committing to succeed” (33). &lt;/p&gt;
-
-&lt;p&gt;At first, I found myself fighting against this passage. That not what I mean when I say “try”! &lt;/p&gt;
-
-&lt;p&gt;But then I found myself thinking, what &lt;em&gt;do&lt;/em&gt; I mean when I say “try”? Generally, I mean I’m unsure - I don’t have a good enough sense of my own abilities and priorities to make a commitment.&lt;/p&gt;
-
-&lt;p&gt;Professionals need to know what they can do. They need to be able to communicate their abilities to those who depend on them. A professional who waffles and agrees to “try” is not acting professionally - they’re expressing a poor understanding of their own abilities.&lt;/p&gt;
-
-&lt;p&gt;My takeaways are twofold. First, anytime I might think of saying “try”, I need to find a way to convert that to a clean “yes” or “no”. If I’m not sure, that’s a “no”. Second, I need to be vigilant about improving my ability to say “yes”. If I frequently have to say “no” because I lack ability, then I need to do a better job of holding myself up to the standards of my profession.&lt;/p&gt;
-
-&lt;p&gt;Avoiding “try” isn’t just eliminating a word from your vocabulary. It’s bringing yourself in line with the practices of a professional.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;When The Going Gets Tough: Staying Disciplined&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;A common motif in &lt;em&gt;Clean Coder&lt;/em&gt; is discipline. A professional exhibits discipline by following through on commitments, exhibiting a strong work ethic, and sticking to best practices. Though a discussion of discipline is not surprising in a text on professionalism, I was intrigued by Martin’s emphasis on avoiding “quick and dirty” solutions. &lt;/p&gt;
-
-&lt;p&gt;We’ve all been in situations where we believe we can accomplish a task more quickly by circumventing some of the more time-consuming procedures that we use to produce good work. Whether it be in spiking out a problem rather than following the incremental progression of test-driven development, shipping in code that “works” even if we know it should be cleaner, or working late into the night even though we can sense that our mental capacity is diminished, sometimes it just feels right to compromise on best practices in the interests of shipping code.&lt;/p&gt;
-
-&lt;p&gt;Martin puts up a big stop sign in front of that line of thinking. In fact, he inverts the very underpinning that gives rise to such sentiments: disciplines are not something that carry us through the good times but can be put aside when the going gets tough; rather, “the reason you &lt;em&gt;have&lt;/em&gt; disciplines is to give you guidance through times of high pressure” (154).&lt;/p&gt;
-
-&lt;p&gt;This was one of those points that felt so obvious I couldn’t really conceptualize how I had ever thought otherwise. If a patient is rushed into an emergency room with an urgent issue, that doesn’t mean the doctor isn’t going to wash their hands. If an airline is running behind schedule and needs to move more quickly, that doesn’t mean a pilot is going to skip procedures like checking that the plane’s carrying enough fuel.&lt;/p&gt;
-
-&lt;p&gt;A software &lt;em&gt;professional&lt;/em&gt; only takes up those disciplines which they believe will improve the quality of their work, so such disciplines cannot be sacrificed in the interest of professional output. The only output a professional will produce is output produced in adherence with professional standards.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;If there’s one thing that ties together all of the points I’ve mentioned here, it’s that professional software developers need to think of themselves as professionals. Perhaps we don’t think of ourselves in the same way that we think of surgeons, pilots, attorneys, and the like, but maybe we should. And even if we don’t attribute to ourselves the same prestige or dress codes, that’s no excuse for compromising on professional standards.&lt;/p&gt;
-
-&lt;p&gt;A professional works through processes that generate high quality output, is clear in communicating what they can do and on what timeline, and does not compromise on their professional standards. &lt;em&gt;Clean Coder&lt;/em&gt; was an excellent reminder of all of these propositions.&lt;/p&gt;
-
-</description>
-        <pubDate>Sat, 09 May 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//general/2015/05/09/professional-programming.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/05/09/professional-programming.html</guid>
-        
-        <category>professionalism</category>
-        
-        <category>readings</category>
-        
-        
-        <category>general</category>
         
       </item>
     
