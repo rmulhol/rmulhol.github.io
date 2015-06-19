@@ -6,9 +6,107 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 17 Jun 2015 15:37:56 -0500</pubDate>
-    <lastBuildDate>Wed, 17 Jun 2015 15:37:56 -0500</lastBuildDate>
+    <pubDate>Fri, 19 Jun 2015 16:42:13 -0500</pubDate>
+    <lastBuildDate>Fri, 19 Jun 2015 16:42:13 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Show Your Work: Recording Data With Java&#39;s Logging Utility</title>
+        <description>&lt;p&gt;As I’ve been putting together &lt;a href=&quot;https://github.com/rmulhol/httpServer&quot;&gt;an HTTP server&lt;/a&gt; in Java to pass &lt;a href=&quot;https://github.com/8thlight/cob_spec&quot;&gt;the Cob Spec Fitnesse suite&lt;/a&gt;, one task I’ve had to carry out is building a log of incoming requests that could be served up to authorized users attempting to access the &lt;code&gt;/logs&lt;/code&gt; uri.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;My initial solution to this challenge was to build and manage my own log, writing all incoming requests to a text file and then serving up the contents of that file to authorized users.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;This solution worked, but it overlooked a built-in feature of the JDK that could have aided me along the path: &lt;code&gt;java.util.logging&lt;/code&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;This package provides a simple and easy-to-implement solution to your logging needs. All it requires is that you set up a logger and tell it when and where to log data.&lt;/p&gt;
+
+&lt;p&gt;Here’s some sample code:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Main&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;     &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Logger&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serverLogger&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;             &lt;span class=&quot;n&quot;&gt;Logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getLogger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IOException&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;             &lt;span class=&quot;n&quot;&gt;FileHandler&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;requestLogHandler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FileHandler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getProperty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;user.dir&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;/logs.txt&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;             &lt;span class=&quot;n&quot;&gt;serverLogger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addHandler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;requestLogHandler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;         &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IOException&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;             &lt;span class=&quot;n&quot;&gt;serverLogger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;SEVERE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Couldn&amp;#39;t add handler to logger&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;         &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;ServerSocket&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serverSocket&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ServerSocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;serverLogger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;INFO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Server starting... &amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt;             &lt;span class=&quot;n&quot;&gt;Socket&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clientSocket&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serverSocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;accept&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;20&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;21&lt;/span&gt;             &lt;span class=&quot;n&quot;&gt;OutputStream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;22&lt;/span&gt;             &lt;span class=&quot;n&quot;&gt;BufferedReader&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;23&lt;/span&gt;             &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;24&lt;/span&gt;                 &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clientSocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getOutputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;25&lt;/span&gt;                 &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;BufferedReader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;InputStreamReader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clientSocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getInputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()));&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;26&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;27&lt;/span&gt;                 &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;readLine&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;28&lt;/span&gt;                 &lt;span class=&quot;n&quot;&gt;serverLogger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;INFO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;29&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;30&lt;/span&gt;                 &lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;HTTP/1.1 200 OK\r\n\r\nYour request: &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;31&lt;/span&gt;                 &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;32&lt;/span&gt;                 &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;33&lt;/span&gt;             &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IOException&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;34&lt;/span&gt;                 &lt;span class=&quot;n&quot;&gt;serverLogger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Level&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;SEVERE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Couldn&amp;#39;t complete request/response cycle&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;35&lt;/span&gt;                 &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printStackTrace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;36&lt;/span&gt;             &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;37&lt;/span&gt;         &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;38&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;39&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here we have a fully-functional echo server with logging capabilities. How does it work?&lt;/p&gt;
+
+&lt;p&gt;First, we set up a logger for our &lt;code&gt;Main&lt;/code&gt; class on lines 3-4. This is the tool we’ll use to log requests.&lt;/p&gt;
+
+&lt;p&gt;Next, we add a &lt;code&gt;FileHandler&lt;/code&gt; on lines 7-12. This step is optional, since our logged data will already be written to the console without this step. But it assures that we have a stored copy of our logs even if we clear the console.&lt;/p&gt;
+
+&lt;p&gt;Line 14 introduces our first actual logging. We note that the server is starting, attributing this message an importance of &lt;code&gt;Level.INFO&lt;/code&gt;. You can see a full rundown of the different log levels &lt;a href=&quot;http://docs.oracle.com/javase/7/docs/api/java/util/logging/Level.html&quot;&gt;here&lt;/a&gt;, but for now all you need to know is that &lt;code&gt;Level.INFO&lt;/code&gt; is sufficient to assure our logged data is written to the console.&lt;/p&gt;
+
+&lt;p&gt;Finally, we make another &lt;code&gt;Level.INFO&lt;/code&gt; log whenever a request has been read. That way we have a record of each request our server receives.&lt;/p&gt;
+
+&lt;p&gt;That’s pretty much it. We now have a persistent record (&lt;code&gt;logs.txt&lt;/code&gt;) that keeps a record of each time the server is started and each request that’s received.&lt;/p&gt;
+
+&lt;p&gt;There are two other places where data is logged in the application above, on lines 11 and 34. Those happen whenever an &lt;code&gt;IOException&lt;/code&gt; is caught, and they’re attributed &lt;code&gt;Level.SEVERE&lt;/code&gt; since something has gone very wrong if they’re ever triggered.&lt;/p&gt;
+
+&lt;p&gt;So that’s pretty much it - &lt;code&gt;java.util.logging&lt;/code&gt; provides all you need to get some basic logging work done.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;Cob Spec tests basic authorization functionality by checking whether attempts to access the &lt;code&gt;/logs&lt;/code&gt; uri are allowed only when the request includes an authorization header. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;Unauthorized users receive the &lt;code&gt;401 Unauthorized&lt;/code&gt; status code. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;There are other logging resources to check out if you’re interested in the topic, perhaps most notably &lt;a href=&quot;http://logging.apache.org/log4j/2.x/&quot;&gt;Log4j&lt;/a&gt; and &lt;a href=&quot;http://www.slf4j.org/&quot;&gt;SLF4J&lt;/a&gt;. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:4&quot;&gt;
+      &lt;p&gt;There’s a lot more you can accomplish with &lt;code&gt;java.util.logging&lt;/code&gt; and other logging tools, so, if you’re interested, don’t stop here! &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Fri, 19 Jun 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//java/2015/06/19/java-logging-utility.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//java/2015/06/19/java-logging-utility.html</guid>
+        
+        <category>server</category>
+        
+        <category>logging</category>
+        
+        
+        <category>java</category>
+        
+      </item>
     
       <item>
         <title>Handlers and Adapters: Thinking Server Architecture</title>
@@ -613,65 +711,6 @@
         
         
         <category>clojure</category>
-        
-      </item>
-    
-      <item>
-        <title>Making Version Control Useful: Effective Commit Messages</title>
-        <description>&lt;p&gt;Over my time as a programmer, one area where I’ve felt there’s always more to learn is the effective use of version control. Internalizing the basics of &lt;code&gt;git add&lt;/code&gt;, &lt;code&gt;git commit&lt;/code&gt;, and &lt;code&gt;git push&lt;/code&gt; doesn’t take too long, but there’s so many more useful features that become relevant with time and experience.&lt;/p&gt;
-
-&lt;p&gt;Beyond additional features, there’s also the challenge of utilizing the simple tools &lt;em&gt;effectively&lt;/em&gt;. Just because you make regular commits during the development process doesn’t mean you’re setting yourself up to reap the benefits of version control in the event that you need it.&lt;/p&gt;
-
-&lt;p&gt;One of the most important foundations for effective use of version control useful is good commit messages. In the event you need to roll back, you’ll be shaking your fist at yourself (or whoever is responsible for sloppy messages) if you can’t identify which commit correlates to the state you want to reach.&lt;/p&gt;
-
-&lt;p&gt;In this post, I want to share some of the techniques I’ve learned for constructing helpful commit messages. There’s a lot more to be said beyond the scope of what I’ll cover here, so think of these suggestions as the basic foundation from which further improvements can proceed.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Avoid Ambiguity: Deliver Details&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;If I’m working on a project with poor test coverage, one priority is to add tests. As I wrap up tests for one class or namespace, it feels like a natural time to make a commit.&lt;/p&gt;
-
-&lt;p&gt;An earlier version of myself might add the message &lt;code&gt;improve test coverage&lt;/code&gt;. It’s concise and describes what I’ve done, so why not?&lt;/p&gt;
-
-&lt;p&gt;The trouble is that this commit message is too vague. Others looking at my commit history don’t receive any useful information about how test coverage was improved.&lt;/p&gt;
-
-&lt;p&gt;At its most basic, a good commit message should provide a clear explanation for what changes have been made. That means that it needs to include a sufficient level of detail to be understandable without diving into the code.&lt;/p&gt;
-
-&lt;p&gt;A more helpful message might read &lt;code&gt;add tests for all methods on the Users controller&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;DRY Commits: Reduce Repetition&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Imagine you’re satisfied with the &lt;code&gt;improve test coverage&lt;/code&gt; commit message above, and now you want to improve test coverage for the whole project. So you’ve got a series of commits, each sharing the same message.&lt;/p&gt;
-
-&lt;p&gt;This compounds the problems described above. Not only can you not tell what’s happening in the first commit with the vague message, you’re also facing a series of subsequent commits bearing the same problem.&lt;/p&gt;
-
-&lt;p&gt;Duplication among commit messages should be treated like duplication in code: something ripe for elimination. If you’re finding yourself labeling multiple commits with the same message, chances are that you’re not only being overly ambiguous about the changes being made in one instance - you’re extending that ambiguity across your entire commit history.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Being Honest: Don’t Lie&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Sometimes while working on a new feature, you might find yourself revisiting some earlier code. Maybe you decide to refactor a few things.&lt;/p&gt;
-
-&lt;p&gt;When it comes time to commit, you clearly lay out the details of your new feature, giving yourself a pat on the back for putting together such a nice commit message. Push up all the changes, feeling good.&lt;/p&gt;
-
-&lt;p&gt;The trouble with this scenario is that there’s some unrelated (and unclaimed) refactoring going on in the same commit. What if it broke something? Someone reading your commit history has no reason to believe this commit touched the breaking code.&lt;/p&gt;
-
-&lt;p&gt;If you’re making changes unrelated to what’s stated in your commit message, you’re lying. The commit does something totally different than what’s claimed in the message.&lt;/p&gt;
-
-&lt;p&gt;A good commit message should be honest. That means you can’t always rely on the trusty &lt;code&gt;git add .&lt;/code&gt;. Unrelated changes should be broken up into separate commits, so that each message tells the truth about what that commit is doing.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;A good commit message begins with uniquely identifiable details that honestly describe exactly what changes are being made. There’s a lot more you can do to make sure that you’re being as helpful as possible, but sticking to these foundational premises will set you started on the track toward reaping value out of your version control.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 16 May 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//general/2015/05/16/effective-commit-messages.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/05/16/effective-commit-messages.html</guid>
-        
-        <category>git</category>
-        
-        <category>commits</category>
-        
-        
-        <category>general</category>
         
       </item>
     
