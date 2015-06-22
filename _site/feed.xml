@@ -6,8 +6,8 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 19 Jun 2015 16:42:13 -0500</pubDate>
-    <lastBuildDate>Fri, 19 Jun 2015 16:42:13 -0500</lastBuildDate>
+    <pubDate>Mon, 22 Jun 2015 09:23:14 -0500</pubDate>
+    <lastBuildDate>Mon, 22 Jun 2015 09:23:14 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
     
       <item>
@@ -110,19 +110,19 @@
     
       <item>
         <title>Handlers and Adapters: Thinking Server Architecture</title>
-        <description>&lt;p&gt;In a &lt;a href=&quot;/java/2015/06/06/simple-java-server.html&quot;&gt;previous post&lt;/a&gt;, I walked through how to build a simple http server in Java that echoes back whatever request is issued by the user. While it’s a nice start for those new to server construction, it leaves a lot left to be desired in terms of functionality.&lt;/p&gt;
+        <description>&lt;p&gt;In a &lt;a href=&quot;/java/2015/06/06/simple-java-server.html&quot;&gt;previous post&lt;/a&gt;, I walked through how to build a simple HTTP server in Java that echoes back whatever request is issued by the user. While it’s a nice start for those new to server construction, it leaves a lot left to be desired in terms of functionality.&lt;/p&gt;
 
 &lt;p&gt;Of course, you could just continue to build on that &lt;code&gt;while&lt;/code&gt; loop, constructing a gargantuan nested conditional to deal with different requests appropriately. But that will leave you with some really gross code.&lt;/p&gt;
 
-&lt;p&gt;Even following the tried and true approach of building away before extracting/refactoring code can leave you with a bit of a mess. It’s hard to put together a good architecture for a complicated piece of software like an http server without an early familiarity with what it might look like down the road.&lt;/p&gt;
+&lt;p&gt;Even following the tried and true approach of building away before extracting/refactoring code can leave you with a bit of a mess. It’s hard to put together a good architecture for a complicated piece of software like an HTTP server without an early familiarity with what it might look like down the road.&lt;/p&gt;
 
 &lt;p&gt;At least, that was the trouble I found myself in after an initial attempt. I managed to decouple and extract most buckets of behavior from the core &lt;code&gt;while&lt;/code&gt; loop, but there was one place where things got iffy: the method where the server determined what response to issue based on the request.&lt;/p&gt;
 
 &lt;p&gt;This is not a good place to fail - it’s basically the heart of the application. I knew the best approach would probably be to go ahead and rewrite the whole thing, but I was at a loss for how I could approach such a rewrite without duplicating the same error.&lt;/p&gt;
 
-&lt;p&gt;Luckily, after speaking with a few knowledgeable colleagues, I stumbled upon a role model of sorts: Clojure’s &lt;a href=&quot;https://github.com/ring-clojure/ring&quot;&gt;Ring&lt;/a&gt;. Ring is a library for building web applications with Clojure, and it’s architecture provides some guidance as to how you can approach building an http server for yourself.&lt;/p&gt;
+&lt;p&gt;Luckily, after speaking with a few knowledgeable colleagues, I stumbled upon a role model of sorts: Clojure’s &lt;a href=&quot;HTTPs://github.com/ring-clojure/ring&quot;&gt;Ring&lt;/a&gt;. Ring is a library for building web applications with Clojure, and it’s architecture provides some guidance as to how you can approach building an HTTP server for yourself.&lt;/p&gt;
 
-&lt;p&gt;While I’d recommend that anyone interested visit &lt;a href=&quot;https://github.com/ring-clojure/ring/wiki&quot;&gt;the Ring wiki&lt;/a&gt; for a more detailed explanation, the core of Ring’s architecture is a division of responsibilities among Handlers and Adapters.&lt;/p&gt;
+&lt;p&gt;While I’d recommend that anyone interested visit &lt;a href=&quot;HTTPs://github.com/ring-clojure/ring/wiki&quot;&gt;the Ring wiki&lt;/a&gt; for a more detailed explanation, the core of Ring’s architecture is a division of responsibilities among Handlers and Adapters.&lt;/p&gt;
 
 &lt;p&gt;Handlers manage the matching of requests to responses, taking one map that defines a request and returning another that defines the response. Adapters do the rest: setting up a port, formatting input into a map for the handler, formatting a response map into output for the client, and so forth.&lt;/p&gt;
 
@@ -316,7 +316,7 @@
 
 &lt;p&gt;Another important point is that developers should put serious thought into what kind of consistency they need for their specific systems. There’s usually a gap between the form of consistency you need and the “C” in CAP, and figuring out where that gap lies can enable you to make the optimal compromise in favor of other qualities like availability and performance.&lt;/p&gt;
 
-&lt;p&gt;Finally, Jepsen’s research encourages those who build and maintain databases for distributed systems to stay vigilant. It’s hard to claim that your system delivers certain promises when repeatable tests demonstrate that it does not, and it appears that Kingsbury has provoked some folks to update their documentation and/or squash bugs.&lt;/p&gt;
+&lt;p&gt;Finally, Kingsbury’s research encourages those who build and maintain databases for distributed systems to stay vigilant. It’s hard to claim that your system delivers certain promises when repeatable tests demonstrate that it does not, and it appears that Kingsbury has provoked some folks to update their documentation and/or squash bugs.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
 

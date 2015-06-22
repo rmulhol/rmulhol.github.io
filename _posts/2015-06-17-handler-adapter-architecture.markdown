@@ -6,17 +6,17 @@ categories: Java
 tags: server socket
 --- 
 
-In a [previous post][prev_post], I walked through how to build a simple http server in Java that echoes back whatever request is issued by the user. While it's a nice start for those new to server construction, it leaves a lot left to be desired in terms of functionality.
+In a [previous post][prev_post], I walked through how to build a simple HTTP server in Java that echoes back whatever request is issued by the user. While it's a nice start for those new to server construction, it leaves a lot left to be desired in terms of functionality.
 
 Of course, you could just continue to build on that `while` loop, constructing a gargantuan nested conditional to deal with different requests appropriately. But that will leave you with some really gross code.
 
-Even following the tried and true approach of building away before extracting/refactoring code can leave you with a bit of a mess. It's hard to put together a good architecture for a complicated piece of software like an http server without an early familiarity with what it might look like down the road.
+Even following the tried and true approach of building away before extracting/refactoring code can leave you with a bit of a mess. It's hard to put together a good architecture for a complicated piece of software like an HTTP server without an early familiarity with what it might look like down the road.
 
 At least, that was the trouble I found myself in after an initial attempt. I managed to decouple and extract most buckets of behavior from the core `while` loop, but there was one place where things got iffy: the method where the server determined what response to issue based on the request.
 
 This is not a good place to fail - it's basically the heart of the application. I knew the best approach would probably be to go ahead and rewrite the whole thing, but I was at a loss for how I could approach such a rewrite without duplicating the same error.
 
-Luckily, after speaking with a few knowledgeable colleagues, I stumbled upon a role model of sorts: Clojure's [Ring][ring]. Ring is a library for building web applications with Clojure, and it's architecture provides some guidance as to how you can approach building an http server for yourself.
+Luckily, after speaking with a few knowledgeable colleagues, I stumbled upon a role model of sorts: Clojure's [Ring][ring]. Ring is a library for building web applications with Clojure, and it's architecture provides some guidance as to how you can approach building an HTTP server for yourself.
 
 While I'd recommend that anyone interested visit [the Ring wiki][ring_wiki] for a more detailed explanation, the core of Ring's architecture is a division of responsibilities among Handlers and Adapters.
 
@@ -31,5 +31,5 @@ Second, the two major components of a handler/adapter architecture can be furthe
 With a server architecture built around the separation of handlers and adapters, it's much easier to build a server you can be proud of. Good, decoupled code only gets you so far without a good, decoupled architecture, and the handler/adapter architecture lays the foundation for building up a good, decoupled code base.
 
 [prev_post]: {% post_url 2015-06-06-simple-java-server %}
-[ring]: https://github.com/ring-clojure/ring
-[ring_wiki]: https://github.com/ring-clojure/ring/wiki
+[ring]: HTTPs://github.com/ring-clojure/ring
+[ring_wiki]: HTTPs://github.com/ring-clojure/ring/wiki
