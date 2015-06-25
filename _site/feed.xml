@@ -6,9 +6,103 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 22 Jun 2015 09:23:14 -0500</pubDate>
-    <lastBuildDate>Mon, 22 Jun 2015 09:23:14 -0500</lastBuildDate>
+    <pubDate>Wed, 24 Jun 2015 21:47:44 -0500</pubDate>
+    <lastBuildDate>Wed, 24 Jun 2015 21:47:44 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Connecting The Dots: Referencing Clojure Code in Java</title>
+        <description>&lt;p&gt;Now that I’ve got &lt;a href=&quot;https://github.com/rmulhol/httpServer&quot;&gt;a working HTTP server&lt;/a&gt; written in Java, I’ve been trying to make it better by adding features. Specifically, I’ve spent the last few days on making it possible to play &lt;a href=&quot;https://github.com/rmulhol/clojure-tic-tac-toe&quot;&gt;my Clojure tic-tac-toe game&lt;/a&gt; through the web interface hosted by the server. &lt;/p&gt;
+
+&lt;p&gt;I wrote Clojure tic-tac-toe as a command line application, so there have been some hurdles in simply connecting all of the dots so that the game logic can support another interface. But perhaps the biggest hurdle has been figuring out the answer to a fairly straightforward question: how can I reference and use Clojure code from a Java application?&lt;/p&gt;
+
+&lt;p&gt;I didn’t expect this to be too difficult. After all, Clojure is &lt;a href=&quot;http://clojure.org/jvm_hosted&quot;&gt;hosted on the JVM&lt;/a&gt; and provides access to Java’s core libraries. Gaining access in the opposite direction wouldn’t seem like much of a leap.&lt;/p&gt;
+
+&lt;p&gt;And while it wasn’t &lt;em&gt;too&lt;/em&gt; difficult, I was surprised at how little explanation I found out there about how to do so properly. Some sources are outdated or overly brief, and others go into great detail on parts of the process without rounding out the big picture.&lt;/p&gt;
+
+&lt;p&gt;Luckily, I was able to find some answers, and now making use of my Clojure code in the Java server is a breeze. So, for those who might be stumbling at a similar roadblock, here’s what worked for me.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 1: the Uberjar&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;If you’re putting together a Clojure project, you can’t go wrong with &lt;a href=&quot;http://leiningen.org/&quot;&gt;Leiningen&lt;/a&gt;. There are numerous reasons, but most pertinent for our current purposes is the simplicity with which it allows you to package a jar file.&lt;/p&gt;
+
+&lt;p&gt;Avid readers may recall that I wrote about how &lt;a href=&quot;/java/2015/06/01/package-jar-intellij.html&quot;&gt;Intellij makes it easy to package jar files&lt;/a&gt; a few weeks ago. Well, put me down as similarly impressed with Leiningen. To package a Leiningen project into a jar file, you execute one command: &lt;code&gt;lein uberjar&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;That being said, there are some things that can go wrong. While the step is easy to execute, it’s the one I’ve found myself repeating most often as I overcome little obstacles along the way.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;What can go wrong, you ask?&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Your &lt;code&gt;project.clj&lt;/code&gt; file may not be properly configured to compile the jar. There are a number of things you need to get right, and they’re not all immediately intuitive. While you can seek guidance from &lt;a href=&quot;https://github.com/technomancy/leiningen/blob/master/sample.project.clj&quot;&gt;the sample &lt;code&gt;project.clj&lt;/code&gt; file at the Leiningen github repo&lt;/a&gt;, that’s 500 lines of code to parse.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Your namespaces might not be properly set up in a way that’s useful for your Java project. You need to provide instructions and Java-ready code to your namespaces if you want to be able to call Clojure functions from Java projects.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;How do you address these stumbling blocks? Read on.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2: Fix Project.clj, Rinse, Repeat&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;If you’re not sure whether or not your jar file is functioning properly, the first thing you can do is to try and give it a run: &lt;code&gt;java -jar path/to/jar.jar&lt;/code&gt;. If it doesn’t execute, chances are you need to clean up your &lt;code&gt;project.clj&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;The first thing to check is that you’ve properly designated a place to find your &lt;code&gt;main&lt;/code&gt; function. My &lt;code&gt;project.clj&lt;/code&gt; file has the line &lt;code&gt;:main tic-tac-toe.core&lt;/code&gt;, which tells Leiningen to find my main function there. You’ll need something similar for your jar to execute.&lt;/p&gt;
+
+&lt;p&gt;After that, you want to provide instructions as to which classes should be compiled ahead of time, rather than just in time. You can read about the differences between the two &lt;a href=&quot;http://clojure.org/compilation&quot;&gt;here&lt;/a&gt;, but the core takeaway is that any namespaces which you intend to call as if they were Java classes should be compiled ahead of time. &lt;/p&gt;
+
+&lt;p&gt;You can be sure that’s taken care of with two steps. First, add &lt;code&gt;:uberjar {:aot :all}&lt;/code&gt; to the &lt;code&gt;:profiles&lt;/code&gt; map in your &lt;code&gt;project.clj&lt;/code&gt;. Second, add &lt;code&gt;:aot [namespace(s)-to-compile]&lt;/code&gt; as a separate line after your main method. These steps will assure Leiningen knows to compile everything you’ve included when you package the jar.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; &lt;/p&gt;
+
+&lt;p&gt;After you’re comfortable that your &lt;code&gt;project.clj&lt;/code&gt; is in good shape, you’ll want to give &lt;code&gt;lein uberjar&lt;/code&gt; another run. If everything is working, great. If not, it’s time to look at your namespaces.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 3: Adjust Namespaces, Rinse, Repeat&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Even after Leiningen is good to go, you still need to make sure your relevant namespaces are ready to serve as Java classes.&lt;/p&gt;
+
+&lt;p&gt;The first concern is whether you’ve told them they might need to do that. You can do so by adding &lt;a href=&quot;https://clojuredocs.org/clojure.core/gen-class&quot;&gt;&lt;code&gt;(gen-class)&lt;/code&gt;&lt;/a&gt; to the top of each namespace you intend to call as if it were a Java class.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Second, you’ll want to check whether the functions you intend to use in your Java project can be read as valid Java code. In my case, the &lt;code&gt;get-move&lt;/code&gt; function on my AI player was causing problems in Java, so I added a wrapper function named &lt;code&gt;getMove&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Third, there’s the question of whether the data structures you’re using play nicely with Java. Some of my Clojure functions work with vectors but need to be called with an ArrayList in Java, so I added conversions in my wrapper functions (e.g. &lt;code&gt;(ArrayList. (function (into [] arg))&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Once you’ve taken care of these steps, hooray! It’s time to start working with Clojure code in a Java project.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 4: Get to Work&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;After your &lt;code&gt;project.clj&lt;/code&gt; is properly configured, you’ve edited your namespaces to play nicely with Java, and you’ve run &lt;code&gt;lein uberjar&lt;/code&gt;, it’s time to import your jar into your Java project.&lt;/p&gt;
+
+&lt;p&gt;At that point, you should be able to call Clojure functions as if they were Java methods (and as if your namespaces were Java classes).&lt;/p&gt;
+
+&lt;p&gt;It’s slightly more tedious than calling built-in Java methods in a Clojure project, but nothing a little elbow grease can’t help you overcome.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;While I put creating the jar file as step 1, it could just as easily fit in as the second-to-last step (right before you import and call it in your Java project), since creating it in a way that’s useful for other programs is so error-prone. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;You should obviously feel free to be more judicious about using &lt;code&gt;:aot :all&lt;/code&gt; if you don’t need everything, but that line will make sure you miss nothing. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;You may need to pass arguments to &lt;code&gt;gen-class&lt;/code&gt; to assure that the Clojure function come out as methods you can call as you wish in Java code. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 24 Jun 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//java/clojure/2015/06/24/clojure-java-interop.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//java/clojure/2015/06/24/clojure-java-interop.html</guid>
+        
+        <category>jar</category>
+        
+        <category>interop</category>
+        
+        
+        <category>java</category>
+        
+        <category>clojure</category>
+        
+      </item>
     
       <item>
         <title>Show Your Work: Recording Data With Java&#39;s Logging Utility</title>
@@ -638,79 +732,6 @@
         
         
         <category>general</category>
-        
-      </item>
-    
-      <item>
-        <title>Testing Input Validation in Clojure: The Beauty of With-In-Str</title>
-        <description>&lt;p&gt;Over the past week, I put together &lt;a href=&quot;https://github.com/rmulhol/clojure-tic-tac-toe&quot;&gt;tic tac toe in Clojure&lt;/a&gt;. The game is playable from the command line, the AI player is unbeatable, and it takes up significantly fewer lines of code than any other version of the game I’ve completed previously.&lt;/p&gt;
-
-&lt;p&gt;I was feeling pretty proud of myself, until I saw what happens when the user enters invalid input upon being promped for a move: the dreaded &lt;code&gt;NullPointerException&lt;/code&gt;. Though my function was set up to recur in the instance of invalid input, something was getting in the way of propogating subsequently validated input back up the stack.&lt;/p&gt;
-
-&lt;p&gt;Though there were problems with the mechanics of my code, the bigger problem was the absence of tests. I had tests that simulated valid user input, but none for invalid input. Because invalid input provoked a recursive call, simulating it felt like a real headache for my test suite.&lt;/p&gt;
-
-&lt;p&gt;But it turns out that simulating a sequence of input is no headache at all. Just a simple tweak on the exact function used to simulate valid input: &lt;code&gt;with-in-str&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Let’s take a look at how one might simulate user input with &lt;code&gt;speclj&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;prompt&amp;quot;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;returns the input provided by the user&amp;quot;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;should=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;with-in-str&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;prompt&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Enter text: &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Assuming our &lt;code&gt;prompt&lt;/code&gt; function looks like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;defn &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;prompt&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;println &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;read-line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The test passes. The function &lt;code&gt;with-in-str&lt;/code&gt; provides a string for &lt;code&gt;read-line&lt;/code&gt; to read, allowing the test to run without actual user input.&lt;/p&gt;
-
-&lt;p&gt;Now imagine we want to validate that the user has entered something specific. For example, the string “hello”. We could do that like so:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;defn &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;prompt&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;println &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;read-line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;= &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;input&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;recur&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;But how do we test it? If we do this:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;prompt&amp;quot;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;returns the input provided by the user&amp;quot;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;should=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;with-in-str&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;car&amp;quot;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;prompt&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Enter text: &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Our tests are going to fail. Not only are they going to fail, they’re going to explode. Endless prompts for new user input never quenched by the desired string “hello”; an infinite loop of pain for our test suite.&lt;/p&gt;
-
-&lt;p&gt;Fortunately, the function we’re using to pass in valid input - &lt;code&gt;with-in-str&lt;/code&gt; - can take multiple lines. Since our &lt;code&gt;prompt&lt;/code&gt; function calls &lt;code&gt;read-line&lt;/code&gt; to evaluate input, it will pass through one line at a time until it returns.&lt;/p&gt;
-
-&lt;p&gt;The simple switch:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-clojure&quot; data-lang=&quot;clojure&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;prompt&amp;quot;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;returns the input provided by the user&amp;quot;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;should=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;
-      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;with-in-str&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;car\nhello&amp;quot;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;prompt&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Enter text: &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Causes our test to pass again. The string before the newline (“car”) is read by the first call to &lt;code&gt;read-line&lt;/code&gt;, and then the rest of the string until another newline (“hello”) is read on subsequent calls. Once input satisfies validation, the function returns.&lt;/p&gt;
-
-&lt;p&gt;This is one of the more simple ways of simulating input that I’ve seen. By simply inserting some newlines, &lt;code&gt;with-in-str&lt;/code&gt; allows you to check how your program interacts with a sequence of (both valid and invalid) input.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 18 May 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//clojure/2015/05/18/testing-input-clojure.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//clojure/2015/05/18/testing-input-clojure.html</guid>
-        
-        <category>testing</category>
-        
-        <category>validation</category>
-        
-        
-        <category>clojure</category>
         
       </item>
     
