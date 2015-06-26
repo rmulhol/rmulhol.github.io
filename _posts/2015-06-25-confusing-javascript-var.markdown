@@ -91,17 +91,17 @@ Everything breaks. Or, more accurately, fails silently - the form is not submitt
 
 So, what's going on here?
 
-The problem relates to the nature of asynchronous listeners in JavaScript. Inside of the `for` loop, the var `i` exists and is set to some integer between 1 and 9. As that's happening, the elements defined by the id `'square-' + i` are receiving event listeners that trigger when clicked.
+The problem relates to the nature of asynchronous listeners in JavaScript. Inside of the `for` loop, the var `i` is set to some integer between 1 and 9. As that's happening, the elements defined by the id `'square-' + i` are receiving event listeners that trigger when clicked.
 
 But the listener is not triggered at that moment - otherwise all the forms would be submitted when the script ran. Instead, the function to submit the form lies in wait for the event listener to trigger.
 
-But there's a problem. When the event triggers, the var `i` no longer exists - the `for` loop has already executed. So when you click on a cell, you get the following error in the console:
+But there's a problem. When the event triggers, the var `i` is no longer set to the value it was when the `for` loop was executing - now it's at 10 (mutable data, good stuff).[^1] So when you click on a cell, you get the following error in the console:
 
 {% highlight javascript %}
 Uncaught TypeError: Cannot read property 'submit' of null
 {% endhighlight %}
 
-By the time the asynchronous listener is called, the object returned by `getElementById` is null, since `'form-' + i` evaluates to `'form-' + null` (or just `'form-'`), which doesn't correspond to any ID on the page. 
+By the time the asynchronous listener is called, the object returned by `getElementById` is null, since `'form-' + i` evaluates to `'form-' + 10` (or just `'form-10'`), which doesn't correspond to any ID on the page. 
 
 Asynchronous callbacks can be tremendously confusing - they can lead you into the pit of [callback hell][callback_hell]. 
 
@@ -109,4 +109,7 @@ But they're also tremendously useful. They let you delay behavior until it's nee
 
 The trick is just figuring out how and when to use them, and then developing thick skin for whenever they leave you feeling like pulling your hair out.
 
+[^1]: Special thanks to Colin and Geoff for helping me to figure this stuff out. Another wildly helpful resource from Geoff: [wat][wat].
+
 [callback_hell]: http://callbackhell.com/
+[wat]: https://www.destroyallsoftware.com/talks/wat

@@ -154,15 +154,15 @@
 
 <p>So, what’s going on here?</p>
 
-<p>The problem relates to the nature of asynchronous listeners in JavaScript. Inside of the <code>for</code> loop, the var <code>i</code> exists and is set to some integer between 1 and 9. As that’s happening, the elements defined by the id <code>'square-' + i</code> are receiving event listeners that trigger when clicked.</p>
+<p>The problem relates to the nature of asynchronous listeners in JavaScript. Inside of the <code>for</code> loop, the var <code>i</code> is set to some integer between 1 and 9. As that’s happening, the elements defined by the id <code>'square-' + i</code> are receiving event listeners that trigger when clicked.</p>
 
 <p>But the listener is not triggered at that moment - otherwise all the forms would be submitted when the script ran. Instead, the function to submit the form lies in wait for the event listener to trigger.</p>
 
-<p>But there’s a problem. When the event triggers, the var <code>i</code> no longer exists - the <code>for</code> loop has already executed. So when you click on a cell, you get the following error in the console:</p>
+<p>But there’s a problem. When the event triggers, the var <code>i</code> is no longer set to the value it was when the <code>for</code> loop was executing - now it’s at 10 (mutable data, good stuff).<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> So when you click on a cell, you get the following error in the console:</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Uncaught</span> <span class="nx">TypeError</span><span class="o">:</span> <span class="nx">Cannot</span> <span class="nx">read</span> <span class="nx">property</span> <span class="s1">&#39;submit&#39;</span> <span class="nx">of</span> <span class="kc">null</span></code></pre></div>
 
-<p>By the time the asynchronous listener is called, the object returned by <code>getElementById</code> is null, since <code>'form-' + i</code> evaluates to <code>'form-' + null</code> (or just <code>'form-'</code>), which doesn’t correspond to any ID on the page. </p>
+<p>By the time the asynchronous listener is called, the object returned by <code>getElementById</code> is null, since <code>'form-' + i</code> evaluates to <code>'form-' + 10</code> (or just <code>'form-10'</code>), which doesn’t correspond to any ID on the page. </p>
 
 <p>Asynchronous callbacks can be tremendously confusing - they can lead you into the pit of <a href="http://callbackhell.com/">callback hell</a>. </p>
 
@@ -170,6 +170,13 @@
 
 <p>The trick is just figuring out how and when to use them, and then developing thick skin for whenever they leave you feeling like pulling your hair out.</p>
 
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Special thanks to Colin and Geoff for helping me to figure this stuff out. Another wildly helpful resource from Geoff: <a href="https://www.destroyallsoftware.com/talks/wat">wat</a>. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 
   </article>
 

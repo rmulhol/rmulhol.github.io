@@ -6,8 +6,8 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 25 Jun 2015 20:27:29 -0500</pubDate>
-    <lastBuildDate>Thu, 25 Jun 2015 20:27:29 -0500</lastBuildDate>
+    <pubDate>Fri, 26 Jun 2015 13:55:45 -0500</pubDate>
+    <lastBuildDate>Fri, 26 Jun 2015 13:55:45 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
     
       <item>
@@ -91,15 +91,15 @@
 
 &lt;p&gt;So, what’s going on here?&lt;/p&gt;
 
-&lt;p&gt;The problem relates to the nature of asynchronous listeners in JavaScript. Inside of the &lt;code&gt;for&lt;/code&gt; loop, the var &lt;code&gt;i&lt;/code&gt; exists and is set to some integer between 1 and 9. As that’s happening, the elements defined by the id &lt;code&gt;&#39;square-&#39; + i&lt;/code&gt; are receiving event listeners that trigger when clicked.&lt;/p&gt;
+&lt;p&gt;The problem relates to the nature of asynchronous listeners in JavaScript. Inside of the &lt;code&gt;for&lt;/code&gt; loop, the var &lt;code&gt;i&lt;/code&gt; is set to some integer between 1 and 9. As that’s happening, the elements defined by the id &lt;code&gt;&#39;square-&#39; + i&lt;/code&gt; are receiving event listeners that trigger when clicked.&lt;/p&gt;
 
 &lt;p&gt;But the listener is not triggered at that moment - otherwise all the forms would be submitted when the script ran. Instead, the function to submit the form lies in wait for the event listener to trigger.&lt;/p&gt;
 
-&lt;p&gt;But there’s a problem. When the event triggers, the var &lt;code&gt;i&lt;/code&gt; no longer exists - the &lt;code&gt;for&lt;/code&gt; loop has already executed. So when you click on a cell, you get the following error in the console:&lt;/p&gt;
+&lt;p&gt;But there’s a problem. When the event triggers, the var &lt;code&gt;i&lt;/code&gt; is no longer set to the value it was when the &lt;code&gt;for&lt;/code&gt; loop was executing - now it’s at 10 (mutable data, good stuff).&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; So when you click on a cell, you get the following error in the console:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Uncaught&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TypeError&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Cannot&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;submit&amp;#39;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;By the time the asynchronous listener is called, the object returned by &lt;code&gt;getElementById&lt;/code&gt; is null, since &lt;code&gt;&#39;form-&#39; + i&lt;/code&gt; evaluates to &lt;code&gt;&#39;form-&#39; + null&lt;/code&gt; (or just &lt;code&gt;&#39;form-&#39;&lt;/code&gt;), which doesn’t correspond to any ID on the page. &lt;/p&gt;
+&lt;p&gt;By the time the asynchronous listener is called, the object returned by &lt;code&gt;getElementById&lt;/code&gt; is null, since &lt;code&gt;&#39;form-&#39; + i&lt;/code&gt; evaluates to &lt;code&gt;&#39;form-&#39; + 10&lt;/code&gt; (or just &lt;code&gt;&#39;form-10&#39;&lt;/code&gt;), which doesn’t correspond to any ID on the page. &lt;/p&gt;
 
 &lt;p&gt;Asynchronous callbacks can be tremendously confusing - they can lead you into the pit of &lt;a href=&quot;http://callbackhell.com/&quot;&gt;callback hell&lt;/a&gt;. &lt;/p&gt;
 
@@ -107,6 +107,13 @@
 
 &lt;p&gt;The trick is just figuring out how and when to use them, and then developing thick skin for whenever they leave you feeling like pulling your hair out.&lt;/p&gt;
 
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;Special thanks to Colin and Geoff for helping me to figure this stuff out. Another wildly helpful resource from Geoff: &lt;a href=&quot;https://www.destroyallsoftware.com/talks/wat&quot;&gt;wat&lt;/a&gt;. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Thu, 25 Jun 2015 00:00:00 -0500</pubDate>
         <link>http://rmulhol.github.io//javascript/2015/06/25/confusing-javascript-var.html</link>
