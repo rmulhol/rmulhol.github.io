@@ -6,9 +6,120 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 24 Jun 2015 21:47:44 -0500</pubDate>
-    <lastBuildDate>Wed, 24 Jun 2015 21:47:44 -0500</lastBuildDate>
+    <pubDate>Thu, 25 Jun 2015 20:27:29 -0500</pubDate>
+    <lastBuildDate>Thu, 25 Jun 2015 20:27:29 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>What the Heck? Being Confused About Asynchronous Execution in JavaScript</title>
+        <description>&lt;p&gt;As I’ve been working on using my Java server as a web interface for my Clojure tic tac toe game, I’ve found JavaScript very helpful. I use it for form validation on the game configuration page:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;validateGameConfig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;player1Move&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;player-1-move&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;player2Move&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;player-2-move&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;player1Move&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;player1Move&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Must enter a move signature for player 1.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;player2Move&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;player2Move&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Must enter a move signature for player 2.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;player1Move&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;player2Move&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;Player move signatures must be distinct.&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And for creating event listeners on each board cell that trigger when the user selects a move:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Tic Tac Toe!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;h4&amp;gt;&lt;/span&gt;Click An Open Space To Make A Move&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h4&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;table&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;tbody&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;td&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;square&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;square-1&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;form-1&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;post&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;hidden&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;player-1-id&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;human&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;hidden&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;player-2-id&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;ai&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;hidden&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;player-1-mv&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;X&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;hidden&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;player-2-mv&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;O&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;hidden&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;board&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot; , , , , , , , , &amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;hidden&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;move&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;1&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+
+      ...
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/tbody&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/table&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;thisForm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;form-&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;square-&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addEventListener&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;click&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;thisForm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;submit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}())&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;JavaScript has served it’s purpose and opened my eyes to all that you can accomplish on the client side. But it’s also left me scratching my head a few times.&lt;/p&gt;
+
+&lt;p&gt;The first example wasn’t much trouble - it’s relatively straightforward. &lt;/p&gt;
+
+&lt;p&gt;But the second was a different story. I had to manually declare the variable &lt;code&gt;thisForm&lt;/code&gt;; I couldn’t just inline &lt;code&gt;&#39;form-&#39; + i&lt;/code&gt; on the &lt;code&gt;getElementById&lt;/code&gt; call.&lt;/p&gt;
+
+&lt;p&gt;Try it for yourself. If you replace the above code with this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;square-&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addEventListener&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;click&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;form-&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;submit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}())&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Everything breaks. Or, more accurately, fails silently - the form is not submitted when a cell is clicked. &lt;/p&gt;
+
+&lt;p&gt;So, what’s going on here?&lt;/p&gt;
+
+&lt;p&gt;The problem relates to the nature of asynchronous listeners in JavaScript. Inside of the &lt;code&gt;for&lt;/code&gt; loop, the var &lt;code&gt;i&lt;/code&gt; exists and is set to some integer between 1 and 9. As that’s happening, the elements defined by the id &lt;code&gt;&#39;square-&#39; + i&lt;/code&gt; are receiving event listeners that trigger when clicked.&lt;/p&gt;
+
+&lt;p&gt;But the listener is not triggered at that moment - otherwise all the forms would be submitted when the script ran. Instead, the function to submit the form lies in wait for the event listener to trigger.&lt;/p&gt;
+
+&lt;p&gt;But there’s a problem. When the event triggers, the var &lt;code&gt;i&lt;/code&gt; no longer exists - the &lt;code&gt;for&lt;/code&gt; loop has already executed. So when you click on a cell, you get the following error in the console:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Uncaught&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TypeError&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Cannot&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;property&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;submit&amp;#39;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;By the time the asynchronous listener is called, the object returned by &lt;code&gt;getElementById&lt;/code&gt; is null, since &lt;code&gt;&#39;form-&#39; + i&lt;/code&gt; evaluates to &lt;code&gt;&#39;form-&#39; + null&lt;/code&gt; (or just &lt;code&gt;&#39;form-&#39;&lt;/code&gt;), which doesn’t correspond to any ID on the page. &lt;/p&gt;
+
+&lt;p&gt;Asynchronous callbacks can be tremendously confusing - they can lead you into the pit of &lt;a href=&quot;http://callbackhell.com/&quot;&gt;callback hell&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;But they’re also tremendously useful. They let you delay behavior until it’s needed, execute multiple actions at once, and avoid blocking.&lt;/p&gt;
+
+&lt;p&gt;The trick is just figuring out how and when to use them, and then developing thick skin for whenever they leave you feeling like pulling your hair out.&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 25 Jun 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//javascript/2015/06/25/confusing-javascript-var.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/06/25/confusing-javascript-var.html</guid>
+        
+        <category>event</category>
+        
+        <category>variable</category>
+        
+        
+        <category>javascript</category>
+        
+      </item>
     
       <item>
         <title>Connecting The Dots: Referencing Clojure Code in Java</title>
@@ -639,96 +750,6 @@
         <category>professionalism</category>
         
         <category>readings</category>
-        
-        
-        <category>general</category>
-        
-      </item>
-    
-      <item>
-        <title>To Change the Past: Cleaning Up Your Git Commit History</title>
-        <description>&lt;p&gt;As I’ve been working to improve my Git etiquette, one thing I’ve been doing is revisiting my projects’ histories and cleaning up their commits to be more modular and expressive. Having had a tendency to batch together collections of unrelated modifications under unhelpful commit messages, my work was cut out for me.&lt;/p&gt;
-
-&lt;p&gt;Fortunately, I was able to figure out some techniques for transforming Git’s record of the past, and I’m happy with the results. Previously sloppy commits were renamed, broken up, and supplemented as necessary.&lt;/p&gt;
-
-&lt;p&gt;In this post, I’d like to share some of the techniques I found most helpful in rewriting Git history. If you’re facing a similar struggle to my own, hopefully you don’t need to suffer the same pain I did along the way.&lt;/p&gt;
-
-&lt;p&gt;A word of caution, though, before we begin: most of these techniques are best left aside if you’re working in a context where other users actively depend on or contribute to your code. While rewriting your Git history can make it easier to grasp what you’ve done through previous iterations of your code, it can also make it more difficult to share and merge new contributions going forward if you’re working with an outdated history. &lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;From Whence it Begins: Revisiting the Past&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;In order to accomplish any of the tasks that follow, it’s necessary to be able to reach back to previous commits. I’ll be discussing three primary strategies for doing so:&lt;/p&gt;
-
-&lt;p&gt;1) &lt;code&gt;git commit --amend&lt;/code&gt; - to modify the most recent commit.&lt;/p&gt;
-
-&lt;p&gt;2) &lt;code&gt;git rebase -i HEAD~...&lt;/code&gt; - to dive deeper into your project’s history. Replace &lt;code&gt;...&lt;/code&gt; with a number specifying how far back into your history you would like to reach.&lt;/p&gt;
-
-&lt;p&gt;3) &lt;code&gt;git rebase -i --root&lt;/code&gt; - to adjust your project’s initial commit.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Control the Message: Renaming Commits&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Perhaps the most pressing task in constructing a solid commit history is simply writing good commit messages. I’ve &lt;a href=&quot;/general/2015/05/16/effective-commit-messages.html&quot;&gt;written previously&lt;/a&gt; of some of the methods for doing so, but what if you want to retroactively map such techniques onto the poorly worded commits of your project’s past?&lt;/p&gt;
-
-&lt;p&gt;This is probably the most simple error to fix. &lt;/p&gt;
-
-&lt;p&gt;To reword your most recent commit message, simply execute &lt;code&gt;git commit --amend&lt;/code&gt;. This will bring up a text editor with the previous message at the beginning of the document. Make your edits, save and close the document, and the log will reflect your changes.&lt;/p&gt;
-
-&lt;p&gt;To rename commits between the root and where you are currently, use &lt;code&gt;git rebase -i HEAD~...&lt;/code&gt;, replacing &lt;code&gt;...&lt;/code&gt; with how many commits back you’d like to reach. This will bring up a text editor listing all of the commits in the range between there and where you are now. Before each one, you’ll see the word &lt;code&gt;pick&lt;/code&gt;. Replace that with &lt;code&gt;reword&lt;/code&gt; for the messages you’d like to change. Save and close the dcoument, and you’ll see a document for each of those commits. Save and close those documents with revised messages, and the log will reflect your changes.&lt;/p&gt;
-
-&lt;p&gt;To rename the root commit message, run &lt;code&gt;git rebase -i --root&lt;/code&gt;. This will take you make to the moment immediately following your initial commit, where &lt;code&gt;git commit --amend&lt;/code&gt; will allow you to edit it as if it were your actual most recent commit. To complete this step, run &lt;code&gt;git rebase --continue&lt;/code&gt;, which will bring you back to the end of your project’s history&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;. &lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Modular Code, Modular Commits: Changing Content&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Good for you if all you have to do is reword the commit messages, but chances are that bad commit messages are a canary in the coal mine for bad commit content. And by bad, I mean that the content of the commits exceeds or is incongruous with what’s described in a well-worded commit message.&lt;/p&gt;
-
-&lt;p&gt;Luckily, making revisions here is within your reach.&lt;/p&gt;
-
-&lt;p&gt;If you need to adjust the content of your most recent commit, you can do so as if you were staging a brand new commit. Simply use &lt;code&gt;git add ...&lt;/code&gt; and/or &lt;code&gt;git rm ...&lt;/code&gt; (replacing &lt;code&gt;...&lt;/code&gt; with the paths for files you’d like to add or remove) and then follow it up with &lt;code&gt;git commit --amend&lt;/code&gt;. Saving and closing the document that pops up will revise the previous commit to reflect the changes.&lt;/p&gt;
-
-&lt;p&gt;If you need to alter content between the root and where you are currently, &lt;code&gt;git rebase -i HEAD~...&lt;/code&gt; lets you do so. This time, for the commits you want to modify, replace &lt;code&gt;pick&lt;/code&gt; with &lt;code&gt;edit&lt;/code&gt;. You’ll be taken back to the moment following the earliest commit you marked for edit, where you can make changes just like you were tackling your most recent commit (&lt;code&gt;git add ...&lt;/code&gt;, &lt;code&gt;git rm ...&lt;/code&gt;, and then &lt;code&gt;git commit --amend&lt;/code&gt;).&lt;/p&gt;
-
-&lt;p&gt;After you’ve amended commits earlier in your project’s history, you’ll need to run &lt;code&gt;git rebase --continue&lt;/code&gt; to proceed. If you only opted to edit one commit, this should bring you back to the future (the end of your project’s history). Otherwise, it will roll you forward to the next commit marked for edit.&lt;/p&gt;
-
-&lt;p&gt;However, this is where things can get hairy. If you make revisions that conflict with later commits, git will stop in its tracks to ask you what to do. To deal with that, you’ll need to edit the files in question as you see fit (you can see which files encountered a conflict as well as the specific lines in tension by running &lt;code&gt;git diff&lt;/code&gt;), merge the changes (&lt;code&gt;git add ...&lt;/code&gt;), and then proceed with &lt;code&gt;git rebase --continue&lt;/code&gt;&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-
-&lt;p&gt;To alter the content at the root, &lt;code&gt;git rebase -i --root&lt;/code&gt; to get there, &lt;code&gt;git commit --amend&lt;/code&gt; to edit, and &lt;code&gt;git rebase --continue&lt;/code&gt; to proceed.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Where Once There Was Nothing: Inserting New Commits Into Your Project’s History&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Changing the content of a commit is all well and good until you find yourself wanting to remove content from a particular commit without deleting it entirely from your project’s history. You know it doesn’t belong in &lt;em&gt;this&lt;/em&gt; commit, but you also don’t want to tack it on at the end of your project’s history when lots of intermediary commits assumed it was there. What to do?&lt;/p&gt;
-
-&lt;p&gt;For this one, I’m going to assume you’re not just trying to add a commit after your most recent commit (hopefully you know how to do that if you’ve read this far).&lt;/p&gt;
-
-&lt;p&gt;The good news is, inserting a commit deep in your project’s history isn’t all that different.&lt;/p&gt;
-
-&lt;p&gt;Say you have an earlier commit that you want to break up into several separate commits so as to reflect a number of distinct changes. We know that we can use &lt;code&gt;git rebase -i HEAD~...&lt;/code&gt; (or &lt;code&gt;git rebase -i --root&lt;/code&gt;) to get there. We know you can strip out unwanted content and/or reword the message with &lt;code&gt;git commit --amend&lt;/code&gt;. And we know how to make new commits.&lt;/p&gt;
-
-&lt;p&gt;Put all the pieces together, and you have your answer. Simply adding new commits (literally &lt;code&gt;git commit -m &quot;...&quot;&lt;/code&gt;) before running &lt;code&gt;git rebase --continue&lt;/code&gt; will cause those commits to live at an intermediary point in your project’s history. You can break up a mammoth of a commit into a series of bite-size chunks without losing any of the files we want later commits to know about.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;At first blush, editing your commit history can feel like a weighty endeavor. There’s a lot to dig into, and ample room for error.&lt;/p&gt;
-
-&lt;p&gt;But making the necessary changes doesn’t have to be a headache. Simply following the techniques above should get you where you need to go.&lt;/p&gt;
-
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;As I discuss further down, you may need to help Git figure out how to merge any changes you make earlier in your history with conflicting changes that follow. This shouldn’t be a problem here, though, if you’re just rewording the commit messages. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;This is, in my experience, the most scary/difficult step to tackle. I’d recommend creating a test repo and practicing this step a few times. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Wed, 20 May 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//general/2015/05/20/clean-commit-history.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/05/20/clean-commit-history.html</guid>
-        
-        <category>git</category>
-        
-        <category>commits</category>
         
         
         <category>general</category>
