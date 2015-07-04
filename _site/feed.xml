@@ -6,9 +6,74 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 26 Jun 2015 13:55:45 -0500</pubDate>
-    <lastBuildDate>Fri, 26 Jun 2015 13:55:45 -0500</lastBuildDate>
+    <pubDate>Fri, 03 Jul 2015 21:59:59 -0500</pubDate>
+    <lastBuildDate>Fri, 03 Jul 2015 21:59:59 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Collective Ownership: Developing Software as a Team</title>
+        <description>&lt;p&gt;Over the past few days, I’ve had the chance to observe some more senior software developers as they’ve worked on building and modifying real world, living codebases. It’s been an extremely educational experience on many fronts, but the thing that’s stuck out to me the most so far is how involved everyone is with everyone else.&lt;/p&gt;
+
+&lt;p&gt;Successful software, it turns out, isn’t the product of one genius individual; in most instances, at least, it’s something that grows out of the coalescence of a team.&lt;/p&gt;
+
+&lt;p&gt;Of course, a team could just be a collection of individuals - each toiling away on their own tasks that will hopefully somehow fit together. But in order for a team to form a whole that’s greater than the sum of its parts, something more needs to happen: team dynamics need to be instilled.&lt;/p&gt;
+
+&lt;p&gt;In this post, I want to review some of the behaviors that go into being part of a successful software development team. While such behaviors may not be especially necessary in the context of the individual projects I’ve worked on thus far, they seem like they’ll hold a lot of relevance in the (team)work I hope to be doing in the future.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 1: Stand Up&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In order for everyone on a team to be on the same page, it’s helpful for each team member to know what page each of their teammates are on. It might sound trivial, but having a bit of time to catch up with your teammates before getting down to writing code is crucial. Stand up meetings fill this role.&lt;/p&gt;
+
+&lt;p&gt;Stand up meetings offer opportunities for teammates to share the progress they’ve made, explain what tasks they’re hoping to accomplish in the immediate feature, and solicit counsel when some obstacle is standing in their way. When kept brief and to the point, they offer a great opportunity for everyone to stay up to date with one another.&lt;/p&gt;
+
+&lt;p&gt;At a far more basic level, they assure team cohesion. When you engage with your teammates every morning, you’re sure to be keeping up with each other. Having a sense for what everyone else is up to and how their tasks fit into the larger project makes it’s easier to envision how you and your teammates’ contributions will fit together.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2: Document Objectives&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The developers I’ve worked with divide up tasks into a set of “stories”. Each story lays out a feature that needs to be built, as well as any specifications that further clarify the nature of that feature. The total list of stories is accessible to the entire team, and each story is marked as either to do, in progress, or complete.&lt;/p&gt;
+
+&lt;p&gt;In my individual work, I’ve used a rudimentary version of this setup, documenting tasks I hope to accomplish in a to do list and crossing things off as progress is made. But having a more sophisticated layout allows you to share that knowledge and tackle those objectives with your team.&lt;/p&gt;
+
+&lt;p&gt;Stories that are accessible to the entire team help to provide a shared sense for the tasks that lie ahead, and documenting who’s working on what further assures that no work is overlapping.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 3: Use Branches&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;People who are working as part of a team don’t all push their commits to master; they set up branches that describe what task they’re working on. When the work is finished, they can submit a pull request for the team to review.&lt;/p&gt;
+
+&lt;p&gt;Working with branches helps to document and organize buckets of work as progress is being made. A large number of commits might fit into the development of a single feature, but branches makes it easy to consolidate them. Their label communicates how everything assembles into one goal.&lt;/p&gt;
+
+&lt;p&gt;Branches also make it easier teammates to review and merge contributions. If the progress looks good without modification, merge. If it needs some more work, revise and resubmit. If it’s looking like you need to go in another direction, no worries: revert to master.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 4: Stay in Touch&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Teammates further contribute to the fostering of team dynamics by deepening their communications with one another as necessary.&lt;/p&gt;
+
+&lt;p&gt;Think knocking out your story will require some architectural changes to the larger organization of the project? Get in touch with your team. Maybe they see some merit to your suggestion and the change is approved with everyone on board. If not, maybe they can suggest some approaches that work within the existing architecture.&lt;/p&gt;
+
+&lt;p&gt;Notice that a teammate has wrapped up a story and submitted a pull request? Give it a review. You might have some additional perspective that assures everything will synthesize together as well as possible.&lt;/p&gt;
+
+&lt;p&gt;Though the work of writing code may be something you approach on your own or with a pair, it never hurts to bring in an extra set of eyeballs. Teammates should put emphasis on staying in touch with one another to assure that progress fits within everyone else’s vision of the project.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Recap: There’s So Much More&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;As I’ve put together my individual projects, I’ve found feedback loops to be really helpful. Getting other people’s perspectives helps me to see ways that I can improve my code and add new features because those folks are approaching my project from a clean slate.&lt;/p&gt;
+
+&lt;p&gt;Working with a team, those feedback lopes aren’t just helpful - they’re essential. Teammates foster team dynamics by meeting up regularly, documenting tasks, working on branches, and staying in touch throughout.&lt;/p&gt;
+
+&lt;p&gt;But that isn’t all that goes into being part of a team. There’s a lot more to learn, and I’m excited to get a better sense of how the most productive teams stay cohesive going forward. &lt;/p&gt;
+</description>
+        <pubDate>Fri, 03 Jul 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//general/2015/07/03/being-a-teammate.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/07/03/being-a-teammate.html</guid>
+        
+        <category>team</category>
+        
+        <category>communication</category>
+        
+        
+        <category>general</category>
+        
+      </item>
     
       <item>
         <title>What the Heck? Being Confused About Asynchronous Execution in JavaScript</title>
@@ -684,82 +749,6 @@
         
         
         <category>clojure</category>
-        
-      </item>
-    
-      <item>
-        <title>Laying the Foundation: On Extreme Programming Explained</title>
-        <description>&lt;p&gt;I just finished Kent Beck’s &lt;a href=&quot;http://www.amazon.com/Extreme-Programming-Explained-Embrace-Edition/dp/0321278658&quot;&gt;&lt;em&gt;Extreme Programming Explained: Embrace Change, 2nd Edition&lt;/em&gt;&lt;/a&gt;, and it was really striking. Not because it came out of left field, nor because it upended all that I had thought previously about what best practices underlie good software development. On the contrary, &lt;em&gt;XP Explained&lt;/em&gt; was striking precisely because of how seemingly self-evident and irrefutable its propositions came across.&lt;/p&gt;
-
-&lt;p&gt;Who among us would dismiss the merits of pair programming? Do you oppose the idea that we ought to use tests to validate that our software does what we expect? How about quick iterations - would it be better to prolong our work cycles so that we only get feedback after months (or years) of potentially wasted effort?&lt;/p&gt;
-
-&lt;p&gt;No, of course not. For most of us, at least, I suspect that each of these inquiries would be met with a response in the negative. We place emphasis on shared collaboration, demonstrable results, and short feedback loops because we know they improve the quality of the software we deliver.&lt;/p&gt;
-
-&lt;p&gt;But how do we know this? Is what appears so self-evident and irrefutable really so? Perhaps not.&lt;/p&gt;
-
-&lt;p&gt;Having come across &lt;em&gt;XP Explained&lt;/em&gt; over 15 years after its initial release, I came to realize that what I saw as self-evident was in fact only so due to this text’s longstanding and far-reaching impact on contemporary literature. Extreme programming has so deeply imbricated itself into much of our daily workflow that we may not notice its profound wisdom, but it is there nonetheless.&lt;/p&gt;
-
-&lt;p&gt;Taking a look at other ways that software engineering could be conceptualized and carried out, one gains a sense for how transformative Beck’s text has really been. And if you look close enough, you can even find places where its insights merit further exploration and application; there is still something there to offer today.&lt;/p&gt;
-
-&lt;p&gt;In this post, then, I’d like to take a moment to dive in and reflect upon some of the elements of &lt;em&gt;XP Explained&lt;/em&gt; that I found most noteworthy. Though the book’s wealth of suggestions eludes quick summary in a brief post like this, it is my hope that highlighting some of the book’s key points can help us to carry forward its contributions here and now, in the spirit of continuous integration. &lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;The Foundation: Values, Principles, and Practices&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;One of the things that sets &lt;em&gt;XP Explained&lt;/em&gt; apart from some of the more technical programming texts that I’ve picked up is that it starts on the ground floor, laying a foundation of values, principles, and practices that make it possible to develop software in ways that are more productive, efficient, and responsive to change.&lt;/p&gt;
-
-&lt;p&gt;Five core values form the bedrock for extreme programming: communication, simplicity, feedback, courage, and respect. These are the concepts around which we organize our judgments of specific habits and activities; those which act in their spirit are treated as good, while those that run against them are not. &lt;/p&gt;
-
-&lt;p&gt;Principles enable us to build a bridge between abstract values and concrete practices; they put values in the context of our domain in order to yield guidelines that give shape to our day-to-day activities. When we think about how to promote communication, for example, we consider the principle of economics; do practices in the name of communication conform to our business needs?&lt;/p&gt;
-
-&lt;p&gt;Practices, finally, are the actual things we do as we work. Things like pair programming, test-driven development, and quick iterations are practices; they describe how we actually develop software in the vein of extreme programming. We choose which practices to make habitual based upon how well they conform to our principles and thereby actualize our values.&lt;/p&gt;
-
-&lt;p&gt;The values, principles, and practices of extreme programming serve as guideposts. They enable us to take the lessons of extreme programming and apply them in contingent circumstances. One may not be able to implement all of the guidelines that Beck offers, but one can come into harmony with the core insights of extreme programming by heeding its core foundation.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;What Else Could Be? Competing Visions&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;What sorts of contingent circumstances might work against extreme programming? Can we envision plausible circumstances in which we might proceed otherwise?&lt;/p&gt;
-
-&lt;p&gt;In a manner that addresses these inquiries, Beck offers up the method of Taylorism. In this approach, one attempts to improve productivity by segmenting tasks into bite-sized chunks, optimizing the processes by which they are carried out, and then assembling them back together. This manner of engineering has been widely popular in various domains for many years.&lt;/p&gt;
-
-&lt;p&gt;While this process might seem to superficially resemble exteme programming, it also presupposes that work is best carried out through a divide-and-conquer approach. But this is not always the case. As Beck points out with respect to the Toyota Production System (TPS), sometimes it is better to allocate responsibility for the entire product to all workers. &lt;/p&gt;
-
-&lt;p&gt;Extreme programming heeds the lesson of TPS, taking note of the particular social structure of work at play in software development. Rather than segmenting roles and responsibilities, it brings experts and stakeholders from various domains into the fold, trusting that collaboration will yield a whole that’s greater than the sum of its parts.&lt;/p&gt;
-
-&lt;p&gt;This is not to say that there is not space for divide-and-conquer approaches in software development. Surely, that is not the case. The challenge, however, is to strike a balance, to adapt your process to your problem. Sometimes, divide-and-counquer will do. Sometimes, you must conquer-and-divide.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Persisting Value(s): Continuously Integrating XP&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;One of the more interesting sections of &lt;em&gt;XP Explained&lt;/em&gt; came in Chapter 9: Corollary Practices. There, Beck discusses some of the practices of XP that can be very useful but also carry some risk.&lt;/p&gt;
-
-&lt;p&gt;Having a shared codebase, for example, suggests that any contributor should be able to contribute to any part of the codebase at any time. This yields the benefit that various parts of the system can be improved as they are encountered by disparate developers.&lt;/p&gt;
-
-&lt;p&gt;A problem arises, however, if there is a lack of shared responsibility and continuous integration. Left to its own devices, a shared codebase could devolve into a non-functioning heap of poor quality code where nobody claims responsibility for cleaning up the mess.&lt;/p&gt;
-
-&lt;p&gt;This suggests that extreme programming is something that you grow and nurture incrementally, much like the software you create while following its guidelines. Once a team has the trust and procedures in place to adopt a new practice, its adoption can yield a better workflow - even if doing so earlier might have been disastrous.&lt;/p&gt;
-
-&lt;p&gt;Such growth and evolution of extreme programming itself raises questions as to how else we can augment and extend the discipline. What ways can we continue to tinker with the ways that we develop software to deepen and advance XP’s core values? I’ll leave it to the reader to theorize such approaches for now, but it’s a helpful and thought-provoking element of &lt;em&gt;XP Explained&lt;/em&gt; that this door is left open.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;On the final read, &lt;em&gt;XP Explained&lt;/em&gt; is perhaps not quite so self-evident and irrefutable after all. Or perhaps it is, but only because we’ve learned the lessons from when it was not. Either way, the text provokes us to continue thinking about how we might carry on its legacy going forward.&lt;/p&gt;
-
-&lt;p&gt;We know that it begins from a set of values, principles, and practices that give form to our everyday activities. We have a template for jumping in, but we also have the flexibility to choose how to swim once we’re in the pool.&lt;/p&gt;
-
-&lt;p&gt;If we accept the premise that continuous integration helps to improve our process for developing software, perhaps we might also explore the possibility that continuous integration ought to be applied to the process itself.&lt;/p&gt;
-
-&lt;p&gt;How we choose to do so is the challenge that lies ahead.&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 26 May 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//general/2015/05/26/extreme-programming-explained.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/05/26/extreme-programming-explained.html</guid>
-        
-        <category>professionalism</category>
-        
-        <category>readings</category>
-        
-        
-        <category>general</category>
         
       </item>
     
