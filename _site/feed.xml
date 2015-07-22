@@ -6,9 +6,143 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 09 Jul 2015 15:58:08 -0500</pubDate>
-    <lastBuildDate>Thu, 09 Jul 2015 15:58:08 -0500</lastBuildDate>
+    <pubDate>Tue, 21 Jul 2015 21:12:10 -0500</pubDate>
+    <lastBuildDate>Tue, 21 Jul 2015 21:12:10 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Getting Started With React - Part 1: Setting Up the File Directory</title>
+        <description>&lt;p&gt;Recently I’ve had the opportunity to do some work with &lt;a href=&quot;https://facebook.github.io/react/&quot;&gt;React&lt;/a&gt;, the JavaScript libary put together by Facebook for building user interfaces. It’s been a really cool experience, and I’m growing more comfortable working with React everyday.&lt;/p&gt;
+
+&lt;p&gt;That’s not to say the process has been hiccup free - it’s been littered with (surmountable) obstacles. Though that’s to be expected when you’re new to any library, it’s particularly pronounced in this instance by the absence of a standardized format for React projects.&lt;/p&gt;
+
+&lt;p&gt;You see, there is no &lt;code&gt;rails new ...&lt;/code&gt; for React. There are several super helpful boilerplate &lt;a href=&quot;https://github.com/petehunt/react-boilerplate&quot;&gt;templates&lt;/a&gt; and &lt;a href=&quot;https://github.com/newtriks/generator-react-webpack&quot;&gt;generators&lt;/a&gt;, but they’re not uniform. People pretty much include whatever they think they’ll need, and they all have different ideas as to what exactly that is.&lt;/p&gt;
+
+&lt;p&gt;I’m not going to tell you that my preferences are any better than those of the folks who have done this work,&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; but I am willing to wager that mine are more minimal. I’m interested in having the bare-bones setup for getting up and running, and we can add other stuff later.&lt;/p&gt;
+
+&lt;p&gt;So, in what follows, I want to lay out the steps for setting up a file directory you can use to build a React project. We’ll include only what we need to start hacking, and then cover further topics in subsequent posts. If you’re willing to hop on for the ride, let’s dive into part 1 of getting started with React.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 1: Setting Up Your &lt;code&gt;package.json&lt;/code&gt; File&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;One thing we’ll be using to manage our project’s dependencies is &lt;a href=&quot;https://www.npmjs.com/&quot;&gt;npm&lt;/a&gt; - the Node Package Manager. If you don’t have that, you’ll want to &lt;a href=&quot;https://docs.npmjs.com/getting-started/installing-node&quot;&gt;install Node.js and npm&lt;/a&gt; now.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Once you’ve got npm, you can run &lt;code&gt;npm init&lt;/code&gt; in an empty directory to setup a basic &lt;a href=&quot;https://docs.npmjs.com/files/package.json&quot;&gt;&lt;code&gt;package.json&lt;/code&gt;&lt;/a&gt; file. By answering the prompts, you’ll identify some key attributes of your project: its name, version, license, etc.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/npm-init.png&quot; alt=&quot;npm-init-execution&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once we’ve got a basic &lt;code&gt;package.json&lt;/code&gt; file setup, we can add one of the more important dependencies for our project - React - with a single command: &lt;code&gt;npm install react --save&lt;/code&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, we can install some dev dependencies we’ll be needing: &lt;code&gt;npm install --save-dev browserify reactify&lt;/code&gt;.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;  &lt;a href=&quot;https://github.com/substack/browserify-handbook&quot;&gt;Browserify&lt;/a&gt; will enable us to compile modules for the browser, and &lt;a href=&quot;https://github.com/andreypopp/reactify&quot;&gt;Reactify&lt;/a&gt; will help Browserify to play nicely with the &lt;a href=&quot;https://facebook.github.io/jsx/&quot;&gt;JSX&lt;/a&gt; syntax we’ll be using in our React modules.&lt;/p&gt;
+
+&lt;p&gt;At this point, your &lt;code&gt;package.json&lt;/code&gt; file should look something like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/pkg-with-devDeps.png&quot; alt=&quot;pkg-with-devDeps&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We’ll want to add a build script to make it look like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/pkg-with-build-script.png&quot; alt=&quot;pkg-with-build-script&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And then install &lt;code&gt;browserify&lt;/code&gt; globally so that our script will execute: &lt;code&gt;npm install -g browserify&lt;/code&gt;.&lt;sup id=&quot;fnref:5&quot;&gt;&lt;a href=&quot;#fn:5&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;That will do it for our &lt;code&gt;package.json&lt;/code&gt; file, for now. Time to start building out the rest of our file directory structure.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2: Add Files/Directories&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Just by setting up our dependencies and build script, we’ve done most of the leg work necessary to get a React project up and running. The next step is pretty simple: put together the file directory structure.&lt;/p&gt;
+
+&lt;p&gt;There are a number of ways you could organize your directory, but to play nicely with our current setup, you’ll want to run the following commands:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/file-directory-commands.png&quot; alt=&quot;file-directory-commands&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;That will set up a file tree that looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/file-directory-tree.png&quot; alt=&quot;file-directory-tree&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;At this point, we’re ready to put in some code!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 3: Filling in &lt;code&gt;index.html&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;index.html&lt;/code&gt; file stores the basic page we’ll be working on. You can fill it in like so:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;en&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;utf-8&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Demo App&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;section&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;react&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;js/bundle.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The key to this file is the &lt;code&gt;section&lt;/code&gt; with the &lt;code&gt;id&lt;/code&gt; “react” - that’s the entry point for our React code. It’ll be filled in by the &lt;code&gt;bundle.js&lt;/code&gt; script (which is generate by Browserify).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 4: Filling in &lt;code&gt;app.js&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Almost there! The next step is to pop some code into our &lt;code&gt;app.js&lt;/code&gt; file that indicates what to put in the “react” &lt;code&gt;section&lt;/code&gt;. You can do that like so:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;var React = require(&amp;#39;react&amp;#39;);
+
+React.render(
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Hello, world!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;,
+    document.getElementById(&amp;#39;react&amp;#39;)
+  );&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This code tells React to find the page element with the &lt;code&gt;id&lt;/code&gt; “react” and put the preceding JSX code (which looks like raw html) there.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 5: Build and Run&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;At this point, we’ve got all the hand-written code we’re going to need. The next step is to run &lt;code&gt;npm run build&lt;/code&gt;, which will trigger the build script we put in our &lt;code&gt;package.json&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;After that’s complete, we’re ready to fire up our app! To do that, we need an http server. The easiest way to get one is probably to run &lt;code&gt;npm install -g http-server&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Once that’s installed, head to your project’s root directory and run &lt;code&gt;http-server&lt;/code&gt;. Pull up the browser and head over to http://localhost:8080/ and…&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/browser-view.png&quot; alt=&quot;browser-view&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It’s alive! That’s not exactly the fancy view we were hoping for when we decided to explore this newfangled UI library, but it’s a start!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;So, we clearly have a lot more to learn before we can start really taking advantage of React’s power, but we are now working with the library. Just by installing a few dependencies, filling out a few files, and executing a few scripts, we’re right about where we’d expect to be with something like a &lt;code&gt;rails new ...&lt;/code&gt; for React.&lt;/p&gt;
+
+&lt;p&gt;Stay tuned for future posts on getting started with React!&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;They’re awesome &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;Seriously, if you’ve read this far, you’re definitely going to want these things. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;The &lt;code&gt;--save&lt;/code&gt; flag tells npm to list react in the &lt;code&gt;dependencies&lt;/code&gt; section of our &lt;code&gt;package.json&lt;/code&gt; file. That’s useful for anyone who clones our repo, since they can now run &lt;code&gt;npm install&lt;/code&gt; to install all of the project’s dependencies. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:4&quot;&gt;
+      &lt;p&gt;The &lt;code&gt;--save-dev&lt;/code&gt; flag tells npm to list Browserify and Reactify in the &lt;code&gt;devDependencies&lt;/code&gt; section of our &lt;code&gt;package.json&lt;/code&gt; file. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:5&quot;&gt;
+      &lt;p&gt;The &lt;code&gt;-g&lt;/code&gt; flag tells npm to install Browserify globally, so that we can run &lt;code&gt;browserify&lt;/code&gt; from the command line anywhere on our system. &lt;a href=&quot;#fnref:5&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Tue, 21 Jul 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//javascript/2015/07/21/starting-react-directory.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/07/21/starting-react-directory.html</guid>
+        
+        <category>react</category>
+        
+        <category>npm</category>
+        
+        
+        <category>javascript</category>
+        
+      </item>
     
       <item>
         <title>Process over Product: Learning From Refactoring</title>
@@ -635,60 +769,6 @@
         
         
         <category>java</category>
-        
-      </item>
-    
-      <item>
-        <title>Testing Distributed Database Systems: Kyle Kingsbury&#39;s Jepsen</title>
-        <description>&lt;p&gt;The other day, I had the privilege of attending Kyle Kingsbury’s talk “Jepsen IV: Hope Springs Eternal” at the DevOps Chicago meetup group. The presentation was interesting, thought-provoking, and entertaining. I found myself doing all sorts of background research afterward just to make sure I was really digesting what he put out there.&lt;/p&gt;
-
-&lt;p&gt;In this post, I want to take a few moments to reflect on what I’ve learned. I can’t promise anything more than my own interpretation of what he said (you can check out a version of the talk for yourself &lt;a href=&quot;http://www.ustream.tv/recorded/61443262&quot;&gt;here&lt;/a&gt;), but hopefully this post can be of use to those who’re also developing an interest in the topic. &lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;What is Jepsen?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Jepsen is a tool developed by Kingsbury for testing the performance of distributed systems undergoing network partitions. It’s basically a generative testing framework for database systems. He’s interested in measuring how well they preserve the consistency of their data when connections between nodes are interrupted.  &lt;/p&gt;
-
-&lt;p&gt;You sort of get a sense for where he’s going right at the beginning of the talk, when he shows a slide portraying the structure that underlies APIs, and the databases are portrayed as a tire fire.&lt;/p&gt;
-
-&lt;p&gt;His research bears out that characterization. Even well reputed databases begin to show cracks under the pressure applied by Jepsen, as data becomes outdated, inaccurate, or lost altogether. &lt;/p&gt;
-
-&lt;p&gt;This talk focused on &lt;a href=&quot;https://www.mongodb.org/&quot;&gt;MongoDB&lt;/a&gt;, &lt;a href=&quot;https://www.elastic.co/products/elasticsearch&quot;&gt;Elasticsearch&lt;/a&gt;, and &lt;a href=&quot;http://www.aerospike.com/&quot;&gt;Aerospike&lt;/a&gt;, but you can see analysis for numerous other systems that have undergone the wrath of Jepsen at &lt;a href=&quot;https://aphyr.com/tags/jepsen&quot;&gt;Kingsbury’s site&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;How Does It Work?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;You can read Kingsbury’s introductory post on how Jepsen works &lt;a href=&quot;https://aphyr.com/posts/281-call-me-maybe-carly-rae-jepsen-and-the-perils-of-network-partitions&quot;&gt;here&lt;/a&gt;, but the basic story is that it spins up a cluster of hosts to serve as a distributed database system, simulates a network partition, then sees how the system manages database operations under such conditions.&lt;/p&gt;
-
-&lt;p&gt;Kingsbury focuses on how well each database lives up to the claims made in its documentation. Given &lt;a href=&quot;http://en.wikipedia.org/wiki/CAP_theorem&quot;&gt;the CAP theorem&lt;/a&gt; (and the &lt;a href=&quot;https://martin.kleppmann.com/2015/05/11/please-stop-calling-databases-cp-or-ap.html&quot;&gt;limitations of thinking in terms of that construct&lt;/a&gt;), we might not expect these databases to offer perfect consistency. But we could expect them to live up to the claims put forward by their marketing departments.&lt;/p&gt;
-
-&lt;p&gt;Or so we thought. Kingsbury’s findings instill a healthy dose of skepticism. He’s found numerous places where databases do not live up to the claims made in their documentation, alongside several other bugs and instances of unexpected behavior. &lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;So, What Now?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;It’s already a community service to document the ways that widely-used or otherwise attractive software falls short of delivering on the features it claims to provide, but what else can we take away from a talk like this?&lt;/p&gt;
-
-&lt;p&gt;Perhaps the most important lesson Kingsbury delivered was simply to rely on measurement over intuition and guesswork. As with all the other forms of testing we use in software development, it’s necessary to have a way to exercise our systems if we’re going to be confident they behave as expected.&lt;/p&gt;
-
-&lt;p&gt;Another important point is that developers should put serious thought into what kind of consistency they need for their specific systems. There’s usually a gap between the form of consistency you need and the “C” in CAP, and figuring out where that gap lies can enable you to make the optimal compromise in favor of other qualities like availability and performance.&lt;/p&gt;
-
-&lt;p&gt;Finally, Kingsbury’s research encourages those who build and maintain databases for distributed systems to stay vigilant. It’s hard to claim that your system delivers certain promises when repeatable tests demonstrate that it does not, and it appears that Kingsbury has provoked some folks to update their documentation and/or squash bugs.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Having been poking around the literature on distributed systems for just a few weeks now, Kingsbury’s talk was a really awesome way to start getting a real sense for how to test and work with such software. I can’t recommend the talk highly enough for those who are interested in this domain. Thanks Kyle!&lt;/p&gt;
-
-&lt;p&gt;I look forward to learning more about his work and the surrounding research in the future, and I’ll keep you posted on further developments as they role in.&lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 28 May 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//general/2015/05/28/testing-databases-jepsen.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/05/28/testing-databases-jepsen.html</guid>
-        
-        <category>distributed-systems</category>
-        
-        <category>databases</category>
-        
-        
-        <category>general</category>
         
       </item>
     
