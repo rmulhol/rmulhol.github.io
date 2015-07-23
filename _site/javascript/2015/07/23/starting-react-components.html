@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Getting Started With React - Part 2: Exploring Components</title>
+    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="canonical" href="http://rmulhol.github.io//javascript/2015/07/23/starting-react-components.html">
+    <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-54831551-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Rob Learns Programming</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Getting Started With React - Part 2: Exploring Components</h1>
+    <p class="post-meta">Jul 23, 2015</p>
+  </header>
+
+  <article class="post-content">
+    <p>React is a library for building user interfaces, but most of the work we’ve done so far has only laid the groundwork for actually carrying out that task. The UI we left off with doesn’t exactly expose React’s power.</p>
+
+<p><img src="http://rmulhol.github.io//assets/browser-view-hello-world.png" alt="browser-view-hello-world" /></p>
+
+<p>If we want to start building something that looks better and does more, we should start to get a handle on React’s tool for generating views: components.</p>
+
+<p>Components are modules that include a <code>render()</code> method that tells the program what to display. They can generate content dynamically, responding to data passed in by other components or the user. </p>
+
+<p>Once you start taking advantage of their numerous features and piecing them together, components provide a valuable tool for constructing sophisticated user interfaces. </p>
+
+<p>Let’s take a look at how components can help us transform our little “hello, world” app into something a bit more visually appealing…</p>
+
+<p><strong>Before We Begin: Housekeeping</strong></p>
+
+<p>If you’re just hopping on now, you can access the source code for the work we’ve done so far in the second commit of the <a href="https://github.com/rmulhol/demo-react-app">demo-react-app Github repo</a>.</p>
+
+<p>Before we begin coding up components, we’ll want to install a few additional tools. The first is <a href="http://react-bootstrap.github.io/">react-bootstrap</a>, which will provide a quick and easy way to add some styling. You can install it by running <code>npm install --save react-bootstrap</code>. You’ll also want to add a link to the Bootstrap stylesheet in the <code>&lt;head&gt;</code> of your <code>index.html</code> file:<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+
+<p><img src="http://rmulhol.github.io//assets/index-with-bootstrap.png" alt="index-with-bootstrap" /></p>
+
+<p>Next, we’ll want to install <a href="https://github.com/substack/watchify">Watchify</a>, which will enable us to automatically recompile our <code>js/bundle.js</code> file each time we make an edit to our source code. Add it by running <code>npm install --save-dev watchify</code>, and then add a <code>start</code> script to your <code>package.json</code> file:<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
+
+<p><img src="http://rmulhol.github.io//assets/pkg-with-start-script.png" alt="pkg-with-start-script" /></p>
+
+<p>Now we can run <code>npm run start</code> to initiate our <code>watchify</code> script, spin up an <code>http-server</code> in our project directory, and see changes reflected in the browser almost immediately as we save them.</p>
+
+<p><strong>Step 1: Extract A Component</strong></p>
+
+<p>Where last left off, we were including the full view for our app in the <code>js/app.js</code> file:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
+
+React.render(
+    <span class="nt">&lt;div&gt;</span>
+      <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>,
+    document.getElementById(&#39;react&#39;)
+  );</code></pre></div>
+
+<p>This works fine when we’ve got so little display, but it quickly becomes unmanageable as our view becomes more substantial. The solution, in React, is to delegate the work to components.</p>
+
+<p>Let’s start by moving the JSX code we’ve got in the <code>js/app.js</code> file over to a new <code>js/components/home_page.js</code> file. Now our <code>js/app.js</code> file can look like this:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
+var HomePage = require(&#39;./components/home_page&#39;);
+
+React.render(
+    <span class="nt">&lt;HomePage</span> <span class="nt">/&gt;</span>,
+    document.getElementById(&#39;react&#39;)
+  );</code></pre></div>
+
+<p>The <code>&lt;HomePage /&gt;</code> call exhibits React’s syntax for instantiating components in JSX - they exist as their own element on the page (with whatever components reside on them nested further down).</p>
+
+<p>To mae this work the same as before, we need the <code>js/components/home_page.js</code> file to look like this:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
+
+var HomePage = React.createClass({
+  render: function() {
+    return (
+      <span class="nt">&lt;div&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    );
+  }
+});
+
+module.exports = HomePage;</code></pre></div>
+
+<p>If we load the page in the browser, everything will look the same. But we’ve introduced a valuable tool: now we can apply the same technique to nest multiple components.</p>
+
+<p><strong>Step 2: Nesting Components</strong></p>
+
+<p>Say, for example, we want to add a header, a body, and a footer to our site. This is a great opportunity to start nesting components.</p>
+
+<p>Instead of having the home page store all of the content for the site, it could instantiate several other components that would each handle one part of the view.</p>
+
+<p>To do so, we’s want to change our <code>js/components/home_page.js</code> file to contain the three subordinate components: <code>&lt;Header /&gt;</code>, <code>&lt;Body /&gt;</code>, and <code>&lt;/Footer&gt;</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
+var Header = require(&#39;./header&#39;);
+var Body = require(&#39;./body&#39;);
+var Footer = require(&#39;./footer&#39;);
+
+var HomePage = React.createClass({
+  render: function() {
+    return (
+      <span class="nt">&lt;div&gt;</span>
+        <span class="nt">&lt;Header</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Body</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;Footer</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    );
+  }
+});
+
+module.exports = HomePage;</code></pre></div>
+
+<p>Once that’s in place, we need to create the subordinate components.</p>
+
+<p>Here’s a <code>js/components/header.js</code> file that takes advantage of some react-bootstrap components to create a Navbar that’s fixed to the top of the page:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
+var Navbar = require(&#39;react-bootstrap/lib/Navbar&#39;);
+var Nav = require(&#39;react-bootstrap/lib/Nav&#39;);
+var NavItem = require(&#39;react-bootstrap/lib/NavItem&#39;);
+
+var Header = React.createClass({
+  render: function() {
+    return (
+      <span class="nt">&lt;Navbar</span> <span class="na">fixedTop</span> <span class="na">brand=</span><span class="s">&#39;Demo App&#39;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Nav</span> <span class="na">right</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;NavItem</span> <span class="na">href=</span><span class="s">&#39;#&#39;</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/NavItem&gt;</span>
+          <span class="nt">&lt;NavItem</span> <span class="na">href=</span><span class="s">&#39;#&#39;</span><span class="nt">&gt;</span>About<span class="nt">&lt;/NavItem&gt;</span>
+        <span class="nt">&lt;/Nav&gt;</span>
+      <span class="nt">&lt;/Navbar&gt;</span>
+    );
+  }
+});
+
+module.exports = Header;</code></pre></div>
+
+<p>A <code>js/components/body.js</code> file to welcome our users:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
+
+var Body = React.createClass({
+  render: function() {
+    return (
+      <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">textAlign</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>Welcome to the Demo React App!<span class="nt">&lt;/h1&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;http://tinyurl.com/pd5ttp3&quot;</span> <span class="na">alt=</span><span class="s">&quot;react-logo&quot;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    );
+  }
+});
+
+module.exports = Body;</code></pre></div>
+
+<p>And a <code>/js/component/footer.js</code> file to round things out:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
+var Navbar = require(&#39;react-bootstrap/lib/Navbar&#39;);
+var Nav = require(&#39;react-bootstrap/lib/Nav&#39;);
+var NavItem = require(&#39;react-bootstrap/lib/NavItem&#39;);
+
+var Footer = React.createClass({
+  render: function() {
+    return (
+      <span class="nt">&lt;div&gt;</span>
+        <span class="nt">&lt;Navbar</span> <span class="na">fixedBottom</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;Nav</span> <span class="na">right</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;NavItem&gt;</span>Contact<span class="nt">&lt;/NavItem&gt;</span>
+          <span class="nt">&lt;/Nav&gt;</span>
+        <span class="nt">&lt;/Navbar&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    );
+  }
+});
+
+module.exports = Footer;</code></pre></div>
+
+<p>At this point, our pages starts looking a lot better:</p>
+
+<p><img src="http://rmulhol.github.io//assets/browser-view-with-header-and-footer.png" alt="browser-view-with-header-and-footer" /></p>
+
+<p>And we’ve got the added bonus that things are increasingly separated out from one another: we can independently edit the header, body, or footer for the page without too much concern about the others.</p>
+
+<p><strong>Step 3: Dynamic Content</strong></p>
+
+<p>The page is starting to look a little better, but it still isn’t very “reactive” - we basically could have put everything together with some HTML and CSS. What more can we get out of components?</p>
+
+<p>Say we wanted to add a button that would toggle the image users see on the body of the page. Instead of always seeing the React logo, they could click the button to see the JavaScript logo (and back and forth ad infinitum).</p>
+
+<p>An easy way to implement this in React is to use the component’s properties and state. Properties are values which should never change, while state is explicitly mutable via the <code>setState()</code> method.</p>
+
+<p>Properties can be passed into a component when it’s instantiated, but they can also be set with the <code>getDefaultProps()</code> method. Similarly, initial state can be set via <code>getInitialState()</code>.</p>
+
+<p>If we wanted to add this new functionality entirely within the body component, we could do so like so:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
+var Col = require(&#39;react-bootstrap/lib/Col&#39;);
+var Thumbnail = require(&#39;react-bootstrap/lib/Thumbnail&#39;);
+var Button = require(&#39;react-bootstrap/lib/Button&#39;);
+
+var Body = React.createClass({
+  getDefaultProps: function() {
+    return {
+      reactLogo: &quot;http://tinyurl.com/pd5ttp3&quot;,
+      jsLogo: &quot;http://tinyurl.com/olm5u5m&quot;
+    }
+  },
+
+  getInitialState: function() {
+    return {
+      showReactLogo: true
+    }
+  },
+
+  toggleImage: function() {
+    this.setState({ showReactLogo: !this.state.showReactLogo });
+  },
+
+  render: function() {
+    var imageToShow;
+
+    if (this.state.showReactLogo) {
+      imageToShow = this.props.reactLogo;
+    } else {
+      imageToShow = this.props.jsLogo;
+    }
+
+    return (
+      <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">textAlign</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>Welcome to the Demo React App!<span class="nt">&lt;/h1&gt;</span>
+        <span class="nt">&lt;Col</span> <span class="na">md=</span><span class="s">{4}</span> <span class="na">mdOffset=</span><span class="s">{4}</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;Thumbnail</span> <span class="na">src=</span><span class="s">{imageToShow}</span> <span class="na">alt=</span><span class="s">&#39;shown-logo&#39;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;p&gt;</span>
+              <span class="nt">&lt;Button</span> <span class="na">bsStyle=</span><span class="s">&#39;primary&#39;</span> <span class="na">onClick=</span><span class="s">{this.toggleImage}</span><span class="nt">&gt;</span>Toggle Logo<span class="nt">&lt;/Button&gt;</span>
+            <span class="nt">&lt;/p&gt;</span>
+          <span class="nt">&lt;/Thumbnail&gt;</span>
+        <span class="nt">&lt;/Col&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    );
+  }
+});
+
+module.exports = Body;</code></pre></div>
+
+<p>Here, we set the urls of the two image logos as properties of our Body component (since they will never change), then set the initial state with <code>showReactLogo</code> set to <code>true</code>. When the user clicks the button, we call <code>toggleImage()</code> to set <code>showReactLogo</code> to the opposite state of whatever it was. Within our <code>render()</code> call, we determine which image to show based on current state.</p>
+
+<p>The result is that users can toggle the image back and forth by clicking our button. Our app is reacting to something!</p>
+
+<p><img src="http://rmulhol.github.io//assets/browser-view-with-image-toggle.png" alt="browser-view-with-image-toggle" /></p>
+
+<p><strong>Wrap Up</strong></p>
+
+<p>We’ve definitely made some improvements to our demo app by starting to work with components. We’re now displaying formatted text, incorporating images, and changing things on the fly. We’ve also locked down a less intrusive build process for faster feedback loops.</p>
+
+<p>But we’ve still barely scratched the surface of all we can do with React. Stay tuned for part 3!</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>To access the latest version of the Bootstrap stylesheet, head over to <a href="http://getbootstrap.com/getting-started/">Bootstrap’s Getting Started page</a> and check out the Bootstrap CDN. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>I’ve added the most simple version of the <code>start</code> script here, but you may find it helpful to add the <code>-v</code> flag to get more verbose output each time your <code>js/bundle.js</code> file is recompiled. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p>Note the closing tags - JSX requires closing tags even in places where you might normally be able to get away with leaving them off. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Rob Learns Programming</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Rob Learns Programming</li>
+          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/rmulhol">
+              <span class="icon  icon--github">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+              <span class="username">rmulhol</span>
+            </a>
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/robmulholand">
+              <span class="icon  icon--twitter">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                  c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+                </svg>
+              </span>
+
+              <span class="username">robmulholand</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

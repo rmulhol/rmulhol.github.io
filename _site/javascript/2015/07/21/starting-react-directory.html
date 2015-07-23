@@ -93,7 +93,7 @@
 
 <p><img src="http://rmulhol.github.io//assets/npm-init.png" alt="npm-init-execution" /></p>
 
-<p>Once we’ve got a basic <code>package.json</code> file setup, we can add one of the more important dependencies for our project - React - with a single command: <code>npm install react --save</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
+<p>Once we’ve got a basic <code>package.json</code> file setup, we can add one of the more important dependencies for our project - React - with a single command: <code>npm install --save react</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
 
 <p>Next, we can install some dev dependencies we’ll be needing: <code>npm install --save-dev browserify reactify</code>.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup>  <a href="https://github.com/substack/browserify-handbook">Browserify</a> will enable us to compile modules for the browser, and <a href="https://github.com/andreypopp/reactify">Reactify</a> will help Browserify to play nicely with the <a href="https://facebook.github.io/jsx/">JSX</a> syntax we’ll be using in our React modules.</p>
 
@@ -164,7 +164,7 @@ React.render(
 
 <p>Once that’s installed, head to your project’s root directory and run <code>http-server</code>. Pull up the browser and head over to http://localhost:8080/ and…</p>
 
-<p><img src="http://rmulhol.github.io//assets/browser-view.png" alt="browser-view" /></p>
+<p><img src="http://rmulhol.github.io//assets/browser-view-hello-world.png" alt="browser-view-hello-world" /></p>
 
 <p>It’s alive! That’s not exactly the fancy view we were hoping for when we decided to explore this newfangled UI library, but it’s a start!</p>
 
@@ -172,7 +172,7 @@ React.render(
 
 <p>So, we clearly have a lot more to learn before we can start really taking advantage of React’s power, but we are now working with the library. Just by installing a few dependencies, filling out a few files, and executing a few scripts, we’re right about where we’d expect to be with something like a <code>rails new ...</code> for React.</p>
 
-<p>Stay tuned for future posts on getting started with React!</p>
+<p>Stay tuned for future posts on getting started with React!<sup id="fnref:6"><a href="#fn:6" class="footnote">6</a></sup></p>
 
 <div class="footnotes">
   <ol>
@@ -190,6 +190,9 @@ React.render(
     </li>
     <li id="fn:5">
       <p>The <code>-g</code> flag tells npm to install Browserify globally, so that we can run <code>browserify</code> from the command line anywhere on our system. <a href="#fnref:5" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:6">
+      <p>If you’d like to follow along with the source code we’re developing over this series of posts, check out the <a href="https://github.com/rmulhol/demo-react-app">demo-react-app Github repo</a>. The changes from this post are reflected in the second commit. <a href="#fnref:6" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

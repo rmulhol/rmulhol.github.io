@@ -6,9 +6,279 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 21 Jul 2015 21:12:10 -0500</pubDate>
-    <lastBuildDate>Tue, 21 Jul 2015 21:12:10 -0500</lastBuildDate>
+    <pubDate>Thu, 23 Jul 2015 15:15:30 -0500</pubDate>
+    <lastBuildDate>Thu, 23 Jul 2015 15:15:30 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Getting Started With React - Part 2: Exploring Components</title>
+        <description>&lt;p&gt;React is a library for building user interfaces, but most of the work we’ve done so far has only laid the groundwork for actually carrying out that task. The UI we left off with doesn’t exactly expose React’s power.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/browser-view-hello-world.png&quot; alt=&quot;browser-view-hello-world&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If we want to start building something that looks better and does more, we should start to get a handle on React’s tool for generating views: components.&lt;/p&gt;
+
+&lt;p&gt;Components are modules that include a &lt;code&gt;render()&lt;/code&gt; method that tells the program what to display. They can generate content dynamically, responding to data passed in by other components or the user. &lt;/p&gt;
+
+&lt;p&gt;Once you start taking advantage of their numerous features and piecing them together, components provide a valuable tool for constructing sophisticated user interfaces. &lt;/p&gt;
+
+&lt;p&gt;Let’s take a look at how components can help us transform our little “hello, world” app into something a bit more visually appealing…&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Before We Begin: Housekeeping&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;If you’re just hopping on now, you can access the source code for the work we’ve done so far in the second commit of the &lt;a href=&quot;https://github.com/rmulhol/demo-react-app&quot;&gt;demo-react-app Github repo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Before we begin coding up components, we’ll want to install a few additional tools. The first is &lt;a href=&quot;http://react-bootstrap.github.io/&quot;&gt;react-bootstrap&lt;/a&gt;, which will provide a quick and easy way to add some styling. You can install it by running &lt;code&gt;npm install --save react-bootstrap&lt;/code&gt;. You’ll also want to add a link to the Bootstrap stylesheet in the &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; of your &lt;code&gt;index.html&lt;/code&gt; file:&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/index-with-bootstrap.png&quot; alt=&quot;index-with-bootstrap&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, we’ll want to install &lt;a href=&quot;https://github.com/substack/watchify&quot;&gt;Watchify&lt;/a&gt;, which will enable us to automatically recompile our &lt;code&gt;js/bundle.js&lt;/code&gt; file each time we make an edit to our source code. Add it by running &lt;code&gt;npm install --save-dev watchify&lt;/code&gt;, and then add a &lt;code&gt;start&lt;/code&gt; script to your &lt;code&gt;package.json&lt;/code&gt; file:&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/pkg-with-start-script.png&quot; alt=&quot;pkg-with-start-script&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we can run &lt;code&gt;npm run start&lt;/code&gt; to initiate our &lt;code&gt;watchify&lt;/code&gt; script, spin up an &lt;code&gt;http-server&lt;/code&gt; in our project directory, and see changes reflected in the browser almost immediately as we save them.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 1: Extract A Component&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Where last left off, we were including the full view for our app in the &lt;code&gt;js/app.js&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;var React = require(&amp;#39;react&amp;#39;);
+
+React.render(
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Hello, world!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;,
+    document.getElementById(&amp;#39;react&amp;#39;)
+  );&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This works fine when we’ve got so little display, but it quickly becomes unmanageable as our view becomes more substantial. The solution, in React, is to delegate the work to components.&lt;/p&gt;
+
+&lt;p&gt;Let’s start by moving the JSX code we’ve got in the &lt;code&gt;js/app.js&lt;/code&gt; file over to a new &lt;code&gt;js/components/home_page.js&lt;/code&gt; file. Now our &lt;code&gt;js/app.js&lt;/code&gt; file can look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;var React = require(&amp;#39;react&amp;#39;);
+var HomePage = require(&amp;#39;./components/home_page&amp;#39;);
+
+React.render(
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;HomePage&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;,
+    document.getElementById(&amp;#39;react&amp;#39;)
+  );&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code&gt;&amp;lt;HomePage /&amp;gt;&lt;/code&gt; call exhibits React’s syntax for instantiating components in JSX - they exist as their own element on the page (with whatever components reside on them nested further down).&lt;/p&gt;
+
+&lt;p&gt;To mae this work the same as before, we need the &lt;code&gt;js/components/home_page.js&lt;/code&gt; file to look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;var React = require(&amp;#39;react&amp;#39;);
+
+var HomePage = React.createClass({
+  render: function() {
+    return (
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Hello, world!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    );
+  }
+});
+
+module.exports = HomePage;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If we load the page in the browser, everything will look the same. But we’ve introduced a valuable tool: now we can apply the same technique to nest multiple components.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2: Nesting Components&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Say, for example, we want to add a header, a body, and a footer to our site. This is a great opportunity to start nesting components.&lt;/p&gt;
+
+&lt;p&gt;Instead of having the home page store all of the content for the site, it could instantiate several other components that would each handle one part of the view.&lt;/p&gt;
+
+&lt;p&gt;To do so, we’s want to change our &lt;code&gt;js/components/home_page.js&lt;/code&gt; file to contain the three subordinate components: &lt;code&gt;&amp;lt;Header /&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;Body /&amp;gt;&lt;/code&gt;, and &lt;code&gt;&amp;lt;/Footer&amp;gt;&lt;/code&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;var React = require(&amp;#39;react&amp;#39;);
+var Header = require(&amp;#39;./header&amp;#39;);
+var Body = require(&amp;#39;./body&amp;#39;);
+var Footer = require(&amp;#39;./footer&amp;#39;);
+
+var HomePage = React.createClass({
+  render: function() {
+    return (
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;Header&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;Body&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;Footer&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    );
+  }
+});
+
+module.exports = HomePage;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Once that’s in place, we need to create the subordinate components.&lt;/p&gt;
+
+&lt;p&gt;Here’s a &lt;code&gt;js/components/header.js&lt;/code&gt; file that takes advantage of some react-bootstrap components to create a Navbar that’s fixed to the top of the page:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;var React = require(&amp;#39;react&amp;#39;);
+var Navbar = require(&amp;#39;react-bootstrap/lib/Navbar&amp;#39;);
+var Nav = require(&amp;#39;react-bootstrap/lib/Nav&amp;#39;);
+var NavItem = require(&amp;#39;react-bootstrap/lib/NavItem&amp;#39;);
+
+var Header = React.createClass({
+  render: function() {
+    return (
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;Navbar&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;fixedTop&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;brand=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;Demo App&amp;#39;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;Nav&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;NavItem&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;#&amp;#39;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Home&lt;span class=&quot;nt&quot;&gt;&amp;lt;/NavItem&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;NavItem&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;#&amp;#39;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;About&lt;span class=&quot;nt&quot;&gt;&amp;lt;/NavItem&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Nav&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Navbar&amp;gt;&lt;/span&gt;
+    );
+  }
+});
+
+module.exports = Header;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;A &lt;code&gt;js/components/body.js&lt;/code&gt; file to welcome our users:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;var React = require(&amp;#39;react&amp;#39;);
+
+var Body = React.createClass({
+  render: function() {
+    return (
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;textAlign&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Welcome to the Demo React App!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;http://tinyurl.com/pd5ttp3&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;alt=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;react-logo&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    );
+  }
+});
+
+module.exports = Body;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And a &lt;code&gt;/js/component/footer.js&lt;/code&gt; file to round things out:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;var React = require(&amp;#39;react&amp;#39;);
+var Navbar = require(&amp;#39;react-bootstrap/lib/Navbar&amp;#39;);
+var Nav = require(&amp;#39;react-bootstrap/lib/Nav&amp;#39;);
+var NavItem = require(&amp;#39;react-bootstrap/lib/NavItem&amp;#39;);
+
+var Footer = React.createClass({
+  render: function() {
+    return (
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;Navbar&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;fixedBottom&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;Nav&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;NavItem&amp;gt;&lt;/span&gt;Contact&lt;span class=&quot;nt&quot;&gt;&amp;lt;/NavItem&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Nav&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Navbar&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    );
+  }
+});
+
+module.exports = Footer;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;At this point, our pages starts looking a lot better:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/browser-view-with-header-and-footer.png&quot; alt=&quot;browser-view-with-header-and-footer&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And we’ve got the added bonus that things are increasingly separated out from one another: we can independently edit the header, body, or footer for the page without too much concern about the others.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 3: Dynamic Content&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The page is starting to look a little better, but it still isn’t very “reactive” - we basically could have put everything together with some HTML and CSS. What more can we get out of components?&lt;/p&gt;
+
+&lt;p&gt;Say we wanted to add a button that would toggle the image users see on the body of the page. Instead of always seeing the React logo, they could click the button to see the JavaScript logo (and back and forth ad infinitum).&lt;/p&gt;
+
+&lt;p&gt;An easy way to implement this in React is to use the component’s properties and state. Properties are values which should never change, while state is explicitly mutable via the &lt;code&gt;setState()&lt;/code&gt; method.&lt;/p&gt;
+
+&lt;p&gt;Properties can be passed into a component when it’s instantiated, but they can also be set with the &lt;code&gt;getDefaultProps()&lt;/code&gt; method. Similarly, initial state can be set via &lt;code&gt;getInitialState()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;If we wanted to add this new functionality entirely within the body component, we could do so like so:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;var React = require(&amp;#39;react&amp;#39;);
+var Col = require(&amp;#39;react-bootstrap/lib/Col&amp;#39;);
+var Thumbnail = require(&amp;#39;react-bootstrap/lib/Thumbnail&amp;#39;);
+var Button = require(&amp;#39;react-bootstrap/lib/Button&amp;#39;);
+
+var Body = React.createClass({
+  getDefaultProps: function() {
+    return {
+      reactLogo: &amp;quot;http://tinyurl.com/pd5ttp3&amp;quot;,
+      jsLogo: &amp;quot;http://tinyurl.com/olm5u5m&amp;quot;
+    }
+  },
+
+  getInitialState: function() {
+    return {
+      showReactLogo: true
+    }
+  },
+
+  toggleImage: function() {
+    this.setState({ showReactLogo: !this.state.showReactLogo });
+  },
+
+  render: function() {
+    var imageToShow;
+
+    if (this.state.showReactLogo) {
+      imageToShow = this.props.reactLogo;
+    } else {
+      imageToShow = this.props.jsLogo;
+    }
+
+    return (
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;textAlign&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Welcome to the Demo React App!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;Col&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;md=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{4}&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mdOffset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{4}&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;Thumbnail&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{imageToShow}&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;alt=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;shown-logo&amp;#39;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
+              &lt;span class=&quot;nt&quot;&gt;&amp;lt;Button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;bsStyle=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;primary&amp;#39;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;onClick=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;{this.toggleImage}&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Toggle Logo&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Button&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Thumbnail&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Col&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    );
+  }
+});
+
+module.exports = Body;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here, we set the urls of the two image logos as properties of our Body component (since they will never change), then set the initial state with &lt;code&gt;showReactLogo&lt;/code&gt; set to &lt;code&gt;true&lt;/code&gt;. When the user clicks the button, we call &lt;code&gt;toggleImage()&lt;/code&gt; to set &lt;code&gt;showReactLogo&lt;/code&gt; to the opposite state of whatever it was. Within our &lt;code&gt;render()&lt;/code&gt; call, we determine which image to show based on current state.&lt;/p&gt;
+
+&lt;p&gt;The result is that users can toggle the image back and forth by clicking our button. Our app is reacting to something!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/browser-view-with-image-toggle.png&quot; alt=&quot;browser-view-with-image-toggle&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Wrap Up&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We’ve definitely made some improvements to our demo app by starting to work with components. We’re now displaying formatted text, incorporating images, and changing things on the fly. We’ve also locked down a less intrusive build process for faster feedback loops.&lt;/p&gt;
+
+&lt;p&gt;But we’ve still barely scratched the surface of all we can do with React. Stay tuned for part 3!&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;To access the latest version of the Bootstrap stylesheet, head over to &lt;a href=&quot;http://getbootstrap.com/getting-started/&quot;&gt;Bootstrap’s Getting Started page&lt;/a&gt; and check out the Bootstrap CDN. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;I’ve added the most simple version of the &lt;code&gt;start&lt;/code&gt; script here, but you may find it helpful to add the &lt;code&gt;-v&lt;/code&gt; flag to get more verbose output each time your &lt;code&gt;js/bundle.js&lt;/code&gt; file is recompiled. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;Note the closing tags - JSX requires closing tags even in places where you might normally be able to get away with leaving them off. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Thu, 23 Jul 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//javascript/2015/07/23/starting-react-components.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/07/23/starting-react-components.html</guid>
+        
+        <category>react</category>
+        
+        <category>components</category>
+        
+        
+        <category>javascript</category>
+        
+      </item>
     
       <item>
         <title>Getting Started With React - Part 1: Setting Up the File Directory</title>
@@ -30,7 +300,7 @@
 
 &lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/npm-init.png&quot; alt=&quot;npm-init-execution&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Once we’ve got a basic &lt;code&gt;package.json&lt;/code&gt; file setup, we can add one of the more important dependencies for our project - React - with a single command: &lt;code&gt;npm install react --save&lt;/code&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;Once we’ve got a basic &lt;code&gt;package.json&lt;/code&gt; file setup, we can add one of the more important dependencies for our project - React - with a single command: &lt;code&gt;npm install --save react&lt;/code&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;p&gt;Next, we can install some dev dependencies we’ll be needing: &lt;code&gt;npm install --save-dev browserify reactify&lt;/code&gt;.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;  &lt;a href=&quot;https://github.com/substack/browserify-handbook&quot;&gt;Browserify&lt;/a&gt; will enable us to compile modules for the browser, and &lt;a href=&quot;https://github.com/andreypopp/reactify&quot;&gt;Reactify&lt;/a&gt; will help Browserify to play nicely with the &lt;a href=&quot;https://facebook.github.io/jsx/&quot;&gt;JSX&lt;/a&gt; syntax we’ll be using in our React modules.&lt;/p&gt;
 
@@ -101,7 +371,7 @@ React.render(
 
 &lt;p&gt;Once that’s installed, head to your project’s root directory and run &lt;code&gt;http-server&lt;/code&gt;. Pull up the browser and head over to http://localhost:8080/ and…&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/browser-view.png&quot; alt=&quot;browser-view&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/browser-view-hello-world.png&quot; alt=&quot;browser-view-hello-world&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;It’s alive! That’s not exactly the fancy view we were hoping for when we decided to explore this newfangled UI library, but it’s a start!&lt;/p&gt;
 
@@ -109,7 +379,7 @@ React.render(
 
 &lt;p&gt;So, we clearly have a lot more to learn before we can start really taking advantage of React’s power, but we are now working with the library. Just by installing a few dependencies, filling out a few files, and executing a few scripts, we’re right about where we’d expect to be with something like a &lt;code&gt;rails new ...&lt;/code&gt; for React.&lt;/p&gt;
 
-&lt;p&gt;Stay tuned for future posts on getting started with React!&lt;/p&gt;
+&lt;p&gt;Stay tuned for future posts on getting started with React!&lt;sup id=&quot;fnref:6&quot;&gt;&lt;a href=&quot;#fn:6&quot; class=&quot;footnote&quot;&gt;6&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
@@ -127,6 +397,9 @@ React.render(
     &lt;/li&gt;
     &lt;li id=&quot;fn:5&quot;&gt;
       &lt;p&gt;The &lt;code&gt;-g&lt;/code&gt; flag tells npm to install Browserify globally, so that we can run &lt;code&gt;browserify&lt;/code&gt; from the command line anywhere on our system. &lt;a href=&quot;#fnref:5&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:6&quot;&gt;
+      &lt;p&gt;If you’d like to follow along with the source code we’re developing over this series of posts, check out the &lt;a href=&quot;https://github.com/rmulhol/demo-react-app&quot;&gt;demo-react-app Github repo&lt;/a&gt;. The changes from this post are reflected in the second commit. &lt;a href=&quot;#fnref:6&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -725,50 +998,6 @@ React.render(
         
         
         <category>general</category>
-        
-      </item>
-    
-      <item>
-        <title>Packaging Programs: Building JAR Files With IntelliJ</title>
-        <description>&lt;p&gt;As a software development apprentice, the latest challenge I’ve taken on is to build an HTTP server in Java. To verify that everything is working as expected, I need to run my program against the tests contained in &lt;a href=&quot;https://github.com/8thlight/cob_spec&quot;&gt;the Cob Spec Fitnesse suite&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;A lot of work goes in to passing all of the tests, but the first step is simply giving Cob Spec access to my program. It’s hard to run the tests if you can’t access the source. For Cob Spec to access the source, the server needs to be packaged into &lt;a href=&quot;http://en.wikipedia.org/wiki/JAR_%28file_format%29&quot;&gt;a JAR file&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;JAR stands for Java Archive; it’s a format for grouping together all of the necessary Java classes plus any other relevant files into one artifact that contains a whole program. Beyond putting everything in one place, it also offers &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/deployment/jar/&quot;&gt;numerous other benefits&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;So how does one create such a convenient file? When I started poking around, I found several resources that covered how you can &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/deployment/jar/build.html&quot;&gt;do so from the command line&lt;/a&gt;. But I was so used to automating these tasks from my IDE (&lt;a href=&quot;https://www.jetbrains.com/idea/&quot;&gt;IntelliJ&lt;/a&gt;) that I figured that there had to be a simpler way.&lt;/p&gt;
-
-&lt;p&gt;And, indeed there is. Creating a JAR file with IntelliJ requires nothing more than a few clicks and keystrokes.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Building a JAR File in IntelliJ&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Once you’ve got a working Java program built in IntelliJ, packaging it into a JAR file is only a few steps away.&lt;/p&gt;
-
-&lt;p&gt;It begins by opening up the Project Structure menu. You can do so by clicking &lt;code&gt;File =&amp;gt; Project Structure&lt;/code&gt;, or with the keyboard shortcut &lt;code&gt;⌘;&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Next, navigate to the &lt;code&gt;Artifacts&lt;/code&gt; option on the left panel. This will open up a menu for building artifacts.&lt;/p&gt;
-
-&lt;p&gt;On that menu, clicking &lt;code&gt;+&lt;/code&gt; prompts you to select what type of artifact you’d like to build.&lt;/p&gt;
-
-&lt;p&gt;After you select &lt;code&gt;JAR&lt;/code&gt;, all that’s left is to fill in the details - give your JAR a name, indicate where to find the &lt;code&gt;main&lt;/code&gt; method, and specify what files to include.&lt;/p&gt;
-
-&lt;p&gt;Clicking &lt;code&gt;OK&lt;/code&gt; in the bottom-right corner of the menu wraps everything up. You can now run &lt;code&gt;java -jar path/to/jar/filename.jar&lt;/code&gt; on the command line to execute your program.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Creating and working with JAR files strikes me as one of those things that becomes virtually automatic after just a little bit of practice. But it can be a bit of a pain when you’re just getting started. Luckily, as with so many other steps that go into working with Java, IntelliJ makes accomplishing this task quick and easy.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 01 Jun 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//java/2015/06/01/package-jar-intellij.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//java/2015/06/01/package-jar-intellij.html</guid>
-        
-        <category>jar</category>
-        
-        <category>packages</category>
-        
-        
-        <category>java</category>
         
       </item>
     
