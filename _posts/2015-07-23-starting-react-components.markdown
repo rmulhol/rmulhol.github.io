@@ -36,50 +36,19 @@ Now we can run `npm run start` to initiate our `watchify` script, spin up an `ht
 
 Where last left off, we were including the full view for our app in the `js/app.js` file:
 
-{% highlight html %}
-var React = require('react');
-
-React.render(
-    <div>
-      <h1>Hello, world!</h1>
-    </div>,
-    document.getElementById('react')
-  );
-{% endhighlight %}
+{% gist dfcb2fd783ada9654894 %}
 
 This works fine when we've got so little display, but it quickly becomes unmanageable as our view becomes more substantial. The solution, in React, is to delegate the work to components.
 
 Let's start by moving the JSX code we've got in the `js/app.js` file over to a new `js/components/home_page.js` file. Now our `js/app.js` file can look like this:
 
-{% highlight html %}
-var React = require('react');
-var HomePage = require('./components/home_page');
-
-React.render(
-    <HomePage />,
-    document.getElementById('react')
-  );
-{% endhighlight %}
+{% gist 8e7a24fddd37ab15ff70 %}
 
 The `<HomePage />` call exhibits React's syntax for instantiating components in JSX - they exist as their own element on the page (with whatever components reside on them nested further down).
 
 To mae this work the same as before, we need the `js/components/home_page.js` file to look like this:
 
-{% highlight html %}
-var React = require('react');
-
-var HomePage = React.createClass({
-  render: function() {
-    return (
-      <div>
-        <h1>Hello, world!</h1>
-      </div>
-    );
-  }
-});
-
-module.exports = HomePage;
-{% endhighlight %}
+{% gist 7cee0ed45ea4620b7310 %}
 
 If we load the page in the browser, everything will look the same. But we've introduced a valuable tool: now we can apply the same technique to nest multiple components.
 
@@ -91,98 +60,23 @@ Instead of having the home page store all of the content for the site, it could 
 
 To do so, we's want to change our `js/components/home_page.js` file to contain the three subordinate components: `<Header />`, `<Body />`, and `</Footer>`.[^3]
 
-{% highlight html %}
-var React = require('react');
-var Header = require('./header');
-var Body = require('./body');
-var Footer = require('./footer');
-
-var HomePage = React.createClass({
-  render: function() {
-    return (
-      <div>
-        <Header />
-        <Body />
-        <Footer />
-      </div>
-    );
-  }
-});
-
-module.exports = HomePage;
-{% endhighlight %}
+{% gist cdef870ab3a9deca4967 %}
 
 Once that's in place, we need to create the subordinate components.
 
 Here's a `js/components/header.js` file that takes advantage of some react-bootstrap components to create a Navbar that's fixed to the top of the page:
 
-{% highlight html %}
-var React = require('react');
-var Navbar = require('react-bootstrap/lib/Navbar');
-var Nav = require('react-bootstrap/lib/Nav');
-var NavItem = require('react-bootstrap/lib/NavItem');
-
-var Header = React.createClass({
-  render: function() {
-    return (
-      <Navbar fixedTop brand='Demo App'>
-        <Nav right>
-          <NavItem href='#'>Home</NavItem>
-          <NavItem href='#'>About</NavItem>
-        </Nav>
-      </Navbar>
-    );
-  }
-});
-
-module.exports = Header;
-{% endhighlight %}
+{% gist 4d5e127a79a56f24ce07 %}
 
 A `js/components/body.js` file to welcome our users:
 
-{% highlight html %}
-var React = require('react');
-
-var Body = React.createClass({
-  render: function() {
-    return (
-      <div style={{ "textAlign": "center", "paddingTop": "70px" }}>
-        <h1>Welcome to the Demo React App!</h1>
-        <img src="http://tinyurl.com/pd5ttp3" alt="react-logo" />
-      </div>
-    );
-  }
-});
-
-module.exports = Body;
-{% endhighlight %}
+{% gist 27f433cba607631a9346 %}
 
 And a `/js/component/footer.js` file to round things out:
 
-{% highlight html %}
-var React = require('react');
-var Navbar = require('react-bootstrap/lib/Navbar');
-var Nav = require('react-bootstrap/lib/Nav');
-var NavItem = require('react-bootstrap/lib/NavItem');
+{% gist 4dbfee934b2fa85249fa %}
 
-var Footer = React.createClass({
-  render: function() {
-    return (
-      <div>
-        <Navbar fixedBottom>
-          <Nav right>
-            <NavItem>Contact</NavItem>
-          </Nav>
-        </Navbar>
-      </div>
-    );
-  }
-});
-
-module.exports = Footer;
-{% endhighlight %}
-
-At this point, our pages starts looking a lot better:
+At this point, our page starts looking a lot better:
 
 ![browser-view-with-header-and-footer]({{ site.url }}/assets/browser-view-with-header-and-footer.png)
 
@@ -200,56 +94,7 @@ Properties can be passed into a component when it's instantiated, but they can a
 
 If we wanted to add this new functionality entirely within the body component, we could do so like so:
 
-{% highlight html %}
-var React = require('react');
-var Col = require('react-bootstrap/lib/Col');
-var Thumbnail = require('react-bootstrap/lib/Thumbnail');
-var Button = require('react-bootstrap/lib/Button');
-
-var Body = React.createClass({
-  getDefaultProps: function() {
-    return {
-      reactLogo: "http://tinyurl.com/pd5ttp3",
-      jsLogo: "http://tinyurl.com/olm5u5m"
-    }
-  },
-
-  getInitialState: function() {
-    return {
-      showReactLogo: true
-    }
-  },
-
-  toggleImage: function() {
-    this.setState({ showReactLogo: !this.state.showReactLogo });
-  },
-
-  render: function() {
-    var imageToShow;
-
-    if (this.state.showReactLogo) {
-      imageToShow = this.props.reactLogo;
-    } else {
-      imageToShow = this.props.jsLogo;
-    }
-
-    return (
-      <div style={{ "textAlign": "center", "paddingTop": "70px" }}>
-        <h1>Welcome to the Demo React App!</h1>
-        <Col md={4} mdOffset={4}>
-          <Thumbnail src={imageToShow} alt='shown-logo'>
-            <p>
-              <Button bsStyle='primary' onClick={this.toggleImage}>Toggle Logo</Button>
-            </p>
-          </Thumbnail>
-        </Col>
-      </div>
-    );
-  }
-});
-
-module.exports = Body;
-{% endhighlight %}
+{% gist c11e477b504fe2b552e0 %}
 
 Here, we set the urls of the two image logos as properties of our Body component (since they will never change), then set the initial state with `showReactLogo` set to `true`. When the user clicks the button, we call `toggleImage()` to set `showReactLogo` to the opposite state of whatever it was. Within our `render()` call, we determine which image to show based on current state.
 

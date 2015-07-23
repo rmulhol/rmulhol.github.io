@@ -105,44 +105,19 @@
 
 <p>Where last left off, we were including the full view for our app in the <code>js/app.js</code> file:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
-
-React.render(
-    <span class="nt">&lt;div&gt;</span>
-      <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
-    <span class="nt">&lt;/div&gt;</span>,
-    document.getElementById(&#39;react&#39;)
-  );</code></pre></div>
+<script src="https://gist.github.com/dfcb2fd783ada9654894.js"> </script>
 
 <p>This works fine when we’ve got so little display, but it quickly becomes unmanageable as our view becomes more substantial. The solution, in React, is to delegate the work to components.</p>
 
 <p>Let’s start by moving the JSX code we’ve got in the <code>js/app.js</code> file over to a new <code>js/components/home_page.js</code> file. Now our <code>js/app.js</code> file can look like this:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
-var HomePage = require(&#39;./components/home_page&#39;);
-
-React.render(
-    <span class="nt">&lt;HomePage</span> <span class="nt">/&gt;</span>,
-    document.getElementById(&#39;react&#39;)
-  );</code></pre></div>
+<script src="https://gist.github.com/8e7a24fddd37ab15ff70.js"> </script>
 
 <p>The <code>&lt;HomePage /&gt;</code> call exhibits React’s syntax for instantiating components in JSX - they exist as their own element on the page (with whatever components reside on them nested further down).</p>
 
 <p>To mae this work the same as before, we need the <code>js/components/home_page.js</code> file to look like this:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
-
-var HomePage = React.createClass({
-  render: function() {
-    return (
-      <span class="nt">&lt;div&gt;</span>
-        <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
-      <span class="nt">&lt;/div&gt;</span>
-    );
-  }
-});
-
-module.exports = HomePage;</code></pre></div>
+<script src="https://gist.github.com/7cee0ed45ea4620b7310.js"> </script>
 
 <p>If we load the page in the browser, everything will look the same. But we’ve introduced a valuable tool: now we can apply the same technique to nest multiple components.</p>
 
@@ -154,90 +129,23 @@ module.exports = HomePage;</code></pre></div>
 
 <p>To do so, we’s want to change our <code>js/components/home_page.js</code> file to contain the three subordinate components: <code>&lt;Header /&gt;</code>, <code>&lt;Body /&gt;</code>, and <code>&lt;/Footer&gt;</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
-var Header = require(&#39;./header&#39;);
-var Body = require(&#39;./body&#39;);
-var Footer = require(&#39;./footer&#39;);
-
-var HomePage = React.createClass({
-  render: function() {
-    return (
-      <span class="nt">&lt;div&gt;</span>
-        <span class="nt">&lt;Header</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;Body</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;Footer</span> <span class="nt">/&gt;</span>
-      <span class="nt">&lt;/div&gt;</span>
-    );
-  }
-});
-
-module.exports = HomePage;</code></pre></div>
+<script src="https://gist.github.com/cdef870ab3a9deca4967.js"> </script>
 
 <p>Once that’s in place, we need to create the subordinate components.</p>
 
 <p>Here’s a <code>js/components/header.js</code> file that takes advantage of some react-bootstrap components to create a Navbar that’s fixed to the top of the page:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
-var Navbar = require(&#39;react-bootstrap/lib/Navbar&#39;);
-var Nav = require(&#39;react-bootstrap/lib/Nav&#39;);
-var NavItem = require(&#39;react-bootstrap/lib/NavItem&#39;);
-
-var Header = React.createClass({
-  render: function() {
-    return (
-      <span class="nt">&lt;Navbar</span> <span class="na">fixedTop</span> <span class="na">brand=</span><span class="s">&#39;Demo App&#39;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;Nav</span> <span class="na">right</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;NavItem</span> <span class="na">href=</span><span class="s">&#39;#&#39;</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/NavItem&gt;</span>
-          <span class="nt">&lt;NavItem</span> <span class="na">href=</span><span class="s">&#39;#&#39;</span><span class="nt">&gt;</span>About<span class="nt">&lt;/NavItem&gt;</span>
-        <span class="nt">&lt;/Nav&gt;</span>
-      <span class="nt">&lt;/Navbar&gt;</span>
-    );
-  }
-});
-
-module.exports = Header;</code></pre></div>
+<script src="https://gist.github.com/4d5e127a79a56f24ce07.js"> </script>
 
 <p>A <code>js/components/body.js</code> file to welcome our users:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
-
-var Body = React.createClass({
-  render: function() {
-    return (
-      <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">textAlign</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;h1&gt;</span>Welcome to the Demo React App!<span class="nt">&lt;/h1&gt;</span>
-        <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;http://tinyurl.com/pd5ttp3&quot;</span> <span class="na">alt=</span><span class="s">&quot;react-logo&quot;</span> <span class="nt">/&gt;</span>
-      <span class="nt">&lt;/div&gt;</span>
-    );
-  }
-});
-
-module.exports = Body;</code></pre></div>
+<script src="https://gist.github.com/27f433cba607631a9346.js"> </script>
 
 <p>And a <code>/js/component/footer.js</code> file to round things out:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
-var Navbar = require(&#39;react-bootstrap/lib/Navbar&#39;);
-var Nav = require(&#39;react-bootstrap/lib/Nav&#39;);
-var NavItem = require(&#39;react-bootstrap/lib/NavItem&#39;);
+<script src="https://gist.github.com/4dbfee934b2fa85249fa.js"> </script>
 
-var Footer = React.createClass({
-  render: function() {
-    return (
-      <span class="nt">&lt;div&gt;</span>
-        <span class="nt">&lt;Navbar</span> <span class="na">fixedBottom</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;Nav</span> <span class="na">right</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;NavItem&gt;</span>Contact<span class="nt">&lt;/NavItem&gt;</span>
-          <span class="nt">&lt;/Nav&gt;</span>
-        <span class="nt">&lt;/Navbar&gt;</span>
-      <span class="nt">&lt;/div&gt;</span>
-    );
-  }
-});
-
-module.exports = Footer;</code></pre></div>
-
-<p>At this point, our pages starts looking a lot better:</p>
+<p>At this point, our page starts looking a lot better:</p>
 
 <p><img src="http://rmulhol.github.io//assets/browser-view-with-header-and-footer.png" alt="browser-view-with-header-and-footer" /></p>
 
@@ -255,54 +163,7 @@ module.exports = Footer;</code></pre></div>
 
 <p>If we wanted to add this new functionality entirely within the body component, we could do so like so:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
-var Col = require(&#39;react-bootstrap/lib/Col&#39;);
-var Thumbnail = require(&#39;react-bootstrap/lib/Thumbnail&#39;);
-var Button = require(&#39;react-bootstrap/lib/Button&#39;);
-
-var Body = React.createClass({
-  getDefaultProps: function() {
-    return {
-      reactLogo: &quot;http://tinyurl.com/pd5ttp3&quot;,
-      jsLogo: &quot;http://tinyurl.com/olm5u5m&quot;
-    }
-  },
-
-  getInitialState: function() {
-    return {
-      showReactLogo: true
-    }
-  },
-
-  toggleImage: function() {
-    this.setState({ showReactLogo: !this.state.showReactLogo });
-  },
-
-  render: function() {
-    var imageToShow;
-
-    if (this.state.showReactLogo) {
-      imageToShow = this.props.reactLogo;
-    } else {
-      imageToShow = this.props.jsLogo;
-    }
-
-    return (
-      <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">textAlign</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;h1&gt;</span>Welcome to the Demo React App!<span class="nt">&lt;/h1&gt;</span>
-        <span class="nt">&lt;Col</span> <span class="na">md=</span><span class="s">{4}</span> <span class="na">mdOffset=</span><span class="s">{4}</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;Thumbnail</span> <span class="na">src=</span><span class="s">{imageToShow}</span> <span class="na">alt=</span><span class="s">&#39;shown-logo&#39;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;p&gt;</span>
-              <span class="nt">&lt;Button</span> <span class="na">bsStyle=</span><span class="s">&#39;primary&#39;</span> <span class="na">onClick=</span><span class="s">{this.toggleImage}</span><span class="nt">&gt;</span>Toggle Logo<span class="nt">&lt;/Button&gt;</span>
-            <span class="nt">&lt;/p&gt;</span>
-          <span class="nt">&lt;/Thumbnail&gt;</span>
-        <span class="nt">&lt;/Col&gt;</span>
-      <span class="nt">&lt;/div&gt;</span>
-    );
-  }
-});
-
-module.exports = Body;</code></pre></div>
+<script src="https://gist.github.com/c11e477b504fe2b552e0.js"> </script>
 
 <p>Here, we set the urls of the two image logos as properties of our Body component (since they will never change), then set the initial state with <code>showReactLogo</code> set to <code>true</code>. When the user clicks the button, we call <code>toggleImage()</code> to set <code>showReactLogo</code> to the opposite state of whatever it was. Within our <code>render()</code> call, we determine which image to show based on current state.</p>
 
