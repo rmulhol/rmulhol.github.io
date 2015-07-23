@@ -24,7 +24,7 @@ Once you've got npm, you can run `npm init` in an empty directory to setup a bas
 
 ![npm-init-execution]({{ site.url }}/assets/npm-init.png)
 
-Once we've got a basic `package.json` file setup, we can add one of the more important dependencies for our project - React - with a single command: `npm install react --save`.[^3]
+Once we've got a basic `package.json` file setup, we can add one of the more important dependencies for our project - React - with a single command: `npm install --save react`.[^3]
 
 Next, we can install some dev dependencies we'll be needing: `npm install --save-dev browserify reactify`.[^4]  [Browserify][browserify] will enable us to compile modules for the browser, and [Reactify][reactify] will help Browserify to play nicely with the [JSX][jsx] syntax we'll be using in our React modules.
 
@@ -99,7 +99,7 @@ After that's complete, we're ready to fire up our app! To do that, we need an ht
 
 Once that's installed, head to your project's root directory and run `http-server`. Pull up the browser and head over to http://localhost:8080/ and...
 
-![browser-view]({{ site.url }}/assets/browser-view.png)
+![browser-view-hello-world]({{ site.url }}/assets/browser-view-hello-world.png)
 
 It's alive! That's not exactly the fancy view we were hoping for when we decided to explore this newfangled UI library, but it's a start!
 
@@ -107,13 +107,14 @@ It's alive! That's not exactly the fancy view we were hoping for when we decided
 
 So, we clearly have a lot more to learn before we can start really taking advantage of React's power, but we are now working with the library. Just by installing a few dependencies, filling out a few files, and executing a few scripts, we're right about where we'd expect to be with something like a `rails new ...` for React.
 
-Stay tuned for future posts on getting started with React!
+Stay tuned for future posts on getting started with React![^6]
 
 [^1]: They're awesome
 [^2]: Seriously, if you've read this far, you're definitely going to want these things.
 [^3]: The `--save` flag tells npm to list react in the `dependencies` section of our `package.json` file. That's useful for anyone who clones our repo, since they can now run `npm install` to install all of the project's dependencies.
 [^4]: The `--save-dev` flag tells npm to list Browserify and Reactify in the `devDependencies` section of our `package.json` file.
 [^5]: The `-g` flag tells npm to install Browserify globally, so that we can run `browserify` from the command line anywhere on our system.
+[^6]: If you'd like to follow along with the source code we're developing over this series of posts, check out the [demo-react-app Github repo][demo-react-app]. The changes from this post are reflected in the second commit.
 
 [react]: https://facebook.github.io/react/
 [boilerplate]: https://github.com/petehunt/react-boilerplate
@@ -124,3 +125,4 @@ Stay tuned for future posts on getting started with React!
 [browserify]: https://github.com/substack/browserify-handbook
 [reactify]: https://github.com/andreypopp/reactify
 [jsx]: https://facebook.github.io/jsx/
+[demo-react-app]: https://github.com/rmulhol/demo-react-app
