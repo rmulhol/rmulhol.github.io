@@ -58,19 +58,7 @@ At this point, we're ready to put in some code!
 
 The `index.html` file stores the basic page we'll be working on. You can fill it in like so:
 
-{% highlight html %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Demo App</title>
-  </head>
-  <body>
-    <section id="react"></section>
-    <script src="js/bundle.js"></script>
-  </body>
-</html>
-{% endhighlight %}
+{% gist 51035643a1a4b29c9a23 %}
 
 The key to this file is the `section` with the `id` "react" - that's the entry point for our React code. It'll be filled in by the `bundle.js` script (which is generate by Browserify).
 
@@ -78,16 +66,7 @@ The key to this file is the `section` with the `id` "react" - that's the entry p
 
 Almost there! The next step is to pop some code into our `app.js` file that indicates what to put in the "react" `section`. You can do that like so:
 
-{% highlight html %}
-var React = require('react');
-
-React.render(
-    <div>
-      <h1>Hello, world!</h1>
-    </div>,
-    document.getElementById('react')
-  );
-{% endhighlight %}
+{% gist dfcb2fd783ada9654894 %}
 
 This code tells React to find the page element with the `id` "react" and put the preceding JSX code (which looks like raw html) there.
 

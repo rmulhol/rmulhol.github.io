@@ -127,17 +127,7 @@
 
 <p>The <code>index.html</code> file stores the basic page we’ll be working on. You can fill it in like so:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!doctype html&gt;</span>
-<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;head&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;title&gt;</span>Demo App<span class="nt">&lt;/title&gt;</span>
-  <span class="nt">&lt;/head&gt;</span>
-  <span class="nt">&lt;body&gt;</span>
-    <span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">&quot;react&quot;</span><span class="nt">&gt;&lt;/section&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/bundle.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-  <span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span></code></pre></div>
+<script src="https://gist.github.com/51035643a1a4b29c9a23.js"> </script>
 
 <p>The key to this file is the <code>section</code> with the <code>id</code> “react” - that’s the entry point for our React code. It’ll be filled in by the <code>bundle.js</code> script (which is generate by Browserify).</p>
 
@@ -145,14 +135,7 @@
 
 <p>Almost there! The next step is to pop some code into our <code>app.js</code> file that indicates what to put in the “react” <code>section</code>. You can do that like so:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html">var React = require(&#39;react&#39;);
-
-React.render(
-    <span class="nt">&lt;div&gt;</span>
-      <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
-    <span class="nt">&lt;/div&gt;</span>,
-    document.getElementById(&#39;react&#39;)
-  );</code></pre></div>
+<script src="https://gist.github.com/dfcb2fd783ada9654894.js"> </script>
 
 <p>This code tells React to find the page element with the <code>id</code> “react” and put the preceding JSX code (which looks like raw html) there.</p>
 
