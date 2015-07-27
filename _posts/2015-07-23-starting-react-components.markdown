@@ -46,7 +46,7 @@ Let's start by moving the JSX code we've got in the `js/app.js` file over to a n
 
 The `<HomePage />` call exhibits React's syntax for instantiating components in JSX - they exist as their own element on the page (with whatever components reside on them nested further down).
 
-To mae this work the same as before, we need the `js/components/home_page.js` file to look like this:
+To make this work the same as before, we need the `js/components/home_page.js` file to look like this:[^3]
 
 {% gist 7cee0ed45ea4620b7310 %}
 
@@ -58,7 +58,7 @@ Say, for example, we want to add a header, a body, and a footer to our site. Thi
 
 Instead of having the home page store all of the content for the site, it could instantiate several other components that would each handle one part of the view.
 
-To do so, we's want to change our `js/components/home_page.js` file to contain the three subordinate components: `<Header />`, `<Body />`, and `</Footer>`.[^3]
+To do so, we want to change our `js/components/home_page.js` file to contain the three subordinate components: `<Header />`, `<Body />`, and `</Footer>`.[^4]
 
 {% gist cdef870ab3a9deca4967 %}
 
@@ -110,9 +110,11 @@ But we've still barely scratched the surface of all we can do with React. Stay t
 
 [^1]: To access the latest version of the Bootstrap stylesheet, head over to [Bootstrap's Getting Started page][bootstrap-getting-started] and check out the Bootstrap CDN.
 [^2]: I've added the most simple version of the `start` script here, but you may find it helpful to add the `-v` flag to get more verbose output each time your `js/bundle.js` file is recompiled.
-[^3]: Note the closing tags - JSX requires closing tags even in places where you might normally be able to get away with leaving them off.
+[^3]: Note our use of `React.createClass()` - this is a constructor for React components. Check out the [React Top-Level API][react_api] for info on React methods you'll want to know.
+[^4]: Note the closing tags - JSX requires closing tags even in places where you might normally be able to get away with leaving them off.
 
 [demo-react-app]: https://github.com/rmulhol/demo-react-app
 [react-bootstrap]: http://react-bootstrap.github.io/
 [watchify]: https://github.com/substack/watchify
 [bootstrap-getting-started]: http://getbootstrap.com/getting-started/
+[react_api]: https://facebook.github.io/react/docs/top-level-api.html

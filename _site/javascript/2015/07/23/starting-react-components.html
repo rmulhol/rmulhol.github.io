@@ -115,7 +115,7 @@
 
 <p>The <code>&lt;HomePage /&gt;</code> call exhibits React’s syntax for instantiating components in JSX - they exist as their own element on the page (with whatever components reside on them nested further down).</p>
 
-<p>To mae this work the same as before, we need the <code>js/components/home_page.js</code> file to look like this:</p>
+<p>To make this work the same as before, we need the <code>js/components/home_page.js</code> file to look like this:<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
 
 <script src="https://gist.github.com/7cee0ed45ea4620b7310.js"> </script>
 
@@ -127,7 +127,7 @@
 
 <p>Instead of having the home page store all of the content for the site, it could instantiate several other components that would each handle one part of the view.</p>
 
-<p>To do so, we’s want to change our <code>js/components/home_page.js</code> file to contain the three subordinate components: <code>&lt;Header /&gt;</code>, <code>&lt;Body /&gt;</code>, and <code>&lt;/Footer&gt;</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
+<p>To do so, we want to change our <code>js/components/home_page.js</code> file to contain the three subordinate components: <code>&lt;Header /&gt;</code>, <code>&lt;Body /&gt;</code>, and <code>&lt;/Footer&gt;</code>.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup></p>
 
 <script src="https://gist.github.com/cdef870ab3a9deca4967.js"> </script>
 
@@ -186,7 +186,10 @@
       <p>I’ve added the most simple version of the <code>start</code> script here, but you may find it helpful to add the <code>-v</code> flag to get more verbose output each time your <code>js/bundle.js</code> file is recompiled. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:3">
-      <p>Note the closing tags - JSX requires closing tags even in places where you might normally be able to get away with leaving them off. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+      <p>Note our use of <code>React.createClass()</code> - this is a constructor for React components. Check out the <a href="https://facebook.github.io/react/docs/top-level-api.html">React Top-Level API</a> for info on React methods you’ll want to know. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p>Note the closing tags - JSX requires closing tags even in places where you might normally be able to get away with leaving them off. <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
