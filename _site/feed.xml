@@ -6,9 +6,131 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 24 Jul 2015 09:57:26 -0500</pubDate>
-    <lastBuildDate>Fri, 24 Jul 2015 09:57:26 -0500</lastBuildDate>
+    <pubDate>Mon, 27 Jul 2015 14:49:17 -0500</pubDate>
+    <lastBuildDate>Mon, 27 Jul 2015 14:49:17 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Getting Started With React - Part 3: The Flux Architecture</title>
+        <description>&lt;p&gt;So we’ve got some sense about how we can work with React components to generate some nice looking views, and even how we can change them up in response to user input. Pretty nifty.&lt;/p&gt;
+
+&lt;p&gt;But what if we want to initiate more broad sweeping changes across numerous components? Or if we want to react to larger chunks of data from an API call? We might figure out a way to do so with what we already have, but our code could get pretty not-so-clean pretty quickly.&lt;/p&gt;
+
+&lt;p&gt;Luckily, there’s no need to indulge such indiscretions, thanks to &lt;a href=&quot;https://facebook.github.io/flux/docs/overview.html&quot;&gt;the Flux architecture&lt;/a&gt;. Flux is a pattern for implementing a unidirectional data flow, one that makes it simple to implement significant and far-reaching changes to our views reliably and efficiently. &lt;/p&gt;
+
+&lt;p&gt;To get a sense for what we can do with the Flux architecture, we’re going to take a run at fitting it into our demo app. Since Flux is a pattern rather than a framework, we’ll be looking at &lt;em&gt;a&lt;/em&gt; way to implement it rather than &lt;em&gt;the&lt;/em&gt; way, but we’ll end up with a nice foundation for implementing further changes.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Before We Begin: Overview&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;If you’ve just starting to follow along with this post, you can catch up with the progress we’ve made so far by checking out the third commit of &lt;a href=&quot;https://github.com/rmulhol/demo-react-app&quot;&gt;the demo react app Github repo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Once you’re up to date, you’ll want to install Flux by running &lt;code&gt;npm install --save flux&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Adding Flux to our project’s dependencies gives us access to the dispatcher, an important tool in the unidirectional data flow that characterizes the Flux architecture. The dispatcher mediates between the actions that are fired by components and the stores that update components.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/flux-architecture.png&quot; alt=&quot;flux-architecture&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this post, we’ll be implementing the Flux architecture to duplicate our app’s existing behavior. Though we won’t be adding any new features for the user, we’ll be tidying up the backend so as to lay the groundwork for future additions.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 1: Add a Dispatcher&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The first thing we’ll want to do is create a dispatcher. It can live at &lt;code&gt;js/dispatcher/dispatcher.js&lt;/code&gt;.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/7fe46f4f9cea3780eacf.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;With this in place, we’ll be able to &lt;code&gt;require&lt;/code&gt; and call the dispatcher from other parts of our application.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2: Create an Action&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;After we’ve got a dispatcher, we’ll want to &lt;code&gt;require&lt;/code&gt; and use it in a file designated to contain our actions. Create the following file at &lt;code&gt;js/actions/demo_app_actions.js&lt;/code&gt;.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/73355cb3dca6fd138fd8.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;Here, the &lt;code&gt;toggleLogo()&lt;/code&gt; method uses the dispatcher to broadcast a payload to the rest of our application. In this case, the payload includes keys for &lt;code&gt;actionType&lt;/code&gt; and &lt;code&gt;showReactLogo&lt;/code&gt;, which correspond to a string and a boolean, respectively.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;Note  the bang (!) before &lt;code&gt;showReactLogo&lt;/code&gt;, which means we’re dispatching a value for &lt;code&gt;showReactLogo&lt;/code&gt; that reflects the opposite of whatever’s passed in. As will become more clear shortly, this is an example of handling state manipulation in the actions rather than the components.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 3: Open a Store&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Once we’ve got actions that invoke the dispatcher to issue payloads to our application, we’ll want to register some callbacks with the dispatcher to handle those payloads. We do this on a store, which we’ll put at &lt;code&gt;js/stores/demo_app_store.js&lt;/code&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/9e236715490835053a8c.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;Let’s unpack what’s going on here.&lt;/p&gt;
+
+&lt;p&gt;In addition to the dispatcher, we’re requiring the &lt;code&gt;EventEmitter&lt;/code&gt; and &lt;code&gt;utils&lt;/code&gt; package from Node.js, which will enable us to inherit features that allow us to run callbacks and handle dispatched payloads.&lt;/p&gt;
+
+&lt;p&gt;We’ve also got an &lt;code&gt;addLogoListener()&lt;/code&gt; method that registers a callback to be invoked whenever a “toggle-logo” event is emitted. We’ll use it in our component to complete state modifications initiated by the actions.&lt;/p&gt;
+
+&lt;p&gt;Finally, we’ve got a &lt;code&gt;dispatchToken()&lt;/code&gt; method that contains a &lt;code&gt;switch&lt;/code&gt; statement.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; The only &lt;code&gt;case&lt;/code&gt; we’ve included so far corresponds to the &lt;code&gt;actionType&lt;/code&gt; of our only action (“toggle-logo”), and it emits an event of that type storing the value that corresponds to the payload’s &lt;code&gt;showReactLogo&lt;/code&gt; key.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 4: Refactor - add Constants&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;At this point, a lot of the behavior we’ve implemented depends on the &lt;code&gt;actionType&lt;/code&gt; “toggle-logo”, and we’ve duplicated that string at several places in our code. It would be shame if something went wrong because of a typo in one of those places.&lt;/p&gt;
+
+&lt;p&gt;For this reason, it can be helpful to keep track of certain constants in a &lt;code&gt;js/constants/constants.js&lt;/code&gt; file. We’ll be using this file to store values for the &lt;code&gt;actionType&lt;/code&gt; of dispatched payloads right now, but we could also put any other important constants here as we go.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/66eaec512c7a94252a27.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;With this in place, we can change how we refer to the “toggle-logo” value for our &lt;code&gt;actionType&lt;/code&gt; key in our action:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/7190e9eff411565edb29.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;And in our store:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/908f2256eb04baba12b3.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;It’s only a minor detour but, like much of what we’re doing in this post, it will make life easier down the line.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 5: Edit Components&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Now that stores are emitting events that carry values from our actions’ payloads, we can add listeners on our components to initiate change in response to emitted events. This is the logic that replaces the existing state transitions on our components.&lt;/p&gt;
+
+&lt;p&gt;The revised &lt;code&gt;js/components/body.js&lt;/code&gt; file should be modified to look like this: &lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/a34fdef63bc0e79d9731.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;The important changes we’ve made here are twofold:&lt;/p&gt;
+
+&lt;p&gt;1) We’ve added a &lt;code&gt;componentDidMount()&lt;/code&gt; method, which will be invoked automatically after the component renders, to register a callback via our &lt;code&gt;addLogoListener()&lt;/code&gt; method from the store. That callback alters the component’s state to correspond to the emitted value of &lt;code&gt;showReactLogo&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;2) We’ve updated our &lt;code&gt;toggleImage()&lt;/code&gt; method to fire an action instead of directly setting state on the component. No longer is our component manipulating state directly; instead, it passes much of that work off to the action, dispatcher, and store.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Wrap Up&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;At this point, our app is working exactly the same as it did at the beginning of the post. Exciting!&lt;/p&gt;
+
+&lt;p&gt;In all seriousness, though, we’ve just laid down an implementation of the Flux architecture which sets us up to make further changes with the reliability of unidirectional data flow at our backs. In future posts, we’ll take a look at some of the cool things we can accomplish with that in place.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;For a more comprehensive description of the Flux architecture, check out &lt;a href=&quot;https://www.npmjs.com/package/flux&quot;&gt;the npm page for the Flux package&lt;/a&gt;.  &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;In subsequent posts, we’ll discuss how to pass and use more sophisticated data, like JSON data from an API call. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;It might feel a little redundant to be creating directories each time we’re adding a file here, and that’s fair. But dividing up our application into separate directories for components, actions, stores, and so forth initiates a nice organizational structure we’ll appreciate if and when we start accumulating more files of each type. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:4&quot;&gt;
+      &lt;p&gt;We’ve called this method &lt;code&gt;dispatchToken()&lt;/code&gt; because it returns a token that we can use for controlling the order of execution of registered callbacks, but it’s also worth noting that this method is doing much more than that. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 27 Jul 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//javascript/2015/07/27/react-flux-architecture.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/07/27/react-flux-architecture.html</guid>
+        
+        <category>react</category>
+        
+        <category>flux</category>
+        
+        
+        <category>javascript</category>
+        
+      </item>
     
       <item>
         <title>Getting Started With React - Part 2: Exploring Components</title>
@@ -52,7 +174,7 @@
 
 &lt;p&gt;The &lt;code&gt;&amp;lt;HomePage /&amp;gt;&lt;/code&gt; call exhibits React’s syntax for instantiating components in JSX - they exist as their own element on the page (with whatever components reside on them nested further down).&lt;/p&gt;
 
-&lt;p&gt;To mae this work the same as before, we need the &lt;code&gt;js/components/home_page.js&lt;/code&gt; file to look like this:&lt;/p&gt;
+&lt;p&gt;To make this work the same as before, we need the &lt;code&gt;js/components/home_page.js&lt;/code&gt; file to look like this:&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/7cee0ed45ea4620b7310.js&quot;&gt; &lt;/script&gt;
 
@@ -64,7 +186,7 @@
 
 &lt;p&gt;Instead of having the home page store all of the content for the site, it could instantiate several other components that would each handle one part of the view.&lt;/p&gt;
 
-&lt;p&gt;To do so, we’s want to change our &lt;code&gt;js/components/home_page.js&lt;/code&gt; file to contain the three subordinate components: &lt;code&gt;&amp;lt;Header /&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;Body /&amp;gt;&lt;/code&gt;, and &lt;code&gt;&amp;lt;/Footer&amp;gt;&lt;/code&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;To do so, we want to change our &lt;code&gt;js/components/home_page.js&lt;/code&gt; file to contain the three subordinate components: &lt;code&gt;&amp;lt;Header /&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;Body /&amp;gt;&lt;/code&gt;, and &lt;code&gt;&amp;lt;/Footer&amp;gt;&lt;/code&gt;.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/cdef870ab3a9deca4967.js&quot;&gt; &lt;/script&gt;
 
@@ -123,7 +245,10 @@
       &lt;p&gt;I’ve added the most simple version of the &lt;code&gt;start&lt;/code&gt; script here, but you may find it helpful to add the &lt;code&gt;-v&lt;/code&gt; flag to get more verbose output each time your &lt;code&gt;js/bundle.js&lt;/code&gt; file is recompiled. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:3&quot;&gt;
-      &lt;p&gt;Note the closing tags - JSX requires closing tags even in places where you might normally be able to get away with leaving them off. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;Note our use of &lt;code&gt;React.createClass()&lt;/code&gt; - this is a constructor for React components. Check out the &lt;a href=&quot;https://facebook.github.io/react/docs/top-level-api.html&quot;&gt;React Top-Level API&lt;/a&gt; for info on React methods you’ll want to know. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:4&quot;&gt;
+      &lt;p&gt;Note the closing tags - JSX requires closing tags even in places where you might normally be able to get away with leaving them off. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
@@ -807,41 +932,6 @@
         
         
         <category>java</category>
-        
-      </item>
-    
-      <item>
-        <title>To Revisit the Past: Working with the Command Line</title>
-        <description>&lt;p&gt;This week, I was tasked with putting together a presentation about the command line. Having stuck  to the most basic Unix operations (&lt;code&gt;cd&lt;/code&gt;, &lt;code&gt;ls&lt;/code&gt;, &lt;code&gt;mv&lt;/code&gt;, etc.) throughout most of my time developing software, I had to do a bit a research.&lt;/p&gt;
-
-&lt;p&gt;Though I learned a lot of things preparing for the talk, perhaps the most useful tool I picked up is one that helps you reach into your command history quickly and easily: &lt;code&gt;CTRL-R&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Typing &lt;code&gt;CTRL-R&lt;/code&gt; in the command line opens up an interactive search line (with autocomplete) for matching previous commands with the bare minimum of its opening characters. Once you hit enter, it’s immediately executed.&lt;/p&gt;
-
-&lt;p&gt;Of course, you can accomplish the same task with &lt;code&gt;!&amp;lt;str&amp;gt;&lt;/code&gt; (replacing &lt;code&gt;&amp;lt;str&amp;gt;&lt;/code&gt; with whichever opening characters you would search for), but &lt;code&gt;CTRL-R&lt;/code&gt; gives you certainty that you’ll get the right command right away, and the ability to execute it immediately&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-
-&lt;p&gt;Having located this tool, I’m thinking it will never be necessary to use the up/down arrow keys for toggling through command line history ever again. Good riddance. Using CTRL-R allows faster retrieval with guaranteed precision.&lt;/p&gt;
-
-&lt;p&gt;Finding this tool has also sparked my interest in discovering more sophisticated Unix commands. I’m excited to find out what other operations I can perform to improve my efficiency and productivity as I continue to work with the command line.&lt;/p&gt;
-
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;To get certainty, you can run &lt;code&gt;!&amp;lt;str&amp;gt;:p&lt;/code&gt; (to see the command this search found) and then &lt;code&gt;!!&lt;/code&gt; (to excecute) once you’re sure it’s right, but this inserts an extra step.  &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Fri, 05 Jun 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//general/2015/06/05/command-line-history.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/06/05/command-line-history.html</guid>
-        
-        <category>command-line</category>
-        
-        <category>history</category>
-        
-        
-        <category>general</category>
         
       </item>
     
