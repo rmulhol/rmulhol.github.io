@@ -6,9 +6,80 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 27 Jul 2015 14:49:17 -0500</pubDate>
-    <lastBuildDate>Mon, 27 Jul 2015 14:49:17 -0500</lastBuildDate>
+    <pubDate>Tue, 04 Aug 2015 11:48:29 -0500</pubDate>
+    <lastBuildDate>Tue, 04 Aug 2015 11:48:29 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Doing More Stuff More Easily: Implementing the Open-Closed Principle in Server Architecture</title>
+        <description>&lt;p&gt;As you may have deduced from &lt;a href=&quot;/java/2015/06/06/simple-java-server.html&quot;&gt;several&lt;/a&gt; &lt;a href=&quot;/java/2015/06/17/handler-adapter-architecture.html&quot;&gt;previous&lt;/a&gt; &lt;a href=&quot;/java/2015/06/19/java-logging-utility.html&quot;&gt;posts&lt;/a&gt;, I’ve been spending some of my time working on an HTTP server. It’s raised some really interesting challenges on numerous fronts, but one that really got me thinking had to do with figuring out the proper mechanism for routing requests.&lt;/p&gt;
+
+&lt;p&gt;It didn’t seem like a particularly big deal when I only had to deal with a few simple requests, since I could just figure everything out with a conditional:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getMethod&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;GET&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getUri&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;RootResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getMethod&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;GET&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getUri&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;/file&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FileResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FourOhFourResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This seems to work OK with a small amount of relatively simple requests, but you’re probably already starting to notice the issue: what about when things get more complicated? Say I’ve got to deal with 100 different requests, sometimes checking things in the header (&lt;code&gt;request.isAuthorized()&lt;/code&gt;, &lt;code&gt;request.hasRange()&lt;/code&gt;, etc.). That conditional is going to get pretty nasty.&lt;/p&gt;
+
+&lt;p&gt;And, conveniently, this problem even has a name: it’s an illustration of what happens when you violate the Open-Closed Principle. That is to say, this approach is not open for extension but closed for modification. Every new request is going to require that you go in an edit that conditional.&lt;/p&gt;
+
+&lt;p&gt;But is there another way? Perhaps server architects have just been toiling away in this sort of mess for years, carrying out such a herculean task that we ought stand in awe of their dedication and resilience.&lt;/p&gt;
+
+&lt;p&gt;Of course there’s another way. Anyone who’s got a passing familiarity with Rails should know as much. Does this look familiar?&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;draw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;                  &lt;span class=&quot;s2&quot;&gt;&amp;quot;static_pages#home&amp;quot;&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;     &lt;span class=&quot;s2&quot;&gt;&amp;quot;help&amp;quot;&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;  &lt;span class=&quot;s2&quot;&gt;&amp;quot;static_pages#help&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;     &lt;span class=&quot;s2&quot;&gt;&amp;quot;about&amp;quot;&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;  &lt;span class=&quot;s2&quot;&gt;&amp;quot;static_pages#about&amp;quot;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;     &lt;span class=&quot;s2&quot;&gt;&amp;quot;contact&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;  &lt;span class=&quot;s2&quot;&gt;&amp;quot;static_pages#contact&amp;quot;&lt;/span&gt;
+
+  &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That’s the beginning of the &lt;code&gt;config/routes.rb&lt;/code&gt; file from Michael Hartl’s &lt;a href=&quot;https://www.railstutorial.org/&quot;&gt;Rails Tutorial&lt;/a&gt;, and it’s accomplishing precisely the task we’ve set out to tackle. It’s also pretty straightforward and elegant - &lt;code&gt;x&lt;/code&gt; request maps to &lt;code&gt;y&lt;/code&gt; controller action.&lt;/p&gt;
+
+&lt;p&gt;That’s a pretty important verb: “map”. It’s also a data structure. In Java, we might think about a &lt;code&gt;HashMap&lt;/code&gt;, where keys could be requests corresponding to values that designate appropriate controllers.&lt;/p&gt;
+
+&lt;p&gt;In retrospect, it’s got this sort of facepalm-eliciting simplicity: associate routes with controllers in a map, then make calls to that map whenever you need to route a request.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Routes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;HashMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;Routes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;routes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HashMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;addRoute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Controller&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Controller&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getRoute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Of course, this is a fairly naive implementation that could be finessed a bit, but it’s the seedling for an extensible architecture that satisfies the Open-Closed principle, and it makes your life a lot easier when you want to add new routes to your server down the line.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 04 Aug 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//java/2015/08/04/ocp-server-router.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//java/2015/08/04/ocp-server-router.html</guid>
+        
+        <category>server</category>
+        
+        <category>router</category>
+        
+        
+        <category>java</category>
+        
+      </item>
     
       <item>
         <title>Getting Started With React - Part 3: The Flux Architecture</title>
@@ -868,63 +939,6 @@
         <pubDate>Wed, 17 Jun 2015 00:00:00 -0500</pubDate>
         <link>http://rmulhol.github.io//java/2015/06/17/handler-adapter-architecture.html</link>
         <guid isPermaLink="true">http://rmulhol.github.io//java/2015/06/17/handler-adapter-architecture.html</guid>
-        
-        <category>server</category>
-        
-        <category>socket</category>
-        
-        
-        <category>java</category>
-        
-      </item>
-    
-      <item>
-        <title>Give and Take: Writing a Simple Server in Java</title>
-        <description>&lt;p&gt;As I’ve been working to put together an HTTP server in Java, there’s been a lot to learn. Correctly parsing and handling HTTP requests is a challenge. If you’d like to try for yourself, check out &lt;a href=&quot;https://github.com/8thlight/cob_spec&quot;&gt;the Cob Spec Firnesse suite&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;While a lot of work goes into dealing with the various types of requests (and the different options they can be accompanied by), an initial difficulty is simply wrapping your head around how to construct an application that receives requests and delivers responses.&lt;/p&gt;
-
-&lt;p&gt;If that’s the task you’ve set out to accomplish, I’ve got news for you: putting together a (very, very basic) server in Java is simple. You can do so with the following 11 lines of code:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IOException&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ServerSocket&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serverSocket&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ServerSocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Socket&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clientSocket&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serverSocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;accept&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;OutputStream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clientSocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getOutputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;BufferedReader&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;BufferedReader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;InputStreamReader&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clientSocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getInputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()));&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;readLine&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;HTTP/1.1 200 OK\r\n\r\nYour request: &amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Let’s break down what’s going on here.&lt;/p&gt;
-
-&lt;p&gt;When the application starts, it calls &lt;code&gt;main&lt;/code&gt;. This method creates a &lt;code&gt;ServerSocket&lt;/code&gt; object which will serve as a host to receive requests. The argument passed in specifies which port the server should listen on; I’ve set to 5000. That means you can make a request to the server by visiting &lt;code&gt;localhost:5000&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;The next line initiates an infinite loop, relying on &lt;code&gt;while(true)&lt;/code&gt; to ceaselessly repeat a sequence of instructions. While infinite loops are normally problematic in software, it’s fine here since we want our server to stay available after every request.&lt;/p&gt;
-
-&lt;p&gt;The body of the &lt;code&gt;while&lt;/code&gt; loop sets up a protocol for dealing with client requests. First, we acknowledge any client that makes a request by allocating it a &lt;code&gt;Socket&lt;/code&gt; object. Second, we identify the input and output streams for that client. While we might expect that our client will normally be a browser, it could also be other things (like a command line issuing a &lt;code&gt;curl&lt;/code&gt; request). &lt;/p&gt;
-
-&lt;p&gt;Once we’ve identified a client and its attendant input and output streams, we’re ready to read a request&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; and write a response. This is the meat of our server’s functionality. After we’ve received a request, we return a &lt;code&gt;200 OK&lt;/code&gt; response header with a body that displays the request we received.&lt;/p&gt;
-
-&lt;p&gt;But the work isn’t finished there, as we still have to close the output stream to signal that the HTTP request/response cycle is complete.&lt;/p&gt;
-
-&lt;p&gt;With one client’s request received, a response sent out, and the output stream closed, our server can move back to beginning of the &lt;code&gt;while&lt;/code&gt; loop to await another request. &lt;/p&gt;
-
-&lt;p&gt;That’s it. With this small amount of code, we’ve got an HTTP server that runs. There’s a lot more to do to make it truly functional, but getting over the initial hurdle of handling the request/response cycle is no problem.&lt;/p&gt;
-
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;Knowledgeable readers will notice that we only read the first line of our client’s request, which likely does not encapsulate the full request. That’s fine for our very limited functionality, but a more sophisticated server would want to be able to parse a complete (multi-line) request.  &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Sat, 06 Jun 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//java/2015/06/06/simple-java-server.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//java/2015/06/06/simple-java-server.html</guid>
         
         <category>server</category>
         
