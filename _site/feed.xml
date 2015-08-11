@@ -6,9 +6,71 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 04 Aug 2015 11:48:29 -0500</pubDate>
-    <lastBuildDate>Tue, 04 Aug 2015 11:48:29 -0500</lastBuildDate>
+    <pubDate>Tue, 11 Aug 2015 11:14:39 -0500</pubDate>
+    <lastBuildDate>Tue, 11 Aug 2015 11:14:39 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Working With APIs: On Cross-Origin Resource Sharing</title>
+        <description>&lt;p&gt;If you’re working with an API, one thing that you might want to do is use &lt;a href=&quot;https://en.wikipedia.org/wiki/Ajax_(programming)&quot;&gt;AJAX&lt;/a&gt; to make requests from the browser. Unfortunately, unless the API provides the required response headers, you might run into some hiccups along the way.&lt;/p&gt;
+
+&lt;p&gt;If you fire a request from the browser at an API that doesn’t support &lt;a href=&quot;https://en.wikipedia.org/wiki/Cross-origin_resource_sharing&quot;&gt;Cross-Origin Resource Sharing (CORS)&lt;/a&gt;, you’ll get something resembling the following error message in the console:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;XMLHttpRequest cannot load https://api.you.want.to.hit.com/get_data. No ‘Access-Control-Allow-Origin’ header is present on the requested resource. Origin ‘http://localhost:8080’ is therefore not allowed access.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So, what’s going on here? And how do we solve the problem?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;What is CORS?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The reason you’re seeing this error message is that you’re trying to launch a cross-domain request from the browser. That is, you’re asking the browser to make a request to a URL with a different protocol, host, and/or port number from that of the originating request. This violates &lt;a href=&quot;https://en.wikipedia.org/wiki/Same-origin_policy&quot;&gt;the same-origin policy&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;Basically, the browser will rubber stamp requests if the source and the target share the same origin. But if you’re interacting with an API, that’s likely not the case.&lt;/p&gt;
+
+&lt;p&gt;That doesn’t mean that cross-domain requests are off limits. But to carry them out, you need to satisfy a few conditions.&lt;/p&gt;
+
+&lt;p&gt;Check out &lt;a href=&quot;http://www.html5rocks.com/en/tutorials/cors/&quot;&gt;this page&lt;/a&gt; for a much more thorough exploration of CORS and its implications for both the client and the server, but for now the most important thing to know is this: in order for a cross-origin request to succeed, the server needs to include an ‘Access-Control-Allow-Origin’ header, and that header needs to authorize the requesting URL (either specifically or via a &lt;code&gt;&#39;*&#39;&lt;/code&gt; value).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Cool, but I don’t control the API’s response headers…&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Right. You’re probably not in a position to assure that your API supports the required response headers.&lt;/p&gt;
+
+&lt;p&gt;At this point, you have a few options. &lt;/p&gt;
+
+&lt;p&gt;The first is to get in touch with people who host the API and request that they support cross-origin requests. It may be ignored or take awhile, but it’s a path of least resistance that they have little reason to turn down beyond not having the time (an admittedly fair obstacle).&lt;/p&gt;
+
+&lt;p&gt;The second is to roll your own proxy server. Even if you can’t get the API host to support cross-origin requests, you can make your own server that does - and then use it to hit the target API outside of the browser.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;The third is to take advantage of other services that do the work for you. &lt;a href=&quot;https://jsonp.afeld.me/&quot;&gt;This site&lt;/a&gt;, for example, will act as a proxy server for you, without any coding on your behalf. Simply append the target url to &lt;code&gt;https://jsonp.afeld.me/?url=&lt;/code&gt;, and the CORS request will succeed.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;That’s pretty easy…&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Indeed, it’s not very difficult to get around the barriers to cross-origin requests. The main question is simply how much work you’re willing/need to do given your use case.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;A &lt;a href=&quot;http://edgeguides.rubyonrails.org/api_app.html&quot;&gt;Rails API&lt;/a&gt; could do the trick. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;One thing to note about this solution is that it creates some security concerns. Since you’ll be passing your data through a proxy you don’t control, you’ll probably want to exercise discretion concerning what sort of information you pass through. The proxy could intercept (a) sensitive data from the API, or (b) private API keys in the URL (which could be a &lt;a href=&quot;https://rosspenman.com/api-key-exposure/&quot;&gt;major problem&lt;/a&gt;). &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Tue, 11 Aug 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//javascript/2015/08/11/cross-origin-resource-sharing.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/08/11/cross-origin-resource-sharing.html</guid>
+        
+        <category>ajax</category>
+        
+        <category>cors</category>
+        
+        
+        <category>javascript</category>
+        
+      </item>
     
       <item>
         <title>Doing More Stuff More Easily: Implementing the Open-Closed Principle in Server Architecture</title>
@@ -903,46 +965,6 @@
         <category>server</category>
         
         <category>logging</category>
-        
-        
-        <category>java</category>
-        
-      </item>
-    
-      <item>
-        <title>Handlers and Adapters: Thinking Server Architecture</title>
-        <description>&lt;p&gt;In a &lt;a href=&quot;/java/2015/06/06/simple-java-server.html&quot;&gt;previous post&lt;/a&gt;, I walked through how to build a simple HTTP server in Java that echoes back whatever request is issued by the user. While it’s a nice start for those new to server construction, it leaves a lot left to be desired in terms of functionality.&lt;/p&gt;
-
-&lt;p&gt;Of course, you could just continue to build on that &lt;code&gt;while&lt;/code&gt; loop, constructing a gargantuan nested conditional to deal with different requests appropriately. But that will leave you with some really gross code.&lt;/p&gt;
-
-&lt;p&gt;Even following the tried and true approach of building away before extracting/refactoring code can leave you with a bit of a mess. It’s hard to put together a good architecture for a complicated piece of software like an HTTP server without an early familiarity with what it might look like down the road.&lt;/p&gt;
-
-&lt;p&gt;At least, that was the trouble I found myself in after an initial attempt. I managed to decouple and extract most buckets of behavior from the core &lt;code&gt;while&lt;/code&gt; loop, but there was one place where things got iffy: the method where the server determined what response to issue based on the request.&lt;/p&gt;
-
-&lt;p&gt;This is not a good place to fail - it’s basically the heart of the application. I knew the best approach would probably be to go ahead and rewrite the whole thing, but I was at a loss for how I could approach such a rewrite without duplicating the same error.&lt;/p&gt;
-
-&lt;p&gt;Luckily, after speaking with a few knowledgeable colleagues, I stumbled upon a role model of sorts: Clojure’s &lt;a href=&quot;HTTPs://github.com/ring-clojure/ring&quot;&gt;Ring&lt;/a&gt;. Ring is a library for building web applications with Clojure, and it’s architecture provides some guidance as to how you can approach building an HTTP server for yourself.&lt;/p&gt;
-
-&lt;p&gt;While I’d recommend that anyone interested visit &lt;a href=&quot;HTTPs://github.com/ring-clojure/ring/wiki&quot;&gt;the Ring wiki&lt;/a&gt; for a more detailed explanation, the core of Ring’s architecture is a division of responsibilities among Handlers and Adapters.&lt;/p&gt;
-
-&lt;p&gt;Handlers manage the matching of requests to responses, taking one map that defines a request and returning another that defines the response. Adapters do the rest: setting up a port, formatting input into a map for the handler, formatting a response map into output for the client, and so forth.&lt;/p&gt;
-
-&lt;p&gt;Dividing up responsibilities along this fault line has several advantages:&lt;/p&gt;
-
-&lt;p&gt;First, putting the request-response matching work in the handler makes the codebase more manageable and extensible. Changes to how input and output are parsed are decoupled from changes to how you respond to a particular request. You can test and verify that specific requests match their designated responses in the handler, and then deal with other application behavior elsewhere.&lt;/p&gt;
-
-&lt;p&gt;Second, the two major components of a handler/adapter architecture can be further subdivided as necessary. If you only need to deal with a small subset of responses, perhaps you can get away with a single, isolated handler. If responsibilities proliferate, the handler can be further subdivided into various support objects/namespaces for the main handler.&lt;/p&gt;
-
-&lt;p&gt;With a server architecture built around the separation of handlers and adapters, it’s much easier to build a server you can be proud of. Good, decoupled code only gets you so far without a good, decoupled architecture, and the handler/adapter architecture lays the foundation for building up a good, decoupled code base.&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 17 Jun 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//java/2015/06/17/handler-adapter-architecture.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//java/2015/06/17/handler-adapter-architecture.html</guid>
-        
-        <category>server</category>
-        
-        <category>socket</category>
         
         
         <category>java</category>
