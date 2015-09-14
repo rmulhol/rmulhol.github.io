@@ -6,9 +6,81 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 25 Aug 2015 10:50:27 -0500</pubDate>
-    <lastBuildDate>Tue, 25 Aug 2015 10:50:27 -0500</lastBuildDate>
+    <pubDate>Mon, 14 Sep 2015 10:57:10 -0500</pubDate>
+    <lastBuildDate>Mon, 14 Sep 2015 10:57:10 -0500</lastBuildDate>
     <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Backbone + React: Render Components With `Render`</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;tl;dr - Use &lt;code&gt;React.render()&lt;/code&gt; in place of &lt;code&gt;React.renderComponent()&lt;/code&gt; when rendering React components from Backbone views&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;If you’re looking to start bringing React into a project you’ve set up in Backbone, you’re in luck. It can be done. There are even some nice posts out there to help get you started.&lt;/p&gt;
+
+&lt;p&gt;Say you want to start bringing React components into your Backbone views. Thomas Boyt &lt;a href=&quot;https://venmo-blog.squarespace.com/2015/6/4/using-react-components-as-backbone-views&quot;&gt;has you covered&lt;/a&gt;. Looking to get more parts of each library talking to each other? Check out &lt;a href=&quot;https://blog.engineyard.com/2015/integrating-react-with-backbone&quot;&gt;Ben Lewis’ post&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The wealth of information is a gift, and a testament to the software community’s willingness to share information to help make solving common problems a little bit easier.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, it can be tough for the literature to keep up with changing APIs. Techniques that got the job done only a year ago (or less) might no longer be supported today.&lt;/p&gt;
+
+&lt;p&gt;This isn’t a huge problem; it’s better to have slightly dated information than to have nothing at all. &lt;/p&gt;
+
+&lt;p&gt;But if you’re new to both libraries, trying to make React and Backbone play nicely with each other can be challenging enough. Adding on the obstacle of non-working sample code can make the solution seem out of reach.&lt;/p&gt;
+
+&lt;p&gt;So, in this post, I want to highlight one place where the API has changed, and what you can do to keep making progress.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Goodbye &lt;code&gt;renderComponent()&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Both of the posts linked to above render React components from Backbone views with &lt;code&gt;React.renderComponent()&lt;/code&gt;. This function takes two arguments: the component to render and the DOM element that it should occupy.&lt;/p&gt;
+
+&lt;p&gt;The trouble is, that function &lt;a href=&quot;https://facebook.github.io/react/blog/2014/10/28/react-v0.12.html&quot;&gt;is now deprecated&lt;/a&gt;. If you give it a try with a recent version of React, you’ll be met with an unwelcome surprise in the console: &lt;code&gt;Uncaught TypeError: React.renderComponent is not a function&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you read through the documentation, you’ll see that &lt;code&gt;React.renderComponent()&lt;/code&gt; has been replaced by &lt;code&gt;React.render()&lt;/code&gt;. And that’s the replacement you should use (see the “tl;dr”), but there are reasons you might be tempted to not do so.&lt;/p&gt;
+
+&lt;p&gt;Just like &lt;code&gt;React.renderComponent()&lt;/code&gt;, &lt;code&gt;React.render()&lt;/code&gt; requires that you pass in a DOM element identifying where on the page your component should be rendered. When the component is rendered to that DOM element, it replaces the existing contents of that container.&lt;/p&gt;
+
+&lt;p&gt;This means that rendering your React component can delete existing page contents. When you’re displaying something like a modal, that can be a real pain.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;So Many Renders&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Taking a look through the documentation, you can see that &lt;code&gt;React.render()&lt;/code&gt; is supplemented by &lt;code&gt;React.renderToString()&lt;/code&gt; and &lt;code&gt;React.renderToStaticMarkup()&lt;/code&gt;. These functions have the advantage of only taking one argument: the component you want to render.&lt;/p&gt;
+
+&lt;p&gt;The benefit of not taking control of a DOM element is that you don’t have to cede control of that container over to React. Simply generate the contents you want to display, then add or remove them at will with jQuery; it creates no problems for your existing content.&lt;/p&gt;
+
+&lt;p&gt;However, such static markup does not have access to functions that you’ve defined on your components. When it comes time to handle events, you can lose a lot of the benefits that React provides, as you start micromanaging every event from your top-level Backbone view.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Render Under Control&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In order to access functions defined on your React components, you’ll want to stick with &lt;code&gt;React.render()&lt;/code&gt;, handing over control of the DOM element. That’s the most simple way to get your content on the page while also taking advantage of React’s event handling.&lt;/p&gt;
+
+&lt;p&gt;If you’re worried about losing existing content, a simple solution is to append a new DOM element where you want the component to render, passing that in as the container.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-coffeescript&quot; data-lang=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nv&quot;&gt;render: &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;-&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;@parentEl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;lt;div class=&amp;#39;component-container&amp;#39;&amp;gt;&amp;lt;/div&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MyComponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;prop1: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{},&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;prop2: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}),&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;.component-container&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Make sure that you unmount the component when it’s closed:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-coffeescript&quot; data-lang=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;unmountComponentAtNode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;.component-container&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And you’ve successfully taken advantage of React’s event handling inside of your Backbone view.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 14 Sep 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//javascript/2015/09/14/backbone-react-render.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/09/14/backbone-react-render.html</guid>
+        
+        <category>react</category>
+        
+        <category>backbone</category>
+        
+        
+        <category>javascript</category>
+        
+      </item>
     
       <item>
         <title>Program Like a Debater: Character, Commitment, Team Work, Hard Work</title>
@@ -771,71 +843,6 @@
         <category>refactoring</category>
         
         <category>tdd</category>
-        
-        
-        <category>general</category>
-        
-      </item>
-    
-      <item>
-        <title>Collective Ownership: Developing Software as a Team</title>
-        <description>&lt;p&gt;Over the past few days, I’ve had the chance to observe some more senior software developers as they’ve worked on building and modifying real world, living codebases. It’s been an extremely educational experience on many fronts, but the thing that’s stuck out to me the most so far is how involved everyone is with everyone else.&lt;/p&gt;
-
-&lt;p&gt;Successful software, it turns out, isn’t the product of one genius individual; in most instances, at least, it’s something that grows out of the coalescence of a team.&lt;/p&gt;
-
-&lt;p&gt;Of course, a team could just be a collection of individuals - each toiling away on their own tasks that will hopefully somehow fit together. But in order for a team to form a whole that’s greater than the sum of its parts, something more needs to happen: team dynamics need to be instilled.&lt;/p&gt;
-
-&lt;p&gt;In this post, I want to review some of the behaviors that go into being part of a successful software development team. While such behaviors may not be especially necessary in the context of the individual projects I’ve worked on thus far, they seem like they’ll hold a lot of relevance in the (team)work I hope to be doing in the future.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 1: Stand Up&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;In order for everyone on a team to be on the same page, it’s helpful for each team member to know what page each of their teammates are on. It might sound trivial, but having a bit of time to catch up with your teammates before getting down to writing code is crucial. Stand up meetings fill this role.&lt;/p&gt;
-
-&lt;p&gt;Stand up meetings offer opportunities for teammates to share the progress they’ve made, explain what tasks they’re hoping to accomplish in the immediate feature, and solicit counsel when some obstacle is standing in their way. When kept brief and to the point, they offer a great opportunity for everyone to stay up to date with one another.&lt;/p&gt;
-
-&lt;p&gt;At a far more basic level, they assure team cohesion. When you engage with your teammates every morning, you’re sure to be keeping up with each other. Having a sense for what everyone else is up to and how their tasks fit into the larger project makes it’s easier to envision how you and your teammates’ contributions will fit together.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 2: Document Objectives&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;The developers I’ve worked with divide up tasks into a set of “stories”. Each story lays out a feature that needs to be built, as well as any specifications that further clarify the nature of that feature. The total list of stories is accessible to the entire team, and each story is marked as either to do, in progress, or complete.&lt;/p&gt;
-
-&lt;p&gt;In my individual work, I’ve used a rudimentary version of this setup, documenting tasks I hope to accomplish in a to do list and crossing things off as progress is made. But having a more sophisticated layout allows you to share that knowledge and tackle those objectives with your team.&lt;/p&gt;
-
-&lt;p&gt;Stories that are accessible to the entire team help to provide a shared sense for the tasks that lie ahead, and documenting who’s working on what further assures that no work is overlapping.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 3: Use Branches&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;People who are working as part of a team don’t all push their commits to master; they set up branches that describe what task they’re working on. When the work is finished, they can submit a pull request for the team to review.&lt;/p&gt;
-
-&lt;p&gt;Working with branches helps to document and organize buckets of work as progress is being made. A large number of commits might fit into the development of a single feature, but branches makes it easy to consolidate them. Their label communicates how everything assembles into one goal.&lt;/p&gt;
-
-&lt;p&gt;Branches also make it easier teammates to review and merge contributions. If the progress looks good without modification, merge. If it needs some more work, revise and resubmit. If it’s looking like you need to go in another direction, no worries: revert to master.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 4: Stay in Touch&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Teammates further contribute to the fostering of team dynamics by deepening their communications with one another as necessary.&lt;/p&gt;
-
-&lt;p&gt;Think knocking out your story will require some architectural changes to the larger organization of the project? Get in touch with your team. Maybe they see some merit to your suggestion and the change is approved with everyone on board. If not, maybe they can suggest some approaches that work within the existing architecture.&lt;/p&gt;
-
-&lt;p&gt;Notice that a teammate has wrapped up a story and submitted a pull request? Give it a review. You might have some additional perspective that assures everything will synthesize together as well as possible.&lt;/p&gt;
-
-&lt;p&gt;Though the work of writing code may be something you approach on your own or with a pair, it never hurts to bring in an extra set of eyeballs. Teammates should put emphasis on staying in touch with one another to assure that progress fits within everyone else’s vision of the project.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Recap: There’s So Much More&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;As I’ve put together my individual projects, I’ve found feedback loops to be really helpful. Getting other people’s perspectives helps me to see ways that I can improve my code and add new features because those folks are approaching my project from a clean slate.&lt;/p&gt;
-
-&lt;p&gt;Working with a team, those feedback lopes aren’t just helpful - they’re essential. Teammates foster team dynamics by meeting up regularly, documenting tasks, working on branches, and staying in touch throughout.&lt;/p&gt;
-
-&lt;p&gt;But that isn’t all that goes into being part of a team. There’s a lot more to learn, and I’m excited to get a better sense of how the most productive teams stay cohesive going forward. &lt;/p&gt;
-</description>
-        <pubDate>Fri, 03 Jul 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//general/2015/07/03/being-a-teammate.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/07/03/being-a-teammate.html</guid>
-        
-        <category>team</category>
-        
-        <category>communication</category>
         
         
         <category>general</category>
