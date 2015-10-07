@@ -81,7 +81,7 @@
 
 <p>This problem is amplified by the ultimate task of the kata: to add a new item to the store’s inventory. You just can’t feel good about completing that last step unless you’ve found some way to render the code open for extension but closed for modification.</p>
 
-<p>So the question that presents itself is how to do so. While an object-oriented language would rely on polymorphism (where each item type would carry its own implementation of the method that updates its quality), Clojure’s lack of classes and objects would seem to place such an approach out of bounds. </p>
+<p>So the question that presents itself is how to do so. While an object-oriented language would rely on polymorphism (where each item type would carry its own implementation of the method that updates its quality), Clojure’s lack of classes and objects would seem to place such an approach out of bounds.</p>
 
 <p>Luckily, that’s not the case. Enter multimethods.</p>
 
@@ -113,7 +113,7 @@
 
 <p>Next, we define a set of methods with dispatch values. If the dispatching function returns <code>1</code>, Clojure knows to choose the method with the dispatch value of <code>1</code>. The same logic applies for <code>2</code>, and then we create a default implementation for if neither of the above implementation match the dispatching value.</p>
 
-<p>There are several other ways to implement polymorphism in Clojure<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup>, but the multimethod is a great way to tackle the particular problem posed by Gilded Rose. Doing so allows us to transform this: </p>
+<p>There are several other ways to implement polymorphism in Clojure<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup>, but the multimethod is a great way to tackle the particular problem posed by Gilded Rose. Doing so allows us to transform this:</p>
 
 <div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="kd">defn </span><span class="nv">update-quality</span> <span class="p">[</span><span class="nv">items</span><span class="p">]</span>
   <span class="p">(</span><span class="nf">map</span>
@@ -180,11 +180,11 @@
 <span class="p">(</span><span class="kd">defn </span><span class="nv">update-quality</span> <span class="p">[</span><span class="nv">items</span><span class="p">]</span>
   <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nf">adjust-quality</span> <span class="nv">%</span><span class="p">)</span> <span class="p">(</span><span class="nf">age-items</span> <span class="nv">items</span><span class="p">)))</span></code></pre></div>
 
-<p>There are still improvements to be made, for sure. But we’ve now decomposed a massive beast of nested conditionals into a manageable collection of bite-sized chunks. And, best of all, we’re now satisfying the open-closed principle; adding a new item type requires - at most - that we add another implementation of <code>adjust-quality</code>. </p>
+<p>There are still improvements to be made, for sure. But we’ve now decomposed a massive beast of nested conditionals into a manageable collection of bite-sized chunks. And, best of all, we’re now satisfying the open-closed principle; adding a new item type requires - at most - that we add another implementation of <code>adjust-quality</code>.</p>
 
 <p><strong>Conclusion</strong></p>
 
-<p>It’s important not to overuse Clojure’s sophisticated facilities for implementing polymorphism, since doing so can provide a crutch to the object-oriented programmer that enables you to dodge more idiomatically functional ways of tackling problems. But when a huge method just screams out for decomposition, resources like Clojure’s multimethod can make it easier to accomplish your objectives in a way that yields extensible code. </p>
+<p>It’s important not to overuse Clojure’s sophisticated facilities for implementing polymorphism, since doing so can provide a crutch to the object-oriented programmer that enables you to dodge more idiomatically functional ways of tackling problems. But when a huge method just screams out for decomposition, resources like Clojure’s multimethod can make it easier to accomplish your objectives in a way that yields extensible code.</p>
 
 <div class="footnotes">
   <ol>
@@ -192,7 +192,7 @@
       <p>We could actually just put <code>:num</code> for our dispatching function - Clojure knows to treat a keyword as a function. I’ve used the more verbose form here for clarity as to what exactly is going on. The verbose form can be useful when you want to identify the correct implementation based on some more nuanced evaluation of your argument(s). <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>Check out <a href="http://blog.8thlight.com/myles-megyesi/2012/04/26/polymorphism-in-clojure.html">this</a> and <a href="http://www.braveclojure.com/multimethods-records-protocols/">this</a> for further information on using functions, protocols, and records to implement the best form of polymorphism for your particular problem.  <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+      <p>Check out <a href="http://blog.8thlight.com/myles-megyesi/2012/04/26/polymorphism-in-clojure.html">this</a> and <a href="http://www.braveclojure.com/multimethods-records-protocols/">this</a> for further information on using functions, protocols, and records to implement the best form of polymorphism for your particular problem. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

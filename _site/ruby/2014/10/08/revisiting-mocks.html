@@ -137,7 +137,7 @@
 
 <p>But, this approach does have some downsides. First of all, I’m going to be intializing a lot of booleans - not a big problem, but something that irks me. Second, and perhaps most importantly, I’m running the risk of verifying that I’ve sent the wrong message. If all of my method calls in the mock object return <code>true</code>, then a verification that one method has been sent will be indistinguishable from the verification that another method has been sent. I won’t be able to verify that I actually sent the <em>right</em> method.</p>
 
-<p>So, I’ve reworked my mocks so that each method returns a unique identifier. Now, instead of returning <code>true</code>, the <code>print</code> method returns <code>"print called"</code>. It looks like this: </p>
+<p>So, I’ve reworked my mocks so that each method returns a unique identifier. Now, instead of returning <code>true</code>, the <code>print</code> method returns <code>"print called"</code>. It looks like this:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MockIO</span>
   <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>

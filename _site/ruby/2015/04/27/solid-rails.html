@@ -77,7 +77,7 @@
   <article class="post-content">
     <p>One habit I’ve picked up in the interest of making sure my programs adhere to good design principles is to generally prefer <a href="http://en.wikipedia.org/wiki/Composition_over_inheritance">composition over inheritance</a>. When I’m seeking to include behavior in a class, I’ll attempt to implement it directly or acquire it via <a href="http://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a> before I opt to inherit it from another class.</p>
 
-<p>But good design is always relative to its context/environment, and sometimes inheritance makes sense. For example, Rails makes use of inheritance to share behavior while keeping code DRY. Following <a href="http://en.wikipedia.org/wiki/Convention_over_configuration">convention over configuration</a>, you’ll get used to class declarations that look like this: </p>
+<p>But good design is always relative to its context/environment, and sometimes inheritance makes sense. For example, Rails makes use of inheritance to share behavior while keeping code DRY. Following <a href="http://en.wikipedia.org/wiki/Convention_over_configuration">convention over configuration</a>, you’ll get used to class declarations that look like this:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span></code></pre></div>
 
@@ -121,7 +121,7 @@
 
 <p><strong>OK, Let’s Just Make Things A Bit Worse</strong></p>
 
-<p>Astute readers will already notice an OCP violation, but let’s dig a bit deeper into the weeds before we clean things up. </p>
+<p>Astute readers will already notice an OCP violation, but let’s dig a bit deeper into the weeds before we clean things up.</p>
 
 <p>In addition to events, a user <code>has_many :guests, through: :events</code>. Routes headed for the guests controller have <code>params[:event_id]</code> and <code>params[:id]</code>. That breaks the method above since it’ll see that there’s no <code>params[:user_id]</code> and try to find a <code>User</code> based on <code>params[:id]</code>, which actually identifies a guest.</p>
 
@@ -149,7 +149,7 @@
 
 <p>1) <a href="http://en.wikipedia.org/wiki/Liskov_substitution_principle">The Liskov Substitution Principle</a>: According to Robert Martin, this principle boils down to a rule that “subtypes must be substitutable for their base types” (<a href="http://www.amazon.com/Software-Development-Principles-Patterns-Practices/dp/0135974445">PPP</a> 111). In our case, the guests controller’s implementation of <code>redirect_if_incorrect_user</code> violates the Liskov substitution principle because it can’t be substituted for the implementation in the base class (the application controller). If we’re locating the user with the <code>params[:event_id]</code>, we’ll be out of luck when there is no <code>params[:event_id]</code> (e.g. actions on the users and events controllers).</p>
 
-<p>2) <a href="http://en.wikipedia.org/wiki/Open/closed_principle">The Open-Closed Principle</a>: describing the OCP, Martin writes, “Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification” (<a href="http://www.amazon.com/Software-Development-Principles-Patterns-Practices/dp/0135974445">PPP</a> 99). If we want to add new features or classes, we shouldn’t have to go back and modify classes we already had to make the new ones work. That means it’s not an adequate solution to add a new <code>if</code> statement to a method on the application controller each time we’re dealing with a new controller. </p>
+<p>2) <a href="http://en.wikipedia.org/wiki/Open/closed_principle">The Open-Closed Principle</a>: describing the OCP, Martin writes, “Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification” (<a href="http://www.amazon.com/Software-Development-Principles-Patterns-Practices/dp/0135974445">PPP</a> 99). If we want to add new features or classes, we shouldn’t have to go back and modify classes we already had to make the new ones work. That means it’s not an adequate solution to add a new <code>if</code> statement to a method on the application controller each time we’re dealing with a new controller.</p>
 
 <p>To accomodate Liskov, we could make the method on our application controller more universal:</p>
 

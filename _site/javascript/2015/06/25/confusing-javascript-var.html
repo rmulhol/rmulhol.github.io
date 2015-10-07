@@ -134,7 +134,7 @@
 
 <p>JavaScript has served it’s purpose and opened my eyes to all that you can accomplish on the client side. But it’s also left me scratching my head a few times.</p>
 
-<p>The first example wasn’t much trouble - it’s relatively straightforward. </p>
+<p>The first example wasn’t much trouble - it’s relatively straightforward.</p>
 
 <p>But the second was a different story. I had to manually declare the variable <code>thisForm</code>; I couldn’t just inline <code>'form-' + i</code> on the <code>getElementById</code> call.</p>
 
@@ -150,7 +150,7 @@
 <span class="p">}</span>
 <span class="nt">&lt;/script&gt;</span></code></pre></div>
 
-<p>Everything breaks. Or, more accurately, fails silently - the form is not submitted when a cell is clicked. </p>
+<p>Everything breaks. Or, more accurately, fails silently - the form is not submitted when a cell is clicked.</p>
 
 <p>So, what’s going on here?</p>
 
@@ -162,9 +162,9 @@
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Uncaught</span> <span class="nx">TypeError</span><span class="o">:</span> <span class="nx">Cannot</span> <span class="nx">read</span> <span class="nx">property</span> <span class="s1">&#39;submit&#39;</span> <span class="nx">of</span> <span class="kc">null</span></code></pre></div>
 
-<p>By the time the asynchronous listener is called, the object returned by <code>getElementById</code> is null, since <code>'form-' + i</code> evaluates to <code>'form-' + 10</code> (or just <code>'form-10'</code>), which doesn’t correspond to any ID on the page. </p>
+<p>By the time the asynchronous listener is called, the object returned by <code>getElementById</code> is null, since <code>'form-' + i</code> evaluates to <code>'form-' + 10</code> (or just <code>'form-10'</code>), which doesn’t correspond to any ID on the page.</p>
 
-<p>Asynchronous callbacks can be tremendously confusing - they can lead you into the pit of <a href="http://callbackhell.com/">callback hell</a>. </p>
+<p>Asynchronous callbacks can be tremendously confusing - they can lead you into the pit of <a href="http://callbackhell.com/">callback hell</a>.</p>
 
 <p>But they’re also tremendously useful. They let you delay behavior until it’s needed, execute multiple actions at once, and avoid blocking.</p>
 

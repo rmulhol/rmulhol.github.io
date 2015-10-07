@@ -93,23 +93,23 @@
 <span class="lineno">6</span>   <span class="k">end</span>
 <span class="lineno">7</span> <span class="k">end</span></code></pre></div>
 
-<p>Then I would navigate to my project’s spec directory, and type <code>rspec addition_spec.rb</code>. The result looked like this: </p>
+<p>Then I would navigate to my project’s spec directory, and type <code>rspec addition_spec.rb</code>. The result looked like this:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">=&gt;</span> <span class="sb">`require&#39;: cannot load such file -- addition (LoadError)</span></code></pre></div>
 
 <p>OK, red-green-refactor, right? That’s red-ish.</p>
 
-<p>But I simply could not get this error to go away. Creating an addition.rb file in my lib directory did nothing; I couldn’t get the tests to run. </p>
+<p>But I simply could not get this error to go away. Creating an addition.rb file in my lib directory did nothing; I couldn’t get the tests to run.</p>
 
-<p>So it was with supreme satisfaction that I learned a way around my problem: add the file directory path! I changed line 1 from the spec file above to this: </p>
+<p>So it was with supreme satisfaction that I learned a way around my problem: add the file directory path! I changed line 1 from the spec file above to this:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;../lib/addition.rb&#39;</span></code></pre></div>
 
 <p>And everything worked!</p>
 
-<p>My ‘require’ statement was a little verbose, but the tests were running. I was happy. </p>
+<p>My ‘require’ statement was a little verbose, but the tests were running. I was happy.</p>
 
-<p>I ran forward with my new knowledge and learned how to <a href="/ruby/2014/09/14/testing-instance-methods.html">write tests for instance methods</a>. </p>
+<p>I ran forward with my new knowledge and learned how to <a href="/ruby/2014/09/14/testing-instance-methods.html">write tests for instance methods</a>.</p>
 
 <p><strong>Step 2: Testing a Whole Project</strong></p>
 
@@ -125,7 +125,7 @@
 
 <p>As had been the pattern previously, I once again grew tired of the seemingly unnecessary limitations I encountered. Though testing the whole project covered all of my bases, I wondered why typing <code>rspec addition_spec.rb</code> in my spec directory would no longer work (instead raising the familiar <code>LoadError</code>).</p>
 
-<p>So, I decided to start checking out some <a href="http://code.tutsplus.com/tutorials/ruby-for-newbies-testing-with-rspec--net-21297">resources</a> for Rspec beginners, intending to retrace my steps until I located the crucial mistake that I most certainly must have made. </p>
+<p>So, I decided to start checking out some <a href="http://code.tutsplus.com/tutorials/ruby-for-newbies-testing-with-rspec--net-21297">resources</a> for Rspec beginners, intending to retrace my steps until I located the crucial mistake that I most certainly must have made.</p>
 
 <p>One thing that jumped out at me during this process was a suggested use of the spec_helper.rb file.</p>
 
@@ -135,7 +135,7 @@
 
 <p><strong>Step 4: Testing Individual Files and the Whole Project (The Right Way)</strong></p>
 
-<p>OK, the lack of colors bothered me. What was up with that? </p>
+<p>OK, the lack of colors bothered me. What was up with that?</p>
 
 <p>I decided to do some more research, and I found <a href="http://qugstart.com/blog/ruby-and-rails/rspec-running-one-test-at-a-time/">this</a>.</p>
 

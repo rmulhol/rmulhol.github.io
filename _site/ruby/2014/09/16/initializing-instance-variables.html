@@ -75,11 +75,11 @@
   </header>
 
   <article class="post-content">
-    <p>Recently, I learned that you can initialize an instance variable in two different ways. I already knew that instance variables were commonly initialized with an @ sign (as in, @instance_variable), but what’s new to me is that you can also do so with the prefix self. (as in, self.instance_variable). </p>
+    <p>Recently, I learned that you can initialize an instance variable in two different ways. I already knew that instance variables were commonly initialized with an @ sign (as in, @instance_variable), but what’s new to me is that you can also do so with the prefix self. (as in, self.instance_variable).</p>
 
-<p>For example, say I want to write a new class, one called Books that will store titles for each instance. </p>
+<p>For example, say I want to write a new class, one called Books that will store titles for each instance.</p>
 
-<p>Of course, we start with a test: </p>
+<p>Of course, we start with a test:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;books&#39;</span>
 
@@ -119,9 +119,9 @@
 
 <p>So what’s going wrong? Is this whole alternative naming convention just a sham? Nope.</p>
 
-<p>First of all - special thanks to <a href="http://calvached.github.io/">Diana</a> and my other fellow student apprentices for helping me figure this out. </p>
+<p>First of all - special thanks to <a href="http://calvached.github.io/">Diana</a> and my other fellow student apprentices for helping me figure this out.</p>
 
-<p>It turns out that initializing instance variables with self. requires more than just an attr_reader. It also needs an attr_writer or, more elegantly, just an attr_accessor (which combines attr_reader and attr_writer). </p>
+<p>It turns out that initializing instance variables with self. requires more than just an attr_reader. It also needs an attr_writer or, more elegantly, just an attr_accessor (which combines attr_reader and attr_writer).</p>
 
 <p>Using attr_writer lets you set the value of an attribute (in this case, the instance variable ‘title’), and attr_reader lets you call the value of that attribute elsewhere.</p>
 
@@ -141,7 +141,7 @@
   <span class="k">end</span>
 <span class="k">end</span></code></pre></div>
 
-<p>Put in the method to write our author attribute: </p>
+<p>Put in the method to write our author attribute:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Books</span>
   <span class="kp">attr_accessor</span> <span class="ss">:title</span>
@@ -196,7 +196,7 @@
 
 <p>Everything works.</p>
 
-<p>But, as I’m sure you might have already guessed, there is a better way! What we’re doing here is <em>writing</em> and <em>reading</em> <strong>attributes</strong> for instances of our Books class. And, wouldn’t you know it, that’s exactly where attr_accessor is most helpful. We could replace the whole class we just completed like this: </p>
+<p>But, as I’m sure you might have already guessed, there is a better way! What we’re doing here is <em>writing</em> and <em>reading</em> <strong>attributes</strong> for instances of our Books class. And, wouldn’t you know it, that’s exactly where attr_accessor is most helpful. We could replace the whole class we just completed like this:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Books</span>
   <span class="kp">attr_accessor</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">:author</span>

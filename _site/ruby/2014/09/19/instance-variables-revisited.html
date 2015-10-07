@@ -132,7 +132,7 @@
 
 <p>So, what’s the solution?</p>
 
-<p>From what I can tell, perhaps the best approach is to hold on to the @instance_variable naming in your initialize method, but then embrace the power of the attr_reader: </p>
+<p>From what I can tell, perhaps the best approach is to hold on to the @instance_variable naming in your initialize method, but then embrace the power of the attr_reader:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Books</span>
   <span class="kp">attr_reader</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">:author</span>
@@ -155,7 +155,7 @@
 
 <p>Typos will only run as nil when you include the ‘@’ at the beginning of the instance variable. Taking advantage of the attr_reader and referring to your instance variables without that symbol takes care of that, and doesn’t require you to include an attr_writer.</p>
 
-<p>Ultimately, choosing how to initialize and refer to your instance variables is a decision you make based on your project’s specific needs - you can go either way. But, in general, holding onto the ‘@’ and taking advantage of the attr_reader seems to deliver most of the benefits and fewer of the costs associated with alternative approaches. </p>
+<p>Ultimately, choosing how to initialize and refer to your instance variables is a decision you make based on your project’s specific needs - you can go either way. But, in general, holding onto the ‘@’ and taking advantage of the attr_reader seems to deliver most of the benefits and fewer of the costs associated with alternative approaches.</p>
 
 
   </article>

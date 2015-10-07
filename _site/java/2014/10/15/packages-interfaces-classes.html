@@ -79,7 +79,7 @@
 
 <p>Though I use an IDE (<a href="https://www.jetbrains.com/idea/">IntelliJ</a>) for my own projects, I’ve been completing the exercises from the book in Vim for two reasons: (1) I want to get a good understanding of what’s going on ‘behind the curtain,’ without relying on all the legwork IntelliJ does for me; and, (2) I don’t want to create new projects in IntelliJ for each of the very small programs in the book (so far I’ve completed over 200, and most are fewer than 50 lines).</p>
 
-<p>Recently, I was working on an example in Chapter 9, where the objective is to practice implementing interfaces. To do so, you first create an interface <code>Callback</code>, then a class <code>Client</code> that implements the interface, and then finally a class <code>TestIface</code> that both declares an interface reference variable and calls the method from <code>Client</code> on it. </p>
+<p>Recently, I was working on an example in Chapter 9, where the objective is to practice implementing interfaces. To do so, you first create an interface <code>Callback</code>, then a class <code>Client</code> that implements the interface, and then finally a class <code>TestIface</code> that both declares an interface reference variable and calls the method from <code>Client</code> on it.</p>
 
 <p>Working in Vim, I first placed all of these components (one interface and two classes) into a single file. It compiled and ran just fine.</p>
 
@@ -94,14 +94,14 @@
 
 <p>I was completely baffled. How could it be that <code>javac Callback.java</code> would work just fine, but <code>javac Client.java</code> would produce the error above? I could see that <code>Callback.class</code> did indeed reside in the exact same package directory as <code>Client.java</code>, but the compiler wasn’t finding it.</p>
 
-<p>I opted to try it out in IntelliJ. While I don’t want to rely on the IDE as a shortcut, I was hoping that I could learn something by seeing how it fixed the problem. But this made things even more confusing - the <em>exact same</em> source code compiled in IntelliJ without a hitch. </p>
+<p>I opted to try it out in IntelliJ. While I don’t want to rely on the IDE as a shortcut, I was hoping that I could learn something by seeing how it fixed the problem. But this made things even more confusing - the <em>exact same</em> source code compiled in IntelliJ without a hitch.</p>
 
 <p>I fooled around for awhile (reading through examples of similar problems on <a href="http://stackoverflow.com/questions/16102893/cannot-find-symbol-saying-implemented-interface-not-found">stackoverflow</a>, using <code>import</code> in myriad different ways, changing the names of the interface and classes, etc) trying to find an answer before I stumbled upon something that worked:</p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">&gt;</span> <span class="n">cd</span> <span class="o">..</span>
 <span class="o">&gt;</span> <span class="n">javac</span> <span class="n">MyPack</span><span class="o">/</span><span class="n">Client</span><span class="o">.</span><span class="na">java</span></code></pre></div>
 
-<p>It turns out that in order to compile a class that implements an interface and resides within a package, you have to back up out of that package and compile by providing the file directory that includes the package. </p>
+<p>It turns out that in order to compile a class that implements an interface and resides within a package, you have to back up out of that package and compile by providing the file directory that includes the package.</p>
 
 <p>Who knew?</p>
 

@@ -6,9 +6,37 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 14 Sep 2015 10:57:10 -0500</pubDate>
-    <lastBuildDate>Mon, 14 Sep 2015 10:57:10 -0500</lastBuildDate>
-    <generator>Jekyll v2.3.0</generator>
+    <pubDate>Wed, 07 Oct 2015 17:02:39 -0500</pubDate>
+    <lastBuildDate>Wed, 07 Oct 2015 17:02:39 -0500</lastBuildDate>
+    <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Undoing An Erroneous Force Push: The Git Reflog</title>
+        <description>&lt;p&gt;Recently, I’ve been working on a project maintained by multiple developers. There are a decent number of pull requests hanging around, and a lot of work happening at all times. One of my roles has been to prepare open pull requests for a clean and easy merge.&lt;/p&gt;
+
+&lt;p&gt;Not too tricky of a task, most of the time. Rebase the branch onto master, resolve all the conflicts, push up the changes, and it’s good to go.&lt;/p&gt;
+
+&lt;p&gt;Unless you mess up the rebase, incorrectly resolving merge conflicts. Running the tests will save you most of the time, but not always. And if you get too far, you may have just force pushed a broken branch onto the PR. Oops.&lt;/p&gt;
+
+&lt;p&gt;Luckily, this sort of error is not the end of the world. Not at all.&lt;/p&gt;
+
+&lt;p&gt;There are number of ways to deal with inadvertent force pushes; I’d recommend &lt;a href=&quot;https://blog.8thlight.com/sandro-padin/2015/06/08/help-i-just-force-pushed-to-master.html&quot;&gt;this blog post&lt;/a&gt; if you haven’t come across it already. But in this case, a very simple solution is to take advantage of &lt;a href=&quot;https://git-scm.com/docs/git-reflog&quot;&gt;the &lt;code&gt;reflog&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you’re in your project’s directory and you type &lt;code&gt;git reflog&lt;/code&gt; on the command line, you’ll see a history of actions you’ve taken within the project: moving between branches, making commits, etc.&lt;/p&gt;
+
+&lt;p&gt;If you pinpoint the &lt;a href=&quot;https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection&quot;&gt;SHA&lt;/a&gt; corresponding to the place where everything went awry (e.g. the place right before where you began the faulty rebase), you can &lt;code&gt;git checkout&lt;/code&gt; that SHA and begin again. Or just breathe a sigh of relief as you push it up un-catastrophically-rebased.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 07 Oct 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//general/2015/10/07/git-reflog.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/10/07/git-reflog.html</guid>
+        
+        <category>git</category>
+        
+        
+        <category>general</category>
+        
+      </item>
     
       <item>
         <title>Backbone + React: Render Components With `Render`</title>
@@ -24,7 +52,7 @@
 
 &lt;p&gt;Unfortunately, it can be tough for the literature to keep up with changing APIs. Techniques that got the job done only a year ago (or less) might no longer be supported today.&lt;/p&gt;
 
-&lt;p&gt;This isn’t a huge problem; it’s better to have slightly dated information than to have nothing at all. &lt;/p&gt;
+&lt;p&gt;This isn’t a huge problem; it’s better to have slightly dated information than to have nothing at all.&lt;/p&gt;
 
 &lt;p&gt;But if you’re new to both libraries, trying to make React and Backbone play nicely with each other can be challenging enough. Adding on the obstacle of non-working sample code can make the solution seem out of reach.&lt;/p&gt;
 
@@ -132,7 +160,7 @@
 
 &lt;p&gt;&lt;strong&gt;Software Craftsmanship&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;As I’ve been growing out of debate and into software development, one thing that’s been heartening for me is the discovery that these principles and mantras aren’t just &lt;em&gt;relevant to&lt;/em&gt; my new field - they’re actively practiced and endorsed, at least by some folks. &lt;/p&gt;
+&lt;p&gt;As I’ve been growing out of debate and into software development, one thing that’s been heartening for me is the discovery that these principles and mantras aren’t just &lt;em&gt;relevant to&lt;/em&gt; my new field - they’re actively practiced and endorsed, at least by some folks.&lt;/p&gt;
 
 &lt;p&gt;In the contexts I’ve explored, they go by the name of software craftsmanship.&lt;/p&gt;
 
@@ -140,7 +168,7 @@
 
 &lt;p&gt;Not everyone who does software development is committed to the principles of software craftsmanship. Some are more interested in shipping code as fast and effortlessly as possible. That’s fine.&lt;/p&gt;
 
-&lt;p&gt;But it’s not the sort of attitude that engenders excellence. As Aristotle put it, “We are what we repeatedly do. Excellence, then, is not an act, but a habit.” &lt;/p&gt;
+&lt;p&gt;But it’s not the sort of attitude that engenders excellence. As Aristotle put it, “We are what we repeatedly do. Excellence, then, is not an act, but a habit.”&lt;/p&gt;
 
 &lt;p&gt;Whether in debate, software, or some other field entirely, character, commitment, team work, and hard work are the habits of excellence. They’re what make a great programmer, a robust programming environment, and a strong team.&lt;/p&gt;
 
@@ -176,9 +204,9 @@
 
 &lt;p&gt;1) Static - the Chicago Beaches page is a static site. All API requests are made through the browser (thanks, Chicago, for supporting cross-origin resource sharing). This probably makes it pretty uninteresting if you’re browsing without JavaScript enabled and/or on an old browser, but it also means I get …&lt;/p&gt;
 
-&lt;p&gt;2) Hosting - via GitHub pages. Just pushed up my &lt;code&gt;gh-pages&lt;/code&gt; branch, and the site was live within minutes. It’s amazing how easy it is to deploy a little React app with these kinds of tools. &lt;/p&gt;
+&lt;p&gt;2) Hosting - via GitHub pages. Just pushed up my &lt;code&gt;gh-pages&lt;/code&gt; branch, and the site was live within minutes. It’s amazing how easy it is to deploy a little React app with these kinds of tools.&lt;/p&gt;
 
-&lt;p&gt;There’s a few more things I could imagine doing to improve this site, but I’m even more excited at the possibilities that lie ahead working with the tools I’ve used. &lt;/p&gt;
+&lt;p&gt;There’s a few more things I could imagine doing to improve this site, but I’m even more excited at the possibilities that lie ahead working with the tools I’ve used.&lt;/p&gt;
 
 &lt;p&gt;With a budding comfortability with React, huge amounts of data just waiting to be used, and simple static site hosting via GitHub pages, there’s a lot of cool things that lie within reach.&lt;/p&gt;
 
@@ -200,7 +228,7 @@
         <title>Working With APIs: Rolling a Proxy Server</title>
         <description>&lt;p&gt;In &lt;a href=&quot;/javascript/2015/08/11/cross-origin-resource-sharing.html&quot;&gt;yesterday’s post&lt;/a&gt;, we talked about the difficulties one can encounter when making AJAX requests to an API that doesn’t support cross-origin resource sharing (CORS). Unless the response includes the required &lt;code&gt;Access-Control-Allow-Origin&lt;/code&gt; header, you’ll be getting an error message in the console - and not much else.&lt;/p&gt;
 
-&lt;p&gt;One way to get around this is to write your own proxy server. Instead of waiting for your API’s maintainers to implement support for CORS, simply fetch the content with your own proxy and pass it along with the required header tacked on. &lt;/p&gt;
+&lt;p&gt;One way to get around this is to write your own proxy server. Instead of waiting for your API’s maintainers to implement support for CORS, simply fetch the content with your own proxy and pass it along with the required header tacked on.&lt;/p&gt;
 
 &lt;p&gt;If you were going to do this in production, you’d have a number of concerns outside of that core functionality - hosting, authentication, etc. But in development, you can cut away a lot of that overhead. Implementing a proxy server in Node is quick and easy.&lt;/p&gt;
 
@@ -209,7 +237,7 @@
 &lt;p&gt;They also don’t support CORS. Try to hit the API with AJAX, and you’ll see the familiar error message.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;XMLHttpRequest cannot load https://api.imgflip.com/get_memes. No ‘Access-Control-Allow-Origin’ header is present on the requested resource. Origin ‘http://localhost:8080’ is therefore not allowed access. &lt;/p&gt;
+  &lt;p&gt;XMLHttpRequest cannot load https://api.imgflip.com/get_memes. No ‘Access-Control-Allow-Origin’ header is present on the requested resource. Origin ‘http://localhost:8080’ is therefore not allowed access.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;If you wanted to hit it by proxy, say at &lt;code&gt;localhost:3000/get_memes&lt;/code&gt;, you could do so with this script:&lt;/p&gt;
@@ -241,9 +269,9 @@
 
 &lt;p&gt;Assuming you’ve got Node installed, you can run this script with &lt;code&gt;node &amp;lt;filename.js&amp;gt;&lt;/code&gt;, and you’re good to go. To access &lt;code&gt;https://api.imgflip.com/get_memes&lt;/code&gt; in a cross-domain request, you could just hit &lt;code&gt;http://localhost:3000/get_memes&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;How does it work? &lt;/p&gt;
+&lt;p&gt;How does it work?&lt;/p&gt;
 
-&lt;p&gt;We use Node’s &lt;code&gt;http&lt;/code&gt; API to create a server, passing in a callback and setting it to listen on port 3000. &lt;/p&gt;
+&lt;p&gt;We use Node’s &lt;code&gt;http&lt;/code&gt; API to create a server, passing in a callback and setting it to listen on port 3000.&lt;/p&gt;
 
 &lt;p&gt;Within the callback, we log the request, affix the required header to our response, and pass along the incoming request to Imgflip’s API, piping the data we get back into our response.&lt;/p&gt;
 
@@ -277,7 +305,7 @@
 
 &lt;p&gt;&lt;strong&gt;What is CORS?&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;The reason you’re seeing this error message is that you’re trying to launch a cross-domain request from the browser. That is, you’re asking the browser to make a request to a URL with a different protocol, host, and/or port number from that of the originating request. This violates &lt;a href=&quot;https://en.wikipedia.org/wiki/Same-origin_policy&quot;&gt;the same-origin policy&lt;/a&gt;. &lt;/p&gt;
+&lt;p&gt;The reason you’re seeing this error message is that you’re trying to launch a cross-domain request from the browser. That is, you’re asking the browser to make a request to a URL with a different protocol, host, and/or port number from that of the originating request. This violates &lt;a href=&quot;https://en.wikipedia.org/wiki/Same-origin_policy&quot;&gt;the same-origin policy&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Basically, the browser will rubber stamp requests if the source and the target share the same origin. But if you’re interacting with an API, that’s likely not the case.&lt;/p&gt;
 
@@ -289,7 +317,7 @@
 
 &lt;p&gt;Right. You’re probably not in a position to assure that your API supports the required response headers.&lt;/p&gt;
 
-&lt;p&gt;At this point, you have a few options. &lt;/p&gt;
+&lt;p&gt;At this point, you have a few options.&lt;/p&gt;
 
 &lt;p&gt;The first is to get in touch with people who host the API and request that they support cross-origin requests. It may be ignored or take awhile, but it’s a path of least resistance that they have little reason to turn down beyond not having the time (an admittedly fair obstacle).&lt;/p&gt;
 
@@ -402,7 +430,7 @@
 
 &lt;p&gt;But what if we want to initiate more broad sweeping changes across numerous components? Or if we want to react to larger chunks of data from an API call? We might figure out a way to do so with what we already have, but our code could get pretty not-so-clean pretty quickly.&lt;/p&gt;
 
-&lt;p&gt;Luckily, there’s no need to indulge such indiscretions, thanks to &lt;a href=&quot;https://facebook.github.io/flux/docs/overview.html&quot;&gt;the Flux architecture&lt;/a&gt;. Flux is a pattern for implementing a unidirectional data flow, one that makes it simple to implement significant and far-reaching changes to our views reliably and efficiently. &lt;/p&gt;
+&lt;p&gt;Luckily, there’s no need to indulge such indiscretions, thanks to &lt;a href=&quot;https://facebook.github.io/flux/docs/overview.html&quot;&gt;the Flux architecture&lt;/a&gt;. Flux is a pattern for implementing a unidirectional data flow, one that makes it simple to implement significant and far-reaching changes to our views reliably and efficiently.&lt;/p&gt;
 
 &lt;p&gt;To get a sense for what we can do with the Flux architecture, we’re going to take a run at fitting it into our demo app. Since Flux is a pattern rather than a framework, we’ll be looking at &lt;em&gt;a&lt;/em&gt; way to implement it rather than &lt;em&gt;the&lt;/em&gt; way, but we’ll end up with a nice foundation for implementing further changes.&lt;/p&gt;
 
@@ -422,6 +450,8 @@
 
 &lt;p&gt;The first thing we’ll want to do is create a dispatcher. It can live at &lt;code&gt;js/dispatcher/dispatcher.js&lt;/code&gt;.&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/7fe46f4f9cea3780eacf.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;With this in place, we’ll be able to &lt;code&gt;require&lt;/code&gt; and call the dispatcher from other parts of our application.&lt;/p&gt;
@@ -430,6 +460,8 @@
 
 &lt;p&gt;After we’ve got a dispatcher, we’ll want to &lt;code&gt;require&lt;/code&gt; and use it in a file designated to contain our actions. Create the following file at &lt;code&gt;js/actions/demo_app_actions.js&lt;/code&gt;.&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/73355cb3dca6fd138fd8.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;Here, the &lt;code&gt;toggleLogo()&lt;/code&gt; method uses the dispatcher to broadcast a payload to the rest of our application. In this case, the payload includes keys for &lt;code&gt;actionType&lt;/code&gt; and &lt;code&gt;showReactLogo&lt;/code&gt;, which correspond to a string and a boolean, respectively.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
@@ -440,6 +472,8 @@
 
 &lt;p&gt;Once we’ve got actions that invoke the dispatcher to issue payloads to our application, we’ll want to register some callbacks with the dispatcher to handle those payloads. We do this on a store, which we’ll put at &lt;code&gt;js/stores/demo_app_store.js&lt;/code&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/9e236715490835053a8c.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;Let’s unpack what’s going on here.&lt;/p&gt;
@@ -456,14 +490,20 @@
 
 &lt;p&gt;For this reason, it can be helpful to keep track of certain constants in a &lt;code&gt;js/constants/constants.js&lt;/code&gt; file. We’ll be using this file to store values for the &lt;code&gt;actionType&lt;/code&gt; of dispatched payloads right now, but we could also put any other important constants here as we go.&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/66eaec512c7a94252a27.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;With this in place, we can change how we refer to the “toggle-logo” value for our &lt;code&gt;actionType&lt;/code&gt; key in our action:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/7190e9eff411565edb29.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;And in our store:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/908f2256eb04baba12b3.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;It’s only a minor detour but, like much of what we’re doing in this post, it will make life easier down the line.&lt;/p&gt;
@@ -472,8 +512,10 @@
 
 &lt;p&gt;Now that stores are emitting events that carry values from our actions’ payloads, we can add listeners on our components to initiate change in response to emitted events. This is the logic that replaces the existing state transitions on our components.&lt;/p&gt;
 
-&lt;p&gt;The revised &lt;code&gt;js/components/body.js&lt;/code&gt; file should be modified to look like this: &lt;/p&gt;
+&lt;p&gt;The revised &lt;code&gt;js/components/body.js&lt;/code&gt; file should be modified to look like this:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/a34fdef63bc0e79d9731.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;The important changes we’ve made here are twofold:&lt;/p&gt;
@@ -491,7 +533,7 @@
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;For a more comprehensive description of the Flux architecture, check out &lt;a href=&quot;https://www.npmjs.com/package/flux&quot;&gt;the npm page for the Flux package&lt;/a&gt;.  &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;For a more comprehensive description of the Flux architecture, check out &lt;a href=&quot;https://www.npmjs.com/package/flux&quot;&gt;the npm page for the Flux package&lt;/a&gt;. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:2&quot;&gt;
       &lt;p&gt;In subsequent posts, we’ll discuss how to pass and use more sophisticated data, like JSON data from an API call. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
@@ -526,9 +568,9 @@
 
 &lt;p&gt;If we want to start building something that looks better and does more, we should start to get a handle on React’s tool for generating views: components.&lt;/p&gt;
 
-&lt;p&gt;Components are modules that include a &lt;code&gt;render()&lt;/code&gt; method that tells the program what to display. They can generate content dynamically, responding to data passed in by other components or the user. &lt;/p&gt;
+&lt;p&gt;Components are modules that include a &lt;code&gt;render()&lt;/code&gt; method that tells the program what to display. They can generate content dynamically, responding to data passed in by other components or the user.&lt;/p&gt;
 
-&lt;p&gt;Once you start taking advantage of their numerous features and piecing them together, components provide a valuable tool for constructing sophisticated user interfaces. &lt;/p&gt;
+&lt;p&gt;Once you start taking advantage of their numerous features and piecing them together, components provide a valuable tool for constructing sophisticated user interfaces.&lt;/p&gt;
 
 &lt;p&gt;Let’s take a look at how components can help us transform our little “hello, world” app into something a bit more visually appealing…&lt;/p&gt;
 
@@ -550,18 +592,24 @@
 
 &lt;p&gt;Where last left off, we were including the full view for our app in the &lt;code&gt;js/app.js&lt;/code&gt; file:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/dfcb2fd783ada9654894.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;This works fine when we’ve got so little display, but it quickly becomes unmanageable as our view becomes more substantial. The solution, in React, is to delegate the work to components.&lt;/p&gt;
 
 &lt;p&gt;Let’s start by moving the JSX code we’ve got in the &lt;code&gt;js/app.js&lt;/code&gt; file over to a new &lt;code&gt;js/components/home_page.js&lt;/code&gt; file. Now our &lt;code&gt;js/app.js&lt;/code&gt; file can look like this:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/8e7a24fddd37ab15ff70.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;The &lt;code&gt;&amp;lt;HomePage /&amp;gt;&lt;/code&gt; call exhibits React’s syntax for instantiating components in JSX - they exist as their own element on the page (with whatever components reside on them nested further down).&lt;/p&gt;
 
 &lt;p&gt;To make this work the same as before, we need the &lt;code&gt;js/components/home_page.js&lt;/code&gt; file to look like this:&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/7cee0ed45ea4620b7310.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;If we load the page in the browser, everything will look the same. But we’ve introduced a valuable tool: now we can apply the same technique to nest multiple components.&lt;/p&gt;
@@ -574,20 +622,28 @@
 
 &lt;p&gt;To do so, we want to change our &lt;code&gt;js/components/home_page.js&lt;/code&gt; file to contain the three subordinate components: &lt;code&gt;&amp;lt;Header /&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;Body /&amp;gt;&lt;/code&gt;, and &lt;code&gt;&amp;lt;/Footer&amp;gt;&lt;/code&gt;.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/cdef870ab3a9deca4967.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;Once that’s in place, we need to create the subordinate components.&lt;/p&gt;
 
 &lt;p&gt;Here’s a &lt;code&gt;js/components/header.js&lt;/code&gt; file that takes advantage of some react-bootstrap components to create a Navbar that’s fixed to the top of the page:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/4d5e127a79a56f24ce07.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;A &lt;code&gt;js/components/body.js&lt;/code&gt; file to welcome our users:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/27f433cba607631a9346.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;And a &lt;code&gt;/js/component/footer.js&lt;/code&gt; file to round things out:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/4dbfee934b2fa85249fa.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;At this point, our page starts looking a lot better:&lt;/p&gt;
@@ -608,6 +664,8 @@
 
 &lt;p&gt;If we wanted to add this new functionality entirely within the body component, we could do so like so:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/c11e477b504fe2b552e0.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;Here, we set the urls of the two image logos as properties of our Body component (since they will never change), then set the initial state with &lt;code&gt;showReactLogo&lt;/code&gt; set to &lt;code&gt;true&lt;/code&gt;. When the user clicks the button, we call &lt;code&gt;toggleImage()&lt;/code&gt; to set &lt;code&gt;showReactLogo&lt;/code&gt; to the opposite state of whatever it was. Within our &lt;code&gt;render()&lt;/code&gt; call, we determine which image to show based on current state.&lt;/p&gt;
@@ -706,6 +764,8 @@
 
 &lt;p&gt;The &lt;code&gt;index.html&lt;/code&gt; file stores the basic page we’ll be working on. You can fill it in like so:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/51035643a1a4b29c9a23.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;The key to this file is the &lt;code&gt;section&lt;/code&gt; with the &lt;code&gt;id&lt;/code&gt; “react” - that’s the entry point for our React code. It’ll be filled in by the &lt;code&gt;bundle.js&lt;/code&gt; script (which is generate by Browserify).&lt;/p&gt;
@@ -714,6 +774,8 @@
 
 &lt;p&gt;Almost there! The next step is to pop some code into our &lt;code&gt;app.js&lt;/code&gt; file that indicates what to put in the “react” &lt;code&gt;section&lt;/code&gt;. You can do that like so:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/dfcb2fd783ada9654894.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;This code tells React to find the page element with the &lt;code&gt;id&lt;/code&gt; “react” and put the preceding JSX code (which looks like raw html) there.&lt;/p&gt;
@@ -769,83 +831,6 @@
         
         
         <category>javascript</category>
-        
-      </item>
-    
-      <item>
-        <title>Process over Product: Learning From Refactoring</title>
-        <description>&lt;p&gt;Recently, I’ve been reading &lt;em&gt;Refactoring: Ruby Edition&lt;/em&gt; by Jay Fields, Shane Harvie, Martin Fowler, and Kent Beck. It’s been a whirlwind tour of the problems that provoke you to refactor and the solutions to those problems, as well as a really insightful look into the process of refactoring.&lt;/p&gt;
-
-&lt;p&gt;I had always thought of myself as refactoring whenever I made edits to my code. After all, I was trying to make it better.&lt;/p&gt;
-
-&lt;p&gt;But refactoring actually denotes a much more specific activity. According to the authors, refactoring is defined as “the process of changing a software system in such a way that it does not alter the external behavior of the code yet improves its internal structure” (xv).&lt;/p&gt;
-
-&lt;p&gt;Though it sounds somewhat simple, there’s a lot to unpack. In what follows, I want to lay out the steps that go into not just editing code, but actually refactoring.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 1: Write Tests&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;A core tenet of refactoring is that you are not altering the external behavior of the code while you’re making changes to its internal structure. An improvement to the code’s internal structure means little if you’re simultaneously breaking existing features.&lt;/p&gt;
-
-&lt;p&gt;In order to be sure you’re not altering the external behavior of the code, it’s super helpful to have tests. Tests provide quick and automated feedback as you’re making changes, allowing you to refactor with confidence.&lt;/p&gt;
-
-&lt;p&gt;Refactoring is actually built into the three stages of test-driven development: red, green, refactor. Once you’ve defined some code’s expected behavior and written the code to execute that behavior, you should also be refactoring to be sure your code is as clean and maintainable as possible. &lt;/p&gt;
-
-&lt;p&gt;Even if you’re not practicing test-driven development, you should write tests as you begin to refactor. That way, you can make sweeping changes to the internal structure of the code and be sure that you’re not taking two steps back as you’re taking one step forward. &lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 2: Identify Smells&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;In order to add some rhyme and reason to your refactoring, it’s necessary to ground your vision of how the code’s internal structure could be improved in some sense of what’s wrong with its existing organization.&lt;/p&gt;
-
-&lt;p&gt;The issues that provoke refactoring are described by the authors of &lt;em&gt;Refactoring&lt;/em&gt; as “code smells”: “certain structures in code that suggest (sometimes they scream for) the possibility of refactoring” (73).&lt;/p&gt;
-
-&lt;p&gt;This could be something simple like duplicated code or a long method, or something more complex like a refused bequest.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; The authors provide a helpful catalogue of code smells that set up a framework for analyzing and improving code by recognizing existing flaws.&lt;/p&gt;
-
-&lt;p&gt;It doesn’t particularly matter which code smell you’re trying to snuff out while refactoring, it just matters that you have some sense for what the code smell is. Proceeding to edit code without a clear sense of what error you’re correcting leaves you prone to making edits that leave the code worse than when you found it.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 3: Baby Steps&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;As the authors lay out the various types of refactorings that can be carried out to correct the wide variety of different smells, they go into meticulous detail in laying out the steps for executing each one correctly.&lt;/p&gt;
-
-&lt;p&gt;Such details are neither circumlocutory nor superfluous; rather, they provide a roadmap for carrying out refactorings in a manner that’s optimally productive and efficient.&lt;/p&gt;
-
-&lt;p&gt;One step that shows up many times along the way is running the tests. As you’re refactoring, the tests should stay green throughout. If you let the tests go red for an extended period of time, the possibility arises that you may not be able to get back to green without undoing all of your adjustments.&lt;/p&gt;
-
-&lt;p&gt;Refactoring should proceed in small, incremental steps so that you’re never far away from a good stopping point. Of course, you will likely continue to refactor throughout the life of your program. But doing so in baby steps assures that you can react quickly if you make a mistake.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 4: Continue&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Though &lt;em&gt;Refactoring&lt;/em&gt; provides an awesome catalogue of smells and refactorings, you’re only really going to master the art of writing good code with practice and experience. Practice helps you carry out refactorings with ease, and experience gives you a sense for which smells are acceptable at the present juncture.&lt;/p&gt;
-
-&lt;p&gt;You may learn of new smells that cause you to carry out different refactorings. You may learn of new techniques that allow you to correct particular smells in a better way. You may even find yourself reversing previous refactorings down the line. &lt;/p&gt;
-
-&lt;p&gt;All of this is fine and expected, and it’s something that reflects the greater degree of knowledge you accumulate about how your program should be designed as you work with it over time. &lt;/p&gt;
-
-&lt;p&gt;The key is to continue to refactor so that you’re always leaving the code better than you found it.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;I’ve found &lt;em&gt;Refactoring: Ruby Edition&lt;/em&gt; to be a tremendously rewarding and worthwhile read. I’m excited to get more familiar with the smells and refactorings they lay out, as well as the process of doing refactoring the right way.&lt;/p&gt;
-
-&lt;p&gt;They only thing that’s certain is that code I come across will warrant refactoring, and I’m excited to have gained some perspective into how to do so well.&lt;/p&gt;
-
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;Subclasses that doe not need the methods or data of their parents. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Sun, 05 Jul 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//general/2015/07/05/refactoring-ruby-edition.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/07/05/refactoring-ruby-edition.html</guid>
-        
-        <category>refactoring</category>
-        
-        <category>tdd</category>
-        
-        
-        <category>general</category>
         
       </item>
     

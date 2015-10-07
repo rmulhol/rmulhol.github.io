@@ -77,7 +77,7 @@
   <article class="post-content">
     <p>In a <a href="/ruby/2015/04/27/solid-rails.html">previous post</a>, I discussed the importance of adhering to SOLID design principles when grappling with inheritance in Rails. Specifically, I talked about how the flow of inheritance from the <code>ApplicationController</code> to subordinate controllers can generate dangers of violating the Open/Closed and Liskov substitution principles.</p>
 
-<p>We dealt with the Liskov substitution principle by refactoring this: </p>
+<p>We dealt with the Liskov substitution principle by refactoring this:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># ApplicationController</span>
 <span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
@@ -147,7 +147,7 @@
   <span class="k">end</span>
 <span class="k">end</span></code></pre></div>
 
-<p>The latter implementation conforms to Liskov because we’re no longer overwriting a method from a superclass in a subtype in a way that would break the superclass. But it also introduces a violation of Open/Closed - <code>identify_user_in_params</code> would need to be modified each time we added a subtype. Accordingly, we further refactored to here: </p>
+<p>The latter implementation conforms to Liskov because we’re no longer overwriting a method from a superclass in a subtype in a way that would break the superclass. But it also introduces a violation of Open/Closed - <code>identify_user_in_params</code> would need to be modified each time we added a subtype. Accordingly, we further refactored to here:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
   <span class="kp">include</span> <span class="no">SessionsHelper</span>
@@ -199,7 +199,7 @@
 
 <p>This is a pretty alright stopping point, since we’re now delegating the work of identifying relevant parameters to the subtype. The <code>ApplicationController</code> is open for extension, and closed for modification - new subtypes need to implement <code>identify_user_in_params</code>, but don’t require changes in the <code>ApplicationController</code>.</p>
 
-<p>If you look closely at this last implementation, you may notice it looks a lot like an implementation of <a href="http://en.wikipedia.org/wiki/Template_method_pattern">the template method</a> design pattern. According to Russ Olsen, </p>
+<p>If you look closely at this last implementation, you may notice it looks a lot like an implementation of <a href="http://en.wikipedia.org/wiki/Template_method_pattern">the template method</a> design pattern. According to Russ Olsen,</p>
 
 <blockquote>
   <p>In the Template Method pattern, the abstract base class controls the higher-level processing through the template method; the subclasses simply fill in the details.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>

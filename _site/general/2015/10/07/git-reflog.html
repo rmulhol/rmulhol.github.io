@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Debugging With RASP: Check Your Work!</title>
+    <title>Undoing An Erroneous Force Push: The Git Reflog</title>
     <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//ruby/2015/01/16/debugging-with-rasp.html">
+    <link rel="canonical" href="http://rmulhol.github.io//general/2015/10/07/git-reflog.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -70,54 +70,24 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Debugging With RASP: Check Your Work!</h1>
-    <p class="post-meta">Jan 16, 2015</p>
+    <h1 class="post-title">Undoing An Erroneous Force Push: The Git Reflog</h1>
+    <p class="post-meta">Oct 7, 2015</p>
   </header>
 
   <article class="post-content">
-    <p>Recently, I encountered a stubborn error message.</p>
+    <p>Recently, I’ve been working on a project maintained by multiple developers. There are a decent number of pull requests hanging around, and a lot of work happening at all times. One of my roles has been to prepare open pull requests for a clean and easy merge.</p>
 
-<p>I’ve been working through <a href="http://www.amazon.com/Agile-Development-Rails-Facets-Ruby/dp/1937785564">Agile Web Development With Rails</a>, and I got to the point where I’m instructed to verify that the order information gathered by my depot application is being written to the database (chapter 12 - Task G: Check Out!). Simple enough, I thought, I’ll just enter <code>sqlite3 -line db.development.sqlite3</code> and run <code>select * from orders;</code>.</p>
+<p>Not too tricky of a task, most of the time. Rebase the branch onto master, resolve all the conflicts, push up the changes, and it’s good to go.</p>
 
-<p>To my dismay, my simple command was met with a daunting error message: <code>Error: no such table: orders</code>.</p>
+<p>Unless you mess up the rebase, incorrectly resolving merge conflicts. Running the tests will save you most of the time, but not always. And if you get too far, you may have just force pushed a broken branch onto the PR. Oops.</p>
 
-<p>How could this be? Had I failed to run <code>rake db:migrate</code> at some point? No, that wasn’t it; I ran <code>rake db:rollback</code> and <code>rake db:migrate</code> several times just to be sure of that. Did my <code>database.yml</code> file contain errors? No, not that I could see; everything looked fine.</p>
+<p>Luckily, this sort of error is not the end of the world. Not at all.</p>
 
-<p>Unsure of where to locate my bug, I decided it was time to go through the trusty RASP progression.</p>
+<p>There are number of ways to deal with inadvertent force pushes; I’d recommend <a href="https://blog.8thlight.com/sandro-padin/2015/06/08/help-i-just-force-pushed-to-master.html">this blog post</a> if you haven’t come across it already. But in this case, a very simple solution is to take advantage of <a href="https://git-scm.com/docs/git-reflog">the <code>reflog</code></a>.</p>
 
-<p>For those who are unfamiliar, RASP instructs you to:</p>
+<p>If you’re in your project’s directory and you type <code>git reflog</code> on the command line, you’ll see a history of actions you’ve taken within the project: moving between branches, making commits, etc.</p>
 
-<p><strong>R</strong>ead the error message</p>
-
-<p><strong>A</strong>sk a colleague an informed question</p>
-
-<p><strong>S</strong>earch using google, stackoverflow, and so forth</p>
-
-<p><strong>P</strong>ost on stackoverflow, online forums, and so forth</p>
-
-<p>I had read the error message. The table <code>orders</code> was clearly not being found in the database under inspection. But why?</p>
-
-<p>I asked a colleague about the error, but they too were befuddled after a quick review of my <code>db/migrate</code> folder and the <code>database.yml</code> file.</p>
-
-<p>It was time to begin pursuing an answer online. Google had helped me to correct several errors in the past, so there was no reason this should be any different. If I played around with a few search term combinations, I figured, an answer would reveal itself.</p>
-
-<p>But that was not to be so. Google yielded surprisingly few results for every set of search terms I could come up with. There were several stackoverflow posts about <code>no such table</code> errors, but none that resembled my problem.</p>
-
-<p>I was very close to posting online, but I had some hesitation. If this problem was common enough that others had encountered it and knew how to solve it, shouldn’t there be posts about the issue already? I decided to take one final peak under the hood.</p>
-
-<p>Upon closer inspection, I noticed that my app root directory now contained an empty <code>db.development.sqlite3</code> file. Where did that come from? I thought my development database was stored as <code>development.sqlite3</code> in my <code>db</code> folder (indeed, it was).</p>
-
-<p>The source of my problem, it turns out, was a typo. Instead of typing <code>sqlite3 -line db.development.sqlite3</code>, I needed to be typing <code>sqlite3 -line db/development.sqlite3</code> (note the forward slash, rather than the dot, following db). When I corrected the typo and tried again, everything worked fine.</p>
-
-<p>So, I propose an addition to the RASP cycle: <strong>C</strong>heck your work. We can call it CRASP.</p>
-
-<p>Sure, most people already check their work before searching online. Sometimes an error message will point you right at the typo so that you can fix it without further effort. Sometimes you’ll realize your own error upon a second glance at what you’ve written.</p>
-
-<p>But other times, you’ll miss the typo. You’ll make it deeper into the RASP cycle before going back to locate what should have been a quick fix.</p>
-
-<p>In those instances when you find yourself deep into the google with no solutions in sight, go back and check your work one more time. What I’ve found is that as the solution to your problem begins to seem more and more elusive, it becomes more and more likely that it’s closer than you think. If you can’t find information about your error online, it’s almost certainly a simple error you’ve made.</p>
-
-<p>So, join me in adding an addendum to the RASP process. Check your work before you go search online, and then check it again with closer scrutiny if you can’t find an answer. Embrace CRASP.</p>
+<p>If you pinpoint the <a href="https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection">SHA</a> corresponding to the place where everything went awry (e.g. the place right before where you began the faulty rebase), you can <code>git checkout</code> that SHA and begin again. Or just breathe a sigh of relief as you push it up un-catastrophically-rebased.</p>
 
 
   </article>
