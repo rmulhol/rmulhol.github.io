@@ -75,13 +75,13 @@
   </header>
 
   <article class="post-content">
-    <p>Recently, I encountered a stubborn error message.</p>
+    <p>Recently, I encountered a stubborn error message. </p>
 
 <p>I’ve been working through <a href="http://www.amazon.com/Agile-Development-Rails-Facets-Ruby/dp/1937785564">Agile Web Development With Rails</a>, and I got to the point where I’m instructed to verify that the order information gathered by my depot application is being written to the database (chapter 12 - Task G: Check Out!). Simple enough, I thought, I’ll just enter <code>sqlite3 -line db.development.sqlite3</code> and run <code>select * from orders;</code>.</p>
 
-<p>To my dismay, my simple command was met with a daunting error message: <code>Error: no such table: orders</code>.</p>
+<p>To my dismay, my simple command was met with a daunting error message: <code>Error: no such table: orders</code>. </p>
 
-<p>How could this be? Had I failed to run <code>rake db:migrate</code> at some point? No, that wasn’t it; I ran <code>rake db:rollback</code> and <code>rake db:migrate</code> several times just to be sure of that. Did my <code>database.yml</code> file contain errors? No, not that I could see; everything looked fine.</p>
+<p>How could this be? Had I failed to run <code>rake db:migrate</code> at some point? No, that wasn’t it; I ran <code>rake db:rollback</code> and <code>rake db:migrate</code> several times just to be sure of that. Did my <code>database.yml</code> file contain errors? No, not that I could see; everything looked fine. </p>
 
 <p>Unsure of where to locate my bug, I decided it was time to go through the trusty RASP progression.</p>
 
@@ -97,7 +97,7 @@
 
 <p>I had read the error message. The table <code>orders</code> was clearly not being found in the database under inspection. But why?</p>
 
-<p>I asked a colleague about the error, but they too were befuddled after a quick review of my <code>db/migrate</code> folder and the <code>database.yml</code> file.</p>
+<p>I asked a colleague about the error, but they too were befuddled after a quick review of my <code>db/migrate</code> folder and the <code>database.yml</code> file. </p>
 
 <p>It was time to begin pursuing an answer online. Google had helped me to correct several errors in the past, so there was no reason this should be any different. If I played around with a few search term combinations, I figured, an answer would reveal itself.</p>
 
@@ -113,9 +113,9 @@
 
 <p>Sure, most people already check their work before searching online. Sometimes an error message will point you right at the typo so that you can fix it without further effort. Sometimes you’ll realize your own error upon a second glance at what you’ve written.</p>
 
-<p>But other times, you’ll miss the typo. You’ll make it deeper into the RASP cycle before going back to locate what should have been a quick fix.</p>
+<p>But other times, you’ll miss the typo. You’ll make it deeper into the RASP cycle before going back to locate what should have been a quick fix. </p>
 
-<p>In those instances when you find yourself deep into the google with no solutions in sight, go back and check your work one more time. What I’ve found is that as the solution to your problem begins to seem more and more elusive, it becomes more and more likely that it’s closer than you think. If you can’t find information about your error online, it’s almost certainly a simple error you’ve made.</p>
+<p>In those instances when you find yourself deep into the google with no solutions in sight, go back and check your work one more time. What I’ve found is that as the solution to your problem begins to seem more and more elusive, it becomes more and more likely that it’s closer than you think. If you can’t find information about your error online, it’s almost certainly a simple error you’ve made. </p>
 
 <p>So, join me in adding an addendum to the RASP process. Check your work before you go search online, and then check it again with closer scrutiny if you can’t find an answer. Embrace CRASP.</p>
 

@@ -75,9 +75,9 @@
   </header>
 
   <article class="post-content">
-    <p>When you begin learning a programming language, one of the first things you come across is how to create comments - blocks of text that explain what surrounding code does but are not processed when the program runs.</p>
+    <p>When you begin learning a programming language, one of the first things you come across is how to create comments - blocks of text that explain what surrounding code does but are not processed when the program runs. </p>
 
-<p>People teaching you want you to know about comments so that they can provide you with examples of working code that are self-explanatory, and you want to know about comments for a variety of reasons: they help <em>you</em> write self-explanatory code, they let you run different variations of the same program without having to completely delete text you want to remove temporarily, they allow you to pair pseudo-code with real code, and so forth.</p>
+<p>People teaching you want you to know about comments so that they can provide you with examples of working code that are self-explanatory, and you want to know about comments for a variety of reasons: they help <em>you</em> write self-explanatory code, they let you run different variations of the same program without having to completely delete text you want to remove temporarily, they allow you to pair pseudo-code with real code, and so forth. </p>
 
 <p>One of the things I’ve learned, however, is that comments are frowned upon by some in the coding community. A mentor of mine, for example, once told me that “comments are where understanding goes to die.” Another colleage published <a href="http://blog.8thlight.com/dariusz-pasciak/2014/08/13/an-appeal-to-cs-teachers.html">a plea to CS teachers</a> begging instructors to abandon draconian requirements that students write comments for every line of code. Clearly, not all programmers are on board with the idea that comments ought to be your go-to tool for writing readable code.</p>
 
@@ -93,7 +93,7 @@
 
 <p>And yet, I recently had an experience with comments that led me to re-evaluate their utility.</p>
 
-<p>The backstory is this: I’ve been working on writing a game of tic tac toe in Java, where one feature is an unbeatable AI player. To make my AI player unbeatable, I’ve been putting together a <a href="http://en.wikipedia.org/wiki/Minimax">minimax algorithm</a> to check the board and pick the optimal move.</p>
+<p>The backstory is this: I’ve been working on writing a game of tic tac toe in Java, where one feature is an unbeatable AI player. To make my AI player unbeatable, I’ve been putting together a <a href="http://en.wikipedia.org/wiki/Minimax">minimax algorithm</a> to check the board and pick the optimal move. </p>
 
 <p>The premise of minimax is straightforward enough - examine every possible game state resulting from any given move up to a certain depth (in this case, the end of the game), score each of the moves accordingly, and then choose the move that minimizes the maximum loss (i.e. reduces the worst case scenario).</p>
 
@@ -103,7 +103,7 @@
 
 <p>The code I had looked right to me, and I had been tinkering with it for so long that I no longer knew what to change, so I opted to consult a mentor. But first, I thought, this could be a good time for comments. I didn’t intend comments to make it into my final program, but I at least wanted to document what I thought every line of code in my program was doing before going and asking someone else to help decipher what was going wrong.</p>
 
-<p>So, I set to work, meticulously commenting each line. Most things were easy to comment - I had been reading about minimax for so long, and looking at so many examples of pseudo and real code implementing the method that simply laying out and describing each step was a welcome form relief.</p>
+<p>So, I set to work, meticulously commenting each line. Most things were easy to comment - I had been reading about minimax for so long, and looking at so many examples of pseudo and real code implementing the method that simply laying out and describing each step was a welcome form relief. </p>
 
 <p>But, wouldn’t you know it, I found a few places where I had confused myself (what was I thinking when I put in <em>this</em> line of code?). So, I trimmed and edited, removing things I couldn’t explain and adding things I needed to make my explanations coherent. And, after it all, I chose to give the program one final try.</p>
 

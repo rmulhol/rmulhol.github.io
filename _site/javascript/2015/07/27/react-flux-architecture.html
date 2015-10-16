@@ -79,7 +79,7 @@
 
 <p>But what if we want to initiate more broad sweeping changes across numerous components? Or if we want to react to larger chunks of data from an API call? We might figure out a way to do so with what we already have, but our code could get pretty not-so-clean pretty quickly.</p>
 
-<p>Luckily, there’s no need to indulge such indiscretions, thanks to <a href="https://facebook.github.io/flux/docs/overview.html">the Flux architecture</a>. Flux is a pattern for implementing a unidirectional data flow, one that makes it simple to implement significant and far-reaching changes to our views reliably and efficiently.</p>
+<p>Luckily, there’s no need to indulge such indiscretions, thanks to <a href="https://facebook.github.io/flux/docs/overview.html">the Flux architecture</a>. Flux is a pattern for implementing a unidirectional data flow, one that makes it simple to implement significant and far-reaching changes to our views reliably and efficiently. </p>
 
 <p>To get a sense for what we can do with the Flux architecture, we’re going to take a run at fitting it into our demo app. Since Flux is a pattern rather than a framework, we’ll be looking at <em>a</em> way to implement it rather than <em>the</em> way, but we’ll end up with a nice foundation for implementing further changes.</p>
 
@@ -99,8 +99,6 @@
 
 <p>The first thing we’ll want to do is create a dispatcher. It can live at <code>js/dispatcher/dispatcher.js</code>.</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/7fe46f4f9cea3780eacf.js"> </script>
 
 <p>With this in place, we’ll be able to <code>require</code> and call the dispatcher from other parts of our application.</p>
@@ -109,8 +107,6 @@
 
 <p>After we’ve got a dispatcher, we’ll want to <code>require</code> and use it in a file designated to contain our actions. Create the following file at <code>js/actions/demo_app_actions.js</code>.</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/73355cb3dca6fd138fd8.js"> </script>
 
 <p>Here, the <code>toggleLogo()</code> method uses the dispatcher to broadcast a payload to the rest of our application. In this case, the payload includes keys for <code>actionType</code> and <code>showReactLogo</code>, which correspond to a string and a boolean, respectively.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
@@ -121,8 +117,6 @@
 
 <p>Once we’ve got actions that invoke the dispatcher to issue payloads to our application, we’ll want to register some callbacks with the dispatcher to handle those payloads. We do this on a store, which we’ll put at <code>js/stores/demo_app_store.js</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/9e236715490835053a8c.js"> </script>
 
 <p>Let’s unpack what’s going on here.</p>
@@ -139,20 +133,14 @@
 
 <p>For this reason, it can be helpful to keep track of certain constants in a <code>js/constants/constants.js</code> file. We’ll be using this file to store values for the <code>actionType</code> of dispatched payloads right now, but we could also put any other important constants here as we go.</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/66eaec512c7a94252a27.js"> </script>
 
 <p>With this in place, we can change how we refer to the “toggle-logo” value for our <code>actionType</code> key in our action:</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/7190e9eff411565edb29.js"> </script>
 
 <p>And in our store:</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/908f2256eb04baba12b3.js"> </script>
 
 <p>It’s only a minor detour but, like much of what we’re doing in this post, it will make life easier down the line.</p>
@@ -161,10 +149,8 @@
 
 <p>Now that stores are emitting events that carry values from our actions’ payloads, we can add listeners on our components to initiate change in response to emitted events. This is the logic that replaces the existing state transitions on our components.</p>
 
-<p>The revised <code>js/components/body.js</code> file should be modified to look like this:</p>
+<p>The revised <code>js/components/body.js</code> file should be modified to look like this: </p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/a34fdef63bc0e79d9731.js"> </script>
 
 <p>The important changes we’ve made here are twofold:</p>
@@ -182,7 +168,7 @@
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>For a more comprehensive description of the Flux architecture, check out <a href="https://www.npmjs.com/package/flux">the npm page for the Flux package</a>. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>For a more comprehensive description of the Flux architecture, check out <a href="https://www.npmjs.com/package/flux">the npm page for the Flux package</a>.  <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
       <p>In subsequent posts, we’ll discuss how to pass and use more sophisticated data, like JSON data from an API call. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>

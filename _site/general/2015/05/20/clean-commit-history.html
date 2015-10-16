@@ -81,7 +81,7 @@
 
 <p>In this post, I’d like to share some of the techniques I found most helpful in rewriting Git history. If you’re facing a similar struggle to my own, hopefully you don’t need to suffer the same pain I did along the way.</p>
 
-<p>A word of caution, though, before we begin: most of these techniques are best left aside if you’re working in a context where other users actively depend on or contribute to your code. While rewriting your Git history can make it easier to grasp what you’ve done through previous iterations of your code, it can also make it more difficult to share and merge new contributions going forward if you’re working with an outdated history.</p>
+<p>A word of caution, though, before we begin: most of these techniques are best left aside if you’re working in a context where other users actively depend on or contribute to your code. While rewriting your Git history can make it easier to grasp what you’ve done through previous iterations of your code, it can also make it more difficult to share and merge new contributions going forward if you’re working with an outdated history. </p>
 
 <p><strong>From Whence it Begins: Revisiting the Past</strong></p>
 
@@ -97,13 +97,13 @@
 
 <p>Perhaps the most pressing task in constructing a solid commit history is simply writing good commit messages. I’ve <a href="/general/2015/05/16/effective-commit-messages.html">written previously</a> of some of the methods for doing so, but what if you want to retroactively map such techniques onto the poorly worded commits of your project’s past?</p>
 
-<p>This is probably the most simple error to fix.</p>
+<p>This is probably the most simple error to fix. </p>
 
 <p>To reword your most recent commit message, simply execute <code>git commit --amend</code>. This will bring up a text editor with the previous message at the beginning of the document. Make your edits, save and close the document, and the log will reflect your changes.</p>
 
 <p>To rename commits between the root and where you are currently, use <code>git rebase -i HEAD~...</code>, replacing <code>...</code> with how many commits back you’d like to reach. This will bring up a text editor listing all of the commits in the range between there and where you are now. Before each one, you’ll see the word <code>pick</code>. Replace that with <code>reword</code> for the messages you’d like to change. Save and close the dcoument, and you’ll see a document for each of those commits. Save and close those documents with revised messages, and the log will reflect your changes.</p>
 
-<p>To rename the root commit message, run <code>git rebase -i --root</code>. This will take you make to the moment immediately following your initial commit, where <code>git commit --amend</code> will allow you to edit it as if it were your actual most recent commit. To complete this step, run <code>git rebase --continue</code>, which will bring you back to the end of your project’s history<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>.</p>
+<p>To rename the root commit message, run <code>git rebase -i --root</code>. This will take you make to the moment immediately following your initial commit, where <code>git commit --amend</code> will allow you to edit it as if it were your actual most recent commit. To complete this step, run <code>git rebase --continue</code>, which will bring you back to the end of your project’s history<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>. </p>
 
 <p><strong>Modular Code, Modular Commits: Changing Content</strong></p>
 

@@ -100,7 +100,7 @@
 
 <p>Putting aside the numerous refactorings that could make this code better (I’ve put in several responsibilities to clarify the context), the irreducible nature of my problem is that my standard mock is going to break the test. <code>get_input</code> keeps waiting and waiting for an integer between 0 and 4, but my mock <code>gets</code> only ever returns “gets was called”.</p>
 
-<p>So, of course, I could separate out the code following the <code>until</code> statement and test that, but I’m still going to want some way of verifying that the loop keeps going until it receives valid input (and I’m also going to want that test to eventually <em>provide</em> valid input, so that the test doesn’t keep waiting indefinitely).</p>
+<p>So, of course, I could separate out the code following the <code>until</code> statement and test that, but I’m still going to want some way of verifying that the loop keeps going until it receives valid input (and I’m also going to want that test to eventually <em>provide</em> valid input, so that the test doesn’t keep waiting indefinitely). </p>
 
 <p>One way I’ve come up with to do that is to pass in input to my mock. Now the mockIO can look like this:</p>
 
@@ -118,7 +118,7 @@
   <span class="k">end</span>
 <span class="k">end</span></code></pre></div>
 
-<p>Now, when I initialize an instance of my main class in the tests, I can inject in an instance of my mockIO with whatever input I want to execute. For example, if I pass in <code>['-7', '13', '2']</code> to my mockIO and run tests on <code>get_input</code>, I can expect that method to return 2.</p>
+<p>Now, when I initialize an instance of my main class in the tests, I can inject in an instance of my mockIO with whatever input I want to execute. For example, if I pass in <code>['-7', '13', '2']</code> to my mockIO and run tests on <code>get_input</code>, I can expect that method to return 2. </p>
 
 
   </article>

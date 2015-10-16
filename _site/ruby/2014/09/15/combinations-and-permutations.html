@@ -75,9 +75,9 @@
   </header>
 
   <article class="post-content">
-    <p>In <a href="http://chimera.labs.oreilly.com/books/1234000001813/index.html">Apprenticeship Patterns</a>, Dave Hoover and Ade Oshineye encourage software apprentices to make breakable toys. Building programs for yourself and for fun, they propose, is a great way to grow, since you can gain experience stretching your skill set in a context where mistakes are of little consequence.</p>
+    <p>In <a href="http://chimera.labs.oreilly.com/books/1234000001813/index.html">Apprenticeship Patterns</a>, Dave Hoover and Ade Oshineye encourage software apprentices to make breakable toys. Building programs for yourself and for fun, they propose, is a great way to grow, since you can gain experience stretching your skill set in a context where mistakes are of little consequence. </p>
 
-<p>This advice has really resonated with me, so I’ve jumped at opportunities to build my own breakable toys. I’ve been working for a little while on a <a href="http://en.wikipedia.org/wiki/Mastermind_(board_game)">Mastermind</a> game, and I recently got to try and develop a <a href="http://en.wikipedia.org/wiki/Candy_Land">Candy Land</a> game at a hack night.</p>
+<p>This advice has really resonated with me, so I’ve jumped at opportunities to build my own breakable toys. I’ve been working for a little while on a <a href="http://en.wikipedia.org/wiki/Mastermind_(board_game)">Mastermind</a> game, and I recently got to try and develop a <a href="http://en.wikipedia.org/wiki/Candy_Land">Candy Land</a> game at a hack night. </p>
 
 <p>In building these games, one of the things I’ve found myself doing quite frequently is working with arrays of numbers that later get changed into something else. The code for my Mastermind game, for example, starts off with an array of numbers (say, [1, 1, 2, 2]), and then delivers that sequence to the user as a series of colors ([“red”, “red”, “blue”, “blue”]). The Candy Land board starts off as an array of numbers:</p>
 
@@ -116,7 +116,7 @@
  
 <span class="o">=&gt;</span> <span class="o">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">]]</span></code></pre></div>
 
-<p>But it is not repetition of a single element that produces this outcome. The two 1’s at the beginning of my_array are treated as separate elements, and thus produce unique combinations when paired with each other, 2, or 3.</p>
+<p>But it is not repetition of a single element that produces this outcome. The two 1’s at the beginning of my_array are treated as separate elements, and thus produce unique combinations when paired with each other, 2, or 3. </p>
 
 <p><strong>Permutations</strong></p>
 
@@ -127,7 +127,7 @@
 
 <span class="o">=&gt;</span> <span class="o">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="o">]]</span></code></pre></div>
 
-<p>Permutations include [2, 1] alongside [1, 2], [3, 2] in the same sequence as [2, 3], and so on. Given the same initial array and argument, the permutation method thus generates a larger set of outputs than combination, since different arrangements of otherwise identical elements are treated as unique permutations.</p>
+<p>Permutations include [2, 1] alongside [1, 2], [3, 2] in the same sequence as [2, 3], and so on. Given the same initial array and argument, the permutation method thus generates a larger set of outputs than combination, since different arrangements of otherwise identical elements are treated as unique permutations.  </p>
 
 <p>Like the combination method, however, permutation will not generate couplings that repeat one element - there is no [1, 1] in the permutation_array above.</p>
 
@@ -144,7 +144,7 @@
 
 <p><strong>Repeated Permutations</strong></p>
 
-<p>The <a href="http://www.ruby-doc.org/core-2.1.2/Array.html#method-i-repeated_permutation">repeated permutation</a> method, as you might by now have imagined, generates the largest possible set of outputs, allowing for each element to be repeated as many times as the argument it receives <em>and</em> treating different arrangements of already combined elements as unique.</p>
+<p>The <a href="http://www.ruby-doc.org/core-2.1.2/Array.html#method-i-repeated_permutation">repeated permutation</a> method, as you might by now have imagined, generates the largest possible set of outputs, allowing for each element to be repeated as many times as the argument it receives <em>and</em> treating different arrangements of already combined elements as unique. </p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&gt;</span> <span class="n">my_array</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="o">]</span>
 <span class="n">repeated_permutation_array</span> <span class="o">=</span> <span class="n">my_array</span><span class="o">.</span><span class="n">repeated_permutation</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span>

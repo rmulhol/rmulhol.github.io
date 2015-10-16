@@ -75,7 +75,7 @@
   </header>
 
   <article class="post-content">
-    <p>Now that I’ve got <a href="https://github.com/rmulhol/httpServer">a working HTTP server</a> written in Java, I’ve been trying to make it better by adding features. Specifically, I’ve spent the last few days on making it possible to play <a href="https://github.com/rmulhol/clojure-tic-tac-toe">my Clojure tic-tac-toe game</a> through the web interface hosted by the server.</p>
+    <p>Now that I’ve got <a href="https://github.com/rmulhol/httpServer">a working HTTP server</a> written in Java, I’ve been trying to make it better by adding features. Specifically, I’ve spent the last few days on making it possible to play <a href="https://github.com/rmulhol/clojure-tic-tac-toe">my Clojure tic-tac-toe game</a> through the web interface hosted by the server. </p>
 
 <p>I wrote Clojure tic-tac-toe as a command line application, so there have been some hurdles in simply connecting all of the dots so that the game logic can support another interface. But perhaps the biggest hurdle has been figuring out the answer to a fairly straightforward question: how can I reference and use Clojure code from a Java application?</p>
 
@@ -112,9 +112,9 @@
 
 <p>The first thing to check is that you’ve properly designated a place to find your <code>main</code> function. My <code>project.clj</code> file has the line <code>:main tic-tac-toe.core</code>, which tells Leiningen to find my main function there. You’ll need something similar for your jar to execute.</p>
 
-<p>After that, you want to provide instructions as to which classes should be compiled ahead of time, rather than just in time. You can read about the differences between the two <a href="http://clojure.org/compilation">here</a>, but the core takeaway is that any namespaces which you intend to call as if they were Java classes should be compiled ahead of time.</p>
+<p>After that, you want to provide instructions as to which classes should be compiled ahead of time, rather than just in time. You can read about the differences between the two <a href="http://clojure.org/compilation">here</a>, but the core takeaway is that any namespaces which you intend to call as if they were Java classes should be compiled ahead of time. </p>
 
-<p>You can be sure that’s taken care of with two steps. First, add <code>:uberjar {:aot :all}</code> to the <code>:profiles</code> map in your <code>project.clj</code>. Second, add <code>:aot [namespace(s)-to-compile]</code> as a separate line after your main method. These steps will assure Leiningen knows to compile everything you’ve included when you package the jar.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
+<p>You can be sure that’s taken care of with two steps. First, add <code>:uberjar {:aot :all}</code> to the <code>:profiles</code> map in your <code>project.clj</code>. Second, add <code>:aot [namespace(s)-to-compile]</code> as a separate line after your main method. These steps will assure Leiningen knows to compile everything you’ve included when you package the jar.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup> </p>
 
 <p>After you’re comfortable that your <code>project.clj</code> is in good shape, you’ll want to give <code>lein uberjar</code> another run. If everything is working, great. If not, it’s time to look at your namespaces.</p>
 

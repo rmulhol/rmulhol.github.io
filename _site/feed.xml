@@ -6,9 +6,172 @@
 </description>
     <link>http://rmulhol.github.io//</link>
     <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 07 Oct 2015 17:02:39 -0500</pubDate>
-    <lastBuildDate>Wed, 07 Oct 2015 17:02:39 -0500</lastBuildDate>
-    <generator>Jekyll v2.5.3</generator>
+    <pubDate>Fri, 16 Oct 2015 10:14:43 -0500</pubDate>
+    <lastBuildDate>Fri, 16 Oct 2015 10:14:43 -0500</lastBuildDate>
+    <generator>Jekyll v2.3.0</generator>
+    
+      <item>
+        <title>Working With SQL: Deriving New Data From Existing Columns</title>
+        <description>&lt;p&gt;If you spend your time working on web applications, it’s almost inevitable that you will at some point find yourself working with a relational database. And even if that database is ultimately &lt;a href=&quot;https://blog.8thlight.com/uncle-bob/2012/05/15/NODB.html&quot;&gt;a peripheral detail of your application&lt;/a&gt;, it’s one with which you’ll want to have a fairly intimate familiarity.&lt;/p&gt;
+
+&lt;p&gt;What do I mean by intimate familiarity? An ability to interact with that database comfortably, without the aid of an ORM. Putting aside questions as to whether &lt;a href=&quot;http://seldo.com/weblog/2011/08/11/orm_is_an_antipattern&quot;&gt;ORM is an anti-pattern&lt;/a&gt; (or &lt;a href=&quot;http://blogs.tedneward.com/2006/06/26/The+Vietnam+Of+Computer+Science.aspx&quot;&gt;the Vietnam of computer science&lt;/a&gt;), there will almost certainly be situations in which understanding the underlying syntax of the database will make your life easier.&lt;/p&gt;
+
+&lt;p&gt;In this post, we’ll get started with nurturing that sort of familiarity by discussing how to accomplish a simple task in PostgreSQL: deriving new data from the combination and/or evaluation of fields in a database.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Combination: &lt;code&gt;UNION&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Accessing data from a table’s columns is fairly straightforward:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;c1&quot;&gt;-- one column from a table&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;one_column&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a_table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;-- multiple columns from a table&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;one_column&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;another_column&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a_table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;-- all columns from a table&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a_table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;These queries allow us access data that’s either identical to or a subset of existing columns. But what if we want our query’s results to &lt;em&gt;combine&lt;/em&gt; data from several columns?&lt;/p&gt;
+
+&lt;p&gt;For example, imagine that you have a table &lt;code&gt;people&lt;/code&gt; that stores the name, favorite actor, and favorite actress of several individuals.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;id&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;name&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;favorite_actor&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;favorite_actress&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Bob&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Brad Pitt&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Angelina Jolie&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Jane&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Bradley Cooper&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Jennifer Lawrence&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;3&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sally&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Leonardo DiCaprio&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Kate Winslet&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Now imagine that we want to extract the favorite actors and actresses into a new column representing all movie stars, without respect for gender.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;movie_star&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Brad Pitt&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Angeline Jolie&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Bradley Cooper&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Jennifer Lawrence&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Leonardo DiCaprio&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Kate Winslet&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The simple queries listed at the top of this section won’t work, since they return columns as they are represented in our database.&lt;/p&gt;
+
+&lt;p&gt;To query for a combination of data from several columns, we can take advantage of the &lt;code&gt;UNION&lt;/code&gt; operation.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;favorite_actor&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;movie_star&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;people&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;UNION&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;favorite_actress&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;people&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code&gt;UNION&lt;/code&gt; operation lets us combine the results of several queries, allowing us to aggregate data both within and across tables.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Derivation: &lt;code&gt;CASE&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In the case of a &lt;code&gt;UNION&lt;/code&gt; operation, our query returns results with a new column header, but merely a combination of contents - they all correspond to existing fields in our database.&lt;/p&gt;
+
+&lt;p&gt;If we want to query for results that yield both a new header and new contents, we can take advantage of the &lt;code&gt;CASE&lt;/code&gt; operation.&lt;/p&gt;
+
+&lt;p&gt;For example, still working with our &lt;code&gt;people&lt;/code&gt; table, say  we want to derive a column that tells us whether the person in question loves &lt;em&gt;Titanic&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;We can’t really be sure that any of them don’t love &lt;em&gt;Titanic&lt;/em&gt;, but we feel comfortable predicting that they do love the film if their favorite actor is Leonardo DiCaprio and their favorite actress is Kate Winslet.&lt;/p&gt;
+
+&lt;p&gt;Using that criteria, we can put together our query like so:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;CASE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;WHEN&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;favorite_actor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Leonardo DiCaprio&amp;#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;favorite_actress&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Kate Winslet&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;THEN&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Yes&amp;#39;&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;ELSE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Unsure&amp;#39;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;END&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loves_titanic&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;people&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Since Sally was the only person in our table that matched the criteria, she will be the only person designated with a ‘Yes’ in our new column.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;name&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;loves_titanic&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Bob&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Unsure&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Jane&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Unsure&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sally&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Yes&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Here, our query returns results without a 1-to-1 mapping to our database. By including a &lt;code&gt;CASE&lt;/code&gt; operation that behaves differently depending on the contents of existing fields in our database, we’re able to derive new information.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We haven’t come close to exhausting the range of techniques you can use to derive new and sophisticated information from tables in a database, much less other information that you’ll want to possess to accomplish other tasks, but we have covered some important ground.&lt;/p&gt;
+
+&lt;p&gt;If you’re in an environment where you’re likely to find yourself working with a relational database, the &lt;code&gt;UNION&lt;/code&gt; and &lt;code&gt;CASE&lt;/code&gt; operations are two techniques with which you’ll want to be familiar.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 16 Oct 2015 00:00:00 -0500</pubDate>
+        <link>http://rmulhol.github.io//sql/2015/10/16/sql-union-case.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io//sql/2015/10/16/sql-union-case.html</guid>
+        
+        <category>union</category>
+        
+        <category>case</category>
+        
+        
+        <category>sql</category>
+        
+      </item>
     
       <item>
         <title>Undoing An Erroneous Force Push: The Git Reflog</title>
@@ -52,7 +215,7 @@
 
 &lt;p&gt;Unfortunately, it can be tough for the literature to keep up with changing APIs. Techniques that got the job done only a year ago (or less) might no longer be supported today.&lt;/p&gt;
 
-&lt;p&gt;This isn’t a huge problem; it’s better to have slightly dated information than to have nothing at all.&lt;/p&gt;
+&lt;p&gt;This isn’t a huge problem; it’s better to have slightly dated information than to have nothing at all. &lt;/p&gt;
 
 &lt;p&gt;But if you’re new to both libraries, trying to make React and Backbone play nicely with each other can be challenging enough. Adding on the obstacle of non-working sample code can make the solution seem out of reach.&lt;/p&gt;
 
@@ -160,7 +323,7 @@
 
 &lt;p&gt;&lt;strong&gt;Software Craftsmanship&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;As I’ve been growing out of debate and into software development, one thing that’s been heartening for me is the discovery that these principles and mantras aren’t just &lt;em&gt;relevant to&lt;/em&gt; my new field - they’re actively practiced and endorsed, at least by some folks.&lt;/p&gt;
+&lt;p&gt;As I’ve been growing out of debate and into software development, one thing that’s been heartening for me is the discovery that these principles and mantras aren’t just &lt;em&gt;relevant to&lt;/em&gt; my new field - they’re actively practiced and endorsed, at least by some folks. &lt;/p&gt;
 
 &lt;p&gt;In the contexts I’ve explored, they go by the name of software craftsmanship.&lt;/p&gt;
 
@@ -168,7 +331,7 @@
 
 &lt;p&gt;Not everyone who does software development is committed to the principles of software craftsmanship. Some are more interested in shipping code as fast and effortlessly as possible. That’s fine.&lt;/p&gt;
 
-&lt;p&gt;But it’s not the sort of attitude that engenders excellence. As Aristotle put it, “We are what we repeatedly do. Excellence, then, is not an act, but a habit.”&lt;/p&gt;
+&lt;p&gt;But it’s not the sort of attitude that engenders excellence. As Aristotle put it, “We are what we repeatedly do. Excellence, then, is not an act, but a habit.” &lt;/p&gt;
 
 &lt;p&gt;Whether in debate, software, or some other field entirely, character, commitment, team work, and hard work are the habits of excellence. They’re what make a great programmer, a robust programming environment, and a strong team.&lt;/p&gt;
 
@@ -204,9 +367,9 @@
 
 &lt;p&gt;1) Static - the Chicago Beaches page is a static site. All API requests are made through the browser (thanks, Chicago, for supporting cross-origin resource sharing). This probably makes it pretty uninteresting if you’re browsing without JavaScript enabled and/or on an old browser, but it also means I get …&lt;/p&gt;
 
-&lt;p&gt;2) Hosting - via GitHub pages. Just pushed up my &lt;code&gt;gh-pages&lt;/code&gt; branch, and the site was live within minutes. It’s amazing how easy it is to deploy a little React app with these kinds of tools.&lt;/p&gt;
+&lt;p&gt;2) Hosting - via GitHub pages. Just pushed up my &lt;code&gt;gh-pages&lt;/code&gt; branch, and the site was live within minutes. It’s amazing how easy it is to deploy a little React app with these kinds of tools. &lt;/p&gt;
 
-&lt;p&gt;There’s a few more things I could imagine doing to improve this site, but I’m even more excited at the possibilities that lie ahead working with the tools I’ve used.&lt;/p&gt;
+&lt;p&gt;There’s a few more things I could imagine doing to improve this site, but I’m even more excited at the possibilities that lie ahead working with the tools I’ve used. &lt;/p&gt;
 
 &lt;p&gt;With a budding comfortability with React, huge amounts of data just waiting to be used, and simple static site hosting via GitHub pages, there’s a lot of cool things that lie within reach.&lt;/p&gt;
 
@@ -228,7 +391,7 @@
         <title>Working With APIs: Rolling a Proxy Server</title>
         <description>&lt;p&gt;In &lt;a href=&quot;/javascript/2015/08/11/cross-origin-resource-sharing.html&quot;&gt;yesterday’s post&lt;/a&gt;, we talked about the difficulties one can encounter when making AJAX requests to an API that doesn’t support cross-origin resource sharing (CORS). Unless the response includes the required &lt;code&gt;Access-Control-Allow-Origin&lt;/code&gt; header, you’ll be getting an error message in the console - and not much else.&lt;/p&gt;
 
-&lt;p&gt;One way to get around this is to write your own proxy server. Instead of waiting for your API’s maintainers to implement support for CORS, simply fetch the content with your own proxy and pass it along with the required header tacked on.&lt;/p&gt;
+&lt;p&gt;One way to get around this is to write your own proxy server. Instead of waiting for your API’s maintainers to implement support for CORS, simply fetch the content with your own proxy and pass it along with the required header tacked on. &lt;/p&gt;
 
 &lt;p&gt;If you were going to do this in production, you’d have a number of concerns outside of that core functionality - hosting, authentication, etc. But in development, you can cut away a lot of that overhead. Implementing a proxy server in Node is quick and easy.&lt;/p&gt;
 
@@ -237,7 +400,7 @@
 &lt;p&gt;They also don’t support CORS. Try to hit the API with AJAX, and you’ll see the familiar error message.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;XMLHttpRequest cannot load https://api.imgflip.com/get_memes. No ‘Access-Control-Allow-Origin’ header is present on the requested resource. Origin ‘http://localhost:8080’ is therefore not allowed access.&lt;/p&gt;
+  &lt;p&gt;XMLHttpRequest cannot load https://api.imgflip.com/get_memes. No ‘Access-Control-Allow-Origin’ header is present on the requested resource. Origin ‘http://localhost:8080’ is therefore not allowed access. &lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;If you wanted to hit it by proxy, say at &lt;code&gt;localhost:3000/get_memes&lt;/code&gt;, you could do so with this script:&lt;/p&gt;
@@ -269,9 +432,9 @@
 
 &lt;p&gt;Assuming you’ve got Node installed, you can run this script with &lt;code&gt;node &amp;lt;filename.js&amp;gt;&lt;/code&gt;, and you’re good to go. To access &lt;code&gt;https://api.imgflip.com/get_memes&lt;/code&gt; in a cross-domain request, you could just hit &lt;code&gt;http://localhost:3000/get_memes&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;How does it work?&lt;/p&gt;
+&lt;p&gt;How does it work? &lt;/p&gt;
 
-&lt;p&gt;We use Node’s &lt;code&gt;http&lt;/code&gt; API to create a server, passing in a callback and setting it to listen on port 3000.&lt;/p&gt;
+&lt;p&gt;We use Node’s &lt;code&gt;http&lt;/code&gt; API to create a server, passing in a callback and setting it to listen on port 3000. &lt;/p&gt;
 
 &lt;p&gt;Within the callback, we log the request, affix the required header to our response, and pass along the incoming request to Imgflip’s API, piping the data we get back into our response.&lt;/p&gt;
 
@@ -305,7 +468,7 @@
 
 &lt;p&gt;&lt;strong&gt;What is CORS?&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;The reason you’re seeing this error message is that you’re trying to launch a cross-domain request from the browser. That is, you’re asking the browser to make a request to a URL with a different protocol, host, and/or port number from that of the originating request. This violates &lt;a href=&quot;https://en.wikipedia.org/wiki/Same-origin_policy&quot;&gt;the same-origin policy&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The reason you’re seeing this error message is that you’re trying to launch a cross-domain request from the browser. That is, you’re asking the browser to make a request to a URL with a different protocol, host, and/or port number from that of the originating request. This violates &lt;a href=&quot;https://en.wikipedia.org/wiki/Same-origin_policy&quot;&gt;the same-origin policy&lt;/a&gt;. &lt;/p&gt;
 
 &lt;p&gt;Basically, the browser will rubber stamp requests if the source and the target share the same origin. But if you’re interacting with an API, that’s likely not the case.&lt;/p&gt;
 
@@ -317,7 +480,7 @@
 
 &lt;p&gt;Right. You’re probably not in a position to assure that your API supports the required response headers.&lt;/p&gt;
 
-&lt;p&gt;At this point, you have a few options.&lt;/p&gt;
+&lt;p&gt;At this point, you have a few options. &lt;/p&gt;
 
 &lt;p&gt;The first is to get in touch with people who host the API and request that they support cross-origin requests. It may be ignored or take awhile, but it’s a path of least resistance that they have little reason to turn down beyond not having the time (an admittedly fair obstacle).&lt;/p&gt;
 
@@ -430,7 +593,7 @@
 
 &lt;p&gt;But what if we want to initiate more broad sweeping changes across numerous components? Or if we want to react to larger chunks of data from an API call? We might figure out a way to do so with what we already have, but our code could get pretty not-so-clean pretty quickly.&lt;/p&gt;
 
-&lt;p&gt;Luckily, there’s no need to indulge such indiscretions, thanks to &lt;a href=&quot;https://facebook.github.io/flux/docs/overview.html&quot;&gt;the Flux architecture&lt;/a&gt;. Flux is a pattern for implementing a unidirectional data flow, one that makes it simple to implement significant and far-reaching changes to our views reliably and efficiently.&lt;/p&gt;
+&lt;p&gt;Luckily, there’s no need to indulge such indiscretions, thanks to &lt;a href=&quot;https://facebook.github.io/flux/docs/overview.html&quot;&gt;the Flux architecture&lt;/a&gt;. Flux is a pattern for implementing a unidirectional data flow, one that makes it simple to implement significant and far-reaching changes to our views reliably and efficiently. &lt;/p&gt;
 
 &lt;p&gt;To get a sense for what we can do with the Flux architecture, we’re going to take a run at fitting it into our demo app. Since Flux is a pattern rather than a framework, we’ll be looking at &lt;em&gt;a&lt;/em&gt; way to implement it rather than &lt;em&gt;the&lt;/em&gt; way, but we’ll end up with a nice foundation for implementing further changes.&lt;/p&gt;
 
@@ -450,8 +613,6 @@
 
 &lt;p&gt;The first thing we’ll want to do is create a dispatcher. It can live at &lt;code&gt;js/dispatcher/dispatcher.js&lt;/code&gt;.&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/7fe46f4f9cea3780eacf.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;With this in place, we’ll be able to &lt;code&gt;require&lt;/code&gt; and call the dispatcher from other parts of our application.&lt;/p&gt;
@@ -460,8 +621,6 @@
 
 &lt;p&gt;After we’ve got a dispatcher, we’ll want to &lt;code&gt;require&lt;/code&gt; and use it in a file designated to contain our actions. Create the following file at &lt;code&gt;js/actions/demo_app_actions.js&lt;/code&gt;.&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/73355cb3dca6fd138fd8.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;Here, the &lt;code&gt;toggleLogo()&lt;/code&gt; method uses the dispatcher to broadcast a payload to the rest of our application. In this case, the payload includes keys for &lt;code&gt;actionType&lt;/code&gt; and &lt;code&gt;showReactLogo&lt;/code&gt;, which correspond to a string and a boolean, respectively.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
@@ -472,8 +631,6 @@
 
 &lt;p&gt;Once we’ve got actions that invoke the dispatcher to issue payloads to our application, we’ll want to register some callbacks with the dispatcher to handle those payloads. We do this on a store, which we’ll put at &lt;code&gt;js/stores/demo_app_store.js&lt;/code&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/9e236715490835053a8c.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;Let’s unpack what’s going on here.&lt;/p&gt;
@@ -490,20 +647,14 @@
 
 &lt;p&gt;For this reason, it can be helpful to keep track of certain constants in a &lt;code&gt;js/constants/constants.js&lt;/code&gt; file. We’ll be using this file to store values for the &lt;code&gt;actionType&lt;/code&gt; of dispatched payloads right now, but we could also put any other important constants here as we go.&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/66eaec512c7a94252a27.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;With this in place, we can change how we refer to the “toggle-logo” value for our &lt;code&gt;actionType&lt;/code&gt; key in our action:&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/7190e9eff411565edb29.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;And in our store:&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/908f2256eb04baba12b3.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;It’s only a minor detour but, like much of what we’re doing in this post, it will make life easier down the line.&lt;/p&gt;
@@ -512,10 +663,8 @@
 
 &lt;p&gt;Now that stores are emitting events that carry values from our actions’ payloads, we can add listeners on our components to initiate change in response to emitted events. This is the logic that replaces the existing state transitions on our components.&lt;/p&gt;
 
-&lt;p&gt;The revised &lt;code&gt;js/components/body.js&lt;/code&gt; file should be modified to look like this:&lt;/p&gt;
+&lt;p&gt;The revised &lt;code&gt;js/components/body.js&lt;/code&gt; file should be modified to look like this: &lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/a34fdef63bc0e79d9731.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;The important changes we’ve made here are twofold:&lt;/p&gt;
@@ -533,7 +682,7 @@
 &lt;div class=&quot;footnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;For a more comprehensive description of the Flux architecture, check out &lt;a href=&quot;https://www.npmjs.com/package/flux&quot;&gt;the npm page for the Flux package&lt;/a&gt;. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;For a more comprehensive description of the Flux architecture, check out &lt;a href=&quot;https://www.npmjs.com/package/flux&quot;&gt;the npm page for the Flux package&lt;/a&gt;.  &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:2&quot;&gt;
       &lt;p&gt;In subsequent posts, we’ll discuss how to pass and use more sophisticated data, like JSON data from an API call. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
@@ -568,9 +717,9 @@
 
 &lt;p&gt;If we want to start building something that looks better and does more, we should start to get a handle on React’s tool for generating views: components.&lt;/p&gt;
 
-&lt;p&gt;Components are modules that include a &lt;code&gt;render()&lt;/code&gt; method that tells the program what to display. They can generate content dynamically, responding to data passed in by other components or the user.&lt;/p&gt;
+&lt;p&gt;Components are modules that include a &lt;code&gt;render()&lt;/code&gt; method that tells the program what to display. They can generate content dynamically, responding to data passed in by other components or the user. &lt;/p&gt;
 
-&lt;p&gt;Once you start taking advantage of their numerous features and piecing them together, components provide a valuable tool for constructing sophisticated user interfaces.&lt;/p&gt;
+&lt;p&gt;Once you start taking advantage of their numerous features and piecing them together, components provide a valuable tool for constructing sophisticated user interfaces. &lt;/p&gt;
 
 &lt;p&gt;Let’s take a look at how components can help us transform our little “hello, world” app into something a bit more visually appealing…&lt;/p&gt;
 
@@ -592,24 +741,18 @@
 
 &lt;p&gt;Where last left off, we were including the full view for our app in the &lt;code&gt;js/app.js&lt;/code&gt; file:&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/dfcb2fd783ada9654894.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;This works fine when we’ve got so little display, but it quickly becomes unmanageable as our view becomes more substantial. The solution, in React, is to delegate the work to components.&lt;/p&gt;
 
 &lt;p&gt;Let’s start by moving the JSX code we’ve got in the &lt;code&gt;js/app.js&lt;/code&gt; file over to a new &lt;code&gt;js/components/home_page.js&lt;/code&gt; file. Now our &lt;code&gt;js/app.js&lt;/code&gt; file can look like this:&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/8e7a24fddd37ab15ff70.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;The &lt;code&gt;&amp;lt;HomePage /&amp;gt;&lt;/code&gt; call exhibits React’s syntax for instantiating components in JSX - they exist as their own element on the page (with whatever components reside on them nested further down).&lt;/p&gt;
 
 &lt;p&gt;To make this work the same as before, we need the &lt;code&gt;js/components/home_page.js&lt;/code&gt; file to look like this:&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/7cee0ed45ea4620b7310.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;If we load the page in the browser, everything will look the same. But we’ve introduced a valuable tool: now we can apply the same technique to nest multiple components.&lt;/p&gt;
@@ -622,28 +765,20 @@
 
 &lt;p&gt;To do so, we want to change our &lt;code&gt;js/components/home_page.js&lt;/code&gt; file to contain the three subordinate components: &lt;code&gt;&amp;lt;Header /&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;Body /&amp;gt;&lt;/code&gt;, and &lt;code&gt;&amp;lt;/Footer&amp;gt;&lt;/code&gt;.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/cdef870ab3a9deca4967.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;Once that’s in place, we need to create the subordinate components.&lt;/p&gt;
 
 &lt;p&gt;Here’s a &lt;code&gt;js/components/header.js&lt;/code&gt; file that takes advantage of some react-bootstrap components to create a Navbar that’s fixed to the top of the page:&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/4d5e127a79a56f24ce07.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;A &lt;code&gt;js/components/body.js&lt;/code&gt; file to welcome our users:&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/27f433cba607631a9346.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;And a &lt;code&gt;/js/component/footer.js&lt;/code&gt; file to round things out:&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/4dbfee934b2fa85249fa.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;At this point, our page starts looking a lot better:&lt;/p&gt;
@@ -664,8 +799,6 @@
 
 &lt;p&gt;If we wanted to add this new functionality entirely within the body component, we could do so like so:&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/c11e477b504fe2b552e0.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;Here, we set the urls of the two image logos as properties of our Body component (since they will never change), then set the initial state with &lt;code&gt;showReactLogo&lt;/code&gt; set to &lt;code&gt;true&lt;/code&gt;. When the user clicks the button, we call &lt;code&gt;toggleImage()&lt;/code&gt; to set &lt;code&gt;showReactLogo&lt;/code&gt; to the opposite state of whatever it was. Within our &lt;code&gt;render()&lt;/code&gt; call, we determine which image to show based on current state.&lt;/p&gt;
@@ -704,130 +837,6 @@
         <category>react</category>
         
         <category>components</category>
-        
-        
-        <category>javascript</category>
-        
-      </item>
-    
-      <item>
-        <title>Getting Started With React - Part 1: Setting Up the File Directory</title>
-        <description>&lt;p&gt;Recently I’ve had the opportunity to do some work with &lt;a href=&quot;https://facebook.github.io/react/&quot;&gt;React&lt;/a&gt;, the JavaScript libary put together by Facebook for building user interfaces. It’s been a really cool experience, and I’m growing more comfortable working with React everyday.&lt;/p&gt;
-
-&lt;p&gt;That’s not to say the process has been hiccup free - it’s been littered with (surmountable) obstacles. Though that’s to be expected when you’re new to any library, it’s particularly pronounced in this instance by the absence of a standardized format for React projects.&lt;/p&gt;
-
-&lt;p&gt;You see, there is no &lt;code&gt;rails new ...&lt;/code&gt; for React. There are several super helpful boilerplate &lt;a href=&quot;https://github.com/petehunt/react-boilerplate&quot;&gt;templates&lt;/a&gt; and &lt;a href=&quot;https://github.com/newtriks/generator-react-webpack&quot;&gt;generators&lt;/a&gt;, but they’re not uniform. People pretty much include whatever they think they’ll need, and they all have different ideas as to what exactly that is.&lt;/p&gt;
-
-&lt;p&gt;I’m not going to tell you that my preferences are any better than those of the folks who have done this work,&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; but I am willing to wager that mine are more minimal. I’m interested in having the bare-bones setup for getting up and running, and we can add other stuff later.&lt;/p&gt;
-
-&lt;p&gt;So, in what follows, I want to lay out the steps for setting up a file directory you can use to build a React project. We’ll include only what we need to start hacking, and then cover further topics in subsequent posts. If you’re willing to hop on for the ride, let’s dive into part 1 of getting started with React.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 1: Setting Up Your &lt;code&gt;package.json&lt;/code&gt; File&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;One thing we’ll be using to manage our project’s dependencies is &lt;a href=&quot;https://www.npmjs.com/&quot;&gt;npm&lt;/a&gt; - the Node Package Manager. If you don’t have that, you’ll want to &lt;a href=&quot;https://docs.npmjs.com/getting-started/installing-node&quot;&gt;install Node.js and npm&lt;/a&gt; now.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;Once you’ve got npm, you can run &lt;code&gt;npm init&lt;/code&gt; in an empty directory to setup a basic &lt;a href=&quot;https://docs.npmjs.com/files/package.json&quot;&gt;&lt;code&gt;package.json&lt;/code&gt;&lt;/a&gt; file. By answering the prompts, you’ll identify some key attributes of your project: its name, version, license, etc.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/npm-init.png&quot; alt=&quot;npm-init-execution&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Once we’ve got a basic &lt;code&gt;package.json&lt;/code&gt; file setup, we can add one of the more important dependencies for our project - React - with a single command: &lt;code&gt;npm install --save react&lt;/code&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;Next, we can install some dev dependencies we’ll be needing: &lt;code&gt;npm install --save-dev browserify reactify&lt;/code&gt;.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;  &lt;a href=&quot;https://github.com/substack/browserify-handbook&quot;&gt;Browserify&lt;/a&gt; will enable us to compile modules for the browser, and &lt;a href=&quot;https://github.com/andreypopp/reactify&quot;&gt;Reactify&lt;/a&gt; will help Browserify to play nicely with the &lt;a href=&quot;https://facebook.github.io/jsx/&quot;&gt;JSX&lt;/a&gt; syntax we’ll be using in our React modules.&lt;/p&gt;
-
-&lt;p&gt;At this point, your &lt;code&gt;package.json&lt;/code&gt; file should look something like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/pkg-with-devDeps.png&quot; alt=&quot;pkg-with-devDeps&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;We’ll want to add a build script to make it look like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/pkg-with-build-script.png&quot; alt=&quot;pkg-with-build-script&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;And then install &lt;code&gt;browserify&lt;/code&gt; globally so that our script will execute: &lt;code&gt;npm install -g browserify&lt;/code&gt;.&lt;sup id=&quot;fnref:5&quot;&gt;&lt;a href=&quot;#fn:5&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;That will do it for our &lt;code&gt;package.json&lt;/code&gt; file, for now. Time to start building out the rest of our file directory structure.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 2: Add Files/Directories&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Just by setting up our dependencies and build script, we’ve done most of the leg work necessary to get a React project up and running. The next step is pretty simple: put together the file directory structure.&lt;/p&gt;
-
-&lt;p&gt;There are a number of ways you could organize your directory, but to play nicely with our current setup, you’ll want to run the following commands:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/file-directory-commands.png&quot; alt=&quot;file-directory-commands&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;That will set up a file tree that looks like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/file-directory-tree.png&quot; alt=&quot;file-directory-tree&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;At this point, we’re ready to put in some code!&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 3: Filling in &lt;code&gt;index.html&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;The &lt;code&gt;index.html&lt;/code&gt; file stores the basic page we’ll be working on. You can fill it in like so:&lt;/p&gt;
-
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
-&lt;script src=&quot;https://gist.github.com/51035643a1a4b29c9a23.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;The key to this file is the &lt;code&gt;section&lt;/code&gt; with the &lt;code&gt;id&lt;/code&gt; “react” - that’s the entry point for our React code. It’ll be filled in by the &lt;code&gt;bundle.js&lt;/code&gt; script (which is generate by Browserify).&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 4: Filling in &lt;code&gt;app.js&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Almost there! The next step is to pop some code into our &lt;code&gt;app.js&lt;/code&gt; file that indicates what to put in the “react” &lt;code&gt;section&lt;/code&gt;. You can do that like so:&lt;/p&gt;
-
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
-&lt;script src=&quot;https://gist.github.com/dfcb2fd783ada9654894.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;This code tells React to find the page element with the &lt;code&gt;id&lt;/code&gt; “react” and put the preceding JSX code (which looks like raw html) there.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 5: Build and Run&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;At this point, we’ve got all the hand-written code we’re going to need. The next step is to run &lt;code&gt;npm run build&lt;/code&gt;, which will trigger the build script we put in our &lt;code&gt;package.json&lt;/code&gt; file.&lt;/p&gt;
-
-&lt;p&gt;After that’s complete, we’re ready to fire up our app! To do that, we need an http server. The easiest way to get one is probably to run &lt;code&gt;npm install -g http-server&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Once that’s installed, head to your project’s root directory and run &lt;code&gt;http-server&lt;/code&gt;. Pull up the browser and head over to http://localhost:8080/ and…&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/browser-view-hello-world.png&quot; alt=&quot;browser-view-hello-world&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;It’s alive! That’s not exactly the fancy view we were hoping for when we decided to explore this newfangled UI library, but it’s a start!&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;So, we clearly have a lot more to learn before we can start really taking advantage of React’s power, but we are now working with the library. Just by installing a few dependencies, filling out a few files, and executing a few scripts, we’re right about where we’d expect to be with something like a &lt;code&gt;rails new ...&lt;/code&gt; for React.&lt;/p&gt;
-
-&lt;p&gt;Stay tuned for future posts on getting started with React!&lt;sup id=&quot;fnref:6&quot;&gt;&lt;a href=&quot;#fn:6&quot; class=&quot;footnote&quot;&gt;6&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;They’re awesome &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;Seriously, if you’ve read this far, you’re definitely going to want these things. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:3&quot;&gt;
-      &lt;p&gt;The &lt;code&gt;--save&lt;/code&gt; flag tells npm to list react in the &lt;code&gt;dependencies&lt;/code&gt; section of our &lt;code&gt;package.json&lt;/code&gt; file. That’s useful for anyone who clones our repo, since they can now run &lt;code&gt;npm install&lt;/code&gt; to install all of the project’s dependencies. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:4&quot;&gt;
-      &lt;p&gt;The &lt;code&gt;--save-dev&lt;/code&gt; flag tells npm to list Browserify and Reactify in the &lt;code&gt;devDependencies&lt;/code&gt; section of our &lt;code&gt;package.json&lt;/code&gt; file. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:5&quot;&gt;
-      &lt;p&gt;The &lt;code&gt;-g&lt;/code&gt; flag tells npm to install Browserify globally, so that we can run &lt;code&gt;browserify&lt;/code&gt; from the command line anywhere on our system. &lt;a href=&quot;#fnref:5&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:6&quot;&gt;
-      &lt;p&gt;If you’d like to follow along with the source code we’re developing over this series of posts, check out the &lt;a href=&quot;https://github.com/rmulhol/demo-react-app&quot;&gt;demo-react-app Github repo&lt;/a&gt;. The changes from this post are reflected in the second commit. &lt;a href=&quot;#fnref:6&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Tue, 21 Jul 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//javascript/2015/07/21/starting-react-directory.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/07/21/starting-react-directory.html</guid>
-        
-        <category>react</category>
-        
-        <category>npm</category>
         
         
         <category>javascript</category>

@@ -77,7 +77,7 @@
   <article class="post-content">
     <p>In a <a href="/java/2015/01/14/java-insertion-sort.html">previous post</a>, I showed a possible implementation of insertion sort written in Java. The code is an almost verbatim translation of pseudocode from <a href="http://en.wikipedia.org/wiki/Introduction_to_Algorithms">CLRS</a>.</p>
 
-<p><em>Almost</em> verbatim. While the pseudocode doesn’t include any type declarations, my Java code does. Specifically, I chose to work with a <a href="http://docs.oracle.com/javase/7/docs/api/java/util/LinkedList.html">LinkedList</a>, since a data structure that allows for <a href="http://en.wikipedia.org/wiki/Linked_list#Advantages">easy <em>insertion</em> and deletion of elements</a> felt like a natural fit for an algorithm named <em>insertion</em> sort. The code ended up looking like this:</p>
+<p><em>Almost</em> verbatim. While the pseudocode doesn’t include any type declarations, my Java code does. Specifically, I chose to work with a <a href="http://docs.oracle.com/javase/7/docs/api/java/util/LinkedList.html">LinkedList</a>, since a data structure that allows for <a href="http://en.wikipedia.org/wiki/Linked_list#Advantages">easy <em>insertion</em> and deletion of elements</a> felt like a natural fit for an algorithm named <em>insertion</em> sort. The code ended up looking like this: </p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">mySort</span><span class="o">(</span><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
     <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
@@ -98,7 +98,7 @@
 
 <p>Upon deeper investigation, I found some <a href="https://kjellkod.wordpress.com/2012/02/25/why-you-should-never-ever-ever-use-linked-list-in-your-code-again/">virulent criticism of the linked list</a>, and decided it was time to revisit my implementation of insertion sort, taking note of a few things:</p>
 
-<p>– Retrieving elements from a linked list by index, it turns out, is computationally expensive. Specifically, the <code>.get()</code> operation I use to access values <a href="http://java-performance.info/linkedlist-performance/">is an O(n) operation</a>; since a LinkedList is a <a href="http://docs.oracle.com/javase/7/docs/api/java/util/AbstractSequentialList.html">sequential access list</a>, accessing elements by index <a href="http://www.cs.rpi.edu/~musser/gp/List/lists1.html">takes linear time</a> (i.e. you have to traverse all prior elements in the list until the desired index is reached).</p>
+<p>– Retrieving elements from a linked list by index, it turns out, is computationally expensive. Specifically, the <code>.get()</code> operation I use to access values <a href="http://java-performance.info/linkedlist-performance/">is an O(n) operation</a>; since a LinkedList is a <a href="http://docs.oracle.com/javase/7/docs/api/java/util/AbstractSequentialList.html">sequential access list</a>, accessing elements by index <a href="http://www.cs.rpi.edu/~musser/gp/List/lists1.html">takes linear time</a> (i.e. you have to traverse all prior elements in the list until the desired index is reached). </p>
 
 <p>By contrast, <code>.get()</code> <a href="http://beginnersbook.com/2013/12/difference-between-arraylist-and-linkedlist-in-java/">is an O(1) operation</a> for an <a href="http://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html">ArrayList</a>; elements can be accessed by index <a href="http://docs.oracle.com/javase/tutorial/collections/implementations/list.html">in constant time</a> since this data structure is a <a href="http://docs.oracle.com/javase/7/docs/api/java/util/RandomAccess.html">random access list</a>.</p>
 
@@ -108,7 +108,7 @@
 
 <p>But, upon reflection, even this data structure felt unnecessary. I don’t need to dynamically modify the size of the input, so I can just work with a simple <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html">array</a>.</p>
 
-<p>That code now looks like this:</p>
+<p>That code now looks like this: </p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">mySort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
     <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
@@ -123,7 +123,7 @@
     <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
 <span class="o">}</span></code></pre></div>
 
-<p>… and it works just fine.</p>
+<p>… and it works just fine. </p>
 
 
   </article>

@@ -96,7 +96,7 @@
 <div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">factorial</span> <span class="mi">10000</span><span class="p">)</span>
 <span class="c1">;= StackOverflowError   clojure.lang.Numbers.isZero (Numbers.java:90)</span></code></pre></div>
 
-<p>The trouble this method is running into is that each recursive call to <code>factorial</code> is adding a new frame to the stack, as the value of <code>n</code> at every call has to be retained in memory.</p>
+<p>The trouble this method is running into is that each recursive call to <code>factorial</code> is adding a new frame to the stack, as the value of <code>n</code> at every call has to be retained in memory. </p>
 
 <p>A standard approach to optimizing this sort of function in functional programming would be to implement some sort of tail call optimization – have the function store the value that it’s reached up to its current point so that it doesn’t have to retain every value it computed before then in memory:</p>
 

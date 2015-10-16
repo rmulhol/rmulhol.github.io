@@ -77,15 +77,15 @@
   <article class="post-content">
     <p>The other day, I had the privilege of attending Kyle Kingsbury’s talk “Jepsen IV: Hope Springs Eternal” at the DevOps Chicago meetup group. The presentation was interesting, thought-provoking, and entertaining. I found myself doing all sorts of background research afterward just to make sure I was really digesting what he put out there.</p>
 
-<p>In this post, I want to take a few moments to reflect on what I’ve learned. I can’t promise anything more than my own interpretation of what he said (you can check out a version of the talk for yourself <a href="http://www.ustream.tv/recorded/61443262">here</a>), but hopefully this post can be of use to those who’re also developing an interest in the topic.</p>
+<p>In this post, I want to take a few moments to reflect on what I’ve learned. I can’t promise anything more than my own interpretation of what he said (you can check out a version of the talk for yourself <a href="http://www.ustream.tv/recorded/61443262">here</a>), but hopefully this post can be of use to those who’re also developing an interest in the topic. </p>
 
 <p><strong>What is Jepsen?</strong></p>
 
-<p>Jepsen is a tool developed by Kingsbury for testing the performance of distributed systems undergoing network partitions. It’s basically a generative testing framework for database systems. He’s interested in measuring how well they preserve the consistency of their data when connections between nodes are interrupted.</p>
+<p>Jepsen is a tool developed by Kingsbury for testing the performance of distributed systems undergoing network partitions. It’s basically a generative testing framework for database systems. He’s interested in measuring how well they preserve the consistency of their data when connections between nodes are interrupted.  </p>
 
 <p>You sort of get a sense for where he’s going right at the beginning of the talk, when he shows a slide portraying the structure that underlies APIs, and the databases are portrayed as a tire fire.</p>
 
-<p>His research bears out that characterization. Even well reputed databases begin to show cracks under the pressure applied by Jepsen, as data becomes outdated, inaccurate, or lost altogether.</p>
+<p>His research bears out that characterization. Even well reputed databases begin to show cracks under the pressure applied by Jepsen, as data becomes outdated, inaccurate, or lost altogether. </p>
 
 <p>This talk focused on <a href="https://www.mongodb.org/">MongoDB</a>, <a href="https://www.elastic.co/products/elasticsearch">Elasticsearch</a>, and <a href="http://www.aerospike.com/">Aerospike</a>, but you can see analysis for numerous other systems that have undergone the wrath of Jepsen at <a href="https://aphyr.com/tags/jepsen">Kingsbury’s site</a>.</p>
 
@@ -95,7 +95,7 @@
 
 <p>Kingsbury focuses on how well each database lives up to the claims made in its documentation. Given <a href="http://en.wikipedia.org/wiki/CAP_theorem">the CAP theorem</a> (and the <a href="https://martin.kleppmann.com/2015/05/11/please-stop-calling-databases-cp-or-ap.html">limitations of thinking in terms of that construct</a>), we might not expect these databases to offer perfect consistency. But we could expect them to live up to the claims put forward by their marketing departments.</p>
 
-<p>Or so we thought. Kingsbury’s findings instill a healthy dose of skepticism. He’s found numerous places where databases do not live up to the claims made in their documentation, alongside several other bugs and instances of unexpected behavior.</p>
+<p>Or so we thought. Kingsbury’s findings instill a healthy dose of skepticism. He’s found numerous places where databases do not live up to the claims made in their documentation, alongside several other bugs and instances of unexpected behavior. </p>
 
 <p><strong>So, What Now?</strong></p>
 

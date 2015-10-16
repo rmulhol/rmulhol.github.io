@@ -79,13 +79,13 @@
 
 <p>This has led to some minor achievements. I’ve been able to <a href="/java/2015/01/14/java-insertion-sort.html">implement insertion sort</a> in Java. I’ve learned why it’s good to <a href="/java/2015/01/26/linked-list-sorting.html">use an array (rather than a linked list) when writing sorting algorithms</a>. I know more now that I did when I embarked upon this journey.</p>
 
-<p>But one thing that’s been bugging me is the inflexibility of the solutions I’ve come up with. It’s great to be able to sort an array of integers, but what if I want to sort an array of … any other type of object? Do I have to overload the algorithm with every type of object I intend to sort?</p>
+<p>But one thing that’s been bugging me is the inflexibility of the solutions I’ve come up with. It’s great to be able to sort an array of integers, but what if I want to sort an array of … any other type of object? Do I have to overload the algorithm with every type of object I intend to sort? </p>
 
 <p>Nope. Enter Java’s <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html"><code>Comparable</code> interface</a>.</p>
 
 <p>If a class implements <code>Comparable</code>, then the <code>compareTo()</code> method provides a <a href="http://en.wikipedia.org/wiki/Total_order">total order</a> for all objects of that class. When we call <code>x.compareTo(y)</code>, it returns a positive integer (1) if <code>x</code> is greater than <code>y</code>, 0 if <code>x</code> is equal to <code>y</code>, or a negative integer (-1) if <code>x</code> is less than <code>y</code>.</p>
 
-<p>This is a pretty big deal. My previous version of insertion sort looked like this:</p>
+<p>This is a pretty big deal. My previous version of insertion sort looked like this: </p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">mySort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
     <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
@@ -102,7 +102,7 @@
 
 <p>That’s right. It only sorts arrays of integers. Lame.</p>
 
-<p>The <code>Comparable</code> interface allows us to write one sorting algorithm that works for objects of any class that implements it, like so:</p>
+<p>The <code>Comparable</code> interface allows us to write one sorting algorithm that works for objects of any class that implements it, like so: </p>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">Comparable</span><span class="o">[]</span> <span class="nf">mySort</span><span class="o">(</span><span class="n">Comparable</span><span class="o">[]</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
     <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>

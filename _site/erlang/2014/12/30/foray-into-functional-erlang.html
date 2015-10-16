@@ -79,7 +79,7 @@
 
 <p>Erlang is technically an “impure” functional programming language; its methods can have side effects. However, working in Erlang has  introduced me to many of the features that separate functional programming from its object oriented companion. No longer can I reassign variables or tackle problems with my trusty <code>for</code> loop. Nay, new approaches must now be uncovered.</p>
 
-<p>So, now that I’ve begun to wrap my head around some of the ways that common problems can be approached using the functional programming style, I wanted to share some of the obstacles I’ve come across along the way as well as how they were overcome.</p>
+<p>So, now that I’ve begun to wrap my head around some of the ways that common problems can be approached using the functional programming style, I wanted to share some of the obstacles I’ve come across along the way as well as how they were overcome. </p>
 
 <p><strong>Referential Transparency, or: How I Learned to Stop Worrying and Love Single Assignment</strong></p>
 
@@ -93,7 +93,7 @@
 
 <p>Coming from the world of object-oriented programming, I had grown so used to passing around important values in instance variables and using all sort of loops and iterators to analyze data that operating without variable re-assignment was nigh unthinkable.</p>
 
-<p>Still, functional programming has been around long enough - and used to do enough - that I knew there had to be an answer, so I kept plugging away. And, as is wholly predictable, it is indeed possible to solve the same problems I had conquered with object-oriented programming, you just have to take a different path to get there.</p>
+<p>Still, functional programming has been around long enough - and used to do enough - that I knew there had to be an answer, so I kept plugging away. And, as is wholly predictable, it is indeed possible to solve the same problems I had conquered with object-oriented programming, you just have to take a different path to get there.   </p>
 
 <p>The classic example I’ve run across so far is generating sums. In Java, I could do that like this:</p>
 
@@ -105,7 +105,7 @@
   <span class="k">return</span> <span class="n">sum</span><span class="o">;</span>
 <span class="o">}</span></code></pre></div>
 
-<p>Since we can’t use a <code>for</code> loop that re-assigns <code>i</code> on each iteration, functional programming languages require us to find a different approach. In Erlang, that’s pretty simple:</p>
+<p>Since we can’t use a <code>for</code> loop that re-assigns <code>i</code> on each iteration, functional programming languages require us to find a different approach. In Erlang, that’s pretty simple: </p>
 
 <div class="highlight"><pre><code class="language-erlang" data-lang="erlang"><span class="nf">sum</span><span class="p">(</span><span class="nv">Num</span><span class="p">)</span> <span class="o">-&gt;</span>
   <span class="nn">lists</span><span class="p">:</span><span class="nf">sum</span><span class="p">(</span><span class="nn">lists</span><span class="p">:</span><span class="nf">seq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nv">Num</span><span class="p">)).</span></code></pre></div>
@@ -126,7 +126,7 @@
 <span class="nf">sum</span><span class="p">(</span><span class="nv">Num</span><span class="p">)</span> <span class="o">-&gt;</span>
   <span class="nv">Num</span> <span class="o">+</span> <span class="n">sum</span><span class="p">(</span><span class="nv">Num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">).</span></code></pre></div>
 
-<p>Here, we make use of <a href="http://learnyousomeerlang.com/syntax-in-functions">pattern matching</a> to declare a function with two clauses. The first clause says, “when the argument passed in is 0, return 0”. The second function clause says, “for any other value, return the sum of the argument with a recursive call to sum where the argument is decremented by 1.”<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
+<p>Here, we make use of <a href="http://learnyousomeerlang.com/syntax-in-functions">pattern matching</a> to declare a function with two clauses. The first clause says, “when the argument passed in is 0, return 0”. The second function clause says, “for any other value, return the sum of the argument with a recursive call to sum where the argument is decremented by 1.”<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup> </p>
 
 <p>With this function declaration, a call to sum(3) would play out like this:</p>
 
@@ -150,7 +150,7 @@
 <span class="nf">sum</span><span class="p">(</span><span class="nv">Num</span><span class="p">,</span> <span class="nv">Acc</span><span class="p">)</span> <span class="o">-&gt;</span>
   <span class="n">sum</span><span class="p">(</span><span class="nv">Num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">Num</span> <span class="o">+</span> <span class="nv">Acc</span><span class="p">).</span></code></pre></div>
 
-<p>Here, we use pattern matching for a few purposes. If we receive one argument, we call sum with two arguments: the original argument passed in and 0 (which will serve as our accumulator). On subsequent calls, we decrement <code>Num</code> by one and add the value of <code>Num</code> to our accumulator (<code>Acc</code>). Calling sum(3) with this function would play out like this:</p>
+<p>Here, we use pattern matching for a few purposes. If we receive one argument, we call sum with two arguments: the original argument passed in and 0 (which will serve as our accumulator). On subsequent calls, we decrement <code>Num</code> by one and add the value of <code>Num</code> to our accumulator (<code>Acc</code>). Calling sum(3) with this function would play out like this: </p>
 
 <div class="highlight"><pre><code class="language-erlang" data-lang="erlang"><span class="nf">sum</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="nf">sum</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -161,7 +161,7 @@
 
 <p>Since each call can stand on its own and does not require us to maintain the previous return values up to that point, this solution achieves the same end without creating the same risks to our memory.</p>
 
-<p><strong>Conclusion: Just Getting Started</strong></p>
+<p><strong>Conclusion: Just Getting Started</strong> </p>
 
 <p>Getting used to immutable data, referential transparency, recursion, and tail-call optimization has made working with Erlang a whole lot easier. I’m no longer at a loss for how to approach problems where I used to reach for variable reassignment, loops, and iterators. But there’s clearly a lot left to learn, and I’m excited to dig deeper. I look forward to posting updates here as I progress with learning the tricks of functional programming.</p>
 
