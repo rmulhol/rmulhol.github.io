@@ -105,18 +105,24 @@
 
 <p>Where last left off, we were including the full view for our app in the <code>js/app.js</code> file:</p>
 
+<noscript><pre>400: Invalid request
+</pre></noscript>
 <script src="https://gist.github.com/dfcb2fd783ada9654894.js"> </script>
 
 <p>This works fine when we’ve got so little display, but it quickly becomes unmanageable as our view becomes more substantial. The solution, in React, is to delegate the work to components.</p>
 
 <p>Let’s start by moving the JSX code we’ve got in the <code>js/app.js</code> file over to a new <code>js/components/home_page.js</code> file. Now our <code>js/app.js</code> file can look like this:</p>
 
+<noscript><pre>400: Invalid request
+</pre></noscript>
 <script src="https://gist.github.com/8e7a24fddd37ab15ff70.js"> </script>
 
 <p>The <code>&lt;HomePage /&gt;</code> call exhibits React’s syntax for instantiating components in JSX - they exist as their own element on the page (with whatever components reside on them nested further down).</p>
 
 <p>To make this work the same as before, we need the <code>js/components/home_page.js</code> file to look like this:<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
 
+<noscript><pre>400: Invalid request
+</pre></noscript>
 <script src="https://gist.github.com/7cee0ed45ea4620b7310.js"> </script>
 
 <p>If we load the page in the browser, everything will look the same. But we’ve introduced a valuable tool: now we can apply the same technique to nest multiple components.</p>
@@ -129,20 +135,28 @@
 
 <p>To do so, we want to change our <code>js/components/home_page.js</code> file to contain the three subordinate components: <code>&lt;Header /&gt;</code>, <code>&lt;Body /&gt;</code>, and <code>&lt;/Footer&gt;</code>.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup></p>
 
+<noscript><pre>400: Invalid request
+</pre></noscript>
 <script src="https://gist.github.com/cdef870ab3a9deca4967.js"> </script>
 
 <p>Once that’s in place, we need to create the subordinate components.</p>
 
 <p>Here’s a <code>js/components/header.js</code> file that takes advantage of some react-bootstrap components to create a Navbar that’s fixed to the top of the page:</p>
 
+<noscript><pre>400: Invalid request
+</pre></noscript>
 <script src="https://gist.github.com/4d5e127a79a56f24ce07.js"> </script>
 
 <p>A <code>js/components/body.js</code> file to welcome our users:</p>
 
+<noscript><pre>400: Invalid request
+</pre></noscript>
 <script src="https://gist.github.com/27f433cba607631a9346.js"> </script>
 
 <p>And a <code>/js/component/footer.js</code> file to round things out:</p>
 
+<noscript><pre>400: Invalid request
+</pre></noscript>
 <script src="https://gist.github.com/4dbfee934b2fa85249fa.js"> </script>
 
 <p>At this point, our page starts looking a lot better:</p>
@@ -163,6 +177,8 @@
 
 <p>If we wanted to add this new functionality entirely within the body component, we could do so like so:</p>
 
+<noscript><pre>400: Invalid request
+</pre></noscript>
 <script src="https://gist.github.com/c11e477b504fe2b552e0.js"> </script>
 
 <p>Here, we set the urls of the two image logos as properties of our Body component (since they will never change), then set the initial state with <code>showReactLogo</code> set to <code>true</code>. When the user clicks the button, we call <code>toggleImage()</code> to set <code>showReactLogo</code> to the opposite state of whatever it was. Within our <code>render()</code> call, we determine which image to show based on current state.</p>
