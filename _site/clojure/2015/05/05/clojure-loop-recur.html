@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -81,63 +83,81 @@
 
 <p>Computing a factorial is relatively straightforward:</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="lineno">1</span> <span class="p">(</span><span class="kd">defn </span><span class="nv">factorial</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
-<span class="lineno">2</span>   <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">zero? </span><span class="nv">n</span><span class="p">)</span>
-<span class="lineno">3</span>     <span class="mi">1</span>
-<span class="lineno">4</span>     <span class="p">(</span><span class="nf">*</span><span class="o">&#39;</span> <span class="nv">n</span> <span class="p">(</span><span class="nf">factorial</span> <span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">)))))</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">factorial</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w">
+  </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">zero?</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w">
+    </span><span class="mi">1</span><span class="w">
+    </span><span class="p">(</span><span class="nb">*</span><span class="o">'</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="p">(</span><span class="nf">factorial</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)))))</span></pre></td></tr></tbody></table></code></pre></figure>
 
 <p>This will work fine with smaller numbers:</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">factorial</span> <span class="mi">5</span><span class="p">)</span>
-<span class="c1">;= 120</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">factorial</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">
+</span><span class="c1">;= 120</span></code></pre></figure>
 
 <p>But it runs into trouble with bigger numbers:</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">factorial</span> <span class="mi">10000</span><span class="p">)</span>
-<span class="c1">;= StackOverflowError   clojure.lang.Numbers.isZero (Numbers.java:90)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">factorial</span><span class="w"> </span><span class="mi">10000</span><span class="p">)</span><span class="w">
+</span><span class="c1">;= StackOverflowError   clojure.lang.Numbers.isZero (Numbers.java:90)</span></code></pre></figure>
 
-<p>The trouble this method is running into is that each recursive call to <code>factorial</code> is adding a new frame to the stack, as the value of <code>n</code> at every call has to be retained in memory. </p>
+<p>The trouble this method is running into is that each recursive call to <code class="highlighter-rouge">factorial</code> is adding a new frame to the stack, as the value of <code class="highlighter-rouge">n</code> at every call has to be retained in memory.</p>
 
 <p>A standard approach to optimizing this sort of function in functional programming would be to implement some sort of tail call optimization – have the function store the value that it’s reached up to its current point so that it doesn’t have to retain every value it computed before then in memory:</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="lineno">1</span> <span class="p">(</span><span class="kd">defn </span><span class="nv">factorial</span> <span class="p">[</span><span class="nv">n</span> <span class="nv">acc</span><span class="p">]</span>
-<span class="lineno">2</span>   <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">zero? </span><span class="nv">n</span><span class="p">)</span>
-<span class="lineno">3</span>     <span class="nv">acc</span>
-<span class="lineno">4</span>     <span class="p">(</span><span class="nf">factorial</span> <span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">)</span> <span class="p">(</span><span class="nf">*</span><span class="o">&#39;</span> <span class="nv">n</span> <span class="nv">acc</span><span class="p">))))</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">factorial</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="w"> </span><span class="n">acc</span><span class="p">]</span><span class="w">
+  </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">zero?</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w">
+    </span><span class="n">acc</span><span class="w">
+    </span><span class="p">(</span><span class="nf">factorial</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="o">'</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="n">acc</span><span class="p">))))</span></pre></td></tr></tbody></table></code></pre></figure>
 
 <p>But that will not save us here:</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">factorial</span> <span class="mi">10000</span> <span class="mi">1</span><span class="p">)</span>
-<span class="c1">;= StackOverflowError   clojure.lang.Numbers.isZero (Numbers.java:90)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">factorial</span><span class="w"> </span><span class="mi">10000</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span><span class="c1">;= StackOverflowError   clojure.lang.Numbers.isZero (Numbers.java:90)</span></code></pre></figure>
 
 <p>Clojure, because it runs on the JVM, <a href="http://clojure.org/functional_programming#Functional%20Programming--Recursive%20Looping">does not support tail call optimization</a>.</p>
 
 <p>So what’s a lonely aspiring Clojure programmer to do?</p>
 
-<p>The answer, it turns out, is <a href="http://clojure.org/special_forms#Special%20Forms--%28recur%20exprs*%29">the <code>recur</code> construct</a>. When placed at the end of a function, <code>recur</code> provides the benefits we’d expect from tail call optimization.</p>
+<p>The answer, it turns out, is <a href="http://clojure.org/special_forms#Special%20Forms--%28recur%20exprs*%29">the <code class="highlighter-rouge">recur</code> construct</a>. When placed at the end of a function, <code class="highlighter-rouge">recur</code> provides the benefits we’d expect from tail call optimization.</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="lineno">1</span> <span class="p">(</span><span class="kd">defn </span><span class="nv">factorial</span> <span class="p">[</span><span class="nv">n</span> <span class="nv">acc</span><span class="p">]</span>
-<span class="lineno">2</span>   <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">zero? </span><span class="nv">n</span><span class="p">)</span>
-<span class="lineno">3</span>     <span class="nv">acc</span>
-<span class="lineno">4</span>     <span class="p">(</span><span class="nf">recur</span> <span class="p">(</span><span class="nb">dec </span><span class="nv">n</span><span class="p">)</span> <span class="p">(</span><span class="nf">*</span><span class="o">&#39;</span> <span class="nv">n</span> <span class="nv">acc</span><span class="p">))))</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">factorial</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="w"> </span><span class="n">acc</span><span class="p">]</span><span class="w">
+  </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">zero?</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w">
+    </span><span class="n">acc</span><span class="w">
+    </span><span class="p">(</span><span class="nf">recur</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="o">'</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="n">acc</span><span class="p">))))</span></pre></td></tr></tbody></table></code></pre></figure>
 
 <p>This method works!</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">factorial</span> <span class="mi">10000</span> <span class="mi">1</span><span class="p">)</span>
-<span class="c1">;= 2846259680917054518906413212119868890148...(really big number)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">factorial</span><span class="w"> </span><span class="mi">10000</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">
+</span><span class="c1">;= 2846259680917054518906413212119868890148...(really big number)</span></code></pre></figure>
 
-<p>One final hangup in the Clojure Koans is to retain the arity of the original function (<code>factorial</code> takes only one parameter). Since we need an accumulator to store the value we’ve computed up to the current call, we’re going to need to bind some new values inside our function.</p>
+<p>One final hangup in the Clojure Koans is to retain the arity of the original function (<code class="highlighter-rouge">factorial</code> takes only one parameter). Since we need an accumulator to store the value we’ve computed up to the current call, we’re going to need to bind some new values inside our function.</p>
 
-<p>We can accomplish this with <a href="https://clojuredocs.org/clojure.core/loop">the Clojure <code>loop</code> construct</a>:</p>
+<p>We can accomplish this with <a href="https://clojuredocs.org/clojure.core/loop">the Clojure <code class="highlighter-rouge">loop</code> construct</a>:</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="lineno">1</span> <span class="p">(</span><span class="kd">defn </span><span class="nv">factorial</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
-<span class="lineno">2</span>   <span class="p">(</span><span class="k">loop </span><span class="p">[</span><span class="nv">new-n-for-looping</span> <span class="nv">n</span>
-<span class="lineno">3</span>          <span class="nv">acc-for-recursion</span> <span class="mi">1</span><span class="p">]</span>
-<span class="lineno">4</span>     <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">zero? </span><span class="nv">new-n-for-looping</span><span class="p">)</span>
-<span class="lineno">5</span>       <span class="nv">acc-for-recursion</span>
-<span class="lineno">6</span>       <span class="p">(</span><span class="nf">recur</span> <span class="p">(</span><span class="nb">dec </span><span class="nv">new-n-for-looping</span><span class="p">)</span> <span class="p">(</span><span class="nf">*</span><span class="o">&#39;</span> <span class="nv">new-n-for-looping</span> <span class="nv">acc-for-recursion</span><span class="p">)))))</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">factorial</span><span class="w"> </span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="w">
+  </span><span class="p">(</span><span class="nb">loop</span><span class="w"> </span><span class="p">[</span><span class="n">new-n-for-looping</span><span class="w"> </span><span class="n">n</span><span class="w">
+         </span><span class="n">acc-for-recursion</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w">
+    </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">zero?</span><span class="w"> </span><span class="n">new-n-for-looping</span><span class="p">)</span><span class="w">
+      </span><span class="n">acc-for-recursion</span><span class="w">
+      </span><span class="p">(</span><span class="nf">recur</span><span class="w"> </span><span class="p">(</span><span class="nb">dec</span><span class="w"> </span><span class="n">new-n-for-looping</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">*</span><span class="o">'</span><span class="w"> </span><span class="n">new-n-for-looping</span><span class="w"> </span><span class="n">acc-for-recursion</span><span class="p">)))))</span></pre></td></tr></tbody></table></code></pre></figure>
 
-<p>Here, we bind the passed value of <code>n</code> to our <code>new-n-for-looping</code> and <code>1</code> to our <code>acc-for-recursion</code>. The accumulator is multiplied by the current value of <code>new-n-for-looping</code> in each recursive call until the base case is reached (<code>new-n-for-looping</code> reaches zero), and we can compute the factorial of very large numbers without that pesky StackOverflowError.</p>
+<p>Here, we bind the passed value of <code class="highlighter-rouge">n</code> to our <code class="highlighter-rouge">new-n-for-looping</code> and <code class="highlighter-rouge">1</code> to our <code class="highlighter-rouge">acc-for-recursion</code>. The accumulator is multiplied by the current value of <code class="highlighter-rouge">new-n-for-looping</code> in each recursive call until the base case is reached (<code class="highlighter-rouge">new-n-for-looping</code> reaches zero), and we can compute the factorial of very large numbers without that pesky StackOverflowError.</p>
 
 
   </article>

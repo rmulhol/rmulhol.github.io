@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -87,25 +89,25 @@
 
 <p><strong>What is CORS?</strong></p>
 
-<p>The reason you’re seeing this error message is that you’re trying to launch a cross-domain request from the browser. That is, you’re asking the browser to make a request to a URL with a different protocol, host, and/or port number from that of the originating request. This violates <a href="https://en.wikipedia.org/wiki/Same-origin_policy">the same-origin policy</a>. </p>
+<p>The reason you’re seeing this error message is that you’re trying to launch a cross-domain request from the browser. That is, you’re asking the browser to make a request to a URL with a different protocol, host, and/or port number from that of the originating request. This violates <a href="https://en.wikipedia.org/wiki/Same-origin_policy">the same-origin policy</a>.</p>
 
 <p>Basically, the browser will rubber stamp requests if the source and the target share the same origin. But if you’re interacting with an API, that’s likely not the case.</p>
 
 <p>That doesn’t mean that cross-domain requests are off limits. But to carry them out, you need to satisfy a few conditions.</p>
 
-<p>Check out <a href="http://www.html5rocks.com/en/tutorials/cors/">this page</a> for a much more thorough exploration of CORS and its implications for both the client and the server, but for now the most important thing to know is this: in order for a cross-origin request to succeed, the server needs to include an ‘Access-Control-Allow-Origin’ header, and that header needs to authorize the requesting URL (either specifically or via a <code>'*'</code> value).</p>
+<p>Check out <a href="http://www.html5rocks.com/en/tutorials/cors/">this page</a> for a much more thorough exploration of CORS and its implications for both the client and the server, but for now the most important thing to know is this: in order for a cross-origin request to succeed, the server needs to include an ‘Access-Control-Allow-Origin’ header, and that header needs to authorize the requesting URL (either specifically or via a <code class="highlighter-rouge">'*'</code> value).</p>
 
 <p><strong>Cool, but I don’t control the API’s response headers…</strong></p>
 
 <p>Right. You’re probably not in a position to assure that your API supports the required response headers.</p>
 
-<p>At this point, you have a few options. </p>
+<p>At this point, you have a few options.</p>
 
 <p>The first is to get in touch with people who host the API and request that they support cross-origin requests. It may be ignored or take awhile, but it’s a path of least resistance that they have little reason to turn down beyond not having the time (an admittedly fair obstacle).</p>
 
 <p>The second is to roll your own proxy server. Even if you can’t get the API host to support cross-origin requests, you can make your own server that does - and then use it to hit the target API outside of the browser.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
 
-<p>The third is to take advantage of other services that do the work for you. <a href="https://jsonp.afeld.me/">This site</a>, for example, will act as a proxy server for you, without any coding on your behalf. Simply append the target url to <code>https://jsonp.afeld.me/?url=</code>, and the CORS request will succeed.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
+<p>The third is to take advantage of other services that do the work for you. <a href="https://jsonp.afeld.me/">This site</a>, for example, will act as a proxy server for you, without any coding on your behalf. Simply append the target url to <code class="highlighter-rouge">https://jsonp.afeld.me/?url=</code>, and the CORS request will succeed.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
 
 <p><strong>That’s pretty easy…</strong></p>
 
@@ -114,10 +116,10 @@
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>A <a href="http://edgeguides.rubyonrails.org/api_app.html">Rails API</a> could do the trick. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>A <a href="http://edgeguides.rubyonrails.org/api_app.html">Rails API</a> could do the trick. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>One thing to note about this solution is that it creates some security concerns. Since you’ll be passing your data through a proxy you don’t control, you’ll probably want to exercise discretion concerning what sort of information you pass through. The proxy could intercept (a) sensitive data from the API, or (b) private API keys in the URL (which could be a <a href="https://rosspenman.com/api-key-exposure/">major problem</a>). <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+      <p>One thing to note about this solution is that it creates some security concerns. Since you’ll be passing your data through a proxy you don’t control, you’ll probably want to exercise discretion concerning what sort of information you pass through. The proxy could intercept (a) sensitive data from the API, or (b) private API keys in the URL (which could be a <a href="https://rosspenman.com/api-key-exposure/">major problem</a>). <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

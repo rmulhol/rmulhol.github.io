@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -79,7 +81,7 @@
 
 <p>But what if we want to initiate more broad sweeping changes across numerous components? Or if we want to react to larger chunks of data from an API call? We might figure out a way to do so with what we already have, but our code could get pretty not-so-clean pretty quickly.</p>
 
-<p>Luckily, there’s no need to indulge such indiscretions, thanks to <a href="https://facebook.github.io/flux/docs/overview.html">the Flux architecture</a>. Flux is a pattern for implementing a unidirectional data flow, one that makes it simple to implement significant and far-reaching changes to our views reliably and efficiently. </p>
+<p>Luckily, there’s no need to indulge such indiscretions, thanks to <a href="https://facebook.github.io/flux/docs/overview.html">the Flux architecture</a>. Flux is a pattern for implementing a unidirectional data flow, one that makes it simple to implement significant and far-reaching changes to our views reliably and efficiently.</p>
 
 <p>To get a sense for what we can do with the Flux architecture, we’re going to take a run at fitting it into our demo app. Since Flux is a pattern rather than a framework, we’ll be looking at <em>a</em> way to implement it rather than <em>the</em> way, but we’ll end up with a nice foundation for implementing further changes.</p>
 
@@ -87,7 +89,7 @@
 
 <p>If you’ve just starting to follow along with this post, you can catch up with the progress we’ve made so far by checking out the third commit of <a href="https://github.com/rmulhol/demo-react-app">the demo react app Github repo</a>.</p>
 
-<p>Once you’re up to date, you’ll want to install Flux by running <code>npm install --save flux</code>.</p>
+<p>Once you’re up to date, you’ll want to install Flux by running <code class="highlighter-rouge">npm install --save flux</code>.</p>
 
 <p>Adding Flux to our project’s dependencies gives us access to the dispatcher, an important tool in the unidirectional data flow that characterizes the Flux architecture. The dispatcher mediates between the actions that are fired by components and the stores that update components.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
 
@@ -97,62 +99,50 @@
 
 <p><strong>Step 1: Add a Dispatcher</strong></p>
 
-<p>The first thing we’ll want to do is create a dispatcher. It can live at <code>js/dispatcher/dispatcher.js</code>.</p>
+<p>The first thing we’ll want to do is create a dispatcher. It can live at <code class="highlighter-rouge">js/dispatcher/dispatcher.js</code>.</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/7fe46f4f9cea3780eacf.js"> </script>
 
-<p>With this in place, we’ll be able to <code>require</code> and call the dispatcher from other parts of our application.</p>
+<p>With this in place, we’ll be able to <code class="highlighter-rouge">require</code> and call the dispatcher from other parts of our application.</p>
 
 <p><strong>Step 2: Create an Action</strong></p>
 
-<p>After we’ve got a dispatcher, we’ll want to <code>require</code> and use it in a file designated to contain our actions. Create the following file at <code>js/actions/demo_app_actions.js</code>.</p>
+<p>After we’ve got a dispatcher, we’ll want to <code class="highlighter-rouge">require</code> and use it in a file designated to contain our actions. Create the following file at <code class="highlighter-rouge">js/actions/demo_app_actions.js</code>.</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/73355cb3dca6fd138fd8.js"> </script>
 
-<p>Here, the <code>toggleLogo()</code> method uses the dispatcher to broadcast a payload to the rest of our application. In this case, the payload includes keys for <code>actionType</code> and <code>showReactLogo</code>, which correspond to a string and a boolean, respectively.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
+<p>Here, the <code class="highlighter-rouge">toggleLogo()</code> method uses the dispatcher to broadcast a payload to the rest of our application. In this case, the payload includes keys for <code class="highlighter-rouge">actionType</code> and <code class="highlighter-rouge">showReactLogo</code>, which correspond to a string and a boolean, respectively.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
 
-<p>Note  the bang (!) before <code>showReactLogo</code>, which means we’re dispatching a value for <code>showReactLogo</code> that reflects the opposite of whatever’s passed in. As will become more clear shortly, this is an example of handling state manipulation in the actions rather than the components.</p>
+<p>Note  the bang (!) before <code class="highlighter-rouge">showReactLogo</code>, which means we’re dispatching a value for <code class="highlighter-rouge">showReactLogo</code> that reflects the opposite of whatever’s passed in. As will become more clear shortly, this is an example of handling state manipulation in the actions rather than the components.</p>
 
 <p><strong>Step 3: Open a Store</strong></p>
 
-<p>Once we’ve got actions that invoke the dispatcher to issue payloads to our application, we’ll want to register some callbacks with the dispatcher to handle those payloads. We do this on a store, which we’ll put at <code>js/stores/demo_app_store.js</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
+<p>Once we’ve got actions that invoke the dispatcher to issue payloads to our application, we’ll want to register some callbacks with the dispatcher to handle those payloads. We do this on a store, which we’ll put at <code class="highlighter-rouge">js/stores/demo_app_store.js</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/9e236715490835053a8c.js"> </script>
 
 <p>Let’s unpack what’s going on here.</p>
 
-<p>In addition to the dispatcher, we’re requiring the <code>EventEmitter</code> and <code>utils</code> package from Node.js, which will enable us to inherit features that allow us to run callbacks and handle dispatched payloads.</p>
+<p>In addition to the dispatcher, we’re requiring the <code class="highlighter-rouge">EventEmitter</code> and <code class="highlighter-rouge">utils</code> package from Node.js, which will enable us to inherit features that allow us to run callbacks and handle dispatched payloads.</p>
 
-<p>We’ve also got an <code>addLogoListener()</code> method that registers a callback to be invoked whenever a “toggle-logo” event is emitted. We’ll use it in our component to complete state modifications initiated by the actions.</p>
+<p>We’ve also got an <code class="highlighter-rouge">addLogoListener()</code> method that registers a callback to be invoked whenever a “toggle-logo” event is emitted. We’ll use it in our component to complete state modifications initiated by the actions.</p>
 
-<p>Finally, we’ve got a <code>dispatchToken()</code> method that contains a <code>switch</code> statement.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup> The only <code>case</code> we’ve included so far corresponds to the <code>actionType</code> of our only action (“toggle-logo”), and it emits an event of that type storing the value that corresponds to the payload’s <code>showReactLogo</code> key.</p>
+<p>Finally, we’ve got a <code class="highlighter-rouge">dispatchToken()</code> method that contains a <code class="highlighter-rouge">switch</code> statement.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup> The only <code class="highlighter-rouge">case</code> we’ve included so far corresponds to the <code class="highlighter-rouge">actionType</code> of our only action (“toggle-logo”), and it emits an event of that type storing the value that corresponds to the payload’s <code class="highlighter-rouge">showReactLogo</code> key.</p>
 
 <p><strong>Step 4: Refactor - add Constants</strong></p>
 
-<p>At this point, a lot of the behavior we’ve implemented depends on the <code>actionType</code> “toggle-logo”, and we’ve duplicated that string at several places in our code. It would be shame if something went wrong because of a typo in one of those places.</p>
+<p>At this point, a lot of the behavior we’ve implemented depends on the <code class="highlighter-rouge">actionType</code> “toggle-logo”, and we’ve duplicated that string at several places in our code. It would be shame if something went wrong because of a typo in one of those places.</p>
 
-<p>For this reason, it can be helpful to keep track of certain constants in a <code>js/constants/constants.js</code> file. We’ll be using this file to store values for the <code>actionType</code> of dispatched payloads right now, but we could also put any other important constants here as we go.</p>
+<p>For this reason, it can be helpful to keep track of certain constants in a <code class="highlighter-rouge">js/constants/constants.js</code> file. We’ll be using this file to store values for the <code class="highlighter-rouge">actionType</code> of dispatched payloads right now, but we could also put any other important constants here as we go.</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/66eaec512c7a94252a27.js"> </script>
 
-<p>With this in place, we can change how we refer to the “toggle-logo” value for our <code>actionType</code> key in our action:</p>
+<p>With this in place, we can change how we refer to the “toggle-logo” value for our <code class="highlighter-rouge">actionType</code> key in our action:</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/7190e9eff411565edb29.js"> </script>
 
 <p>And in our store:</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/908f2256eb04baba12b3.js"> </script>
 
 <p>It’s only a minor detour but, like much of what we’re doing in this post, it will make life easier down the line.</p>
@@ -161,17 +151,15 @@
 
 <p>Now that stores are emitting events that carry values from our actions’ payloads, we can add listeners on our components to initiate change in response to emitted events. This is the logic that replaces the existing state transitions on our components.</p>
 
-<p>The revised <code>js/components/body.js</code> file should be modified to look like this: </p>
+<p>The revised <code class="highlighter-rouge">js/components/body.js</code> file should be modified to look like this:</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/a34fdef63bc0e79d9731.js"> </script>
 
 <p>The important changes we’ve made here are twofold:</p>
 
-<p>1) We’ve added a <code>componentDidMount()</code> method, which will be invoked automatically after the component renders, to register a callback via our <code>addLogoListener()</code> method from the store. That callback alters the component’s state to correspond to the emitted value of <code>showReactLogo</code>.</p>
+<p>1) We’ve added a <code class="highlighter-rouge">componentDidMount()</code> method, which will be invoked automatically after the component renders, to register a callback via our <code class="highlighter-rouge">addLogoListener()</code> method from the store. That callback alters the component’s state to correspond to the emitted value of <code class="highlighter-rouge">showReactLogo</code>.</p>
 
-<p>2) We’ve updated our <code>toggleImage()</code> method to fire an action instead of directly setting state on the component. No longer is our component manipulating state directly; instead, it passes much of that work off to the action, dispatcher, and store.</p>
+<p>2) We’ve updated our <code class="highlighter-rouge">toggleImage()</code> method to fire an action instead of directly setting state on the component. No longer is our component manipulating state directly; instead, it passes much of that work off to the action, dispatcher, and store.</p>
 
 <p><strong>Wrap Up</strong></p>
 
@@ -182,16 +170,16 @@
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>For a more comprehensive description of the Flux architecture, check out <a href="https://www.npmjs.com/package/flux">the npm page for the Flux package</a>.  <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>For a more comprehensive description of the Flux architecture, check out <a href="https://www.npmjs.com/package/flux">the npm page for the Flux package</a>. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>In subsequent posts, we’ll discuss how to pass and use more sophisticated data, like JSON data from an API call. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+      <p>In subsequent posts, we’ll discuss how to pass and use more sophisticated data, like JSON data from an API call. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:3">
-      <p>It might feel a little redundant to be creating directories each time we’re adding a file here, and that’s fair. But dividing up our application into separate directories for components, actions, stores, and so forth initiates a nice organizational structure we’ll appreciate if and when we start accumulating more files of each type. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+      <p>It might feel a little redundant to be creating directories each time we’re adding a file here, and that’s fair. But dividing up our application into separate directories for components, actions, stores, and so forth initiates a nice organizational structure we’ll appreciate if and when we start accumulating more files of each type. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:4">
-      <p>We’ve called this method <code>dispatchToken()</code> because it returns a token that we can use for controlling the order of execution of registered callbacks, but it’s also worth noting that this method is doing much more than that. <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
+      <p>We’ve called this method <code class="highlighter-rouge">dispatchToken()</code> because it returns a token that we can use for controlling the order of execution of registered callbacks, but it’s also worth noting that this method is doing much more than that. <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

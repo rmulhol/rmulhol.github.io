@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -81,29 +83,29 @@
 
 <p>I’m only a couple chapters in, and I can already see why this book would be considered required reading for someone pursuing a career in software development. The materials are simple enough for the average reader to grasp upon a close read, but challenging enough to keep your interest and stretch your brain.</p>
 
-<p>One of the first algorithms covered in the book is <a href="http://en.wikipedia.org/wiki/Insertion_sort">insertion sort</a>. A sorting algorithm, insertion sort sequentially examines each element in a list and moves the element it’s looking at into the proper placement among all those that came before. They give the example of a hand of cards: if I’m sorting five cards, I might work through them left to right and move lower cards to the left until the lowest is all the way to the left and the highest is all the way to the right. </p>
+<p>One of the first algorithms covered in the book is <a href="http://en.wikipedia.org/wiki/Insertion_sort">insertion sort</a>. A sorting algorithm, insertion sort sequentially examines each element in a list and moves the element it’s looking at into the proper placement among all those that came before. They give the example of a hand of cards: if I’m sorting five cards, I might work through them left to right and move lower cards to the left until the lowest is all the way to the left and the highest is all the way to the right.</p>
 
 <p>Grokking the algorithm is simple enough; their example makes things really clear. But actually implementing it can be a different matter. Though it’s certainly not (even close to) the most challenging algorithm, you have to know a bit about lists, loops, and iterators, and you have to be able to translate their pseudocode. That’s the subject of this post.</p>
 
 <p>Their pseudocode for the insertion sort algorithm is as follows:</p>
 
-<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span> <span class="n">to</span> <span class="n">A</span><span class="p">.</span><span class="n">length</span>
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span> <span class="n">to</span> <span class="n">A</span><span class="p">.</span><span class="n">length</span>
   <span class="n">key</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
   <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span>
   <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="n">and</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">key</span>
     <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
     <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
-  <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span></code></pre></div>
+  <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span></code></pre></figure>
 
 <p>Alright, simple enough. As the algorithm describes, we’re going through the list, starting with second element, moving it to first if the second is less than the first, and then continuing to shift later elements closer to the beginning until we have a sorted list. Now what if I wanted to implement this pseudocode in Java?</p>
 
 <p>The first thing to note is that there are no type declarations. We’ll presumably be using this algorithm to sort a list of integers, so we’ll have to note that as we declare variables while translating the pseudocode. Sorting elements of some other type would require some significant changes.</p>
 
-<p>Second, they’re indexing the second element of the list at index 2 and the first element at index 1. But the indexes for a LinkedList (which I’ll be using) in Java start at 0. This has two consequences: (1) we’ll want to initialize our <code>for</code> loop at 1 rather than 2, and (2) we’ll want to proceed as long as the index is <em>less than</em> the length of the list (rather than less than <em>or equal to</em> the length, which would take us out of bounds).</p>
+<p>Second, they’re indexing the second element of the list at index 2 and the first element at index 1. But the indexes for a LinkedList (which I’ll be using) in Java start at 0. This has two consequences: (1) we’ll want to initialize our <code class="highlighter-rouge">for</code> loop at 1 rather than 2, and (2) we’ll want to proceed as long as the index is <em>less than</em> the length of the list (rather than less than <em>or equal to</em> the length, which would take us out of bounds).</p>
 
 <p>Put things together, and an implementation of insertion sort in Java could look like this:</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">insertionSort</span><span class="o">(</span><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">insertionSort</span><span class="o">(</span><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
   <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
     <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">j</span><span class="o">);</span>
     <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
@@ -114,7 +116,7 @@
     <span class="n">list</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span> <span class="n">key</span><span class="o">);</span>
   <span class="o">}</span>
   <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 <p>So, much more to learn and many more algorithms with which to get familiar, but that work can now proceed with a proper understanding and way of translating the pseudocode in place.</p>
 

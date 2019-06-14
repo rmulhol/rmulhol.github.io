@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -77,11 +79,11 @@
   <article class="post-content">
     <p>In a <a href="/java/2015/06/06/simple-java-server.html">previous post</a>, I walked through how to build a simple HTTP server in Java that echoes back whatever request is issued by the user. While it’s a nice start for those new to server construction, it leaves a lot left to be desired in terms of functionality.</p>
 
-<p>Of course, you could just continue to build on that <code>while</code> loop, constructing a gargantuan nested conditional to deal with different requests appropriately. But that will leave you with some really gross code.</p>
+<p>Of course, you could just continue to build on that <code class="highlighter-rouge">while</code> loop, constructing a gargantuan nested conditional to deal with different requests appropriately. But that will leave you with some really gross code.</p>
 
 <p>Even following the tried and true approach of building away before extracting/refactoring code can leave you with a bit of a mess. It’s hard to put together a good architecture for a complicated piece of software like an HTTP server without an early familiarity with what it might look like down the road.</p>
 
-<p>At least, that was the trouble I found myself in after an initial attempt. I managed to decouple and extract most buckets of behavior from the core <code>while</code> loop, but there was one place where things got iffy: the method where the server determined what response to issue based on the request.</p>
+<p>At least, that was the trouble I found myself in after an initial attempt. I managed to decouple and extract most buckets of behavior from the core <code class="highlighter-rouge">while</code> loop, but there was one place where things got iffy: the method where the server determined what response to issue based on the request.</p>
 
 <p>This is not a good place to fail - it’s basically the heart of the application. I knew the best approach would probably be to go ahead and rewrite the whole thing, but I was at a loss for how I could approach such a rewrite without duplicating the same error.</p>
 

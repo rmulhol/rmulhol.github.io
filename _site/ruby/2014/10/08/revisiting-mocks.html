@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -89,10 +91,10 @@
 
 <p>So, with that said, how can one write the mocks that let you test that outgoing command messages are sent, and just that?</p>
 
-<p>At first, I was overwriting methods from my (non-mock) classes so that they would return a boolean. Set an instance variable to <code>false</code> when the new mock object is initialized, then set it to <code>true</code> when the appropriate method is called. For example, my MockIO object initially looked like this:</p>
+<p>At first, I was overwriting methods from my (non-mock) classes so that they would return a boolean. Set an instance variable to <code class="highlighter-rouge">false</code> when the new mock object is initialized, then set it to <code class="highlighter-rouge">true</code> when the appropriate method is called. For example, my MockIO object initially looked like this:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MockIO</span>
-  <span class="kp">attr_reader</span> <span class="ss">:print_was_called</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MockIO</span>
+  <span class="nb">attr_reader</span> <span class="ss">:print_was_called</span>
 
   <span class="k">def</span> <span class="nf">initialize</span>
     <span class="vi">@print_was_called</span> <span class="o">=</span> <span class="kp">false</span>
@@ -101,67 +103,67 @@
   <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
     <span class="vi">@print_was_called</span> <span class="o">=</span> <span class="kp">true</span>
   <span class="k">end</span>
-<span class="k">end</span></code></pre></div>
+<span class="k">end</span></code></pre></figure>
 
 <p>Now I can inject my MockIO object in place of my real IO object when I’m testing my main class, and then assure I’m receiving the appropriate boolean after the outgoing command messages are sent. For example, if my main class looked like this:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Main</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Main</span>
   <span class="k">def</span> <span class="nf">intialize</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
     <span class="vi">@io</span> <span class="o">=</span> <span class="n">io</span>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-    <span class="n">io</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">io</span><span class="p">.</span><span class="nf">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
   <span class="k">end</span>
-<span class="k">end</span></code></pre></div>
+<span class="k">end</span></code></pre></figure>
 
 <p>Then I can test it this test:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;mockio&#39;</span>
-<span class="nb">require</span> <span class="s1">&#39;main&#39;</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">'mockio'</span>
+<span class="nb">require</span> <span class="s1">'main'</span>
 
 <span class="n">describe</span> <span class="no">Main</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:new_run</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">MockIO</span><span class="o">.</span><span class="n">new</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:new_run</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">MockIO</span><span class="p">.</span><span class="nf">new</span><span class="p">)</span> <span class="p">}</span>
 
-  <span class="n">describe</span> <span class="s2">&quot;#print_message&quot;</span> <span class="k">do</span>
-    <span class="n">it</span> <span class="s2">&quot;calls print from io&quot;</span> <span class="k">do</span>
-      <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-      <span class="n">printed_message</span> <span class="o">=</span> <span class="n">new_run</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">describe</span> <span class="s2">"#print_message"</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">"calls print from io"</span> <span class="k">do</span>
+      <span class="n">message</span> <span class="o">=</span> <span class="s1">''</span>
+      <span class="n">printed_message</span> <span class="o">=</span> <span class="n">new_run</span><span class="p">.</span><span class="nf">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-      <span class="n">expect</span><span class="p">(</span><span class="n">printed_message</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">printed_message</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
     <span class="k">end</span>
   <span class="k">end</span>
-<span class="k">end</span></code></pre></div>
+<span class="k">end</span></code></pre></figure>
 
 <p>And, there we have it. I’ve now rolled my own mock and I can inject it into my tests to assure that outgoing command messages are being sent without having to do anything more. I don’t have to incur any side effects the commands might have when they’re sent to my real IO, and I don’t have to worry about unexpected outcomes I could see using an automated mocking framework. Cool!</p>
 
-<p>But, this approach does have some downsides. First of all, I’m going to be intializing a lot of booleans - not a big problem, but something that irks me. Second, and perhaps most importantly, I’m running the risk of verifying that I’ve sent the wrong message. If all of my method calls in the mock object return <code>true</code>, then a verification that one method has been sent will be indistinguishable from the verification that another method has been sent. I won’t be able to verify that I actually sent the <em>right</em> method.</p>
+<p>But, this approach does have some downsides. First of all, I’m going to be intializing a lot of booleans - not a big problem, but something that irks me. Second, and perhaps most importantly, I’m running the risk of verifying that I’ve sent the wrong message. If all of my method calls in the mock object return <code class="highlighter-rouge">true</code>, then a verification that one method has been sent will be indistinguishable from the verification that another method has been sent. I won’t be able to verify that I actually sent the <em>right</em> method.</p>
 
-<p>So, I’ve reworked my mocks so that each method returns a unique identifier. Now, instead of returning <code>true</code>, the <code>print</code> method returns <code>"print called"</code>. It looks like this: </p>
+<p>So, I’ve reworked my mocks so that each method returns a unique identifier. Now, instead of returning <code class="highlighter-rouge">true</code>, the <code class="highlighter-rouge">print</code> method returns <code class="highlighter-rouge">"print called"</code>. It looks like this:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MockIO</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MockIO</span>
   <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-    <span class="s2">&quot;print called&quot;</span>
+    <span class="s2">"print called"</span>
   <span class="k">end</span>
-<span class="k">end</span></code></pre></div>
+<span class="k">end</span></code></pre></figure>
 
 <p>For this MockIO, my test looks like this:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;mockio&#39;</span>
-<span class="nb">require</span> <span class="s1">&#39;main&#39;</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">'mockio'</span>
+<span class="nb">require</span> <span class="s1">'main'</span>
 
 <span class="n">describe</span> <span class="no">Main</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:new_run</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">MockIO</span><span class="o">.</span><span class="n">new</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:new_run</span><span class="p">)</span> <span class="p">{</span> <span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">MockIO</span><span class="p">.</span><span class="nf">new</span><span class="p">)</span> <span class="p">}</span>
 
-  <span class="n">describe</span> <span class="s2">&quot;#print_message&quot;</span> <span class="k">do</span>
-    <span class="n">it</span> <span class="s2">&quot;calls print from io&quot;</span> <span class="k">do</span>
-      <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-      <span class="n">printed_message</span> <span class="o">=</span> <span class="n">new_run</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">describe</span> <span class="s2">"#print_message"</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">"calls print from io"</span> <span class="k">do</span>
+      <span class="n">message</span> <span class="o">=</span> <span class="s1">''</span>
+      <span class="n">printed_message</span> <span class="o">=</span> <span class="n">new_run</span><span class="p">.</span><span class="nf">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-      <span class="n">expect</span><span class="p">(</span><span class="n">printed_message</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">&quot;print called&quot;</span><span class="p">)</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">printed_message</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"print called"</span><span class="p">)</span>
     <span class="k">end</span>
   <span class="k">end</span>
-<span class="k">end</span></code></pre></div>
+<span class="k">end</span></code></pre></figure>
 
 <p>Everything still works, and I have verification not only that an outgoing command message is being sent, but also that the <em>right</em> outgoing command message is being sent.</p>
 

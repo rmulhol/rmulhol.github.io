@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -75,7 +77,7 @@
   </header>
 
   <article class="post-content">
-    <p>Now that I’ve got <a href="https://github.com/rmulhol/httpServer">a working HTTP server</a> written in Java, I’ve been trying to make it better by adding features. Specifically, I’ve spent the last few days on making it possible to play <a href="https://github.com/rmulhol/clojure-tic-tac-toe">my Clojure tic-tac-toe game</a> through the web interface hosted by the server. </p>
+    <p>Now that I’ve got <a href="https://github.com/rmulhol/httpServer">a working HTTP server</a> written in Java, I’ve been trying to make it better by adding features. Specifically, I’ve spent the last few days on making it possible to play <a href="https://github.com/rmulhol/clojure-tic-tac-toe">my Clojure tic-tac-toe game</a> through the web interface hosted by the server.</p>
 
 <p>I wrote Clojure tic-tac-toe as a command line application, so there have been some hurdles in simply connecting all of the dots so that the game logic can support another interface. But perhaps the biggest hurdle has been figuring out the answer to a fairly straightforward question: how can I reference and use Clojure code from a Java application?</p>
 
@@ -89,7 +91,7 @@
 
 <p>If you’re putting together a Clojure project, you can’t go wrong with <a href="http://leiningen.org/">Leiningen</a>. There are numerous reasons, but most pertinent for our current purposes is the simplicity with which it allows you to package a jar file.</p>
 
-<p>Avid readers may recall that I wrote about how <a href="/java/2015/06/01/package-jar-intellij.html">Intellij makes it easy to package jar files</a> a few weeks ago. Well, put me down as similarly impressed with Leiningen. To package a Leiningen project into a jar file, you execute one command: <code>lein uberjar</code>.</p>
+<p>Avid readers may recall that I wrote about how <a href="/java/2015/06/01/package-jar-intellij.html">Intellij makes it easy to package jar files</a> a few weeks ago. Well, put me down as similarly impressed with Leiningen. To package a Leiningen project into a jar file, you execute one command: <code class="highlighter-rouge">lein uberjar</code>.</p>
 
 <p>That being said, there are some things that can go wrong. While the step is easy to execute, it’s the one I’ve found myself repeating most often as I overcome little obstacles along the way.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
 
@@ -97,7 +99,7 @@
 
 <ul>
   <li>
-    <p>Your <code>project.clj</code> file may not be properly configured to compile the jar. There are a number of things you need to get right, and they’re not all immediately intuitive. While you can seek guidance from <a href="https://github.com/technomancy/leiningen/blob/master/sample.project.clj">the sample <code>project.clj</code> file at the Leiningen github repo</a>, that’s 500 lines of code to parse.</p>
+    <p>Your <code class="highlighter-rouge">project.clj</code> file may not be properly configured to compile the jar. There are a number of things you need to get right, and they’re not all immediately intuitive. While you can seek guidance from <a href="https://github.com/technomancy/leiningen/blob/master/sample.project.clj">the sample <code class="highlighter-rouge">project.clj</code> file at the Leiningen github repo</a>, that’s 500 lines of code to parse.</p>
   </li>
   <li>
     <p>Your namespaces might not be properly set up in a way that’s useful for your Java project. You need to provide instructions and Java-ready code to your namespaces if you want to be able to call Clojure functions from Java projects.</p>
@@ -108,31 +110,31 @@
 
 <p><strong>Step 2: Fix Project.clj, Rinse, Repeat</strong></p>
 
-<p>If you’re not sure whether or not your jar file is functioning properly, the first thing you can do is to try and give it a run: <code>java -jar path/to/jar.jar</code>. If it doesn’t execute, chances are you need to clean up your <code>project.clj</code> file.</p>
+<p>If you’re not sure whether or not your jar file is functioning properly, the first thing you can do is to try and give it a run: <code class="highlighter-rouge">java -jar path/to/jar.jar</code>. If it doesn’t execute, chances are you need to clean up your <code class="highlighter-rouge">project.clj</code> file.</p>
 
-<p>The first thing to check is that you’ve properly designated a place to find your <code>main</code> function. My <code>project.clj</code> file has the line <code>:main tic-tac-toe.core</code>, which tells Leiningen to find my main function there. You’ll need something similar for your jar to execute.</p>
+<p>The first thing to check is that you’ve properly designated a place to find your <code class="highlighter-rouge">main</code> function. My <code class="highlighter-rouge">project.clj</code> file has the line <code class="highlighter-rouge">:main tic-tac-toe.core</code>, which tells Leiningen to find my main function there. You’ll need something similar for your jar to execute.</p>
 
-<p>After that, you want to provide instructions as to which classes should be compiled ahead of time, rather than just in time. You can read about the differences between the two <a href="http://clojure.org/compilation">here</a>, but the core takeaway is that any namespaces which you intend to call as if they were Java classes should be compiled ahead of time. </p>
+<p>After that, you want to provide instructions as to which classes should be compiled ahead of time, rather than just in time. You can read about the differences between the two <a href="http://clojure.org/compilation">here</a>, but the core takeaway is that any namespaces which you intend to call as if they were Java classes should be compiled ahead of time.</p>
 
-<p>You can be sure that’s taken care of with two steps. First, add <code>:uberjar {:aot :all}</code> to the <code>:profiles</code> map in your <code>project.clj</code>. Second, add <code>:aot [namespace(s)-to-compile]</code> as a separate line after your main method. These steps will assure Leiningen knows to compile everything you’ve included when you package the jar.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup> </p>
+<p>You can be sure that’s taken care of with two steps. First, add <code class="highlighter-rouge">:uberjar {:aot :all}</code> to the <code class="highlighter-rouge">:profiles</code> map in your <code class="highlighter-rouge">project.clj</code>. Second, add <code class="highlighter-rouge">:aot [namespace(s)-to-compile]</code> as a separate line after your main method. These steps will assure Leiningen knows to compile everything you’ve included when you package the jar.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
 
-<p>After you’re comfortable that your <code>project.clj</code> is in good shape, you’ll want to give <code>lein uberjar</code> another run. If everything is working, great. If not, it’s time to look at your namespaces.</p>
+<p>After you’re comfortable that your <code class="highlighter-rouge">project.clj</code> is in good shape, you’ll want to give <code class="highlighter-rouge">lein uberjar</code> another run. If everything is working, great. If not, it’s time to look at your namespaces.</p>
 
 <p><strong>Step 3: Adjust Namespaces, Rinse, Repeat</strong></p>
 
 <p>Even after Leiningen is good to go, you still need to make sure your relevant namespaces are ready to serve as Java classes.</p>
 
-<p>The first concern is whether you’ve told them they might need to do that. You can do so by adding <a href="https://clojuredocs.org/clojure.core/gen-class"><code>(gen-class)</code></a> to the top of each namespace you intend to call as if it were a Java class.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
+<p>The first concern is whether you’ve told them they might need to do that. You can do so by adding <a href="https://clojuredocs.org/clojure.core/gen-class"><code class="highlighter-rouge">(gen-class)</code></a> to the top of each namespace you intend to call as if it were a Java class.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
 
-<p>Second, you’ll want to check whether the functions you intend to use in your Java project can be read as valid Java code. In my case, the <code>get-move</code> function on my AI player was causing problems in Java, so I added a wrapper function named <code>getMove</code>.</p>
+<p>Second, you’ll want to check whether the functions you intend to use in your Java project can be read as valid Java code. In my case, the <code class="highlighter-rouge">get-move</code> function on my AI player was causing problems in Java, so I added a wrapper function named <code class="highlighter-rouge">getMove</code>.</p>
 
-<p>Third, there’s the question of whether the data structures you’re using play nicely with Java. Some of my Clojure functions work with vectors but need to be called with an ArrayList in Java, so I added conversions in my wrapper functions (e.g. <code>(ArrayList. (function (into [] arg))</code>).</p>
+<p>Third, there’s the question of whether the data structures you’re using play nicely with Java. Some of my Clojure functions work with vectors but need to be called with an ArrayList in Java, so I added conversions in my wrapper functions (e.g. <code class="highlighter-rouge">(ArrayList. (function (into [] arg))</code>).</p>
 
 <p>Once you’ve taken care of these steps, hooray! It’s time to start working with Clojure code in a Java project.</p>
 
 <p><strong>Step 4: Get to Work</strong></p>
 
-<p>After your <code>project.clj</code> is properly configured, you’ve edited your namespaces to play nicely with Java, and you’ve run <code>lein uberjar</code>, it’s time to import your jar into your Java project.</p>
+<p>After your <code class="highlighter-rouge">project.clj</code> is properly configured, you’ve edited your namespaces to play nicely with Java, and you’ve run <code class="highlighter-rouge">lein uberjar</code>, it’s time to import your jar into your Java project.</p>
 
 <p>At that point, you should be able to call Clojure functions as if they were Java methods (and as if your namespaces were Java classes).</p>
 
@@ -141,13 +143,13 @@
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>While I put creating the jar file as step 1, it could just as easily fit in as the second-to-last step (right before you import and call it in your Java project), since creating it in a way that’s useful for other programs is so error-prone. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>While I put creating the jar file as step 1, it could just as easily fit in as the second-to-last step (right before you import and call it in your Java project), since creating it in a way that’s useful for other programs is so error-prone. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>You should obviously feel free to be more judicious about using <code>:aot :all</code> if you don’t need everything, but that line will make sure you miss nothing. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+      <p>You should obviously feel free to be more judicious about using <code class="highlighter-rouge">:aot :all</code> if you don’t need everything, but that line will make sure you miss nothing. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:3">
-      <p>You may need to pass arguments to <code>gen-class</code> to assure that the Clojure function come out as methods you can call as you wish in Java code. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+      <p>You may need to pass arguments to <code class="highlighter-rouge">gen-class</code> to assure that the Clojure function come out as methods you can call as you wish in Java code. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

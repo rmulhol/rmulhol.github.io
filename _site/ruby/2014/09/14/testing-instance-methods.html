@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -77,80 +79,80 @@
   <article class="post-content">
     <p>Once I decided to <a href="/ruby/2014/09/13/getting-started-with-tdd.html">get started with TDD in Ruby</a>, I developed a perhaps premature sense of pride in my ability to use TDD to write methods. Following the red-green-refactor model, I would write a test for a method, write the code to make it pass, revise for elegance and maintainability, and then repeat those steps until the method accomplished everything I wanted. But as soon as I got ambitious and started trying TDD with classes, I ran into some trouble: a NameError telling me of some “undefined local variable or method.”</p>
 
-<p>What was going wrong? Well, as I progressed from files containing single methods to full classes, I was writing tests for <em>instance</em> methods without initializing an instance of that class upon which I would call those methods in my tests.  </p>
+<p>What was going wrong? Well, as I progressed from files containing single methods to full classes, I was writing tests for <em>instance</em> methods without initializing an instance of that class upon which I would call those methods in my tests.</p>
 
 <p>So, for example, lets say I wanted to write a method that returns “Hello, world!” Simple enough. First, I’d write a test in my project’s spec directory:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;hello_world&#39;</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">'hello_world'</span>
 
-<span class="n">describe</span> <span class="s2">&quot;hello_world&quot;</span> <span class="k">do</span>
-  <span class="n">it</span> <span class="s2">&quot;returns &#39;Hello, World!&#39;&quot;</span> <span class="k">do</span>
-    <span class="n">expect</span><span class="p">(</span><span class="n">hello_world</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">)</span>
+<span class="n">describe</span> <span class="s2">"hello_world"</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="s2">"returns 'Hello, World!'"</span> <span class="k">do</span>
+    <span class="n">expect</span><span class="p">(</span><span class="n">hello_world</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"Hello, world!"</span><span class="p">)</span>
   <span class="k">end</span>
-<span class="k">end</span></code></pre></div>
+<span class="k">end</span></code></pre></figure>
 
 <p>Watch it fail. Generate a blank file in my projects lib directory named hello_world.rb. Watch it fail again. Now add some code:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">hello_world</span>
-  <span class="s2">&quot;Hello, world!&quot;&quot;</span>
-<span class="s2">end</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">hello_world</span>
+  <span class="s2">"Hello, world!""
+end</span></code></pre></figure>
 
 <p>Run the tests again. Everything passes. Great!</p>
 
 <p>But what if I wanted that method to be nested in a class? Well, I’ve already written the tests, so lets add the class and see what happens. Back to the hello_world.rb file:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">HelloWorld</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">HelloWorld</span>
   <span class="k">def</span> <span class="nf">hello_world</span>
-    <span class="s2">&quot;Hello, world!&quot;</span>
+    <span class="s2">"Hello, world!"</span>
   <span class="k">end</span>
-<span class="k">end</span></code></pre></div>
+<span class="k">end</span></code></pre></figure>
 
 <p>Run the test and disaster ensues:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rspec</span> <span class="n">spec</span>
-<span class="n">F</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">rspec</span> <span class="n">spec</span>
+<span class="no">F</span>
 
-<span class="ss">Failures</span><span class="p">:</span>
+<span class="no">Failures</span><span class="p">:</span>
 
-  <span class="mi">1</span><span class="p">)</span> <span class="n">hello_world</span> <span class="n">returns</span> <span class="s1">&#39;Hello, world!&#39;</span>
-     <span class="no">Failure</span><span class="o">/</span><span class="ss">Error</span><span class="p">:</span> <span class="n">expect</span><span class="p">(</span><span class="n">hello_world</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">)</span>
-     <span class="ss">NameError</span><span class="p">:</span>
-       <span class="n">undefined</span> <span class="n">local</span> <span class="n">variable</span> <span class="ow">or</span> <span class="nb">method</span> <span class="s1">&#39;hello_world&#39;</span> <span class="k">for</span> <span class="c1">#&lt;RSpec::ExampleGroups::HelloWorld:0x000001011c6ba8&gt;</span>
-     <span class="c1"># ./spec/hello_world_spec.rb:5:in &#39;block (2 levels) in &lt;top (required)&gt;&#39;</span>
+  <span class="mi">1</span><span class="p">)</span> <span class="n">hello_world</span> <span class="n">returns</span> <span class="s1">'Hello, world!'</span>
+     <span class="no">Failure</span><span class="o">/</span><span class="no">Error</span><span class="p">:</span> <span class="n">expect</span><span class="p">(</span><span class="n">hello_world</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"Hello, world!"</span><span class="p">)</span>
+     <span class="no">NameError</span><span class="p">:</span>
+       <span class="n">undefined</span> <span class="n">local</span> <span class="n">variable</span> <span class="n">or</span> <span class="nb">method</span> <span class="s1">'hello_world'</span> <span class="k">for</span> <span class="c1">#&lt;RSpec::ExampleGroups::HelloWorld:0x000001011c6ba8&gt;</span>
+     <span class="c1"># ./spec/hello_world_spec.rb:5:in 'block (2 levels) in &lt;top (required)&gt;'</span>
 
-<span class="no">Finished</span> <span class="k">in</span> <span class="mi">0</span><span class="o">.</span><span class="mo">00071</span> <span class="n">seconds</span> <span class="p">(</span><span class="n">files</span> <span class="n">took</span> <span class="mi">0</span><span class="o">.</span><span class="mi">15835</span> <span class="n">seconds</span> <span class="n">to</span> <span class="nb">load</span><span class="p">)</span>
+<span class="no">Finished</span> <span class="k">in</span> <span class="mf">0.00071</span> <span class="n">seconds</span> <span class="p">(</span><span class="n">files</span> <span class="n">took</span> <span class="mf">0.15835</span> <span class="n">seconds</span> <span class="n">to</span> <span class="nb">load</span><span class="p">)</span>
 <span class="mi">1</span> <span class="n">example</span><span class="p">,</span> <span class="mi">1</span> <span class="n">failure</span>
 
-<span class="no">Failed</span> <span class="ss">examples</span><span class="p">:</span>
+<span class="no">Failed</span> <span class="ss">examples:
 
-<span class="n">rspec</span> <span class="o">.</span><span class="n">/spec</span><span class="o">/</span><span class="n">hello_world_spec</span><span class="o">.</span><span class="n">rb</span><span class="p">:</span><span class="mi">4</span> <span class="c1"># hello_world returns &#39;Hello, world!&#39;</span></code></pre></div>
+</span><span class="n">rspec</span> <span class="p">.</span><span class="nf">/</span><span class="n">spec</span><span class="o">/</span><span class="n">hello_world_spec</span><span class="p">.</span><span class="nf">rb</span><span class="p">:</span><span class="mi">4</span> <span class="c1"># hello_world returns 'Hello, world!'</span></code></pre></figure>
 
 <p>How can this be? I haven’t changed the method!</p>
 
 <p>Well, now that I’ve nested my (instance) method inside of a class, the test needs to initialize an instance of that class upon which it can call my method. Changing the test like this solves our problem:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;hello_world&#39;</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">'hello_world'</span>
 
-<span class="n">describe</span> <span class="s2">&quot;hello_world&quot;</span> <span class="k">do</span>
-  <span class="n">it</span> <span class="s2">&quot;returns &#39;Hello, World!&#39;&quot;</span> <span class="k">do</span>
-    <span class="n">my_instance</span> <span class="o">=</span> <span class="no">HelloWorld</span><span class="o">.</span><span class="n">new</span>
-    <span class="n">expect</span><span class="p">(</span><span class="n">my_instance</span><span class="o">.</span><span class="n">hello_world</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">)</span>
+<span class="n">describe</span> <span class="s2">"hello_world"</span> <span class="k">do</span>
+  <span class="n">it</span> <span class="s2">"returns 'Hello, World!'"</span> <span class="k">do</span>
+    <span class="n">my_instance</span> <span class="o">=</span> <span class="no">HelloWorld</span><span class="p">.</span><span class="nf">new</span>
+    <span class="n">expect</span><span class="p">(</span><span class="n">my_instance</span><span class="p">.</span><span class="nf">hello_world</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"Hello, world!"</span><span class="p">)</span>
   <span class="k">end</span>
-<span class="k">end</span></code></pre></div>
+<span class="k">end</span></code></pre></figure>
 
-<p>So, altogether, not too complicated. In order to test an instance method, your tests need to initialize an instance that can call that method. </p>
+<p>So, altogether, not too complicated. In order to test an instance method, your tests need to initialize an instance that can call that method.</p>
 
 <p>Bonus side note: if you’re testing multiple instance methods, you can DRY up your code by initializing your instance just once:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;hello_world&#39;</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">'hello_world'</span>
 
-<span class="n">describe</span> <span class="s2">&quot;hello_world&quot;</span> <span class="k">do</span>
-  <span class="n">let</span><span class="p">(</span><span class="ss">:my_instance</span><span class="p">)</span> <span class="p">{</span><span class="n">described_class</span><span class="o">.</span><span class="n">new</span><span class="p">}</span>
+<span class="n">describe</span> <span class="s2">"hello_world"</span> <span class="k">do</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:my_instance</span><span class="p">)</span> <span class="p">{</span><span class="n">described_class</span><span class="p">.</span><span class="nf">new</span><span class="p">}</span>
 
-  <span class="n">it</span> <span class="s2">&quot;returns &#39;Hello, World!&#39;&quot;</span> <span class="k">do</span>
-    <span class="n">expect</span><span class="p">(</span><span class="n">my_instance</span><span class="o">.</span><span class="n">hello_world</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;&quot;)</span>
-<span class="s2">  end</span>
-<span class="s2">end</span></code></pre></div>
+  <span class="n">it</span> <span class="s2">"returns 'Hello, World!'"</span> <span class="k">do</span>
+    <span class="n">expect</span><span class="p">(</span><span class="n">my_instance</span><span class="p">.</span><span class="nf">hello_world</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s2">"Hello, world!"")
+  end
+end</span></code></pre></figure>
 
 <p>Though, I must advise that you proceed with caution, as I’ve heard that relying on “let” <a href="http://robots.thoughtbot.com/lets-not">isn’t necessarily a best practice</a>.</p>
 

@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -76,7 +78,7 @@
 
   <article class="post-content">
     <blockquote>
-  <p>tl;dr - Use <code>React.render()</code> in place of <code>React.renderComponent()</code> when rendering React components from Backbone views</p>
+  <p>tl;dr - Use <code class="highlighter-rouge">React.render()</code> in place of <code class="highlighter-rouge">React.renderComponent()</code> when rendering React components from Backbone views</p>
 </blockquote>
 
 <p>If you’re looking to start bringing React into a project you’ve set up in Backbone, you’re in luck. It can be done. There are even some nice posts out there to help get you started.</p>
@@ -87,27 +89,27 @@
 
 <p>Unfortunately, it can be tough for the literature to keep up with changing APIs. Techniques that got the job done only a year ago (or less) might no longer be supported today.</p>
 
-<p>This isn’t a huge problem; it’s better to have slightly dated information than to have nothing at all. </p>
+<p>This isn’t a huge problem; it’s better to have slightly dated information than to have nothing at all.</p>
 
 <p>But if you’re new to both libraries, trying to make React and Backbone play nicely with each other can be challenging enough. Adding on the obstacle of non-working sample code can make the solution seem out of reach.</p>
 
 <p>So, in this post, I want to highlight one place where the API has changed, and what you can do to keep making progress.</p>
 
-<p><strong>Goodbye <code>renderComponent()</code></strong></p>
+<p><strong>Goodbye <code class="highlighter-rouge">renderComponent()</code></strong></p>
 
-<p>Both of the posts linked to above render React components from Backbone views with <code>React.renderComponent()</code>. This function takes two arguments: the component to render and the DOM element that it should occupy.</p>
+<p>Both of the posts linked to above render React components from Backbone views with <code class="highlighter-rouge">React.renderComponent()</code>. This function takes two arguments: the component to render and the DOM element that it should occupy.</p>
 
-<p>The trouble is, that function <a href="https://facebook.github.io/react/blog/2014/10/28/react-v0.12.html">is now deprecated</a>. If you give it a try with a recent version of React, you’ll be met with an unwelcome surprise in the console: <code>Uncaught TypeError: React.renderComponent is not a function</code>.</p>
+<p>The trouble is, that function <a href="https://facebook.github.io/react/blog/2014/10/28/react-v0.12.html">is now deprecated</a>. If you give it a try with a recent version of React, you’ll be met with an unwelcome surprise in the console: <code class="highlighter-rouge">Uncaught TypeError: React.renderComponent is not a function</code>.</p>
 
-<p>If you read through the documentation, you’ll see that <code>React.renderComponent()</code> has been replaced by <code>React.render()</code>. And that’s the replacement you should use (see the “tl;dr”), but there are reasons you might be tempted to not do so.</p>
+<p>If you read through the documentation, you’ll see that <code class="highlighter-rouge">React.renderComponent()</code> has been replaced by <code class="highlighter-rouge">React.render()</code>. And that’s the replacement you should use (see the “tl;dr”), but there are reasons you might be tempted to not do so.</p>
 
-<p>Just like <code>React.renderComponent()</code>, <code>React.render()</code> requires that you pass in a DOM element identifying where on the page your component should be rendered. When the component is rendered to that DOM element, it replaces the existing contents of that container.</p>
+<p>Just like <code class="highlighter-rouge">React.renderComponent()</code>, <code class="highlighter-rouge">React.render()</code> requires that you pass in a DOM element identifying where on the page your component should be rendered. When the component is rendered to that DOM element, it replaces the existing contents of that container.</p>
 
 <p>This means that rendering your React component can delete existing page contents. When you’re displaying something like a modal, that can be a real pain.</p>
 
 <p><strong>So Many Renders</strong></p>
 
-<p>Taking a look through the documentation, you can see that <code>React.render()</code> is supplemented by <code>React.renderToString()</code> and <code>React.renderToStaticMarkup()</code>. These functions have the advantage of only taking one argument: the component you want to render.</p>
+<p>Taking a look through the documentation, you can see that <code class="highlighter-rouge">React.render()</code> is supplemented by <code class="highlighter-rouge">React.renderToString()</code> and <code class="highlighter-rouge">React.renderToStaticMarkup()</code>. These functions have the advantage of only taking one argument: the component you want to render.</p>
 
 <p>The benefit of not taking control of a DOM element is that you don’t have to cede control of that container over to React. Simply generate the contents you want to display, then add or remove them at will with jQuery; it creates no problems for your existing content.</p>
 
@@ -115,19 +117,19 @@
 
 <p><strong>Render Under Control</strong></p>
 
-<p>In order to access functions defined on your React components, you’ll want to stick with <code>React.render()</code>, handing over control of the DOM element. That’s the most simple way to get your content on the page while also taking advantage of React’s event handling.</p>
+<p>In order to access functions defined on your React components, you’ll want to stick with <code class="highlighter-rouge">React.render()</code>, handing over control of the DOM element. That’s the most simple way to get your content on the page while also taking advantage of React’s event handling.</p>
 
 <p>If you’re worried about losing existing content, a simple solution is to append a new DOM element where you want the component to render, passing that in as the container.</p>
 
-<div class="highlight"><pre><code class="language-coffeescript" data-lang="coffeescript"><span class="nv">render: </span><span class="nf">-&gt;</span>
-  <span class="nx">$</span><span class="p">(</span><span class="nx">@parentEl</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s">&quot;&lt;div class=&#39;component-container&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">)</span>
-  <span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
-    <span class="nx">React</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">MyComponent</span><span class="p">,</span> <span class="p">{</span> <span class="nv">prop1: </span><span class="p">{},</span> <span class="nv">prop2: </span><span class="p">[]</span> <span class="p">}),</span>
-    <span class="nx">$</span><span class="p">(</span><span class="s">&#39;.component-container&#39;</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-coffeescript" data-lang="coffeescript"><span class="na">render</span><span class="o">:</span> <span class="o">-&gt;</span>
+  <span class="nx">$</span><span class="p">(</span><span class="vi">@</span><span class="na">parentEl</span><span class="p">).</span><span class="na">append</span><span class="p">(</span><span class="s">"&lt;div class='component-container'&gt;&lt;/div&gt;"</span><span class="p">)</span>
+  <span class="nx">React</span><span class="p">.</span><span class="na">render</span><span class="p">(</span>
+    <span class="nx">React</span><span class="p">.</span><span class="na">createElement</span><span class="p">(</span><span class="nx">MyComponent</span><span class="p">,</span> <span class="p">{</span> <span class="na">prop1</span><span class="o">:</span> <span class="p">{},</span> <span class="na">prop2</span><span class="o">:</span> <span class="p">[]</span> <span class="p">}),</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s">'.component-container'</span><span class="p">).</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span></code></pre></figure>
 
 <p>Make sure that you unmount the component when it’s closed:</p>
 
-<div class="highlight"><pre><code class="language-coffeescript" data-lang="coffeescript"><span class="nx">React</span><span class="p">.</span><span class="nx">unmountComponentAtNode</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s">&#39;.component-container&#39;</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-coffeescript" data-lang="coffeescript"><span class="nx">React</span><span class="p">.</span><span class="na">unmountComponentAtNode</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s">'.component-container'</span><span class="p">).</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span></code></pre></figure>
 
 <p>And you’ve successfully taken advantage of React’s event handling inside of your Backbone view.</p>
 

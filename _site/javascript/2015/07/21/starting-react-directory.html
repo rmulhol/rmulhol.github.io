@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -79,25 +81,25 @@
 
 <p>That’s not to say the process has been hiccup free - it’s been littered with (surmountable) obstacles. Though that’s to be expected when you’re new to any library, it’s particularly pronounced in this instance by the absence of a standardized format for React projects.</p>
 
-<p>You see, there is no <code>rails new ...</code> for React. There are several super helpful boilerplate <a href="https://github.com/petehunt/react-boilerplate">templates</a> and <a href="https://github.com/newtriks/generator-react-webpack">generators</a>, but they’re not uniform. People pretty much include whatever they think they’ll need, and they all have different ideas as to what exactly that is.</p>
+<p>You see, there is no <code class="highlighter-rouge">rails new ...</code> for React. There are several super helpful boilerplate <a href="https://github.com/petehunt/react-boilerplate">templates</a> and <a href="https://github.com/newtriks/generator-react-webpack">generators</a>, but they’re not uniform. People pretty much include whatever they think they’ll need, and they all have different ideas as to what exactly that is.</p>
 
 <p>I’m not going to tell you that my preferences are any better than those of the folks who have done this work,<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> but I am willing to wager that mine are more minimal. I’m interested in having the bare-bones setup for getting up and running, and we can add other stuff later.</p>
 
 <p>So, in what follows, I want to lay out the steps for setting up a file directory you can use to build a React project. We’ll include only what we need to start hacking, and then cover further topics in subsequent posts. If you’re willing to hop on for the ride, let’s dive into part 1 of getting started with React.</p>
 
-<p><strong>Step 1: Setting Up Your <code>package.json</code> File</strong></p>
+<p><strong>Step 1: Setting Up Your <code class="highlighter-rouge">package.json</code> File</strong></p>
 
 <p>One thing we’ll be using to manage our project’s dependencies is <a href="https://www.npmjs.com/">npm</a> - the Node Package Manager. If you don’t have that, you’ll want to <a href="https://docs.npmjs.com/getting-started/installing-node">install Node.js and npm</a> now.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
 
-<p>Once you’ve got npm, you can run <code>npm init</code> in an empty directory to setup a basic <a href="https://docs.npmjs.com/files/package.json"><code>package.json</code></a> file. By answering the prompts, you’ll identify some key attributes of your project: its name, version, license, etc.</p>
+<p>Once you’ve got npm, you can run <code class="highlighter-rouge">npm init</code> in an empty directory to setup a basic <a href="https://docs.npmjs.com/files/package.json"><code class="highlighter-rouge">package.json</code></a> file. By answering the prompts, you’ll identify some key attributes of your project: its name, version, license, etc.</p>
 
 <p><img src="http://rmulhol.github.io//assets/npm-init.png" alt="npm-init-execution" /></p>
 
-<p>Once we’ve got a basic <code>package.json</code> file setup, we can add one of the more important dependencies for our project - React - with a single command: <code>npm install --save react</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
+<p>Once we’ve got a basic <code class="highlighter-rouge">package.json</code> file setup, we can add one of the more important dependencies for our project - React - with a single command: <code class="highlighter-rouge">npm install --save react</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
 
-<p>Next, we can install some dev dependencies we’ll be needing: <code>npm install --save-dev browserify reactify</code>.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup>  <a href="https://github.com/substack/browserify-handbook">Browserify</a> will enable us to compile modules for the browser, and <a href="https://github.com/andreypopp/reactify">Reactify</a> will help Browserify to play nicely with the <a href="https://facebook.github.io/jsx/">JSX</a> syntax we’ll be using in our React modules.</p>
+<p>Next, we can install some dev dependencies we’ll be needing: <code class="highlighter-rouge">npm install --save-dev browserify reactify</code>.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup>  <a href="https://github.com/substack/browserify-handbook">Browserify</a> will enable us to compile modules for the browser, and <a href="https://github.com/andreypopp/reactify">Reactify</a> will help Browserify to play nicely with the <a href="https://facebook.github.io/jsx/">JSX</a> syntax we’ll be using in our React modules.</p>
 
-<p>At this point, your <code>package.json</code> file should look something like this:</p>
+<p>At this point, your <code class="highlighter-rouge">package.json</code> file should look something like this:</p>
 
 <p><img src="http://rmulhol.github.io//assets/pkg-with-devDeps.png" alt="pkg-with-devDeps" /></p>
 
@@ -105,9 +107,9 @@
 
 <p><img src="http://rmulhol.github.io//assets/pkg-with-build-script.png" alt="pkg-with-build-script" /></p>
 
-<p>And then install <code>browserify</code> globally so that our script will execute: <code>npm install -g browserify</code>.<sup id="fnref:5"><a href="#fn:5" class="footnote">5</a></sup></p>
+<p>And then install <code class="highlighter-rouge">browserify</code> globally so that our script will execute: <code class="highlighter-rouge">npm install -g browserify</code>.<sup id="fnref:5"><a href="#fn:5" class="footnote">5</a></sup></p>
 
-<p>That will do it for our <code>package.json</code> file, for now. Time to start building out the rest of our file directory structure.</p>
+<p>That will do it for our <code class="highlighter-rouge">package.json</code> file, for now. Time to start building out the rest of our file directory structure.</p>
 
 <p><strong>Step 2: Add Files/Directories</strong></p>
 
@@ -123,33 +125,29 @@
 
 <p>At this point, we’re ready to put in some code!</p>
 
-<p><strong>Step 3: Filling in <code>index.html</code></strong></p>
+<p><strong>Step 3: Filling in <code class="highlighter-rouge">index.html</code></strong></p>
 
-<p>The <code>index.html</code> file stores the basic page we’ll be working on. You can fill it in like so:</p>
+<p>The <code class="highlighter-rouge">index.html</code> file stores the basic page we’ll be working on. You can fill it in like so:</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/51035643a1a4b29c9a23.js"> </script>
 
-<p>The key to this file is the <code>section</code> with the <code>id</code> “react” - that’s the entry point for our React code. It’ll be filled in by the <code>bundle.js</code> script (which is generate by Browserify).</p>
+<p>The key to this file is the <code class="highlighter-rouge">section</code> with the <code class="highlighter-rouge">id</code> “react” - that’s the entry point for our React code. It’ll be filled in by the <code class="highlighter-rouge">bundle.js</code> script (which is generate by Browserify).</p>
 
-<p><strong>Step 4: Filling in <code>app.js</code></strong></p>
+<p><strong>Step 4: Filling in <code class="highlighter-rouge">app.js</code></strong></p>
 
-<p>Almost there! The next step is to pop some code into our <code>app.js</code> file that indicates what to put in the “react” <code>section</code>. You can do that like so:</p>
+<p>Almost there! The next step is to pop some code into our <code class="highlighter-rouge">app.js</code> file that indicates what to put in the “react” <code class="highlighter-rouge">section</code>. You can do that like so:</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
 <script src="https://gist.github.com/dfcb2fd783ada9654894.js"> </script>
 
-<p>This code tells React to find the page element with the <code>id</code> “react” and put the preceding JSX code (which looks like raw html) there.</p>
+<p>This code tells React to find the page element with the <code class="highlighter-rouge">id</code> “react” and put the preceding JSX code (which looks like raw html) there.</p>
 
 <p><strong>Step 5: Build and Run</strong></p>
 
-<p>At this point, we’ve got all the hand-written code we’re going to need. The next step is to run <code>npm run build</code>, which will trigger the build script we put in our <code>package.json</code> file.</p>
+<p>At this point, we’ve got all the hand-written code we’re going to need. The next step is to run <code class="highlighter-rouge">npm run build</code>, which will trigger the build script we put in our <code class="highlighter-rouge">package.json</code> file.</p>
 
-<p>After that’s complete, we’re ready to fire up our app! To do that, we need an http server. The easiest way to get one is probably to run <code>npm install -g http-server</code>.</p>
+<p>After that’s complete, we’re ready to fire up our app! To do that, we need an http server. The easiest way to get one is probably to run <code class="highlighter-rouge">npm install -g http-server</code>.</p>
 
-<p>Once that’s installed, head to your project’s root directory and run <code>http-server</code>. Pull up the browser and head over to http://localhost:8080/ and…</p>
+<p>Once that’s installed, head to your project’s root directory and run <code class="highlighter-rouge">http-server</code>. Pull up the browser and head over to http://localhost:8080/ and…</p>
 
 <p><img src="http://rmulhol.github.io//assets/browser-view-hello-world.png" alt="browser-view-hello-world" /></p>
 
@@ -157,29 +155,29 @@
 
 <p><strong>Conclusion</strong></p>
 
-<p>So, we clearly have a lot more to learn before we can start really taking advantage of React’s power, but we are now working with the library. Just by installing a few dependencies, filling out a few files, and executing a few scripts, we’re right about where we’d expect to be with something like a <code>rails new ...</code> for React.</p>
+<p>So, we clearly have a lot more to learn before we can start really taking advantage of React’s power, but we are now working with the library. Just by installing a few dependencies, filling out a few files, and executing a few scripts, we’re right about where we’d expect to be with something like a <code class="highlighter-rouge">rails new ...</code> for React.</p>
 
 <p>Stay tuned for future posts on getting started with React!<sup id="fnref:6"><a href="#fn:6" class="footnote">6</a></sup></p>
 
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>They’re awesome <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>They’re awesome <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>Seriously, if you’ve read this far, you’re definitely going to want these things. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+      <p>Seriously, if you’ve read this far, you’re definitely going to want these things. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:3">
-      <p>The <code>--save</code> flag tells npm to list react in the <code>dependencies</code> section of our <code>package.json</code> file. That’s useful for anyone who clones our repo, since they can now run <code>npm install</code> to install all of the project’s dependencies. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+      <p>The <code class="highlighter-rouge">--save</code> flag tells npm to list react in the <code class="highlighter-rouge">dependencies</code> section of our <code class="highlighter-rouge">package.json</code> file. That’s useful for anyone who clones our repo, since they can now run <code class="highlighter-rouge">npm install</code> to install all of the project’s dependencies. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:4">
-      <p>The <code>--save-dev</code> flag tells npm to list Browserify and Reactify in the <code>devDependencies</code> section of our <code>package.json</code> file. <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
+      <p>The <code class="highlighter-rouge">--save-dev</code> flag tells npm to list Browserify and Reactify in the <code class="highlighter-rouge">devDependencies</code> section of our <code class="highlighter-rouge">package.json</code> file. <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:5">
-      <p>The <code>-g</code> flag tells npm to install Browserify globally, so that we can run <code>browserify</code> from the command line anywhere on our system. <a href="#fnref:5" class="reversefootnote">&#8617;</a></p>
+      <p>The <code class="highlighter-rouge">-g</code> flag tells npm to install Browserify globally, so that we can run <code class="highlighter-rouge">browserify</code> from the command line anywhere on our system. <a href="#fnref:5" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:6">
-      <p>If you’d like to follow along with the source code we’re developing over this series of posts, check out the <a href="https://github.com/rmulhol/demo-react-app">demo-react-app Github repo</a>. The changes from this post are reflected in the second commit. <a href="#fnref:6" class="reversefootnote">&#8617;</a></p>
+      <p>If you’d like to follow along with the source code we’re developing over this series of posts, check out the <a href="https://github.com/rmulhol/demo-react-app">demo-react-app Github repo</a>. The changes from this post are reflected in the second commit. <a href="#fnref:6" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

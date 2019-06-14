@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -79,15 +81,15 @@
 
 <p>It didn’t seem like a particularly big deal when I only had to deal with a few simple requests, since I could just figure everything out with a conditional:</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">if</span> <span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getMethod</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;GET&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">request</span><span class="o">.</span><span class="na">getUri</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">))</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">if</span> <span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getMethod</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">"GET"</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">request</span><span class="o">.</span><span class="na">getUri</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">"/"</span><span class="o">))</span> <span class="o">{</span>
     <span class="k">return</span> <span class="k">new</span> <span class="nf">RootResponse</span><span class="o">();</span>
-<span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getMethod</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;GET&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">request</span><span class="o">.</span><span class="na">getUri</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;/file&quot;</span><span class="o">))</span> <span class="o">{</span>
+<span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getMethod</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">"GET"</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">request</span><span class="o">.</span><span class="na">getUri</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">"/file"</span><span class="o">))</span> <span class="o">{</span>
   <span class="k">return</span> <span class="k">new</span> <span class="nf">FileResponse</span><span class="o">();</span>
 <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
   <span class="k">return</span> <span class="k">new</span> <span class="nf">FourOhFourResponse</span><span class="o">();</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
-<p>This seems to work OK with a small amount of relatively simple requests, but you’re probably already starting to notice the issue: what about when things get more complicated? Say I’ve got to deal with 100 different requests, sometimes checking things in the header (<code>request.isAuthorized()</code>, <code>request.hasRange()</code>, etc.). That conditional is going to get pretty nasty.</p>
+<p>This seems to work OK with a small amount of relatively simple requests, but you’re probably already starting to notice the issue: what about when things get more complicated? Say I’ve got to deal with 100 different requests, sometimes checking things in the header (<code class="highlighter-rouge">request.isAuthorized()</code>, <code class="highlighter-rouge">request.hasRange()</code>, etc.). That conditional is going to get pretty nasty.</p>
 
 <p>And, conveniently, this problem even has a name: it’s an illustration of what happens when you violate the Open-Closed Principle. That is to say, this approach is not open for extension but closed for modification. Every new request is going to require that you go in an edit that conditional.</p>
 
@@ -95,23 +97,23 @@
 
 <p>Of course there’s another way. Anyone who’s got a passing familiarity with Rails should know as much. Does this look familiar?</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Rails</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
-  <span class="n">root</span>                  <span class="s2">&quot;static_pages#home&quot;</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">routes</span><span class="p">.</span><span class="nf">draw</span> <span class="k">do</span>
+  <span class="n">root</span>                  <span class="s2">"static_pages#home"</span>
 
-  <span class="n">get</span>     <span class="s2">&quot;help&quot;</span>    <span class="o">=&gt;</span>  <span class="s2">&quot;static_pages#help&quot;</span>
-  <span class="n">get</span>     <span class="s2">&quot;about&quot;</span>   <span class="o">=&gt;</span>  <span class="s2">&quot;static_pages#about&quot;</span>
-  <span class="n">get</span>     <span class="s2">&quot;contact&quot;</span> <span class="o">=&gt;</span>  <span class="s2">&quot;static_pages#contact&quot;</span>
+  <span class="n">get</span>     <span class="s2">"help"</span>    <span class="o">=&gt;</span>  <span class="s2">"static_pages#help"</span>
+  <span class="n">get</span>     <span class="s2">"about"</span>   <span class="o">=&gt;</span>  <span class="s2">"static_pages#about"</span>
+  <span class="n">get</span>     <span class="s2">"contact"</span> <span class="o">=&gt;</span>  <span class="s2">"static_pages#contact"</span>
 
-  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-<span class="k">end</span></code></pre></div>
+  <span class="o">...</span>
+<span class="k">end</span></code></pre></figure>
 
-<p>That’s the beginning of the <code>config/routes.rb</code> file from Michael Hartl’s <a href="https://www.railstutorial.org/">Rails Tutorial</a>, and it’s accomplishing precisely the task we’ve set out to tackle. It’s also pretty straightforward and elegant - <code>x</code> request maps to <code>y</code> controller action.</p>
+<p>That’s the beginning of the <code class="highlighter-rouge">config/routes.rb</code> file from Michael Hartl’s <a href="https://www.railstutorial.org/">Rails Tutorial</a>, and it’s accomplishing precisely the task we’ve set out to tackle. It’s also pretty straightforward and elegant - <code class="highlighter-rouge">x</code> request maps to <code class="highlighter-rouge">y</code> controller action.</p>
 
-<p>That’s a pretty important verb: “map”. It’s also a data structure. In Java, we might think about a <code>HashMap</code>, where keys could be requests corresponding to values that designate appropriate controllers.</p>
+<p>That’s a pretty important verb: “map”. It’s also a data structure. In Java, we might think about a <code class="highlighter-rouge">HashMap</code>, where keys could be requests corresponding to values that designate appropriate controllers.</p>
 
 <p>In retrospect, it’s got this sort of facepalm-eliciting simplicity: associate routes with controllers in a map, then make calls to that map whenever you need to route a request.</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Routes</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Routes</span> <span class="o">{</span>
 
     <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Controller</span><span class="o">&gt;</span> <span class="n">routes</span><span class="o">;</span>
 
@@ -126,7 +128,7 @@
     <span class="kd">public</span> <span class="n">Controller</span> <span class="nf">getRoute</span><span class="o">(</span><span class="n">String</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
       <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">routes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
     <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 <p>Of course, this is a fairly naive implementation that could be finessed a bit, but it’s the seedling for an extensible architecture that satisfies the Open-Closed principle, and it makes your life a lot easier when you want to add new routes to your server down the line.</p>
 

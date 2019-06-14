@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -77,39 +79,39 @@
   <article class="post-content">
     <p>In a <a href="/ruby/2014/09/16/initializing-instance-variables.html">previous post</a>, I described the process of initializing instance variables with the self.instance_variable naming format. To do so, you have to use an attr_accessor:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Books</span>
-  <span class="kp">attr_accessor</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">:author</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Books</span>
+  <span class="nb">attr_accessor</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">:author</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">author</span><span class="p">)</span>
-    <span class="nb">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
-    <span class="nb">self</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">author</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nf">title</span> <span class="o">=</span> <span class="n">title</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nf">author</span> <span class="o">=</span> <span class="n">author</span>
   <span class="k">end</span>
-<span class="k">end</span></code></pre></div>
+<span class="k">end</span></code></pre></figure>
 
 <p>This approach has its advantages. You don’t, for example, have to worry about a mistyped reference to your instance variable running as nill:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Cats</span>
-  <span class="kp">attr_accessor</span> <span class="ss">:name</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Cats</span>
+  <span class="nb">attr_accessor</span> <span class="ss">:name</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-    <span class="nb">self</span><span class="o">.</span><span class="n">name</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nf">name</span>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">cats_name</span>
-    <span class="nb">self</span><span class="o">.</span><span class="n">naaaame</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nf">naaaame</span>
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="o">&gt;</span> <span class="n">my_cat</span> <span class="o">=</span> <span class="no">Cats</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Buford&quot;</span><span class="p">)</span>
-<span class="o">&gt;</span> <span class="n">my_cat</span><span class="o">.</span><span class="n">name</span>
-<span class="o">=&gt;</span> <span class="s2">&quot;Buford&quot;</span>
-<span class="o">&gt;</span> <span class="n">my_cat</span><span class="o">.</span><span class="n">cats_name</span>
-<span class="o">=&gt;</span> <span class="ss">NoMethodError</span><span class="p">:</span> <span class="n">undefined</span> <span class="nb">method</span> <span class="sb">`naaame&#39;</span></code></pre></div>
+<span class="o">&gt;</span> <span class="n">my_cat</span> <span class="o">=</span> <span class="no">Cats</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"Buford"</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">my_cat</span><span class="p">.</span><span class="nf">name</span>
+<span class="o">=&gt;</span> <span class="s2">"Buford"</span>
+<span class="o">&gt;</span> <span class="n">my_cat</span><span class="p">.</span><span class="nf">cats_name</span>
+<span class="o">=&gt;</span> <span class="no">NoMethodError</span><span class="p">:</span> <span class="n">undefined</span> <span class="nb">method</span> <span class="sb">`naaame'</span></code></pre></figure>
 
 <p>This NoMethodError doesn’t show up if you mistype an instance variable labeled with ‘@’:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Dogs</span>
-  <span class="kp">attr_reader</span> <span class="ss">:name</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Dogs</span>
+  <span class="nb">attr_reader</span> <span class="ss">:name</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
     <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
@@ -120,11 +122,11 @@
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="o">&gt;</span> <span class="n">my_dog</span> <span class="o">=</span> <span class="no">Dogs</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Pug Life&quot;</span><span class="p">)</span>
-<span class="o">&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">name</span>
-<span class="o">=&gt;</span> <span class="s2">&quot;Pug Life&quot;</span>
-<span class="o">&gt;</span> <span class="n">my_dog</span><span class="o">.</span><span class="n">dogs_name</span>
-<span class="o">=&gt;</span> <span class="kp">nil</span></code></pre></div>
+<span class="o">&gt;</span> <span class="n">my_dog</span> <span class="o">=</span> <span class="no">Dogs</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"Pug Life"</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">my_dog</span><span class="p">.</span><span class="nf">name</span>
+<span class="o">=&gt;</span> <span class="s2">"Pug Life"</span>
+<span class="o">&gt;</span> <span class="n">my_dog</span><span class="p">.</span><span class="nf">dogs_name</span>
+<span class="o">=&gt;</span> <span class="kp">nil</span></code></pre></figure>
 
 <p>Though the nil return might not seem like that big of a deal right now, it can be a real pain later if the value gets passed through multiple lines of code before you receive the inevitable ‘undefined method for nil: NilClass’ error. You’ll be wishing you could have seen the error right where you went wrong.</p>
 
@@ -132,10 +134,10 @@
 
 <p>So, what’s the solution?</p>
 
-<p>From what I can tell, perhaps the best approach is to hold on to the @instance_variable naming in your initialize method, but then embrace the power of the attr_reader: </p>
+<p>From what I can tell, perhaps the best approach is to hold on to the @instance_variable naming in your initialize method, but then embrace the power of the attr_reader:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Books</span>
-  <span class="kp">attr_reader</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">:author</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Books</span>
+  <span class="nb">attr_reader</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">:author</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">author</span><span class="p">)</span>
     <span class="vi">@title</span> <span class="o">=</span> <span class="n">title</span>
@@ -147,15 +149,15 @@
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="o">&gt;</span> <span class="n">my_book</span> <span class="o">=</span> <span class="no">Books</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Nineteen Eighty-Four&quot;</span><span class="p">,</span> <span class="s2">&quot;George Orwell&quot;</span><span class="p">)</span>
-<span class="o">&gt;</span> <span class="n">my_book</span><span class="o">.</span><span class="n">title</span>
-<span class="o">=&gt;</span> <span class="s2">&quot;Nineteen Eighty-Four&quot;</span>
-<span class="o">&gt;</span> <span class="n">my_book</span><span class="o">.</span><span class="n">books_title</span>
-<span class="o">&gt;</span> <span class="n">undefined</span> <span class="n">local</span> <span class="n">variable</span> <span class="ow">or</span> <span class="nb">method</span> <span class="s1">&#39;tiiiitle&#39;</span></code></pre></div>
+<span class="o">&gt;</span> <span class="n">my_book</span> <span class="o">=</span> <span class="no">Books</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"Nineteen Eighty-Four"</span><span class="p">,</span> <span class="s2">"George Orwell"</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">my_book</span><span class="p">.</span><span class="nf">title</span>
+<span class="o">=&gt;</span> <span class="s2">"Nineteen Eighty-Four"</span>
+<span class="o">&gt;</span> <span class="n">my_book</span><span class="p">.</span><span class="nf">books_title</span>
+<span class="o">&gt;</span> <span class="n">undefined</span> <span class="n">local</span> <span class="n">variable</span> <span class="n">or</span> <span class="nb">method</span> <span class="s1">'tiiiitle'</span></code></pre></figure>
 
 <p>Typos will only run as nil when you include the ‘@’ at the beginning of the instance variable. Taking advantage of the attr_reader and referring to your instance variables without that symbol takes care of that, and doesn’t require you to include an attr_writer.</p>
 
-<p>Ultimately, choosing how to initialize and refer to your instance variables is a decision you make based on your project’s specific needs - you can go either way. But, in general, holding onto the ‘@’ and taking advantage of the attr_reader seems to deliver most of the benefits and fewer of the costs associated with alternative approaches. </p>
+<p>Ultimately, choosing how to initialize and refer to your instance variables is a decision you make based on your project’s specific needs - you can go either way. But, in general, holding onto the ‘@’ and taking advantage of the attr_reader seems to deliver most of the benefits and fewer of the costs associated with alternative approaches.</p>
 
 
   </article>

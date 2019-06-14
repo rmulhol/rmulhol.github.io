@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -79,21 +81,21 @@
 
 <p>One of the first things that struck me about Java is its verbosity. In Ruby, the ‘hello world’ program looks like this:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">puts</span> <span class="s1">&#39;Hello, world!&#39;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">puts</span> <span class="s1">'Hello, world!'</span></code></pre></figure>
 
 <p>But in Java, it looks like this:</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
-    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Hello, world!"</span><span class="o">);</span>
   <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
-<p>While Ruby does a lot of work behind the scenes and lets you accomplish tasks with really elegant and readable code, Java requires a little more legwork. You can’t just execute one command to print “Hello, world!” to the console; you also have to create a class, declare a <code>main</code> method, use proper opening and closing curly braces, <em>and</em> be sure to end every statement with a semicolon.</p>
+<p>While Ruby does a lot of work behind the scenes and lets you accomplish tasks with really elegant and readable code, Java requires a little more legwork. You can’t just execute one command to print “Hello, world!” to the console; you also have to create a class, declare a <code class="highlighter-rouge">main</code> method, use proper opening and closing curly braces, <em>and</em> be sure to end every statement with a semicolon.</p>
 
-<p>Another thing that distinguishes Java from Ruby is that it’s a ‘strong static’ language (Ruby is ‘strong dynamic’). What this means is that you must declare types for variables and method returns, and then compile source code into ‘bytecode’ before it can run. While Ruby lets you write code and then immediately run it with the <code>ruby &lt;filename&gt;</code> command, Java requires you to first enter <code>javac &lt;filename&gt;</code> (to compile) and then enter <code>java &lt;classname&gt;</code> (to run). If your source code contains obvious errors, it won’t compile and (therefore) it won’t run.</p>
+<p>Another thing that distinguishes Java from Ruby is that it’s a ‘strong static’ language (Ruby is ‘strong dynamic’). What this means is that you must declare types for variables and method returns, and then compile source code into ‘bytecode’ before it can run. While Ruby lets you write code and then immediately run it with the <code class="highlighter-rouge">ruby &lt;filename&gt;</code> command, Java requires you to first enter <code class="highlighter-rouge">javac &lt;filename&gt;</code> (to compile) and then enter <code class="highlighter-rouge">java &lt;classname&gt;</code> (to run). If your source code contains obvious errors, it won’t compile and (therefore) it won’t run.</p>
 
-<p>While the above distinctions might make Java sound like more trouble than it’s worth, there are some merits to these features. </p>
+<p>While the above distinctions might make Java sound like more trouble than it’s worth, there are some merits to these features.</p>
 
 <p>First, all of the verbosity paints a better picture of what’s going on ‘under the hood’. While I’ve encountered some baffling errors in Ruby where the code didn’t do what I expected, it’s hard to even get to those sort of lofty expectations in Java since you’re laying out each step in greater detail.</p>
 

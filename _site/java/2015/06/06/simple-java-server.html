@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -81,38 +83,38 @@
 
 <p>If that’s the task you’ve set out to accomplish, I’ve got news for you: putting together a (very, very basic) server in Java is simple. You can do so with the following 11 lines of code:</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
-    <span class="n">ServerSocket</span> <span class="n">serverSocket</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ServerSocket</span><span class="o">(</span><span class="mi">5000</span><span class="o">);</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">ServerSocket</span> <span class="n">serverSocket</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ServerSocket</span><span class="o">(</span><span class="mi">5000</span><span class="o">);</span>
     <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">Socket</span> <span class="n">clientSocket</span> <span class="o">=</span> <span class="n">serverSocket</span><span class="o">.</span><span class="na">accept</span><span class="o">();</span>
         <span class="n">OutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="n">clientSocket</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
-        <span class="n">BufferedReader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nf">InputStreamReader</span><span class="o">(</span><span class="n">clientSocket</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>
+        <span class="n">BufferedReader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">clientSocket</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>
         <span class="n">String</span> <span class="n">request</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
-        <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">((</span><span class="s">&quot;HTTP/1.1 200 OK\r\n\r\nYour request: &quot;</span> <span class="o">+</span> <span class="n">request</span><span class="o">).</span><span class="na">getBytes</span><span class="o">());</span>
+        <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">((</span><span class="s">"HTTP/1.1 200 OK\r\n\r\nYour request: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">).</span><span class="na">getBytes</span><span class="o">());</span>
         <span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
     <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 <p>Let’s break down what’s going on here.</p>
 
-<p>When the application starts, it calls <code>main</code>. This method creates a <code>ServerSocket</code> object which will serve as a host to receive requests. The argument passed in specifies which port the server should listen on; I’ve set to 5000. That means you can make a request to the server by visiting <code>localhost:5000</code>.</p>
+<p>When the application starts, it calls <code class="highlighter-rouge">main</code>. This method creates a <code class="highlighter-rouge">ServerSocket</code> object which will serve as a host to receive requests. The argument passed in specifies which port the server should listen on; I’ve set to 5000. That means you can make a request to the server by visiting <code class="highlighter-rouge">localhost:5000</code>.</p>
 
-<p>The next line initiates an infinite loop, relying on <code>while(true)</code> to ceaselessly repeat a sequence of instructions. While infinite loops are normally problematic in software, it’s fine here since we want our server to stay available after every request.</p>
+<p>The next line initiates an infinite loop, relying on <code class="highlighter-rouge">while(true)</code> to ceaselessly repeat a sequence of instructions. While infinite loops are normally problematic in software, it’s fine here since we want our server to stay available after every request.</p>
 
-<p>The body of the <code>while</code> loop sets up a protocol for dealing with client requests. First, we acknowledge any client that makes a request by allocating it a <code>Socket</code> object. Second, we identify the input and output streams for that client. While we might expect that our client will normally be a browser, it could also be other things (like a command line issuing a <code>curl</code> request). </p>
+<p>The body of the <code class="highlighter-rouge">while</code> loop sets up a protocol for dealing with client requests. First, we acknowledge any client that makes a request by allocating it a <code class="highlighter-rouge">Socket</code> object. Second, we identify the input and output streams for that client. While we might expect that our client will normally be a browser, it could also be other things (like a command line issuing a <code class="highlighter-rouge">curl</code> request).</p>
 
-<p>Once we’ve identified a client and its attendant input and output streams, we’re ready to read a request<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> and write a response. This is the meat of our server’s functionality. After we’ve received a request, we return a <code>200 OK</code> response header with a body that displays the request we received.</p>
+<p>Once we’ve identified a client and its attendant input and output streams, we’re ready to read a request<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> and write a response. This is the meat of our server’s functionality. After we’ve received a request, we return a <code class="highlighter-rouge">200 OK</code> response header with a body that displays the request we received.</p>
 
 <p>But the work isn’t finished there, as we still have to close the output stream to signal that the HTTP request/response cycle is complete.</p>
 
-<p>With one client’s request received, a response sent out, and the output stream closed, our server can move back to beginning of the <code>while</code> loop to await another request. </p>
+<p>With one client’s request received, a response sent out, and the output stream closed, our server can move back to beginning of the <code class="highlighter-rouge">while</code> loop to await another request.</p>
 
 <p>That’s it. With this small amount of code, we’ve got an HTTP server that runs. There’s a lot more to do to make it truly functional, but getting over the initial hurdle of handling the request/response cycle is no problem.</p>
 
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>Knowledgeable readers will notice that we only read the first line of our client’s request, which likely does not encapsulate the full request. That’s fine for our very limited functionality, but a more sophisticated server would want to be able to parse a complete (multi-line) request.  <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>Knowledgeable readers will notice that we only read the first line of our client’s request, which likely does not encapsulate the full request. That’s fine for our very limited functionality, but a more sophisticated server would want to be able to parse a complete (multi-line) request. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

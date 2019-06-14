@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -81,21 +83,21 @@
 
 <p>We decided to tackle this task with an array, and our first step was to create a new array that itself contained 100 empty arrays. We generated it with the literal constructor:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">make_100_spaces</span>
-  <span class="n">new_board</span> <span class="o">=</span> <span class="o">[]</span>
-  <span class="mi">100</span><span class="o">.</span><span class="n">times</span> <span class="k">do</span> <span class="p">{</span> <span class="n">new_board</span> <span class="o">&lt;&lt;</span> <span class="o">[]</span> <span class="p">}</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">make_100_spaces</span>
+  <span class="n">new_board</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="mi">100</span><span class="p">.</span><span class="nf">times</span> <span class="k">do</span> <span class="p">{</span> <span class="n">new_board</span> <span class="o">&lt;&lt;</span> <span class="p">[]</span> <span class="p">}</span>
   <span class="n">new_board</span>
-<span class="k">end</span></code></pre></div>
+<span class="k">end</span></code></pre></figure>
 
 <p>But after we got everything up and running, we went back to refactor and thought about trying the Array.new constructor:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">make_100_spaces</span>
-  <span class="nb">Array</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="o">[]</span><span class="p">)</span>
-<span class="k">end</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">make_100_spaces</span>
+  <span class="no">Array</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="p">[])</span>
+<span class="k">end</span></code></pre></figure>
 
 <p>This feels like good refactoring. We’re cutting back on lines of code and reducing the number of operations, so the only question is whether it achieves the same result.</p>
 
-<p>Well, it does not. When we ran the tests, everything was blowing up. A bunch of unexpected outcomes early on, then some <code>NoMethodError</code> messages referencing the <code>NilClass</code> toward the end.</p>
+<p>Well, it does not. When we ran the tests, everything was blowing up. A bunch of unexpected outcomes early on, then some <code class="highlighter-rouge">NoMethodError</code> messages referencing the <code class="highlighter-rouge">NilClass</code> toward the end.</p>
 
 <p>How could this be? I fired up an irb session and tried both approaches manually. Sure enough, our original approach was working as expected, and the Array.new constructor was not. I decided it was time to do some reading.</p>
 
@@ -103,9 +105,9 @@
 
 <p>The takeaway is not, however, just to stick to the literal constructor. The Array.new constructor can work just fine as written above above when you want the default value to point every element that receives it at the same thing (“natively immutable values”). And, if that’s not what you want, you can pass the Array.new constructor a block:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">make_100_spaces</span>
-  <span class="nb">Array</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="p">{</span> <span class="o">[]</span> <span class="p">}</span>
-<span class="k">end</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">make_100_spaces</span>
+  <span class="no">Array</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="p">{</span> <span class="p">[]</span> <span class="p">}</span>
+<span class="k">end</span></code></pre></figure>
 
 <p>When our code was refactored with the approach above, all of the tests pass.</p>
 

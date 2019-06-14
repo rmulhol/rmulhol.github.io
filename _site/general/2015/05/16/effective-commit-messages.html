@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -75,7 +77,7 @@
   </header>
 
   <article class="post-content">
-    <p>Over my time as a programmer, one area where I’ve felt there’s always more to learn is the effective use of version control. Internalizing the basics of <code>git add</code>, <code>git commit</code>, and <code>git push</code> doesn’t take too long, but there’s so many more useful features that become relevant with time and experience.</p>
+    <p>Over my time as a programmer, one area where I’ve felt there’s always more to learn is the effective use of version control. Internalizing the basics of <code class="highlighter-rouge">git add</code>, <code class="highlighter-rouge">git commit</code>, and <code class="highlighter-rouge">git push</code> doesn’t take too long, but there’s so many more useful features that become relevant with time and experience.</p>
 
 <p>Beyond additional features, there’s also the challenge of utilizing the simple tools <em>effectively</em>. Just because you make regular commits during the development process doesn’t mean you’re setting yourself up to reap the benefits of version control in the event that you need it.</p>
 
@@ -87,17 +89,17 @@
 
 <p>If I’m working on a project with poor test coverage, one priority is to add tests. As I wrap up tests for one class or namespace, it feels like a natural time to make a commit.</p>
 
-<p>An earlier version of myself might add the message <code>improve test coverage</code>. It’s concise and describes what I’ve done, so why not?</p>
+<p>An earlier version of myself might add the message <code class="highlighter-rouge">improve test coverage</code>. It’s concise and describes what I’ve done, so why not?</p>
 
 <p>The trouble is that this commit message is too vague. Others looking at my commit history don’t receive any useful information about how test coverage was improved.</p>
 
 <p>At its most basic, a good commit message should provide a clear explanation for what changes have been made. That means that it needs to include a sufficient level of detail to be understandable without diving into the code.</p>
 
-<p>A more helpful message might read <code>add tests for all methods on the Users controller</code>.</p>
+<p>A more helpful message might read <code class="highlighter-rouge">add tests for all methods on the Users controller</code>.</p>
 
 <p><strong>DRY Commits: Reduce Repetition</strong></p>
 
-<p>Imagine you’re satisfied with the <code>improve test coverage</code> commit message above, and now you want to improve test coverage for the whole project. So you’ve got a series of commits, each sharing the same message.</p>
+<p>Imagine you’re satisfied with the <code class="highlighter-rouge">improve test coverage</code> commit message above, and now you want to improve test coverage for the whole project. So you’ve got a series of commits, each sharing the same message.</p>
 
 <p>This compounds the problems described above. Not only can you not tell what’s happening in the first commit with the vague message, you’re also facing a series of subsequent commits bearing the same problem.</p>
 
@@ -113,7 +115,7 @@
 
 <p>If you’re making changes unrelated to what’s stated in your commit message, you’re lying. The commit does something totally different than what’s claimed in the message.</p>
 
-<p>A good commit message should be honest. That means you can’t always rely on the trusty <code>git add .</code>. Unrelated changes should be broken up into separate commits, so that each message tells the truth about what that commit is doing.</p>
+<p>A good commit message should be honest. That means you can’t always rely on the trusty <code class="highlighter-rouge">git add .</code>. Unrelated changes should be broken up into separate commits, so that each message tells the truth about what that commit is doing.</p>
 
 <p><strong>Conclusion</strong></p>
 

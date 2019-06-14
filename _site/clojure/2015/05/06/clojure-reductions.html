@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -75,80 +77,85 @@
   </header>
 
   <article class="post-content">
-    <p>One of the tasks I’ve been working on lately completing is the coin changer kata in Clojure. The objective is to calculate what coins you should distribute to most efficiently make a given amount of change. </p>
+    <p>One of the tasks I’ve been working on lately completing is the coin changer kata in Clojure. The objective is to calculate what coins you should distribute to most efficiently make a given amount of change.</p>
 
 <p>I’m blessed that there’s <a href="https://vimeo.com/53519408">a video out there</a> of Micah Martin performing this exact task, but being able to perform the kata feels a little bit empty without having a sense for what’s going on under the hood.</p>
 
 <p>And while the nature of task lends itself pretty well to the understanding (in US currency, simply provide larger coins until their value exceeds the amount you still owe), the implementation in Clojure is a bit complicated:</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="lineno">1</span> <span class="p">(</span><span class="kd">defn </span><span class="nv">change-for</span> <span class="p">[</span><span class="nv">amount</span><span class="p">]</span>
-<span class="lineno">2</span>   <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">denominations</span> <span class="p">[</span><span class="mi">25</span> <span class="mi">10</span> <span class="mi">5</span> <span class="mi">1</span><span class="p">]</span>
-<span class="lineno">3</span>         <span class="nv">amounts</span> <span class="p">(</span><span class="nf">reductions</span> <span class="o">#</span><span class="p">(</span><span class="nb">rem </span><span class="nv">%1</span> <span class="nv">%2</span><span class="p">)</span> <span class="nv">amount</span> <span class="nv">denominations</span><span class="p">)</span>
-<span class="lineno">4</span>         <span class="nv">coins</span> <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nb">int </span><span class="p">(</span><span class="nb">/ </span><span class="nv">%1</span> <span class="nv">%2</span><span class="p">))</span> <span class="nv">amounts</span> <span class="nv">denominations</span><span class="p">)]</span>
-<span class="lineno">5</span>     <span class="p">(</span><span class="nb">mapcat </span><span class="o">#</span><span class="p">(</span><span class="nb">take </span><span class="nv">%1</span> <span class="p">(</span><span class="nb">repeat </span><span class="nv">%2</span><span class="p">))</span> <span class="nv">coins</span> <span class="nv">denominations</span><span class="p">)))</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">change-for</span><span class="w"> </span><span class="p">[</span><span class="n">amount</span><span class="p">]</span><span class="w">
+  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">denominations</span><span class="w"> </span><span class="p">[</span><span class="mi">25</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w">
+        </span><span class="n">amounts</span><span class="w"> </span><span class="p">(</span><span class="nf">reductions</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">rem</span><span class="w"> </span><span class="n">%1</span><span class="w"> </span><span class="n">%2</span><span class="p">)</span><span class="w"> </span><span class="n">amount</span><span class="w"> </span><span class="n">denominations</span><span class="p">)</span><span class="w">
+        </span><span class="n">coins</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">int</span><span class="w"> </span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="n">%1</span><span class="w"> </span><span class="n">%2</span><span class="p">))</span><span class="w"> </span><span class="n">amounts</span><span class="w"> </span><span class="n">denominations</span><span class="p">)]</span><span class="w">
+    </span><span class="p">(</span><span class="nb">mapcat</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">take</span><span class="w"> </span><span class="n">%1</span><span class="w"> </span><span class="p">(</span><span class="nb">repeat</span><span class="w"> </span><span class="n">%2</span><span class="p">))</span><span class="w"> </span><span class="n">coins</span><span class="w"> </span><span class="n">denominations</span><span class="p">)))</span></pre></td></tr></tbody></table></code></pre></figure>
 
 <p>So let’s try and unpack what’s going on here.</p>
 
-<p>Lines 1 and 2 aren’t too difficult - we define a function with one parameter and bind the vector <code>[25 10 5 1]</code> to our <code>denominations</code> variable. So far, so good.</p>
+<p>Lines 1 and 2 aren’t too difficult - we define a function with one parameter and bind the vector <code class="highlighter-rouge">[25 10 5 1]</code> to our <code class="highlighter-rouge">denominations</code> variable. So far, so good.</p>
 
-<p>But line 3 gets more tricky. What is this <code>reductions</code>?</p>
+<p>But line 3 gets more tricky. What is this <code class="highlighter-rouge">reductions</code>?</p>
 
-<p>Turns out, nothing all too complicated. </p>
+<p>Turns out, nothing all too complicated.</p>
 
-<p>If you’re (like me) more familiar with Ruby than Clojure, then you might be familiar with <code>.inject</code> - a handy way to perform operations on collections.</p>
+<p>If you’re (like me) more familiar with Ruby than Clojure, then you might be familiar with <code class="highlighter-rouge">.inject</code> - a handy way to perform operations on collections.</p>
 
 <p>Say you want to get the sum of an array. You might call:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="o">].</span><span class="n">inject</span><span class="p">(</span><span class="ss">:+</span><span class="p">)</span>
-<span class="o">=&gt;</span> <span class="mi">15</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">].</span><span class="nf">inject</span><span class="p">(:</span><span class="o">+</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="mi">15</span></code></pre></figure>
 
-<p>If you want to begin your calculation of the sum from an initial value, you can do that too: </p>
+<p>If you want to begin your calculation of the sum from an initial value, you can do that too:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="o">].</span><span class="n">inject</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="ss">:+</span><span class="p">)</span>
-<span class="o">=&gt;</span> <span class="mi">20</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">].</span><span class="nf">inject</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="p">:</span><span class="o">+</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="mi">20</span></code></pre></figure>
 
-<p>As you may know, <code>.inject</code> also goes by the alias <code>.reduce</code> - these two methods accomplish the same task.</p>
+<p>As you may know, <code class="highlighter-rouge">.inject</code> also goes by the alias <code class="highlighter-rouge">.reduce</code> - these two methods accomplish the same task.</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="o">].</span><span class="n">reduce</span><span class="p">(</span><span class="ss">:+</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(:</span><span class="o">+</span><span class="p">)</span>
 <span class="o">=&gt;</span> <span class="mi">15</span>
-<span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="o">].</span><span class="n">reduce</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="ss">:+</span><span class="p">)</span>
-<span class="o">=&gt;</span> <span class="mi">20</span></code></pre></div>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">].</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="p">:</span><span class="o">+</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="mi">20</span></code></pre></figure>
 
-<p>Clojure also makes use of <code>reduce</code>:</p>
+<p>Clojure also makes use of <code class="highlighter-rouge">reduce</code>:</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">reduce </span><span class="o">#</span><span class="p">(</span><span class="nb">+ </span><span class="nv">%1</span> <span class="nv">%2</span><span class="p">)</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">])</span>
-<span class="c1">;= 15</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">reduce</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="n">%1</span><span class="w"> </span><span class="n">%2</span><span class="p">)</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="p">])</span><span class="w">
+</span><span class="c1">;= 15</span></code></pre></figure>
 
 <p>And it can also take an initial value:</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">reduce </span><span class="o">#</span><span class="p">(</span><span class="nb">+ </span><span class="nv">%1</span> <span class="nv">%2</span><span class="p">)</span> <span class="mi">5</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">])</span>
-<span class="c1">;= 20</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">reduce</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="n">%1</span><span class="w"> </span><span class="n">%2</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="p">])</span><span class="w">
+</span><span class="c1">;= 20</span></code></pre></figure>
 
-<p>So why the detour? Well, it turns out that <code>reductions</code> simply provides a sequence of the intermediate values involved in calling <code>reduce</code>:</p>
+<p>So why the detour? Well, it turns out that <code class="highlighter-rouge">reductions</code> simply provides a sequence of the intermediate values involved in calling <code class="highlighter-rouge">reduce</code>:</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">reductions</span> <span class="o">#</span><span class="p">(</span><span class="nb">+ </span><span class="nv">%1</span> <span class="nv">%2</span><span class="p">)</span> <span class="mi">5</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">])</span>
-<span class="c1">;= (5 6 8 11 15 20)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">reductions</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="n">%1</span><span class="w"> </span><span class="n">%2</span><span class="p">)</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="p">])</span><span class="w">
+</span><span class="c1">;= (5 6 8 11 15 20)</span></code></pre></figure>
 
-<p>Our sequence contains the initial value <code>5</code> followed by each of the values computed from adding on the next element in the collection (<code>5 + 1 = 6</code>, <code>6 + 2 = 8</code>, <code>8 + 3 = 11</code>, etc.).</p>
+<p>Our sequence contains the initial value <code class="highlighter-rouge">5</code> followed by each of the values computed from adding on the next element in the collection (<code class="highlighter-rouge">5 + 1 = 6</code>, <code class="highlighter-rouge">6 + 2 = 8</code>, <code class="highlighter-rouge">8 + 3 = 11</code>, etc.).</p>
 
-<p>This means that in the coin changer code above, <code>reductions</code> is giving us a collection containing the initial amount we owe followed by the amounts we still owe after factoring out larger denominations:</p>
+<p>This means that in the coin changer code above, <code class="highlighter-rouge">reductions</code> is giving us a collection containing the initial amount we owe followed by the amounts we still owe after factoring out larger denominations:</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">reductions</span> <span class="o">#</span><span class="p">(</span><span class="nb">rem </span><span class="nv">%1</span> <span class="nv">%2</span><span class="p">)</span> <span class="mi">99</span> <span class="p">[</span><span class="mi">25</span> <span class="mi">10</span> <span class="mi">5</span> <span class="mi">1</span><span class="p">])</span>
-<span class="c1">;= (99 24 4 4 0)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">reductions</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">rem</span><span class="w"> </span><span class="n">%1</span><span class="w"> </span><span class="n">%2</span><span class="p">)</span><span class="w"> </span><span class="mi">99</span><span class="w"> </span><span class="p">[</span><span class="mi">25</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">1</span><span class="p">])</span><span class="w">
+</span><span class="c1">;= (99 24 4 4 0)</span></code></pre></figure>
 
 <p>We still owe 24 cents after factoring out quarters, 4 cents after factoring out dimes and nickels, and then we’re done after we’ve distributed 4 pennies.</p>
 
 <p>So, how does this fit into the rest of the solution?</p>
 
-<p>Line 4 maps the quotients of dividing the <code>amounts</code> by the <code>denominations</code> (<code>99 / 25 = 3</code>, <code>24 / 10 = 2</code>, <code>4 / 5 = 0</code>, etc.): </p>
+<p>Line 4 maps the quotients of dividing the <code class="highlighter-rouge">amounts</code> by the <code class="highlighter-rouge">denominations</code> (<code class="highlighter-rouge">99 / 25 = 3</code>, <code class="highlighter-rouge">24 / 10 = 2</code>, <code class="highlighter-rouge">4 / 5 = 0</code>, etc.):</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nb">int </span><span class="p">(</span><span class="nb">/ </span><span class="nv">%1</span> <span class="nv">%2</span><span class="p">))</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">99</span> <span class="mi">24</span> <span class="mi">4</span> <span class="mi">4</span> <span class="mi">0</span><span class="p">)</span> <span class="p">[</span><span class="mi">25</span> <span class="mi">10</span> <span class="mi">5</span> <span class="mi">1</span><span class="p">])</span>
-<span class="c1">;= (3 2 0 4)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">int</span><span class="w"> </span><span class="p">(</span><span class="nb">/</span><span class="w"> </span><span class="n">%1</span><span class="w"> </span><span class="n">%2</span><span class="p">))</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">99</span><span class="w"> </span><span class="mi">24</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">[</span><span class="mi">25</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">1</span><span class="p">])</span><span class="w">
+</span><span class="c1">;= (3 2 0 4)</span></code></pre></figure>
 
 <p>And line 5 concatenates the mapping of the number of each coin with its denominational value:</p>
 
-<div class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">mapcat </span><span class="o">#</span><span class="p">(</span><span class="nb">take </span><span class="nv">%1</span> <span class="p">(</span><span class="nb">repeat </span><span class="nv">%2</span><span class="p">))</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">3</span> <span class="mi">2</span> <span class="mi">0</span> <span class="mi">4</span><span class="p">)</span> <span class="p">[</span><span class="mi">25</span> <span class="mi">10</span> <span class="mi">5</span> <span class="mi">1</span><span class="p">])</span>
-<span class="c1">;= (25 25 25 10 10 1 1 1 1)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nb">mapcat</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">take</span><span class="w"> </span><span class="n">%1</span><span class="w"> </span><span class="p">(</span><span class="nb">repeat</span><span class="w"> </span><span class="n">%2</span><span class="p">))</span><span class="w"> </span><span class="o">'</span><span class="p">(</span><span class="nf">3</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="p">[</span><span class="mi">25</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">1</span><span class="p">])</span><span class="w">
+</span><span class="c1">;= (25 25 25 10 10 1 1 1 1)</span></code></pre></figure>
 
 <p>The solution solves the problem, it’s elegant, and it makes sense.</p>
 

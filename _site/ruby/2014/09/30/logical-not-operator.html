@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -75,29 +77,29 @@
   </header>
 
   <article class="post-content">
-    <p>One of the tools that Ruby offers for evaluating objects is the logical NOT operator (the exclamation point, as in <code>x != y</code>). While the exclamation point is also used in other contexts to indicate that a method modifies the object it’s called on in place (e.g. <code>gets.chomp!</code>), the focus of this post is on the use of the exclamation point as a tool for comparison.</p>
+    <p>One of the tools that Ruby offers for evaluating objects is the logical NOT operator (the exclamation point, as in <code class="highlighter-rouge">x != y</code>). While the exclamation point is also used in other contexts to indicate that a method modifies the object it’s called on in place (e.g. <code class="highlighter-rouge">gets.chomp!</code>), the focus of this post is on the use of the exclamation point as a tool for comparison.</p>
 
-<p>Ruby offers <a href="http://www.tutorialspoint.com/ruby/ruby_operators.htm">numerous operators</a> for accomplishing all sorts of tasks, logical comparison being just one of them. Learning how and when to use these operators can be challenging at first (don’t forget: <code>=</code> is for assignment, but you must use <code>==</code> for comparison!), but it quickly becomes second nature. </p>
+<p>Ruby offers <a href="http://www.tutorialspoint.com/ruby/ruby_operators.htm">numerous operators</a> for accomplishing all sorts of tasks, logical comparison being just one of them. Learning how and when to use these operators can be challenging at first (don’t forget: <code class="highlighter-rouge">=</code> is for assignment, but you must use <code class="highlighter-rouge">==</code> for comparison!), but it quickly becomes second nature.</p>
 
 <p>As you get more familiar, the logical operators can be especially helpful. Say you want to take one array and return a new array that excludes all of a given element. You could easily do so like this:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span> <span class="o">!=</span> <span class="n">element_to_exclude</span> <span class="p">}</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="p">.</span><span class="nf">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span> <span class="o">!=</span> <span class="n">element_to_exclude</span> <span class="p">}</span></code></pre></figure>
 
 <p>Run the code, and an array containing only the elements that do not equal the element you want to exclude will be returned.</p>
 
 <p>So that’s great. But wouldn’t it be really useful if you could use the logical NOT operator for things other than equivalence? Say, for example, that you want to remove all elements in an array that do not include a given feature. For the inverse, you would obviously write:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span><span class="o">.</span><span class="n">include?</span> <span class="n">feature</span> <span class="p">}</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="p">.</span><span class="nf">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span><span class="p">.</span><span class="nf">include?</span> <span class="n">feature</span> <span class="p">}</span></code></pre></figure>
 
 <p>But to actually check that a feature is not included, this doesn’t work:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span><span class="o">.!</span><span class="kp">include</span><span class="p">?</span> <span class="n">feature_to_exclude</span> <span class="p">}</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="p">.</span><span class="nf">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span><span class="o">.!</span><span class="kp">include</span><span class="p">?</span> <span class="n">feature_to_exclude</span> <span class="p">}</span></code></pre></figure>
 
-<p>So is it hopeless? Does the absence of a <code>.does_not_include?</code> method doom us?</p>
+<p>So is it hopeless? Does the absence of a <code class="highlighter-rouge">.does_not_include?</code> method doom us?</p>
 
-<p>Not at all. You <em>can</em> use the logical NOT operator for this sort of comparison, but its placement differs from how it’s used in the <code>!=</code> comparison. To check that every element in an array does not include something, you simply write:</p>
+<p>Not at all. You <em>can</em> use the logical NOT operator for this sort of comparison, but its placement differs from how it’s used in the <code class="highlighter-rouge">!=</code> comparison. To check that every element in an array does not include something, you simply write:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="o">!</span><span class="n">element</span><span class="o">.</span><span class="n">include?</span> <span class="n">feature_to_exclude</span> <span class="p">}</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="p">.</span><span class="nf">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="o">!</span><span class="n">element</span><span class="p">.</span><span class="nf">include?</span> <span class="n">feature_to_exclude</span> <span class="p">}</span></code></pre></figure>
 
 <p>By placing the logical NOT operator before the check for inclusion, you’re basically saying “I only want to keep elements where it is NOT true that the element includes the feature I want to exclude.” In this context, it makes sense that the logical NOT operator comes before the whole operation. You’re not exactly running a method that checks that something is not included; you’re running the method that checks that something <em>is</em> included but <em>also</em> saying you do NOT want those things.</p>
 

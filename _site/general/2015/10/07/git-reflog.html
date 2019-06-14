@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -83,11 +85,11 @@
 
 <p>Luckily, this sort of error is not the end of the world. Not at all.</p>
 
-<p>There are number of ways to deal with inadvertent force pushes; I’d recommend <a href="https://blog.8thlight.com/sandro-padin/2015/06/08/help-i-just-force-pushed-to-master.html">this blog post</a> if you haven’t come across it already. But in this case, a very simple solution is to take advantage of <a href="https://git-scm.com/docs/git-reflog">the <code>reflog</code></a>.</p>
+<p>There are number of ways to deal with inadvertent force pushes; I’d recommend <a href="https://blog.8thlight.com/sandro-padin/2015/06/08/help-i-just-force-pushed-to-master.html">this blog post</a> if you haven’t come across it already. But in this case, a very simple solution is to take advantage of <a href="https://git-scm.com/docs/git-reflog">the <code class="highlighter-rouge">reflog</code></a>.</p>
 
-<p>If you’re in your project’s directory and you type <code>git reflog</code> on the command line, you’ll see a history of actions you’ve taken within the project: moving between branches, making commits, etc.</p>
+<p>If you’re in your project’s directory and you type <code class="highlighter-rouge">git reflog</code> on the command line, you’ll see a history of actions you’ve taken within the project: moving between branches, making commits, etc.</p>
 
-<p>If you pinpoint the <a href="https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection">SHA</a> corresponding to the place where everything went awry (e.g. the place right before where you began the faulty rebase), you can <code>git checkout</code> that SHA and begin again. Or just breathe a sigh of relief as you push it up un-catastrophically-rebased.</p>
+<p>If you pinpoint the <a href="https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection">SHA</a> corresponding to the place where everything went awry (e.g. the place right before where you began the faulty rebase), you can <code class="highlighter-rouge">git checkout</code> that SHA and begin again. Or just breathe a sigh of relief as you push it up un-catastrophically-rebased.</p>
 
 
   </article>

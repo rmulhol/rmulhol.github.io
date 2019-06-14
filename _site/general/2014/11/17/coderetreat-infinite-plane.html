@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -83,15 +85,15 @@
 
 <p>Deleting the code after each session was oddly liberating. I would have expected it to be really frustrating (“I already tackled this task, I want to move onto the next one!”), but in reality, hitting the reset button and starting from the ground up with the accumulated knowledge of what worked and what didn’t yielded better code on each iteration.</p>
 
-<p>I also appreciated getting a sense for how to work within an infinite two-dimensional field. In the past, when I’ve worked with a grid structured similarly to the one in this game, I’ve made calculations for determining neighboring cells based on the length of the rows and columns. </p>
+<p>I also appreciated getting a sense for how to work within an infinite two-dimensional field. In the past, when I’ve worked with a grid structured similarly to the one in this game, I’ve made calculations for determining neighboring cells based on the length of the rows and columns.</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># grid of finite width and height:</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># grid of finite width and height:</span>
 
  <span class="mi">0</span> <span class="o">|</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">2</span>
 <span class="o">---|---|---</span>
  <span class="mi">3</span> <span class="o">|</span> <span class="mi">4</span> <span class="o">|</span> <span class="mi">5</span>
 <span class="o">---|---|---</span>
- <span class="mi">6</span> <span class="o">|</span> <span class="mi">7</span> <span class="o">|</span> <span class="mi">8</span></code></pre></div>
+ <span class="mi">6</span> <span class="o">|</span> <span class="mi">7</span> <span class="o">|</span> <span class="mi">8</span></code></pre></figure>
 
 <p>This setup is sufficient for me to determine lines. I know that the rows will be sequential sets that begin from the base index and extend as long as the side length ([0, 1, 2], [3, 4, 5], [6, 7, 8]), columns will be cumulative lists that begin at each of the indexes in the first row and add the length of the side ([0, 3, 6], [1, 4, 7], [2, 5, 8]), and diagonals will be cumulative lists that begin at either the first or last index in the first row and then add the length of the side plus 1 or the length of the side minus 1, respectively ([0, 4, 8], [2, 4, 6]).</p>
 
@@ -99,19 +101,19 @@
 
 <p>The answer, I learned, is to work with a <a href="http://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian coordinate system</a>. If we replace some base cell (say, index 4 in the example above) with (0, 0) and work outward from there, we can learn the index of all neighbors simply by toggling the x and y values by one. You can do that pretty easily:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">get_neighboring_cells</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span>
-  <span class="n">increments</span> <span class="o">=</span> <span class="o">[-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="o">].</span><span class="n">repeated_permutation</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span> <span class="o">-</span> <span class="o">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="o">]]</span>
-  <span class="n">increments</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">neighbor_row</span><span class="p">,</span> <span class="n">neighbor_col</span><span class="o">|</span>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">get_neighboring_cells</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span>
+  <span class="n">increments</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">].</span><span class="nf">repeated_permutation</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="nf">to_a</span> <span class="o">-</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
+  <span class="n">increments</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">neighbor_row</span><span class="p">,</span> <span class="n">neighbor_col</span><span class="o">|</span>
     <span class="n">neighbor_row</span> <span class="o">+=</span> <span class="n">row</span>
     <span class="n">neighbor_col</span> <span class="o">+=</span> <span class="n">col</span>
-    <span class="o">[</span><span class="n">neighbor_row</span><span class="p">,</span> <span class="n">neighbor_col</span><span class="o">]</span>
+    <span class="p">[</span><span class="n">neighbor_row</span><span class="p">,</span> <span class="n">neighbor_col</span><span class="p">]</span>
   <span class="k">end</span>
-<span class="k">end</span></code></pre></div>
+<span class="k">end</span></code></pre></figure>
 
 <p>Here, we get all repeated permutations of [-1, 0, 1] of length 2 ([[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]), remove [0, 0] (which maps to the index of the cell for which we’re gathering neighbors), and then map those values onto the cell we’ve passed in. The result is an array containing the coordinates for all 8 neighbors:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&gt;</span> <span class="n">get_neighboring_cells</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="o">=&gt;</span> <span class="o">[[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="o">]]</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&gt;</span> <span class="n">get_neighboring_cells</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="p">[[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span></code></pre></figure>
 
 <p>Working with coordinates like this isn’t all that tricky, but it’s something you might not think of if you’re continually approaching similar problems in similar ways. As Thanksgiving nears, I’m thankful that I had the opportunity to practice tackling a different problem in different ways at Global Day of Coderetreat 2014.</p>
 

@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -75,9 +77,9 @@
   </header>
 
   <article class="post-content">
-    <p>In <a href="/javascript/2015/08/11/cross-origin-resource-sharing.html">yesterday’s post</a>, we talked about the difficulties one can encounter when making AJAX requests to an API that doesn’t support cross-origin resource sharing (CORS). Unless the response includes the required <code>Access-Control-Allow-Origin</code> header, you’ll be getting an error message in the console - and not much else.</p>
+    <p>In <a href="/javascript/2015/08/11/cross-origin-resource-sharing.html">yesterday’s post</a>, we talked about the difficulties one can encounter when making AJAX requests to an API that doesn’t support cross-origin resource sharing (CORS). Unless the response includes the required <code class="highlighter-rouge">Access-Control-Allow-Origin</code> header, you’ll be getting an error message in the console - and not much else.</p>
 
-<p>One way to get around this is to write your own proxy server. Instead of waiting for your API’s maintainers to implement support for CORS, simply fetch the content with your own proxy and pass it along with the required header tacked on. </p>
+<p>One way to get around this is to write your own proxy server. Instead of waiting for your API’s maintainers to implement support for CORS, simply fetch the content with your own proxy and pass it along with the required header tacked on.</p>
 
 <p>If you were going to do this in production, you’d have a number of concerns outside of that core functionality - hosting, authentication, etc. But in development, you can cut away a lot of that overhead. Implementing a proxy server in Node is quick and easy.</p>
 
@@ -86,25 +88,25 @@
 <p>They also don’t support CORS. Try to hit the API with AJAX, and you’ll see the familiar error message.</p>
 
 <blockquote>
-  <p>XMLHttpRequest cannot load https://api.imgflip.com/get_memes. No ‘Access-Control-Allow-Origin’ header is present on the requested resource. Origin ‘http://localhost:8080’ is therefore not allowed access. </p>
+  <p>XMLHttpRequest cannot load https://api.imgflip.com/get_memes. No ‘Access-Control-Allow-Origin’ header is present on the requested resource. Origin ‘http://localhost:8080’ is therefore not allowed access.</p>
 </blockquote>
 
-<p>If you wanted to hit it by proxy, say at <code>localhost:3000/get_memes</code>, you could do so with this script:</p>
+<p>If you wanted to hit it by proxy, say at <code class="highlighter-rouge">localhost:3000/get_memes</code>, you could do so with this script:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'http'</span><span class="p">);</span>
 
 <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="nx">proxyImgflip</span><span class="p">).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
 
 <span class="kd">function</span> <span class="nx">proxyImgflip</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Serving up &quot;</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">method</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Serving up "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">method</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">);</span>
 
-  <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Access-Control-Allow-Origin&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">);</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">'Access-Control-Allow-Origin'</span><span class="p">,</span> <span class="s1">'*'</span><span class="p">);</span>
 
   <span class="kd">var</span> <span class="nx">proxyRequest</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">hostname</span><span class="o">:</span> <span class="s1">&#39;api.imgflip.com&#39;</span><span class="p">,</span>
-    <span class="nx">port</span><span class="o">:</span> <span class="mi">80</span><span class="p">,</span>
-    <span class="nx">path</span><span class="o">:</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
-    <span class="nx">method</span><span class="o">:</span> <span class="nx">request</span><span class="p">.</span><span class="nx">method</span>
+    <span class="na">hostname</span><span class="p">:</span> <span class="s1">'api.imgflip.com'</span><span class="p">,</span>
+    <span class="na">port</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
+    <span class="na">path</span><span class="p">:</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span>
+    <span class="na">method</span><span class="p">:</span> <span class="nx">request</span><span class="p">.</span><span class="nx">method</span>
   <span class="p">};</span>
 
   <span class="kd">var</span> <span class="nx">proxyResponse</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">request</span><span class="p">(</span><span class="nx">proxyRequest</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
@@ -114,13 +116,13 @@
   <span class="nx">request</span><span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">proxyResponse</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Listening on 3000&quot;</span><span class="p">);</span></code></pre></div>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Listening on 3000"</span><span class="p">);</span></code></pre></figure>
 
-<p>Assuming you’ve got Node installed, you can run this script with <code>node &lt;filename.js&gt;</code>, and you’re good to go. To access <code>https://api.imgflip.com/get_memes</code> in a cross-domain request, you could just hit <code>http://localhost:3000/get_memes</code>.</p>
+<p>Assuming you’ve got Node installed, you can run this script with <code class="highlighter-rouge">node &lt;filename.js&gt;</code>, and you’re good to go. To access <code class="highlighter-rouge">https://api.imgflip.com/get_memes</code> in a cross-domain request, you could just hit <code class="highlighter-rouge">http://localhost:3000/get_memes</code>.</p>
 
-<p>How does it work? </p>
+<p>How does it work?</p>
 
-<p>We use Node’s <code>http</code> API to create a server, passing in a callback and setting it to listen on port 3000. </p>
+<p>We use Node’s <code class="highlighter-rouge">http</code> API to create a server, passing in a callback and setting it to listen on port 3000.</p>
 
 <p>Within the callback, we log the request, affix the required header to our response, and pass along the incoming request to Imgflip’s API, piping the data we get back into our response.</p>
 

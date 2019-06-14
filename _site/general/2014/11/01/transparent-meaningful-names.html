@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -77,9 +79,9 @@
   <article class="post-content">
     <p>In chapter 2 of <a href="http://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882">Clean Code</a>, Uncle Bob Martin suggests that an important technique for writing quality code is using meaningful names. His rationale is sound. While it might seem like cryptic labels make code more elegant and thus easier to take in, it’s likely that those benefits come at the cost of comprehensibility - as the code grows, it becomes increasingly difficult to understand how all of the various abbreviated identifiers fit together.</p>
 
-<p>To make my own code more clean, I’ve been using meaningful names as I construct my tic tac toe game. My <code>getMove()</code> method, for example, has three parameters: the current state of the board, the move identifier for opponent, and the move identifier for the current player. Instead of writing the method as <code>getMove(x, y, z)</code>, it makes sense to label those parameters like so: <code>getMove(board, opponentMove, myMove)</code>.</p>
+<p>To make my own code more clean, I’ve been using meaningful names as I construct my tic tac toe game. My <code class="highlighter-rouge">getMove()</code> method, for example, has three parameters: the current state of the board, the move identifier for opponent, and the move identifier for the current player. Instead of writing the method as <code class="highlighter-rouge">getMove(x, y, z)</code>, it makes sense to label those parameters like so: <code class="highlighter-rouge">getMove(board, opponentMove, myMove)</code>.</p>
 
-<p>Using these names for my parameters allows me to carry out all sorts of evaluations to determine which move is optimal while assuring that those evaluations are unambiguous. I can see whether placing <code>myMove</code> in one place on <code>board</code> will cause a win (taking it if so), try to block a loss if placing <code>opponentMove</code> somewhere on <code>board</code> would cause that and a win is not available, check whether placing either move could cause a fork and take or block it accordingly, etc.</p>
+<p>Using these names for my parameters allows me to carry out all sorts of evaluations to determine which move is optimal while assuring that those evaluations are unambiguous. I can see whether placing <code class="highlighter-rouge">myMove</code> in one place on <code class="highlighter-rouge">board</code> will cause a win (taking it if so), try to block a loss if placing <code class="highlighter-rouge">opponentMove</code> somewhere on <code class="highlighter-rouge">board</code> would cause that and a win is not available, check whether placing either move could cause a fork and take or block it accordingly, etc.</p>
 
 <p>I proceeded through three AI players writing my method like this: a dumb player that returns random moves, a smart AI player that manually checks for wins, losses, forks, and the middle space, and an unbeatable AI player using the minimax algorithm to consider, evaluate, and score all possible moves. Everything worked perfectly.</p>
 
@@ -87,7 +89,7 @@
 
 <p>This problem had me very confused. I spent a number of hours tinkering with my AI player trying to figure out where I had introduced some subtle error into my minimax algorith.</p>
 
-<p>Unfortunately, the error lied elswhere. It turned out that my Runner class, when it was making the call to <code>getMove()</code>, sent the arguments <code>board, player1Move, player2Move</code>. Here, I had used meaningful names for my arguments, but they expected to be operating within the game’s default configuration. Once I added the option to customize the game, <code>getMove()</code> was failing to provide correct moves when the AI player was player 1 because it was always receiving <code>player2Move</code> as <code>myMove</code>.</p>
+<p>Unfortunately, the error lied elswhere. It turned out that my Runner class, when it was making the call to <code class="highlighter-rouge">getMove()</code>, sent the arguments <code class="highlighter-rouge">board, player1Move, player2Move</code>. Here, I had used meaningful names for my arguments, but they expected to be operating within the game’s default configuration. Once I added the option to customize the game, <code class="highlighter-rouge">getMove()</code> was failing to provide correct moves when the AI player was player 1 because it was always receiving <code class="highlighter-rouge">player2Move</code> as <code class="highlighter-rouge">myMove</code>.</p>
 
 <p>This error is entirely my own, rather than a fault with the practice of using meaningful names. Indeed, the third point in Uncle Bob’s chapter on meaninful names is to avoid disinformation. What I learned, however, is that you must be dilligent with the meaningful names you choose so that the code you write actually expresses your intentions. Over-specifying right now might seem like it makes your names even more meaningful, but it comes at the cost of requiring abstraction when you abstract related features in other parts of your program.</p>
 

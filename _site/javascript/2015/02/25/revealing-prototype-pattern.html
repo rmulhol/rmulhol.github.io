@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -75,11 +77,11 @@
   </header>
 
   <article class="post-content">
-    <p>Coming to JavaScript from a language like Ruby or Java, object-oriented programming feels different. There are some <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript">great resources</a> out there to help you make the transition, but it can take some time (and experience) to get used to JavaScript’s prototype-based, rather than class-based, object model. </p>
+    <p>Coming to JavaScript from a language like Ruby or Java, object-oriented programming feels different. There are some <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript">great resources</a> out there to help you make the transition, but it can take some time (and experience) to get used to JavaScript’s prototype-based, rather than class-based, object model.</p>
 
-<p>One of the things that I found particularly tricky was figuring out how to simultaneously create objects efficiently and incorporate information hiding. </p>
+<p>One of the things that I found particularly tricky was figuring out how to simultaneously create objects efficiently and incorporate information hiding.</p>
 
-<p>These two things are not too difficult to achieve on their own: </p>
+<p>These two things are not too difficult to achieve on their own:</p>
 
 <p>– If you want to create objects efficiently, you can place shared functions in a prototype rather than a constructor. That way, the functions aren’t copied for every object; they’re stored in the same prototype that each object (instance) references.</p>
 
@@ -89,13 +91,13 @@
 
 <p>Short answer: yes. Enter the <a href="http://blog.pluralsight.com/revealing-prototype-pattern-structuring-javascript-code-part-iv">revealing prototype pattern</a>.</p>
 
-<p>Once you’re familiar with the revealing module pattern, implementing the revealing prototype pattern isn’t a giant leap. Both use something similar to an <a href="http://benalman.com/news/2010/11/immediately-invoked-function-expression/">immediately-invoked function expression</a> to return objects with only those properties that you want exposed.  </p>
+<p>Once you’re familiar with the revealing module pattern, implementing the revealing prototype pattern isn’t a giant leap. Both use something similar to an <a href="http://benalman.com/news/2010/11/immediately-invoked-function-expression/">immediately-invoked function expression</a> to return objects with only those properties that you want exposed.</p>
 
-<p>For example, say we’re building an AI player for a tic tac toe game. We know that we want the player to have a move signature and to be able to make a move. To make a move, it might need to implement a few other functions (a minimax algorithm, a function to score the current state of the board, etc.). </p>
+<p>For example, say we’re building an AI player for a tic tac toe game. We know that we want the player to have a move signature and to be able to make a move. To make a move, it might need to implement a few other functions (a minimax algorithm, a function to score the current state of the board, etc.).</p>
 
 <p>If you just used the revealing module pattern, it might look like this:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">AiPlayer</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">AiPlayer</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">moveSign</span><span class="p">;</span>
 
   <span class="kd">function</span> <span class="nx">setMoveSign</span><span class="p">(</span><span class="nx">moveSign</span><span class="p">)</span> <span class="p">{</span>
@@ -119,37 +121,37 @@
   <span class="p">}</span>
 
   <span class="k">return</span> <span class="p">{</span>
-    <span class="nx">setMoveSign</span><span class="o">:</span> <span class="nx">setMoveSign</span><span class="p">,</span>
-    <span class="nx">getMoveSign</span><span class="o">:</span> <span class="nx">getMoveSign</span><span class="p">,</span>
-    <span class="nx">makeMove</span><span class="o">:</span> <span class="nx">makeMove</span>
+    <span class="na">setMoveSign</span><span class="p">:</span> <span class="nx">setMoveSign</span><span class="p">,</span>
+    <span class="na">getMoveSign</span><span class="p">:</span> <span class="nx">getMoveSign</span><span class="p">,</span>
+    <span class="na">makeMove</span><span class="p">:</span> <span class="nx">makeMove</span>
   <span class="p">}</span>
-<span class="p">};</span></code></pre></div>
+<span class="p">};</span></code></pre></figure>
 
-<p>This option effectively hides information so that we’re only exposing three properties (get/set the move signature and make a move), but it doesn’t enable us to create new players efficiently. Any time we call <code>AiPlayer()</code>, all of the methods will be copied for the new instance.</p>
+<p>This option effectively hides information so that we’re only exposing three properties (get/set the move signature and make a move), but it doesn’t enable us to create new players efficiently. Any time we call <code class="highlighter-rouge">AiPlayer()</code>, all of the methods will be copied for the new instance.</p>
 
 <p>Using prototypes, we could rectify this problem:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">AiPlayer</span><span class="p">(</span><span class="nx">moveSignature</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">AiPlayer</span><span class="p">(</span><span class="nx">moveSignature</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">moveSignature</span> <span class="o">=</span> <span class="nx">moveSignature</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="nx">AiPlayer</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">getMove</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">board</span><span class="p">)</span> <span class="p">{</span>
+  <span class="na">getMove</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">board</span><span class="p">)</span> <span class="p">{</span>
     <span class="p">...</span>
   <span class="p">},</span>
-  <span class="nx">minimax</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">myTurn</span><span class="p">,</span> <span class="nx">depth</span><span class="p">)</span> <span class="p">{</span>
+  <span class="na">minimax</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">myTurn</span><span class="p">,</span> <span class="nx">depth</span><span class="p">)</span> <span class="p">{</span>
     <span class="p">...</span>
   <span class="p">},</span>
-  <span class="nx">scoreBoard</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">board</span><span class="p">)</span> <span class="p">{</span>
+  <span class="na">scoreBoard</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">board</span><span class="p">)</span> <span class="p">{</span>
     <span class="p">...</span>
   <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
-<p>Now we can create new objects efficiently. Calls to <code>new AiPlayer(moveSignature)</code> don’t copy all of our functions, just a reference to the prototype where they’re stored. The problem is that we’ve lost our information hiding - the <code>minimax</code> and <code>scoreBoard</code> functions are exposed publicly.   </p>
+<p>Now we can create new objects efficiently. Calls to <code class="highlighter-rouge">new AiPlayer(moveSignature)</code> don’t copy all of our functions, just a reference to the prototype where they’re stored. The problem is that we’ve lost our information hiding - the <code class="highlighter-rouge">minimax</code> and <code class="highlighter-rouge">scoreBoard</code> functions are exposed publicly.</p>
 
 <p>Using the revealing module pattern, we can get information hiding <em>and</em> efficient object creation:</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">AiPlayer</span><span class="p">(</span><span class="nx">moveSignature</span><span class="p">)</span> <span class="p">{</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">AiPlayer</span><span class="p">(</span><span class="nx">moveSignature</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">moveSignature</span> <span class="o">=</span> <span class="nx">moveSignature</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -167,11 +169,11 @@
   <span class="p">}</span>
 
   <span class="k">return</span> <span class="p">{</span>
-    <span class="nx">makeMove</span><span class="o">:</span> <span class="nx">makeMove</span>
+    <span class="na">makeMove</span><span class="p">:</span> <span class="nx">makeMove</span>
   <span class="p">}</span>
-<span class="p">})();</span></code></pre></div>
+<span class="p">})();</span></code></pre></figure>
 
-<p>Using the revealing prototype pattern, our constructor creates objects efficiently and hides private information. New <code>AiPlayer</code> objects only store their own <code>moveSignature</code> and a reference to the prototype, and the prototype only exposes a <code>makeMove()</code> function.</p>
+<p>Using the revealing prototype pattern, our constructor creates objects efficiently and hides private information. New <code class="highlighter-rouge">AiPlayer</code> objects only store their own <code class="highlighter-rouge">moveSignature</code> and a reference to the prototype, and the prototype only exposes a <code class="highlighter-rouge">makeMove()</code> function.</p>
 
 
   </article>

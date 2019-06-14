@@ -57,6 +57,8 @@
         
           
         
+          
+        
       </div>
     </nav>
 
@@ -81,22 +83,22 @@
 
 <p>In this post, we’ll get started with nurturing that sort of familiarity by discussing how to accomplish a simple task in PostgreSQL: deriving new data from the combination and/or evaluation of fields in a database.</p>
 
-<p><strong>Combination: <code>UNION</code></strong></p>
+<p><strong>Combination: <code class="highlighter-rouge">UNION</code></strong></p>
 
 <p>Accessing data from a table’s columns is fairly straightforward:</p>
 
-<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="c1">-- one column from a table</span>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="c1">-- one column from a table</span>
 <span class="k">SELECT</span> <span class="n">one_column</span> <span class="k">FROM</span> <span class="n">a_table</span><span class="p">;</span>
 
 <span class="c1">-- multiple columns from a table</span>
 <span class="k">SELECT</span> <span class="n">one_column</span><span class="p">,</span> <span class="n">another_column</span> <span class="k">FROM</span> <span class="n">a_table</span><span class="p">;</span>
 
 <span class="c1">-- all columns from a table</span>
-<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">a_table</span><span class="p">;</span></code></pre></div>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">a_table</span><span class="p">;</span></code></pre></figure>
 
 <p>These queries allow us access data that’s either identical to or a subset of existing columns. But what if we want our query’s results to <em>combine</em> data from several columns?</p>
 
-<p>For example, imagine that you have a table <code>people</code> that stores the name, favorite actor, and favorite actress of several individuals.</p>
+<p>For example, imagine that you have a table <code class="highlighter-rouge">people</code> that stores the name, favorite actor, and favorite actress of several individuals.</p>
 
 <table>
   <thead>
@@ -161,33 +163,33 @@
 
 <p>The simple queries listed at the top of this section won’t work, since they return columns as they are represented in our database.</p>
 
-<p>To query for a combination of data from several columns, we can take advantage of the <code>UNION</code> operation.</p>
+<p>To query for a combination of data from several columns, we can take advantage of the <code class="highlighter-rouge">UNION</code> operation.</p>
 
-<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">favorite_actor</span> <span class="k">AS</span> <span class="n">movie_star</span>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">favorite_actor</span> <span class="k">AS</span> <span class="n">movie_star</span>
 	<span class="k">FROM</span> <span class="n">people</span>
 <span class="k">UNION</span>
 <span class="k">SELECT</span> <span class="n">favorite_actress</span>
-	<span class="k">FROM</span> <span class="n">people</span><span class="p">;</span></code></pre></div>
+	<span class="k">FROM</span> <span class="n">people</span><span class="p">;</span></code></pre></figure>
 
-<p>The <code>UNION</code> operation lets us combine the results of several queries, allowing us to aggregate data both within and across tables.</p>
+<p>The <code class="highlighter-rouge">UNION</code> operation lets us combine the results of several queries, allowing us to aggregate data both within and across tables.</p>
 
-<p><strong>Derivation: <code>CASE</code></strong></p>
+<p><strong>Derivation: <code class="highlighter-rouge">CASE</code></strong></p>
 
-<p>In the case of a <code>UNION</code> operation, our query returns results with a new column header, but merely a combination of contents - they all correspond to existing fields in our database.</p>
+<p>In the case of a <code class="highlighter-rouge">UNION</code> operation, our query returns results with a new column header, but merely a combination of contents - they all correspond to existing fields in our database.</p>
 
-<p>If we want to query for results that yield both a new header and new contents, we can take advantage of the <code>CASE</code> operation.</p>
+<p>If we want to query for results that yield both a new header and new contents, we can take advantage of the <code class="highlighter-rouge">CASE</code> operation.</p>
 
-<p>For example, still working with our <code>people</code> table, say  we want to derive a column that tells us whether the person in question loves <em>Titanic</em>.</p>
+<p>For example, still working with our <code class="highlighter-rouge">people</code> table, say  we want to derive a column that tells us whether the person in question loves <em>Titanic</em>.</p>
 
 <p>We can’t really be sure that any of them don’t love <em>Titanic</em>, but we feel comfortable predicting that they do love the film if their favorite actor is Leonardo DiCaprio and their favorite actress is Kate Winslet.</p>
 
 <p>Using that criteria, we can put together our query like so:</p>
 
-<div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">name</span><span class="p">,</span>
-	<span class="k">CASE</span> <span class="k">WHEN</span> <span class="p">(</span><span class="n">favorite_actor</span> <span class="o">=</span> <span class="s1">&#39;Leonardo DiCaprio&#39;</span> <span class="k">and</span> <span class="n">favorite_actress</span> <span class="o">=</span> <span class="s1">&#39;Kate Winslet&#39;</span><span class="p">)</span> <span class="k">THEN</span> <span class="s1">&#39;Yes&#39;</span>
-		<span class="k">ELSE</span> <span class="s1">&#39;Unsure&#39;</span>
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">name</span><span class="p">,</span>
+	<span class="k">CASE</span> <span class="k">WHEN</span> <span class="p">(</span><span class="n">favorite_actor</span> <span class="o">=</span> <span class="s1">'Leonardo DiCaprio'</span> <span class="k">and</span> <span class="n">favorite_actress</span> <span class="o">=</span> <span class="s1">'Kate Winslet'</span><span class="p">)</span> <span class="k">THEN</span> <span class="s1">'Yes'</span>
+		<span class="k">ELSE</span> <span class="s1">'Unsure'</span>
 	<span class="k">END</span> <span class="k">AS</span> <span class="n">loves_titanic</span>
-<span class="k">FROM</span> <span class="n">people</span><span class="p">;</span></code></pre></div>
+<span class="k">FROM</span> <span class="n">people</span><span class="p">;</span></code></pre></figure>
 
 <p>Since Sally was the only person in our table that matched the criteria, she will be the only person designated with a ‘Yes’ in our new column.</p>
 
@@ -214,13 +216,13 @@
   </tbody>
 </table>
 
-<p>Here, our query returns results without a 1-to-1 mapping to our database. By including a <code>CASE</code> operation that behaves differently depending on the contents of existing fields in our database, we’re able to derive new information.</p>
+<p>Here, our query returns results without a 1-to-1 mapping to our database. By including a <code class="highlighter-rouge">CASE</code> operation that behaves differently depending on the contents of existing fields in our database, we’re able to derive new information.</p>
 
 <p><strong>Conclusion</strong></p>
 
 <p>We haven’t come close to exhausting the range of techniques you can use to derive new and sophisticated information from tables in a database, much less other information that you’ll want to possess to accomplish other tasks, but we have covered some important ground.</p>
 
-<p>If you’re in an environment where you’re likely to find yourself working with a relational database, the <code>UNION</code> and <code>CASE</code> operations are two techniques with which you’ll want to be familiar.</p>
+<p>If you’re in an environment where you’re likely to find yourself working with a relational database, the <code class="highlighter-rouge">UNION</code> and <code class="highlighter-rouge">CASE</code> operations are two techniques with which you’ll want to be familiar.</p>
 
 
   </article>
