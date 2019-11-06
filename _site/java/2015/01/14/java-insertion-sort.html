@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Learning Data Structures and Algorithms: Implementing Insertion Sort in Java</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//java/2015/01/14/java-insertion-sort.html">
+    <link rel="canonical" href="http://rmulhol.github.io/java/2015/01/14/java-insertion-sort.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -101,11 +101,11 @@
 
 <p>The first thing to note is that there are no type declarations. We’ll presumably be using this algorithm to sort a list of integers, so we’ll have to note that as we declare variables while translating the pseudocode. Sorting elements of some other type would require some significant changes.</p>
 
-<p>Second, they’re indexing the second element of the list at index 2 and the first element at index 1. But the indexes for a LinkedList (which I’ll be using) in Java start at 0. This has two consequences: (1) we’ll want to initialize our <code class="highlighter-rouge">for</code> loop at 1 rather than 2, and (2) we’ll want to proceed as long as the index is <em>less than</em> the length of the list (rather than less than <em>or equal to</em> the length, which would take us out of bounds).</p>
+<p>Second, they’re indexing the second element of the list at index 2 and the first element at index 1. But the indexes for a LinkedList (which I’ll be using) in Java start at 0. This has two consequences: (1) we’ll want to initialize our <code class="language-plaintext highlighter-rouge">for</code> loop at 1 rather than 2, and (2) we’ll want to proceed as long as the index is <em>less than</em> the length of the list (rather than less than <em>or equal to</em> the length, which would take us out of bounds).</p>
 
 <p>Put things together, and an implementation of insertion sort in Java could look like this:</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">insertionSort</span><span class="o">(</span><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nc">LinkedList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">insertionSort</span><span class="o">(</span><span class="nc">LinkedList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
   <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
     <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">j</span><span class="o">);</span>
     <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
@@ -134,13 +134,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -178,7 +178,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

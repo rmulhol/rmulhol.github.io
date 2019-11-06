@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Checking A Negative: Using the Logical NOT Operator (!)</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//ruby/2014/09/30/logical-not-operator.html">
+    <link rel="canonical" href="http://rmulhol.github.io/ruby/2014/09/30/logical-not-operator.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -77,9 +77,9 @@
   </header>
 
   <article class="post-content">
-    <p>One of the tools that Ruby offers for evaluating objects is the logical NOT operator (the exclamation point, as in <code class="highlighter-rouge">x != y</code>). While the exclamation point is also used in other contexts to indicate that a method modifies the object it’s called on in place (e.g. <code class="highlighter-rouge">gets.chomp!</code>), the focus of this post is on the use of the exclamation point as a tool for comparison.</p>
+    <p>One of the tools that Ruby offers for evaluating objects is the logical NOT operator (the exclamation point, as in <code class="language-plaintext highlighter-rouge">x != y</code>). While the exclamation point is also used in other contexts to indicate that a method modifies the object it’s called on in place (e.g. <code class="language-plaintext highlighter-rouge">gets.chomp!</code>), the focus of this post is on the use of the exclamation point as a tool for comparison.</p>
 
-<p>Ruby offers <a href="http://www.tutorialspoint.com/ruby/ruby_operators.htm">numerous operators</a> for accomplishing all sorts of tasks, logical comparison being just one of them. Learning how and when to use these operators can be challenging at first (don’t forget: <code class="highlighter-rouge">=</code> is for assignment, but you must use <code class="highlighter-rouge">==</code> for comparison!), but it quickly becomes second nature.</p>
+<p>Ruby offers <a href="http://www.tutorialspoint.com/ruby/ruby_operators.htm">numerous operators</a> for accomplishing all sorts of tasks, logical comparison being just one of them. Learning how and when to use these operators can be challenging at first (don’t forget: <code class="language-plaintext highlighter-rouge">=</code> is for assignment, but you must use <code class="language-plaintext highlighter-rouge">==</code> for comparison!), but it quickly becomes second nature.</p>
 
 <p>As you get more familiar, the logical operators can be especially helpful. Say you want to take one array and return a new array that excludes all of a given element. You could easily do so like this:</p>
 
@@ -95,9 +95,9 @@
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="p">.</span><span class="nf">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span><span class="o">.!</span><span class="kp">include</span><span class="p">?</span> <span class="n">feature_to_exclude</span> <span class="p">}</span></code></pre></figure>
 
-<p>So is it hopeless? Does the absence of a <code class="highlighter-rouge">.does_not_include?</code> method doom us?</p>
+<p>So is it hopeless? Does the absence of a <code class="language-plaintext highlighter-rouge">.does_not_include?</code> method doom us?</p>
 
-<p>Not at all. You <em>can</em> use the logical NOT operator for this sort of comparison, but its placement differs from how it’s used in the <code class="highlighter-rouge">!=</code> comparison. To check that every element in an array does not include something, you simply write:</p>
+<p>Not at all. You <em>can</em> use the logical NOT operator for this sort of comparison, but its placement differs from how it’s used in the <code class="language-plaintext highlighter-rouge">!=</code> comparison. To check that every element in an array does not include something, you simply write:</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">my_array</span><span class="p">.</span><span class="nf">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="o">!</span><span class="n">element</span><span class="p">.</span><span class="nf">include?</span> <span class="n">feature_to_exclude</span> <span class="p">}</span></code></pre></figure>
 
@@ -117,13 +117,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -161,7 +161,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

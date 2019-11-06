@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Show Your Work: Recording Data With Java's Logging Utility</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//java/2015/06/19/java-logging-utility.html">
+    <link rel="canonical" href="http://rmulhol.github.io/java/2015/06/19/java-logging-utility.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -77,11 +77,11 @@
   </header>
 
   <article class="post-content">
-    <p>As I’ve been putting together <a href="https://github.com/rmulhol/httpServer">an HTTP server</a> in Java to pass <a href="https://github.com/8thlight/cob_spec">the Cob Spec Fitnesse suite</a>, one task I’ve had to carry out is building a log of incoming requests that could be served up to authorized users attempting to access the <code class="highlighter-rouge">/logs</code> uri.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
+    <p>As I’ve been putting together <a href="https://github.com/rmulhol/httpServer">an HTTP server</a> in Java to pass <a href="https://github.com/8thlight/cob_spec">the Cob Spec Fitnesse suite</a>, one task I’ve had to carry out is building a log of incoming requests that could be served up to authorized users attempting to access the <code class="language-plaintext highlighter-rouge">/logs</code> uri.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
 
 <p>My initial solution to this challenge was to build and manage my own log, writing all incoming requests to a text file and then serving up the contents of that file to authorized users.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
 
-<p>This solution worked, but it overlooked a built-in feature of the JDK that could have aided me along the path: <code class="highlighter-rouge">java.util.logging</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
+<p>This solution worked, but it overlooked a built-in feature of the JDK that could have aided me along the path: <code class="language-plaintext highlighter-rouge">java.util.logging</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
 
 <p>This package provides a simple and easy-to-implement solution to your logging needs. All it requires is that you set up a logger and tell it when and where to log data.</p>
 
@@ -128,73 +128,74 @@
 39
 </pre></td><td class="code"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
 
-    <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">serverLogger</span> <span class="o">=</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Main</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+    <span class="kd">static</span> <span class="kd">final</span> <span class="nc">Logger</span> <span class="n">serverLogger</span> <span class="o">=</span>
+            <span class="nc">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="nc">Main</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
         <span class="k">try</span> <span class="o">{</span>
-            <span class="n">FileHandler</span> <span class="n">requestLogHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileHandler</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"user.dir"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"/logs.txt"</span><span class="o">);</span>
+            <span class="nc">FileHandler</span> <span class="n">requestLogHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileHandler</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"user.dir"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"/logs.txt"</span><span class="o">);</span>
             <span class="n">serverLogger</span><span class="o">.</span><span class="na">addHandler</span><span class="o">(</span><span class="n">requestLogHandler</span><span class="o">);</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">serverLogger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="n">Level</span><span class="o">.</span><span class="na">SEVERE</span><span class="o">,</span> <span class="s">"Couldn't add handler to logger"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">serverLogger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="nc">Level</span><span class="o">.</span><span class="na">SEVERE</span><span class="o">,</span> <span class="s">"Couldn't add handler to logger"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
         <span class="o">}</span>
 
-        <span class="n">ServerSocket</span> <span class="n">serverSocket</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ServerSocket</span><span class="o">(</span><span class="mi">5000</span><span class="o">);</span>
+        <span class="nc">ServerSocket</span> <span class="n">serverSocket</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ServerSocket</span><span class="o">(</span><span class="mi">5000</span><span class="o">);</span>
 
-        <span class="n">serverLogger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="n">Level</span><span class="o">.</span><span class="na">INFO</span><span class="o">,</span> <span class="s">"Server starting... "</span><span class="o">);</span>
+        <span class="n">serverLogger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="nc">Level</span><span class="o">.</span><span class="na">INFO</span><span class="o">,</span> <span class="s">"Server starting... "</span><span class="o">);</span>
 
         <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">Socket</span> <span class="n">clientSocket</span> <span class="o">=</span> <span class="n">serverSocket</span><span class="o">.</span><span class="na">accept</span><span class="o">();</span>
+            <span class="nc">Socket</span> <span class="n">clientSocket</span> <span class="o">=</span> <span class="n">serverSocket</span><span class="o">.</span><span class="na">accept</span><span class="o">();</span>
 
-            <span class="n">OutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-            <span class="n">BufferedReader</span> <span class="n">in</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="nc">OutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="nc">BufferedReader</span> <span class="n">in</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
             <span class="k">try</span> <span class="o">{</span>
                 <span class="n">out</span> <span class="o">=</span> <span class="n">clientSocket</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
-                <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">clientSocket</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>
+                <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">InputStreamReader</span><span class="o">(</span><span class="n">clientSocket</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>
 
-                <span class="n">String</span> <span class="n">request</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
-                <span class="n">serverLogger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="n">Level</span><span class="o">.</span><span class="na">INFO</span><span class="o">,</span> <span class="n">request</span><span class="o">);</span>
+                <span class="nc">String</span> <span class="n">request</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
+                <span class="n">serverLogger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="nc">Level</span><span class="o">.</span><span class="na">INFO</span><span class="o">,</span> <span class="n">request</span><span class="o">);</span>
 
                 <span class="kt">byte</span><span class="o">[]</span> <span class="n">response</span> <span class="o">=</span> <span class="o">(</span><span class="s">"HTTP/1.1 200 OK\r\n\r\nYour request: "</span> <span class="o">+</span> <span class="n">request</span><span class="o">).</span><span class="na">getBytes</span><span class="o">();</span>
                 <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">response</span><span class="o">);</span>
                 <span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">serverLogger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="n">Level</span><span class="o">.</span><span class="na">SEVERE</span><span class="o">,</span> <span class="s">"Couldn't complete request/response cycle"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">serverLogger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="nc">Level</span><span class="o">.</span><span class="na">SEVERE</span><span class="o">,</span> <span class="s">"Couldn't complete request/response cycle"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
                 <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
             <span class="o">}</span>
         <span class="o">}</span>
     <span class="o">}</span>
-<span class="o">}</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <p>Here we have a fully-functional echo server with logging capabilities. How does it work?</p>
 
-<p>First, we set up a logger for our <code class="highlighter-rouge">Main</code> class on lines 3-4. This is the tool we’ll use to log requests.</p>
+<p>First, we set up a logger for our <code class="language-plaintext highlighter-rouge">Main</code> class on lines 3-4. This is the tool we’ll use to log requests.</p>
 
-<p>Next, we add a <code class="highlighter-rouge">FileHandler</code> on lines 7-12. This step is optional, since our logged data will already be written to the console without this step. But it assures that we have a stored copy of our logs even if we clear the console.</p>
+<p>Next, we add a <code class="language-plaintext highlighter-rouge">FileHandler</code> on lines 7-12. This step is optional, since our logged data will already be written to the console without this step. But it assures that we have a stored copy of our logs even if we clear the console.</p>
 
-<p>Line 14 introduces our first actual logging. We note that the server is starting, attributing this message an importance of <code class="highlighter-rouge">Level.INFO</code>. You can see a full rundown of the different log levels <a href="http://docs.oracle.com/javase/7/docs/api/java/util/logging/Level.html">here</a>, but for now all you need to know is that <code class="highlighter-rouge">Level.INFO</code> is sufficient to assure our logged data is written to the console.</p>
+<p>Line 14 introduces our first actual logging. We note that the server is starting, attributing this message an importance of <code class="language-plaintext highlighter-rouge">Level.INFO</code>. You can see a full rundown of the different log levels <a href="http://docs.oracle.com/javase/7/docs/api/java/util/logging/Level.html">here</a>, but for now all you need to know is that <code class="language-plaintext highlighter-rouge">Level.INFO</code> is sufficient to assure our logged data is written to the console.</p>
 
-<p>Finally, we make another <code class="highlighter-rouge">Level.INFO</code> log whenever a request has been read. That way we have a record of each request our server receives.</p>
+<p>Finally, we make another <code class="language-plaintext highlighter-rouge">Level.INFO</code> log whenever a request has been read. That way we have a record of each request our server receives.</p>
 
-<p>That’s pretty much it. We now have a persistent record (<code class="highlighter-rouge">logs.txt</code>) that keeps a record of each time the server is started and each request that’s received.</p>
+<p>That’s pretty much it. We now have a persistent record (<code class="language-plaintext highlighter-rouge">logs.txt</code>) that keeps a record of each time the server is started and each request that’s received.</p>
 
-<p>There are two other places where data is logged in the application above, on lines 11 and 34. Those happen whenever an <code class="highlighter-rouge">IOException</code> is caught, and they’re attributed <code class="highlighter-rouge">Level.SEVERE</code> since something has gone very wrong if they’re ever triggered.</p>
+<p>There are two other places where data is logged in the application above, on lines 11 and 34. Those happen whenever an <code class="language-plaintext highlighter-rouge">IOException</code> is caught, and they’re attributed <code class="language-plaintext highlighter-rouge">Level.SEVERE</code> since something has gone very wrong if they’re ever triggered.</p>
 
-<p>So that’s pretty much it - <code class="highlighter-rouge">java.util.logging</code> provides all you need to get some basic logging work done.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup></p>
+<p>So that’s pretty much it - <code class="language-plaintext highlighter-rouge">java.util.logging</code> provides all you need to get some basic logging work done.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup></p>
 
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>Cob Spec tests basic authorization functionality by checking whether attempts to access the <code class="highlighter-rouge">/logs</code> uri are allowed only when the request includes an authorization header. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>Cob Spec tests basic authorization functionality by checking whether attempts to access the <code class="language-plaintext highlighter-rouge">/logs</code> uri are allowed only when the request includes an authorization header. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>Unauthorized users receive the <code class="highlighter-rouge">401 Unauthorized</code> status code. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+      <p>Unauthorized users receive the <code class="language-plaintext highlighter-rouge">401 Unauthorized</code> status code. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:3">
       <p>There are other logging resources to check out if you’re interested in the topic, perhaps most notably <a href="http://logging.apache.org/log4j/2.x/">Log4j</a> and <a href="http://www.slf4j.org/">SLF4J</a>. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:4">
-      <p>There’s a lot more you can accomplish with <code class="highlighter-rouge">java.util.logging</code> and other logging tools, so, if you’re interested, don’t stop here! <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
+      <p>There’s a lot more you can accomplish with <code class="language-plaintext highlighter-rouge">java.util.logging</code> and other logging tools, so, if you’re interested, don’t stop here! <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -210,13 +211,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -254,7 +255,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

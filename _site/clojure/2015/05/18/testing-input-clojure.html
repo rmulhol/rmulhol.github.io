@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Testing Input Validation in Clojure: The Beauty of With-In-Str</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//clojure/2015/05/18/testing-input-clojure.html">
+    <link rel="canonical" href="http://rmulhol.github.io/clojure/2015/05/18/testing-input-clojure.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -79,13 +79,13 @@
   <article class="post-content">
     <p>Over the past week, I put together <a href="https://github.com/rmulhol/clojure-tic-tac-toe">tic tac toe in Clojure</a>. The game is playable from the command line, the AI player is unbeatable, and it takes up significantly fewer lines of code than any other version of the game I’ve completed previously.</p>
 
-<p>I was feeling pretty proud of myself, until I saw what happens when the user enters invalid input upon being promped for a move: the dreaded <code class="highlighter-rouge">NullPointerException</code>. Though my function was set up to recur in the instance of invalid input, something was getting in the way of propogating subsequently validated input back up the stack.</p>
+<p>I was feeling pretty proud of myself, until I saw what happens when the user enters invalid input upon being promped for a move: the dreaded <code class="language-plaintext highlighter-rouge">NullPointerException</code>. Though my function was set up to recur in the instance of invalid input, something was getting in the way of propogating subsequently validated input back up the stack.</p>
 
 <p>Though there were problems with the mechanics of my code, the bigger problem was the absence of tests. I had tests that simulated valid user input, but none for invalid input. Because invalid input provoked a recursive call, simulating it felt like a real headache for my test suite.</p>
 
-<p>But it turns out that simulating a sequence of input is no headache at all. Just a simple tweak on the exact function used to simulate valid input: <code class="highlighter-rouge">with-in-str</code>.</p>
+<p>But it turns out that simulating a sequence of input is no headache at all. Just a simple tweak on the exact function used to simulate valid input: <code class="language-plaintext highlighter-rouge">with-in-str</code>.</p>
 
-<p>Let’s take a look at how one might simulate user input with <code class="highlighter-rouge">speclj</code>:</p>
+<p>Let’s take a look at how one might simulate user input with <code class="language-plaintext highlighter-rouge">speclj</code>:</p>
 
 <figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="nf">describe</span><span class="w"> </span><span class="s">"prompt"</span><span class="w">
   </span><span class="p">(</span><span class="nf">it</span><span class="w"> </span><span class="s">"returns the input provided by the user"</span><span class="w">
@@ -93,13 +93,13 @@
       </span><span class="p">(</span><span class="nf">with-in-str</span><span class="w"> </span><span class="s">"hello"</span><span class="w">
         </span><span class="p">(</span><span class="nf">prompt</span><span class="w"> </span><span class="s">"Enter text: "</span><span class="p">)))))</span></code></pre></figure>
 
-<p>Assuming our <code class="highlighter-rouge">prompt</code> function looks like this:</p>
+<p>Assuming our <code class="language-plaintext highlighter-rouge">prompt</code> function looks like this:</p>
 
 <figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">prompt</span><span class="w"> </span><span class="p">[</span><span class="n">message</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="nb">println</span><span class="w"> </span><span class="n">message</span><span class="p">)</span><span class="w">
   </span><span class="p">(</span><span class="nb">read-line</span><span class="p">))</span></code></pre></figure>
 
-<p>The test passes. The function <code class="highlighter-rouge">with-in-str</code> provides a string for <code class="highlighter-rouge">read-line</code> to read, allowing the test to run without actual user input.</p>
+<p>The test passes. The function <code class="language-plaintext highlighter-rouge">with-in-str</code> provides a string for <code class="language-plaintext highlighter-rouge">read-line</code> to read, allowing the test to run without actual user input.</p>
 
 <p>Now imagine we want to validate that the user has entered something specific. For example, the string “hello”. We could do that like so:</p>
 
@@ -120,7 +120,7 @@
 
 <p>Our tests are going to fail. Not only are they going to fail, they’re going to explode. Endless prompts for new user input never quenched by the desired string “hello”; an infinite loop of pain for our test suite.</p>
 
-<p>Fortunately, the function we’re using to pass in valid input - <code class="highlighter-rouge">with-in-str</code> - can take multiple lines. Since our <code class="highlighter-rouge">prompt</code> function calls <code class="highlighter-rouge">read-line</code> to evaluate input, it will pass through one line at a time until it returns.</p>
+<p>Fortunately, the function we’re using to pass in valid input - <code class="language-plaintext highlighter-rouge">with-in-str</code> - can take multiple lines. Since our <code class="language-plaintext highlighter-rouge">prompt</code> function calls <code class="language-plaintext highlighter-rouge">read-line</code> to evaluate input, it will pass through one line at a time until it returns.</p>
 
 <p>The simple switch:</p>
 
@@ -130,9 +130,9 @@
       </span><span class="p">(</span><span class="nf">with-in-str</span><span class="w"> </span><span class="s">"car\nhello"</span><span class="w">
         </span><span class="p">(</span><span class="nf">prompt</span><span class="w"> </span><span class="s">"Enter text: "</span><span class="p">)))))</span></code></pre></figure>
 
-<p>Causes our test to pass again. The string before the newline (“car”) is read by the first call to <code class="highlighter-rouge">read-line</code>, and then the rest of the string until another newline (“hello”) is read on subsequent calls. Once input satisfies validation, the function returns.</p>
+<p>Causes our test to pass again. The string before the newline (“car”) is read by the first call to <code class="language-plaintext highlighter-rouge">read-line</code>, and then the rest of the string until another newline (“hello”) is read on subsequent calls. Once input satisfies validation, the function returns.</p>
 
-<p>This is one of the more simple ways of simulating input that I’ve seen. By simply inserting some newlines, <code class="highlighter-rouge">with-in-str</code> allows you to check how your program interacts with a sequence of (both valid and invalid) input.</p>
+<p>This is one of the more simple ways of simulating input that I’ve seen. By simply inserting some newlines, <code class="language-plaintext highlighter-rouge">with-in-str</code> allows you to check how your program interacts with a sequence of (both valid and invalid) input.</p>
 
 
   </article>
@@ -146,13 +146,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -190,7 +190,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

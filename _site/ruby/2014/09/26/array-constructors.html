@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Working With Arrays: Choose Your Constuctor Wisely</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//ruby/2014/09/26/array-constructors.html">
+    <link rel="canonical" href="http://rmulhol.github.io/ruby/2014/09/26/array-constructors.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -97,7 +97,7 @@
 
 <p>This feels like good refactoring. We’re cutting back on lines of code and reducing the number of operations, so the only question is whether it achieves the same result.</p>
 
-<p>Well, it does not. When we ran the tests, everything was blowing up. A bunch of unexpected outcomes early on, then some <code class="highlighter-rouge">NoMethodError</code> messages referencing the <code class="highlighter-rouge">NilClass</code> toward the end.</p>
+<p>Well, it does not. When we ran the tests, everything was blowing up. A bunch of unexpected outcomes early on, then some <code class="language-plaintext highlighter-rouge">NoMethodError</code> messages referencing the <code class="language-plaintext highlighter-rouge">NilClass</code> toward the end.</p>
 
 <p>How could this be? I fired up an irb session and tried both approaches manually. Sure enough, our original approach was working as expected, and the Array.new constructor was not. I decided it was time to do some reading.</p>
 
@@ -125,13 +125,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -169,7 +169,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

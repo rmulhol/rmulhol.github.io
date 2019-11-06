@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Working With APIs: On Cross-Origin Resource Sharing</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//javascript/2015/08/11/cross-origin-resource-sharing.html">
+    <link rel="canonical" href="http://rmulhol.github.io/javascript/2015/08/11/cross-origin-resource-sharing.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -95,7 +95,7 @@
 
 <p>That doesn’t mean that cross-domain requests are off limits. But to carry them out, you need to satisfy a few conditions.</p>
 
-<p>Check out <a href="http://www.html5rocks.com/en/tutorials/cors/">this page</a> for a much more thorough exploration of CORS and its implications for both the client and the server, but for now the most important thing to know is this: in order for a cross-origin request to succeed, the server needs to include an ‘Access-Control-Allow-Origin’ header, and that header needs to authorize the requesting URL (either specifically or via a <code class="highlighter-rouge">'*'</code> value).</p>
+<p>Check out <a href="http://www.html5rocks.com/en/tutorials/cors/">this page</a> for a much more thorough exploration of CORS and its implications for both the client and the server, but for now the most important thing to know is this: in order for a cross-origin request to succeed, the server needs to include an ‘Access-Control-Allow-Origin’ header, and that header needs to authorize the requesting URL (either specifically or via a <code class="language-plaintext highlighter-rouge">'*'</code> value).</p>
 
 <p><strong>Cool, but I don’t control the API’s response headers…</strong></p>
 
@@ -107,7 +107,7 @@
 
 <p>The second is to roll your own proxy server. Even if you can’t get the API host to support cross-origin requests, you can make your own server that does - and then use it to hit the target API outside of the browser.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
 
-<p>The third is to take advantage of other services that do the work for you. <a href="https://jsonp.afeld.me/">This site</a>, for example, will act as a proxy server for you, without any coding on your behalf. Simply append the target url to <code class="highlighter-rouge">https://jsonp.afeld.me/?url=</code>, and the CORS request will succeed.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
+<p>The third is to take advantage of other services that do the work for you. <a href="https://jsonp.afeld.me/">This site</a>, for example, will act as a proxy server for you, without any coding on your behalf. Simply append the target url to <code class="language-plaintext highlighter-rouge">https://jsonp.afeld.me/?url=</code>, and the CORS request will succeed.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
 
 <p><strong>That’s pretty easy…</strong></p>
 
@@ -135,13 +135,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -179,7 +179,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

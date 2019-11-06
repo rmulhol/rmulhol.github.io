@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>My Foray into Functional Programming: Getting Started with Erlang</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//erlang/2014/12/30/foray-into-functional-erlang.html">
+    <link rel="canonical" href="http://rmulhol.github.io/erlang/2014/12/30/foray-into-functional-erlang.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -79,7 +79,7 @@
   <article class="post-content">
     <p>One of the things that I’ve been working on lately is wrapping my head around <a href="http://en.wikipedia.org/wiki/Functional_programming">functional programming</a>. Having completed most of my projects so far in Ruby and Java (languages that support the <a href="http://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented programming paradigm</a>), beginning to work with a language that encourages the functional programming style felt like a logical next step. Enter Erlang.</p>
 
-<p>Erlang is technically an “impure” functional programming language; its methods can have side effects. However, working in Erlang has  introduced me to many of the features that separate functional programming from its object oriented companion. No longer can I reassign variables or tackle problems with my trusty <code class="highlighter-rouge">for</code> loop. Nay, new approaches must now be uncovered.</p>
+<p>Erlang is technically an “impure” functional programming language; its methods can have side effects. However, working in Erlang has  introduced me to many of the features that separate functional programming from its object oriented companion. No longer can I reassign variables or tackle problems with my trusty <code class="language-plaintext highlighter-rouge">for</code> loop. Nay, new approaches must now be uncovered.</p>
 
 <p>So, now that I’ve begun to wrap my head around some of the ways that common problems can be approached using the functional programming style, I wanted to share some of the obstacles I’ve come across along the way as well as how they were overcome.</p>
 
@@ -107,14 +107,14 @@
   <span class="k">return</span> <span class="n">sum</span><span class="o">;</span>
 <span class="o">}</span></code></pre></figure>
 
-<p>Since we can’t use a <code class="highlighter-rouge">for</code> loop that re-assigns <code class="highlighter-rouge">i</code> on each iteration, functional programming languages require us to find a different approach. In Erlang, that’s pretty simple:</p>
+<p>Since we can’t use a <code class="language-plaintext highlighter-rouge">for</code> loop that re-assigns <code class="language-plaintext highlighter-rouge">i</code> on each iteration, functional programming languages require us to find a different approach. In Erlang, that’s pretty simple:</p>
 
 <figure class="highlight"><pre><code class="language-erlang" data-lang="erlang"><span class="nf">sum</span><span class="p">(</span><span class="nv">Num</span><span class="p">)</span> <span class="o">-&gt;</span>
   <span class="nn">lists</span><span class="p">:</span><span class="nf">sum</span><span class="p">(</span><span class="nn">lists</span><span class="p">:</span><span class="nf">seq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nv">Num</span><span class="p">)).</span></code></pre></figure>
 
 <p>Well, that’s elegant. I’ve tackled the same problem without immutable data, and it actually made my code shorter.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
 
-<p>So, what’s going on here? Well, my sum function takes an argument, converts that argument into a list of all of the integers from 1 to that argument, and then provides a sum of all of the values in the list. It achieves the same result as my <code class="highlighter-rouge">for</code> loop without iteration or variable reassignment.</p>
+<p>So, what’s going on here? Well, my sum function takes an argument, converts that argument into a list of all of the integers from 1 to that argument, and then provides a sum of all of the values in the list. It achieves the same result as my <code class="language-plaintext highlighter-rouge">for</code> loop without iteration or variable reassignment.</p>
 
 <p><strong>Recursion: Did You Mean Recursion?</strong></p>
 
@@ -152,7 +152,7 @@
 <span class="nf">sum</span><span class="p">(</span><span class="nv">Num</span><span class="p">,</span> <span class="nv">Acc</span><span class="p">)</span> <span class="o">-&gt;</span>
   <span class="nf">sum</span><span class="p">(</span><span class="nv">Num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">Num</span> <span class="o">+</span> <span class="nv">Acc</span><span class="p">).</span></code></pre></figure>
 
-<p>Here, we use pattern matching for a few purposes. If we receive one argument, we call sum with two arguments: the original argument passed in and 0 (which will serve as our accumulator). On subsequent calls, we decrement <code class="highlighter-rouge">Num</code> by one and add the value of <code class="highlighter-rouge">Num</code> to our accumulator (<code class="highlighter-rouge">Acc</code>). Calling sum(3) with this function would play out like this:</p>
+<p>Here, we use pattern matching for a few purposes. If we receive one argument, we call sum with two arguments: the original argument passed in and 0 (which will serve as our accumulator). On subsequent calls, we decrement <code class="language-plaintext highlighter-rouge">Num</code> by one and add the value of <code class="language-plaintext highlighter-rouge">Num</code> to our accumulator (<code class="language-plaintext highlighter-rouge">Acc</code>). Calling sum(3) with this function would play out like this:</p>
 
 <figure class="highlight"><pre><code class="language-erlang" data-lang="erlang"><span class="nf">sum</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="nf">sum</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -172,10 +172,10 @@
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>This is where some functional programming advocates begin to declare the elegance of functional programming over object-oriented programming. While I’m sure there’s some truth to that in the aggregate, I still appreciate that Ruby comes pretty close: <code class="highlighter-rouge">(1..num).to_a.reduce(:+)</code>. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>This is where some functional programming advocates begin to declare the elegance of functional programming over object-oriented programming. While I’m sure there’s some truth to that in the aggregate, I still appreciate that Ruby comes pretty close: <code class="language-plaintext highlighter-rouge">(1..num).to_a.reduce(:+)</code>. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>This function will not play nicely with negative numbers, though that could be handled with further pattern matching (e.g. <code class="highlighter-rouge">sum(Num) when Num &lt; 0 -&gt; io:format("Can't sum negative values!~n", []);</code>). <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+      <p>This function will not play nicely with negative numbers, though that could be handled with further pattern matching (e.g. <code class="language-plaintext highlighter-rouge">sum(Num) when Num &lt; 0 -&gt; io:format("Can't sum negative values!~n", []);</code>). <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:3">
       <p>It should be noted that tail recursion <a href="http://www.erlang.org/doc/efficiency_guide/myths.html#id59389">does not necessarily yield better performance</a> than body recursion, due to optimizations in the Erlang compiler. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
@@ -194,13 +194,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -238,7 +238,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

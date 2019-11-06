@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Working With Rspec: Testing Input and Output with Mocks</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//ruby/2014/10/02/testing-with-mocks.html">
+    <link rel="canonical" href="http://rmulhol.github.io/ruby/2014/10/02/testing-with-mocks.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -79,13 +79,13 @@
   <article class="post-content">
     <p>Lately, I’ve been working on getting more familiar with TDD and Rspec by writing tests first for every method of my programs. Though I’ve heard some <a href="http://david.heinemeierhansson.com/2014/tdd-is-dead-long-live-testing.html">loud criticisms</a> of adhering strictly to the test-first design pattern (as well as a <a href="http://blog.8thlight.com/uncle-bob/2014/05/19/First.html">rebuttal</a> or <a href="http://mikeknep.com/2014/04/23/response-to-dhh.html">two</a>), I’m mostly interested in giving it a serious try right now so that I can learn all of the techniques and make a more informed judgment about when (not) to test down the line.</p>
 
-<p>For the most part, I’ve been applying the standard pattern with which I’m most familiar: <code class="highlighter-rouge">expect(some_method).to eq(some_value)</code>. Making sure my methods behave as I expect, and working through those expectations sequentially, has generally resulted in more elegant code with fewer unnecessary dependencies.</p>
+<p>For the most part, I’ve been applying the standard pattern with which I’m most familiar: <code class="language-plaintext highlighter-rouge">expect(some_method).to eq(some_value)</code>. Making sure my methods behave as I expect, and working through those expectations sequentially, has generally resulted in more elegant code with fewer unnecessary dependencies.</p>
 
 <p>However, one of the things that I’ve found more tricky is testing input and output.</p>
 
-<p>At first, I was tripped up by the simple fact that methods which send output to the console always return <code class="highlighter-rouge">nil</code>. How am I supposed to test different instances of output to the console if all of them will <code class="highlighter-rouge">eq(nil)</code>?</p>
+<p>At first, I was tripped up by the simple fact that methods which send output to the console always return <code class="language-plaintext highlighter-rouge">nil</code>. How am I supposed to test different instances of output to the console if all of them will <code class="language-plaintext highlighter-rouge">eq(nil)</code>?</p>
 
-<p>Next, I discovered <a href="https://www.relishapp.com/rspec/rspec-expectations/docs/built-in-matchers/output-matcher">the <code class="highlighter-rouge">output</code> matcher</a>. If I have a method like this:</p>
+<p>Next, I discovered <a href="https://www.relishapp.com/rspec/rspec-expectations/docs/built-in-matchers/output-matcher">the <code class="language-plaintext highlighter-rouge">output</code> matcher</a>. If I have a method like this:</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">say_hello</span>
   <span class="nb">print</span> <span class="s2">"Hello!"</span>
@@ -128,7 +128,7 @@
   <span class="k">end</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>Now I can run this class in my program by passing <code class="highlighter-rouge">$stdin</code> and <code class="highlighter-rouge">$stdout</code> as my arguments for reader and writer, and I can also run tests that don’t depend on those inputs by passing in other arguments.</p>
+<p>Now I can run this class in my program by passing <code class="language-plaintext highlighter-rouge">$stdin</code> and <code class="language-plaintext highlighter-rouge">$stdout</code> as my arguments for reader and writer, and I can also run tests that don’t depend on those inputs by passing in other arguments.</p>
 
 <p>At first, I thought I’d test this class by passing in StringIO objects. I had seen that approach <a href="http://danielirvine.com/blog/2014/05/30/a-better-stringio/">mentioned</a> in some <a href="http://technicalpickles.com/posts/a-pattern-for-using-standard-in-and-out-in-your-ruby-code/">other posts</a> while I was reading on the topic, and it seemed like a good place to start. It helped me test that input and output were conforming to what I’d expect given whatever I passed in.</p>
 
@@ -136,7 +136,7 @@
 
 <p>So, I set out to make a mock. This would be an object that I could pass in for my reader and writer not to see that input and output were conforming to expectations, but rather just to see that the appropriate methods were in fact being called. When I initialize my MockIO, <s>I set certain instance variables to false (e.g. `@print_was_called` or `@gets_was_called`), and</s> I overwrite the appropriate methods in my mock to <s>toggle those values to true</s> <em>[edit, see below] return unique identifiers [end edit]</em> if they are indeed called. When my tests passed, I know that I’m in fact calling the methods I wanted to access, and I can pass in whatever values I like.</p>
 
-<p>This approach has the additional benefit of letting me separate out all of the actual text I want to output to the console. I put that stuff a separate class where I have methods that <em>return</em> (rather than <code class="highlighter-rouge">puts</code> or <code class="highlighter-rouge">print</code>) strings. I can test those methods without using the <code class="highlighter-rouge">output</code> matcher, simply expecting returns of those method calls to <code class="highlighter-rouge">include("part of the string")</code>.</p>
+<p>This approach has the additional benefit of letting me separate out all of the actual text I want to output to the console. I put that stuff a separate class where I have methods that <em>return</em> (rather than <code class="language-plaintext highlighter-rouge">puts</code> or <code class="language-plaintext highlighter-rouge">print</code>) strings. I can test those methods without using the <code class="language-plaintext highlighter-rouge">output</code> matcher, simply expecting returns of those method calls to <code class="language-plaintext highlighter-rouge">include("part of the string")</code>.</p>
 
 <p>So, altogether, I have a working test suite where the tests are less brittle and the code operates as expected.</p>
 
@@ -156,13 +156,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -200,7 +200,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

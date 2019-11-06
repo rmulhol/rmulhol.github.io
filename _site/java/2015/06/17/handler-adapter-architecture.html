@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Handlers and Adapters: Thinking Server Architecture</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//java/2015/06/17/handler-adapter-architecture.html">
+    <link rel="canonical" href="http://rmulhol.github.io/java/2015/06/17/handler-adapter-architecture.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -79,11 +79,11 @@
   <article class="post-content">
     <p>In a <a href="/java/2015/06/06/simple-java-server.html">previous post</a>, I walked through how to build a simple HTTP server in Java that echoes back whatever request is issued by the user. While it’s a nice start for those new to server construction, it leaves a lot left to be desired in terms of functionality.</p>
 
-<p>Of course, you could just continue to build on that <code class="highlighter-rouge">while</code> loop, constructing a gargantuan nested conditional to deal with different requests appropriately. But that will leave you with some really gross code.</p>
+<p>Of course, you could just continue to build on that <code class="language-plaintext highlighter-rouge">while</code> loop, constructing a gargantuan nested conditional to deal with different requests appropriately. But that will leave you with some really gross code.</p>
 
 <p>Even following the tried and true approach of building away before extracting/refactoring code can leave you with a bit of a mess. It’s hard to put together a good architecture for a complicated piece of software like an HTTP server without an early familiarity with what it might look like down the road.</p>
 
-<p>At least, that was the trouble I found myself in after an initial attempt. I managed to decouple and extract most buckets of behavior from the core <code class="highlighter-rouge">while</code> loop, but there was one place where things got iffy: the method where the server determined what response to issue based on the request.</p>
+<p>At least, that was the trouble I found myself in after an initial attempt. I managed to decouple and extract most buckets of behavior from the core <code class="language-plaintext highlighter-rouge">while</code> loop, but there was one place where things got iffy: the method where the server determined what response to issue based on the request.</p>
 
 <p>This is not a good place to fail - it’s basically the heart of the application. I knew the best approach would probably be to go ahead and rewrite the whole thing, but I was at a loss for how I could approach such a rewrite without duplicating the same error.</p>
 
@@ -113,13 +113,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -157,7 +157,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

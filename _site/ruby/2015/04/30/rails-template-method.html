@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>The Template Method: Revisiting Inheritance in Rails Controllers</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//ruby/2015/04/30/rails-template-method.html">
+    <link rel="canonical" href="http://rmulhol.github.io/ruby/2015/04/30/rails-template-method.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -77,7 +77,7 @@
   </header>
 
   <article class="post-content">
-    <p>In a <a href="/ruby/2015/04/27/solid-rails.html">previous post</a>, I discussed the importance of adhering to SOLID design principles when grappling with inheritance in Rails. Specifically, I talked about how the flow of inheritance from the <code class="highlighter-rouge">ApplicationController</code> to subordinate controllers can generate dangers of violating the Open/Closed and Liskov substitution principles.</p>
+    <p>In a <a href="/ruby/2015/04/27/solid-rails.html">previous post</a>, I discussed the importance of adhering to SOLID design principles when grappling with inheritance in Rails. Specifically, I talked about how the flow of inheritance from the <code class="language-plaintext highlighter-rouge">ApplicationController</code> to subordinate controllers can generate dangers of violating the Open/Closed and Liskov substitution principles.</p>
 
 <p>We dealt with the Liskov substitution principle by refactoring this:</p>
 
@@ -149,7 +149,7 @@
   <span class="k">end</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>The latter implementation conforms to Liskov because we’re no longer overwriting a method from a superclass in a subtype in a way that would break the superclass. But it also introduces a violation of Open/Closed - <code class="highlighter-rouge">identify_user_in_params</code> would need to be modified each time we added a subtype. Accordingly, we further refactored to here:</p>
+<p>The latter implementation conforms to Liskov because we’re no longer overwriting a method from a superclass in a subtype in a way that would break the superclass. But it also introduces a violation of Open/Closed - <code class="language-plaintext highlighter-rouge">identify_user_in_params</code> would need to be modified each time we added a subtype. Accordingly, we further refactored to here:</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
   <span class="kp">include</span> <span class="no">SessionsHelper</span>
@@ -199,7 +199,7 @@
     <span class="k">end</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>This is a pretty alright stopping point, since we’re now delegating the work of identifying relevant parameters to the subtype. The <code class="highlighter-rouge">ApplicationController</code> is open for extension, and closed for modification - new subtypes need to implement <code class="highlighter-rouge">identify_user_in_params</code>, but don’t require changes in the <code class="highlighter-rouge">ApplicationController</code>.</p>
+<p>This is a pretty alright stopping point, since we’re now delegating the work of identifying relevant parameters to the subtype. The <code class="language-plaintext highlighter-rouge">ApplicationController</code> is open for extension, and closed for modification - new subtypes need to implement <code class="language-plaintext highlighter-rouge">identify_user_in_params</code>, but don’t require changes in the <code class="language-plaintext highlighter-rouge">ApplicationController</code>.</p>
 
 <p>If you look closely at this last implementation, you may notice it looks a lot like an implementation of <a href="http://en.wikipedia.org/wiki/Template_method_pattern">the template method</a> design pattern. According to Russ Olsen,</p>
 
@@ -209,9 +209,9 @@
 
 <p>That passage aptly describes what’s going on here - the superclass implements shared behavior, and the behavior that varies is delegated to the subclasses. Only one thing is missing: the template!</p>
 
-<p>Some might argue that there’s no need for a template in Ruby. After all, if we implement a new subclass and doesn’t either implement <code class="highlighter-rouge">identify_user_in_params</code> or include <code class="highlighter-rouge">skip_before_action :redirect_if_incorrect_user</code>, this code will throw an error: <code class="highlighter-rouge">NameError: undefined local variable or method `identify_user_in_params` for #&lt;...&gt;</code>.</p>
+<p>Some might argue that there’s no need for a template in Ruby. After all, if we implement a new subclass and doesn’t either implement <code class="language-plaintext highlighter-rouge">identify_user_in_params</code> or include <code class="language-plaintext highlighter-rouge">skip_before_action :redirect_if_incorrect_user</code>, this code will throw an error: <code class="language-plaintext highlighter-rouge">NameError: undefined local variable or method `identify_user_in_params` for #&lt;...&gt;</code>.</p>
 
-<p>And, in fact, this very error introduces a deliberate violation of Liskov - no subtype is now substitutable for the superclass, since the <code class="highlighter-rouge">ApplicationController</code> by itself cannot function (we’ll always get an error unless the subtype implements a workaround). Therefore, it’s best to be explicit about what’s going on. By introducing a template:</p>
+<p>And, in fact, this very error introduces a deliberate violation of Liskov - no subtype is now substitutable for the superclass, since the <code class="language-plaintext highlighter-rouge">ApplicationController</code> by itself cannot function (we’ll always get an error unless the subtype implements a workaround). Therefore, it’s best to be explicit about what’s going on. By introducing a template:</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
 
@@ -243,13 +243,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -287,7 +287,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>
