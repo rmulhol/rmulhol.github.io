@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Inheritance in Rails Controllers: SOLID Principles In Practice</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//ruby/2015/04/27/solid-rails.html">
+    <link rel="canonical" href="http://rmulhol.github.io/ruby/2015/04/27/solid-rails.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -87,7 +87,7 @@
 
 <p><strong>The Danger Zone: The Application Controller</strong></p>
 
-<p>Recently, I’ve been putting together <a href="https://rocky-ocean-5667.herokuapp.com/">a little Rails app to handle RSVPs</a>. One piece of behavior I’ve wanted to implement is a method to verify that the user attempting to invoke an action actually has access to that action. It would be a problem if one user could modify another user’s profile, so I need to have a filter. On the <code class="highlighter-rouge">UsersController</code>, it might look something like this:</p>
+<p>Recently, I’ve been putting together <a href="https://rocky-ocean-5667.herokuapp.com/">a little Rails app to handle RSVPs</a>. One piece of behavior I’ve wanted to implement is a method to verify that the user attempting to invoke an action actually has access to that action. It would be a problem if one user could modify another user’s profile, so I need to have a filter. On the <code class="language-plaintext highlighter-rouge">UsersController</code>, it might look something like this:</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
   <span class="kp">include</span> <span class="no">SessionsHelper</span> <span class="c1"># contains current_user?(user)</span>
@@ -103,7 +103,7 @@
     <span class="k">end</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>But I want to protect actions on other controllers as well. Specifically, a user <code class="highlighter-rouge">has_many :events</code>, and I don’t want one user to be able to modify another user’s events. So I can move the before filter to the application controller.</p>
+<p>But I want to protect actions on other controllers as well. Specifically, a user <code class="language-plaintext highlighter-rouge">has_many :events</code>, and I don’t want one user to be able to modify another user’s events. So I can move the before filter to the application controller.</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
   <span class="kp">include</span> <span class="no">SessionsHelper</span>
@@ -119,15 +119,15 @@
   <span class="k">end</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>Now my before filter will be inherited by every controller, and I can un-protect individual actions as necessary by <a href="http://en.wikipedia.org/wiki/Whitelist">whitelisting</a>. I had to implement a slightly more tedious way of examining the route, since a route pointing to an action on the events controller will identify the user with <code class="highlighter-rouge">params[:user_id]</code> (rather than <code class="highlighter-rouge">params[:id]</code>, which will refer to the event itself), but this works for both users and events.</p>
+<p>Now my before filter will be inherited by every controller, and I can un-protect individual actions as necessary by <a href="http://en.wikipedia.org/wiki/Whitelist">whitelisting</a>. I had to implement a slightly more tedious way of examining the route, since a route pointing to an action on the events controller will identify the user with <code class="language-plaintext highlighter-rouge">params[:user_id]</code> (rather than <code class="language-plaintext highlighter-rouge">params[:id]</code>, which will refer to the event itself), but this works for both users and events.</p>
 
 <p><strong>OK, Let’s Just Make Things A Bit Worse</strong></p>
 
 <p>Astute readers will already notice an OCP violation, but let’s dig a bit deeper into the weeds before we clean things up.</p>
 
-<p>In addition to events, a user <code class="highlighter-rouge">has_many :guests, through: :events</code>. Routes headed for the guests controller have <code class="highlighter-rouge">params[:event_id]</code> and <code class="highlighter-rouge">params[:id]</code>. That breaks the method above since it’ll see that there’s no <code class="highlighter-rouge">params[:user_id]</code> and try to find a <code class="highlighter-rouge">User</code> based on <code class="highlighter-rouge">params[:id]</code>, which actually identifies a guest.</p>
+<p>In addition to events, a user <code class="language-plaintext highlighter-rouge">has_many :guests, through: :events</code>. Routes headed for the guests controller have <code class="language-plaintext highlighter-rouge">params[:event_id]</code> and <code class="language-plaintext highlighter-rouge">params[:id]</code>. That breaks the method above since it’ll see that there’s no <code class="language-plaintext highlighter-rouge">params[:user_id]</code> and try to find a <code class="language-plaintext highlighter-rouge">User</code> based on <code class="language-plaintext highlighter-rouge">params[:id]</code>, which actually identifies a guest.</p>
 
-<p>Since the <code class="highlighter-rouge">before_action</code> filter is inherited, we can implement a better version on the guests controller by overwriting the <code class="highlighter-rouge">redirect_if_incorrect_user</code> method:</p>
+<p>Since the <code class="language-plaintext highlighter-rouge">before_action</code> filter is inherited, we can implement a better version on the guests controller by overwriting the <code class="language-plaintext highlighter-rouge">redirect_if_incorrect_user</code> method:</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">GuestsController</span> <span class="o">&lt;</span> <span class="no">Application</span> <span class="no">Controller</span>
   
@@ -149,9 +149,9 @@
 
 <p>We’ve got two pretty big violations of the SOLID design principles here:</p>
 
-<p>1) <a href="http://en.wikipedia.org/wiki/Liskov_substitution_principle">The Liskov Substitution Principle</a>: According to Robert Martin, this principle boils down to a rule that “subtypes must be substitutable for their base types” (<a href="http://www.amazon.com/Software-Development-Principles-Patterns-Practices/dp/0135974445">PPP</a> 111). In our case, the guests controller’s implementation of <code class="highlighter-rouge">redirect_if_incorrect_user</code> violates the Liskov substitution principle because it can’t be substituted for the implementation in the base class (the application controller). If we’re locating the user with the <code class="highlighter-rouge">params[:event_id]</code>, we’ll be out of luck when there is no <code class="highlighter-rouge">params[:event_id]</code> (e.g. actions on the users and events controllers).</p>
+<p>1) <a href="http://en.wikipedia.org/wiki/Liskov_substitution_principle">The Liskov Substitution Principle</a>: According to Robert Martin, this principle boils down to a rule that “subtypes must be substitutable for their base types” (<a href="http://www.amazon.com/Software-Development-Principles-Patterns-Practices/dp/0135974445">PPP</a> 111). In our case, the guests controller’s implementation of <code class="language-plaintext highlighter-rouge">redirect_if_incorrect_user</code> violates the Liskov substitution principle because it can’t be substituted for the implementation in the base class (the application controller). If we’re locating the user with the <code class="language-plaintext highlighter-rouge">params[:event_id]</code>, we’ll be out of luck when there is no <code class="language-plaintext highlighter-rouge">params[:event_id]</code> (e.g. actions on the users and events controllers).</p>
 
-<p>2) <a href="http://en.wikipedia.org/wiki/Open/closed_principle">The Open-Closed Principle</a>: describing the OCP, Martin writes, “Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification” (<a href="http://www.amazon.com/Software-Development-Principles-Patterns-Practices/dp/0135974445">PPP</a> 99). If we want to add new features or classes, we shouldn’t have to go back and modify classes we already had to make the new ones work. That means it’s not an adequate solution to add a new <code class="highlighter-rouge">if</code> statement to a method on the application controller each time we’re dealing with a new controller.</p>
+<p>2) <a href="http://en.wikipedia.org/wiki/Open/closed_principle">The Open-Closed Principle</a>: describing the OCP, Martin writes, “Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification” (<a href="http://www.amazon.com/Software-Development-Principles-Patterns-Practices/dp/0135974445">PPP</a> 99). If we want to add new features or classes, we shouldn’t have to go back and modify classes we already had to make the new ones work. That means it’s not an adequate solution to add a new <code class="language-plaintext highlighter-rouge">if</code> statement to a method on the application controller each time we’re dealing with a new controller.</p>
 
 <p>To accomodate Liskov, we could make the method on our application controller more universal:</p>
 
@@ -179,7 +179,7 @@
   <span class="k">end</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>Here, the <code class="highlighter-rouge">identify_user_in_params</code> still doesn’t satisfy Open/Closed, since it’ll have to be modified as parameters change. Therefore, a more appropriate decision might be to delegate the work of correctly unpacking parameters to each controller:</p>
+<p>Here, the <code class="language-plaintext highlighter-rouge">identify_user_in_params</code> still doesn’t satisfy Open/Closed, since it’ll have to be modified as parameters change. Therefore, a more appropriate decision might be to delegate the work of correctly unpacking parameters to each controller:</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
   <span class="kp">include</span> <span class="no">SessionsHelper</span>
@@ -240,13 +240,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -284,7 +284,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

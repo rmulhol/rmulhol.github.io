@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Object-Oriented JavaScript: Implementing the Revealing Prototype Pattern</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//javascript/2015/02/25/revealing-prototype-pattern.html">
+    <link rel="canonical" href="http://rmulhol.github.io/javascript/2015/02/25/revealing-prototype-pattern.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -127,7 +127,7 @@
   <span class="p">}</span>
 <span class="p">};</span></code></pre></figure>
 
-<p>This option effectively hides information so that we’re only exposing three properties (get/set the move signature and make a move), but it doesn’t enable us to create new players efficiently. Any time we call <code class="highlighter-rouge">AiPlayer()</code>, all of the methods will be copied for the new instance.</p>
+<p>This option effectively hides information so that we’re only exposing three properties (get/set the move signature and make a move), but it doesn’t enable us to create new players efficiently. Any time we call <code class="language-plaintext highlighter-rouge">AiPlayer()</code>, all of the methods will be copied for the new instance.</p>
 
 <p>Using prototypes, we could rectify this problem:</p>
 
@@ -147,7 +147,7 @@
   <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>Now we can create new objects efficiently. Calls to <code class="highlighter-rouge">new AiPlayer(moveSignature)</code> don’t copy all of our functions, just a reference to the prototype where they’re stored. The problem is that we’ve lost our information hiding - the <code class="highlighter-rouge">minimax</code> and <code class="highlighter-rouge">scoreBoard</code> functions are exposed publicly.</p>
+<p>Now we can create new objects efficiently. Calls to <code class="language-plaintext highlighter-rouge">new AiPlayer(moveSignature)</code> don’t copy all of our functions, just a reference to the prototype where they’re stored. The problem is that we’ve lost our information hiding - the <code class="language-plaintext highlighter-rouge">minimax</code> and <code class="language-plaintext highlighter-rouge">scoreBoard</code> functions are exposed publicly.</p>
 
 <p>Using the revealing module pattern, we can get information hiding <em>and</em> efficient object creation:</p>
 
@@ -173,7 +173,7 @@
   <span class="p">}</span>
 <span class="p">})();</span></code></pre></figure>
 
-<p>Using the revealing prototype pattern, our constructor creates objects efficiently and hides private information. New <code class="highlighter-rouge">AiPlayer</code> objects only store their own <code class="highlighter-rouge">moveSignature</code> and a reference to the prototype, and the prototype only exposes a <code class="highlighter-rouge">makeMove()</code> function.</p>
+<p>Using the revealing prototype pattern, our constructor creates objects efficiently and hides private information. New <code class="language-plaintext highlighter-rouge">AiPlayer</code> objects only store their own <code class="language-plaintext highlighter-rouge">moveSignature</code> and a reference to the prototype, and the prototype only exposes a <code class="language-plaintext highlighter-rouge">makeMove()</code> function.</p>
 
 
   </article>
@@ -187,13 +187,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -231,7 +231,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

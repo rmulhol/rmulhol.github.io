@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Working with Packages: Compiling Classes that Implement Interfaces</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//java/2014/10/15/packages-interfaces-classes.html">
+    <link rel="canonical" href="http://rmulhol.github.io/java/2014/10/15/packages-interfaces-classes.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -81,27 +81,27 @@
 
 <p>Though I use an IDE (<a href="https://www.jetbrains.com/idea/">IntelliJ</a>) for my own projects, I’ve been completing the exercises from the book in Vim for two reasons: (1) I want to get a good understanding of what’s going on ‘behind the curtain,’ without relying on all the legwork IntelliJ does for me; and, (2) I don’t want to create new projects in IntelliJ for each of the very small programs in the book (so far I’ve completed over 200, and most are fewer than 50 lines).</p>
 
-<p>Recently, I was working on an example in Chapter 9, where the objective is to practice implementing interfaces. To do so, you first create an interface <code class="highlighter-rouge">Callback</code>, then a class <code class="highlighter-rouge">Client</code> that implements the interface, and then finally a class <code class="highlighter-rouge">TestIface</code> that both declares an interface reference variable and calls the method from <code class="highlighter-rouge">Client</code> on it.</p>
+<p>Recently, I was working on an example in Chapter 9, where the objective is to practice implementing interfaces. To do so, you first create an interface <code class="language-plaintext highlighter-rouge">Callback</code>, then a class <code class="language-plaintext highlighter-rouge">Client</code> that implements the interface, and then finally a class <code class="language-plaintext highlighter-rouge">TestIface</code> that both declares an interface reference variable and calls the method from <code class="language-plaintext highlighter-rouge">Client</code> on it.</p>
 
 <p>Working in Vim, I first placed all of these components (one interface and two classes) into a single file. It compiled and ran just fine.</p>
 
-<p>The next lesson adds two more classes: one, <code class="highlighter-rouge">AnotherClient</code>, that implements the interface differently, and another, <code class="highlighter-rouge">TestIface2</code>, that calls the method from <code class="highlighter-rouge">AnotherClient</code> on an interface reference variable. So that I could minimize retyping, I opted to place each component in a separate file: one for the interface, and four for the respective classes.</p>
+<p>The next lesson adds two more classes: one, <code class="language-plaintext highlighter-rouge">AnotherClient</code>, that implements the interface differently, and another, <code class="language-plaintext highlighter-rouge">TestIface2</code>, that calls the method from <code class="language-plaintext highlighter-rouge">AnotherClient</code> on an interface reference variable. So that I could minimize retyping, I opted to place each component in a separate file: one for the interface, and four for the respective classes.</p>
 
 <p>The file containing the interface compiled just fine, but the classes were giving me guff:</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Client</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">3</span><span class="o">:</span> <span class="nl">error:</span> <span class="n">cannot</span> <span class="n">find</span> <span class="n">symbol</span>
-<span class="kd">class</span> <span class="nc">Client</span> <span class="kd">implements</span> <span class="n">Callback</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="nc">Client</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">3</span><span class="o">:</span> <span class="nl">error:</span> <span class="n">cannot</span> <span class="n">find</span> <span class="n">symbol</span>
+<span class="kd">class</span> <span class="nc">Client</span> <span class="kd">implements</span> <span class="nc">Callback</span> <span class="o">{</span>
                         <span class="o">^</span>
   <span class="nl">symbol:</span> <span class="kd">class</span> <span class="nc">Callback</span></code></pre></figure>
 
-<p>I was completely baffled. How could it be that <code class="highlighter-rouge">javac Callback.java</code> would work just fine, but <code class="highlighter-rouge">javac Client.java</code> would produce the error above? I could see that <code class="highlighter-rouge">Callback.class</code> did indeed reside in the exact same package directory as <code class="highlighter-rouge">Client.java</code>, but the compiler wasn’t finding it.</p>
+<p>I was completely baffled. How could it be that <code class="language-plaintext highlighter-rouge">javac Callback.java</code> would work just fine, but <code class="language-plaintext highlighter-rouge">javac Client.java</code> would produce the error above? I could see that <code class="language-plaintext highlighter-rouge">Callback.class</code> did indeed reside in the exact same package directory as <code class="language-plaintext highlighter-rouge">Client.java</code>, but the compiler wasn’t finding it.</p>
 
 <p>I opted to try it out in IntelliJ. While I don’t want to rely on the IDE as a shortcut, I was hoping that I could learn something by seeing how it fixed the problem. But this made things even more confusing - the <em>exact same</em> source code compiled in IntelliJ without a hitch.</p>
 
-<p>I fooled around for awhile (reading through examples of similar problems on <a href="http://stackoverflow.com/questions/16102893/cannot-find-symbol-saying-implemented-interface-not-found">stackoverflow</a>, using <code class="highlighter-rouge">import</code> in myriad different ways, changing the names of the interface and classes, etc) trying to find an answer before I stumbled upon something that worked:</p>
+<p>I fooled around for awhile (reading through examples of similar problems on <a href="http://stackoverflow.com/questions/16102893/cannot-find-symbol-saying-implemented-interface-not-found">stackoverflow</a>, using <code class="language-plaintext highlighter-rouge">import</code> in myriad different ways, changing the names of the interface and classes, etc) trying to find an answer before I stumbled upon something that worked:</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">&gt;</span> <span class="n">cd</span> <span class="o">..</span>
-<span class="o">&gt;</span> <span class="n">javac</span> <span class="n">MyPack</span><span class="o">/</span><span class="n">Client</span><span class="o">.</span><span class="na">java</span></code></pre></figure>
+<span class="o">&gt;</span> <span class="n">javac</span> <span class="nc">MyPack</span><span class="o">/</span><span class="nc">Client</span><span class="o">.</span><span class="na">java</span></code></pre></figure>
 
 <p>It turns out that in order to compile a class that implements an interface and resides within a package, you have to back up out of that package and compile by providing the file directory that includes the package.</p>
 
@@ -119,13 +119,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -163,7 +163,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>You Down With OCP? Implementing the Open/Closed Principle</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//oop/2014/10/01/open-closed-principle.html">
+    <link rel="canonical" href="http://rmulhol.github.io/oop/2014/10/01/open-closed-principle.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -93,7 +93,7 @@
   <span class="k">end</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>That seems like it’ll work fine. But what if I want to add a new type of player (say I want to have several classes of computer players that operate at varying degrees of difficulty, for example)? To make that addition, I’m going to need to add a new <code class="highlighter-rouge">elsif</code> statement for the new player(s). And while that change might not seem like that big of a deal right here, imagine if I’ve structured multiple methods - or worse, multiple classes - with this pattern. One addition is going to force changes all over the place.</p>
+<p>That seems like it’ll work fine. But what if I want to add a new type of player (say I want to have several classes of computer players that operate at varying degrees of difficulty, for example)? To make that addition, I’m going to need to add a new <code class="language-plaintext highlighter-rouge">elsif</code> statement for the new player(s). And while that change might not seem like that big of a deal right here, imagine if I’ve structured multiple methods - or worse, multiple classes - with this pattern. One addition is going to force changes all over the place.</p>
 
 <p>If I invert the dependency, and expect all of the different varieties of players to respond to a single method (using what Sandi Metz refers to as ‘duck typing’), then I can turn abstraction to my advantage:</p>
 
@@ -101,7 +101,7 @@
   <span class="n">player</span><span class="p">.</span><span class="nf">deliver_next_move</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>Now I trust each player to implement a <code class="highlighter-rouge">deliver_next_move</code> method, and my original object will work with any added class that does so. I’ll be able to use the new additions without modifying the code I already have. Hence, open for extension, closed for modification.</p>
+<p>Now I trust each player to implement a <code class="language-plaintext highlighter-rouge">deliver_next_move</code> method, and my original object will work with any added class that does so. I’ll be able to use the new additions without modifying the code I already have. Hence, open for extension, closed for modification.</p>
 
 <p>I’m excited about continuing to play with and learn about these concepts (what’s the difference between the O and the D in SOLID? Is one <a href="http://tech.michaelgroner.com/2009/01/29/openclose-principle-and-dependency-inversion-principle-ndash-two-sides-same-coin/">just a way of implementing the other</a>?), because it’s clear that what bits I do learn will help me write better and more maintainable code.</p>
 
@@ -119,13 +119,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -163,7 +163,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

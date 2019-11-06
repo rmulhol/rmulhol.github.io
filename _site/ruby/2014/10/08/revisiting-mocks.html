@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Working with Rspec: Revisiting Testing With Mocks</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//ruby/2014/10/08/revisiting-mocks.html">
+    <link rel="canonical" href="http://rmulhol.github.io/ruby/2014/10/08/revisiting-mocks.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -91,7 +91,7 @@
 
 <p>So, with that said, how can one write the mocks that let you test that outgoing command messages are sent, and just that?</p>
 
-<p>At first, I was overwriting methods from my (non-mock) classes so that they would return a boolean. Set an instance variable to <code class="highlighter-rouge">false</code> when the new mock object is initialized, then set it to <code class="highlighter-rouge">true</code> when the appropriate method is called. For example, my MockIO object initially looked like this:</p>
+<p>At first, I was overwriting methods from my (non-mock) classes so that they would return a boolean. Set an instance variable to <code class="language-plaintext highlighter-rouge">false</code> when the new mock object is initialized, then set it to <code class="language-plaintext highlighter-rouge">true</code> when the appropriate method is called. For example, my MockIO object initially looked like this:</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MockIO</span>
   <span class="nb">attr_reader</span> <span class="ss">:print_was_called</span>
@@ -137,9 +137,9 @@
 
 <p>And, there we have it. I’ve now rolled my own mock and I can inject it into my tests to assure that outgoing command messages are being sent without having to do anything more. I don’t have to incur any side effects the commands might have when they’re sent to my real IO, and I don’t have to worry about unexpected outcomes I could see using an automated mocking framework. Cool!</p>
 
-<p>But, this approach does have some downsides. First of all, I’m going to be intializing a lot of booleans - not a big problem, but something that irks me. Second, and perhaps most importantly, I’m running the risk of verifying that I’ve sent the wrong message. If all of my method calls in the mock object return <code class="highlighter-rouge">true</code>, then a verification that one method has been sent will be indistinguishable from the verification that another method has been sent. I won’t be able to verify that I actually sent the <em>right</em> method.</p>
+<p>But, this approach does have some downsides. First of all, I’m going to be intializing a lot of booleans - not a big problem, but something that irks me. Second, and perhaps most importantly, I’m running the risk of verifying that I’ve sent the wrong message. If all of my method calls in the mock object return <code class="language-plaintext highlighter-rouge">true</code>, then a verification that one method has been sent will be indistinguishable from the verification that another method has been sent. I won’t be able to verify that I actually sent the <em>right</em> method.</p>
 
-<p>So, I’ve reworked my mocks so that each method returns a unique identifier. Now, instead of returning <code class="highlighter-rouge">true</code>, the <code class="highlighter-rouge">print</code> method returns <code class="highlighter-rouge">"print called"</code>. It looks like this:</p>
+<p>So, I’ve reworked my mocks so that each method returns a unique identifier. Now, instead of returning <code class="language-plaintext highlighter-rouge">true</code>, the <code class="language-plaintext highlighter-rouge">print</code> method returns <code class="language-plaintext highlighter-rouge">"print called"</code>. It looks like this:</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MockIO</span>
   <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
@@ -181,13 +181,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -225,7 +225,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

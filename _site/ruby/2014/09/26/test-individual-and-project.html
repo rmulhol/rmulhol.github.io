@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Working with Rspec: Testing Both Individual Files and Complete Projects</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//ruby/2014/09/26/test-individual-and-project.html">
+    <link rel="canonical" href="http://rmulhol.github.io/ruby/2014/09/26/test-individual-and-project.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -100,9 +100,10 @@
   <span class="n">it</span> <span class="s2">"adds 2 integers"</span> <span class="k">do</span>
     <span class="n">expect</span><span class="p">(</span><span class="n">addition</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
   <span class="k">end</span>
-<span class="k">end</span></pre></td></tr></tbody></table></code></pre></figure>
+<span class="k">end</span>
+</pre></td></tr></tbody></table></code></pre></figure>
 
-<p>Then I would navigate to my project’s spec directory, and type <code class="highlighter-rouge">rspec addition_spec.rb</code>. The result looked like this:</p>
+<p>Then I would navigate to my project’s spec directory, and type <code class="language-plaintext highlighter-rouge">rspec addition_spec.rb</code>. The result looked like this:</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">=&gt;</span> <span class="sb">`require': cannot load such file -- addition (LoadError)</span></code></pre></figure>
 
@@ -124,23 +125,23 @@
 
 <p>As time wore on, I began to grow weary of my lengthy ‘require’ statements, and I developed a keen interest in learning better ways of writing tests.</p>
 
-<p>Acting upon that interest, I decided to strike up a conversation with a more knowledgeable compatriot, and I was rewarded with a helpful bit of knowledge. It turned out that if I navigated to my project’s home directory (rather than the spec directory) and simply typed <code class="highlighter-rouge">rspec</code>, all of my tests would run with the original, less verbose <code class="highlighter-rouge">require</code> syntax (e.g. <code class="highlighter-rouge">require 'addition'</code>).</p>
+<p>Acting upon that interest, I decided to strike up a conversation with a more knowledgeable compatriot, and I was rewarded with a helpful bit of knowledge. It turned out that if I navigated to my project’s home directory (rather than the spec directory) and simply typed <code class="language-plaintext highlighter-rouge">rspec</code>, all of my tests would run with the original, less verbose <code class="language-plaintext highlighter-rouge">require</code> syntax (e.g. <code class="language-plaintext highlighter-rouge">require 'addition'</code>).</p>
 
-<p>I couldn’t get the old approach to work, but no matter. I was running all of my tests and using the <code class="highlighter-rouge">require</code> syntax I had longed for.</p>
+<p>I couldn’t get the old approach to work, but no matter. I was running all of my tests and using the <code class="language-plaintext highlighter-rouge">require</code> syntax I had longed for.</p>
 
 <p>Traveling along in this fashion, I began to tackle projects made up of multiple files.</p>
 
 <p><strong>Step 3: Testing Individual Files and the Whole Project (The Wrong Way)</strong></p>
 
-<p>As had been the pattern previously, I once again grew tired of the seemingly unnecessary limitations I encountered. Though testing the whole project covered all of my bases, I wondered why typing <code class="highlighter-rouge">rspec addition_spec.rb</code> in my spec directory would no longer work (instead raising the familiar <code class="highlighter-rouge">LoadError</code>).</p>
+<p>As had been the pattern previously, I once again grew tired of the seemingly unnecessary limitations I encountered. Though testing the whole project covered all of my bases, I wondered why typing <code class="language-plaintext highlighter-rouge">rspec addition_spec.rb</code> in my spec directory would no longer work (instead raising the familiar <code class="language-plaintext highlighter-rouge">LoadError</code>).</p>
 
 <p>So, I decided to start checking out some <a href="http://code.tutsplus.com/tutorials/ruby-for-newbies-testing-with-rspec--net-21297">resources</a> for Rspec beginners, intending to retrace my steps until I located the crucial mistake that I most certainly must have made.</p>
 
 <p>One thing that jumped out at me during this process was a suggested use of the spec_helper.rb file.</p>
 
-<p>Basically, the idea was to <code class="highlighter-rouge">require_relative</code> all of the files in the lib directory in my spec_helper, and then to require only the spec_helper in every spec. Though I felt some apprehension at the idea that every individual spec would require every file in the lib directory, I was desperate.</p>
+<p>Basically, the idea was to <code class="language-plaintext highlighter-rouge">require_relative</code> all of the files in the lib directory in my spec_helper, and then to require only the spec_helper in every spec. Though I felt some apprehension at the idea that every individual spec would require every file in the lib directory, I was desperate.</p>
 
-<p>And it worked! Now I could test the whole project (<code class="highlighter-rouge">rspec spec</code> in the project directory) and individual files (<code class="highlighter-rouge">rspec addition_spec.rb</code> in the spec directory), though the tests on individual files weren’t outputting the normal colors I was used to (red output for failures, green output for passing). No matter, I thought.</p>
+<p>And it worked! Now I could test the whole project (<code class="language-plaintext highlighter-rouge">rspec spec</code> in the project directory) and individual files (<code class="language-plaintext highlighter-rouge">rspec addition_spec.rb</code> in the spec directory), though the tests on individual files weren’t outputting the normal colors I was used to (red output for failures, green output for passing). No matter, I thought.</p>
 
 <p><strong>Step 4: Testing Individual Files and the Whole Project (The Right Way)</strong></p>
 
@@ -172,13 +173,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -216,7 +217,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

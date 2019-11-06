@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Working With SQL: Deriving New Data From Existing Columns</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//sql/2015/10/16/sql-union-case.html">
+    <link rel="canonical" href="http://rmulhol.github.io/sql/2015/10/16/sql-union-case.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -83,7 +83,7 @@
 
 <p>In this post, we’ll get started with nurturing that sort of familiarity by discussing how to accomplish a simple task in PostgreSQL: deriving new data from the combination and/or evaluation of fields in a database.</p>
 
-<p><strong>Combination: <code class="highlighter-rouge">UNION</code></strong></p>
+<p><strong>Combination: <code class="language-plaintext highlighter-rouge">UNION</code></strong></p>
 
 <p>Accessing data from a table’s columns is fairly straightforward:</p>
 
@@ -98,7 +98,7 @@
 
 <p>These queries allow us access data that’s either identical to or a subset of existing columns. But what if we want our query’s results to <em>combine</em> data from several columns?</p>
 
-<p>For example, imagine that you have a table <code class="highlighter-rouge">people</code> that stores the name, favorite actor, and favorite actress of several individuals.</p>
+<p>For example, imagine that you have a table <code class="language-plaintext highlighter-rouge">people</code> that stores the name, favorite actor, and favorite actress of several individuals.</p>
 
 <table>
   <thead>
@@ -163,7 +163,7 @@
 
 <p>The simple queries listed at the top of this section won’t work, since they return columns as they are represented in our database.</p>
 
-<p>To query for a combination of data from several columns, we can take advantage of the <code class="highlighter-rouge">UNION</code> operation.</p>
+<p>To query for a combination of data from several columns, we can take advantage of the <code class="language-plaintext highlighter-rouge">UNION</code> operation.</p>
 
 <figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">favorite_actor</span> <span class="k">AS</span> <span class="n">movie_star</span>
 	<span class="k">FROM</span> <span class="n">people</span>
@@ -171,15 +171,15 @@
 <span class="k">SELECT</span> <span class="n">favorite_actress</span>
 	<span class="k">FROM</span> <span class="n">people</span><span class="p">;</span></code></pre></figure>
 
-<p>The <code class="highlighter-rouge">UNION</code> operation lets us combine the results of several queries, allowing us to aggregate data both within and across tables.</p>
+<p>The <code class="language-plaintext highlighter-rouge">UNION</code> operation lets us combine the results of several queries, allowing us to aggregate data both within and across tables.</p>
 
-<p><strong>Derivation: <code class="highlighter-rouge">CASE</code></strong></p>
+<p><strong>Derivation: <code class="language-plaintext highlighter-rouge">CASE</code></strong></p>
 
-<p>In the case of a <code class="highlighter-rouge">UNION</code> operation, our query returns results with a new column header, but merely a combination of contents - they all correspond to existing fields in our database.</p>
+<p>In the case of a <code class="language-plaintext highlighter-rouge">UNION</code> operation, our query returns results with a new column header, but merely a combination of contents - they all correspond to existing fields in our database.</p>
 
-<p>If we want to query for results that yield both a new header and new contents, we can take advantage of the <code class="highlighter-rouge">CASE</code> operation.</p>
+<p>If we want to query for results that yield both a new header and new contents, we can take advantage of the <code class="language-plaintext highlighter-rouge">CASE</code> operation.</p>
 
-<p>For example, still working with our <code class="highlighter-rouge">people</code> table, say  we want to derive a column that tells us whether the person in question loves <em>Titanic</em>.</p>
+<p>For example, still working with our <code class="language-plaintext highlighter-rouge">people</code> table, say  we want to derive a column that tells us whether the person in question loves <em>Titanic</em>.</p>
 
 <p>We can’t really be sure that any of them don’t love <em>Titanic</em>, but we feel comfortable predicting that they do love the film if their favorite actor is Leonardo DiCaprio and their favorite actress is Kate Winslet.</p>
 
@@ -216,13 +216,13 @@
   </tbody>
 </table>
 
-<p>Here, our query returns results without a 1-to-1 mapping to our database. By including a <code class="highlighter-rouge">CASE</code> operation that behaves differently depending on the contents of existing fields in our database, we’re able to derive new information.</p>
+<p>Here, our query returns results without a 1-to-1 mapping to our database. By including a <code class="language-plaintext highlighter-rouge">CASE</code> operation that behaves differently depending on the contents of existing fields in our database, we’re able to derive new information.</p>
 
 <p><strong>Conclusion</strong></p>
 
 <p>We haven’t come close to exhausting the range of techniques you can use to derive new and sophisticated information from tables in a database, much less other information that you’ll want to possess to accomplish other tasks, but we have covered some important ground.</p>
 
-<p>If you’re in an environment where you’re likely to find yourself working with a relational database, the <code class="highlighter-rouge">UNION</code> and <code class="highlighter-rouge">CASE</code> operations are two techniques with which you’ll want to be familiar.</p>
+<p>If you’re in an environment where you’re likely to find yourself working with a relational database, the <code class="language-plaintext highlighter-rouge">UNION</code> and <code class="language-plaintext highlighter-rouge">CASE</code> operations are two techniques with which you’ll want to be familiar.</p>
 
 
   </article>
@@ -236,13 +236,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -280,7 +280,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

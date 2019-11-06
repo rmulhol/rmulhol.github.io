@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>To Change the Past: Cleaning Up Your Git Commit History</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//general/2015/05/20/clean-commit-history.html">
+    <link rel="canonical" href="http://rmulhol.github.io/general/2015/05/20/clean-commit-history.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -89,11 +89,11 @@
 
 <p>In order to accomplish any of the tasks that follow, it’s necessary to be able to reach back to previous commits. I’ll be discussing three primary strategies for doing so:</p>
 
-<p>1) <code class="highlighter-rouge">git commit --amend</code> - to modify the most recent commit.</p>
+<p>1) <code class="language-plaintext highlighter-rouge">git commit --amend</code> - to modify the most recent commit.</p>
 
-<p>2) <code class="highlighter-rouge">git rebase -i HEAD~...</code> - to dive deeper into your project’s history. Replace <code class="highlighter-rouge">...</code> with a number specifying how far back into your history you would like to reach.</p>
+<p>2) <code class="language-plaintext highlighter-rouge">git rebase -i HEAD~...</code> - to dive deeper into your project’s history. Replace <code class="language-plaintext highlighter-rouge">...</code> with a number specifying how far back into your history you would like to reach.</p>
 
-<p>3) <code class="highlighter-rouge">git rebase -i --root</code> - to adjust your project’s initial commit.</p>
+<p>3) <code class="language-plaintext highlighter-rouge">git rebase -i --root</code> - to adjust your project’s initial commit.</p>
 
 <p><strong>Control the Message: Renaming Commits</strong></p>
 
@@ -101,11 +101,11 @@
 
 <p>This is probably the most simple error to fix.</p>
 
-<p>To reword your most recent commit message, simply execute <code class="highlighter-rouge">git commit --amend</code>. This will bring up a text editor with the previous message at the beginning of the document. Make your edits, save and close the document, and the log will reflect your changes.</p>
+<p>To reword your most recent commit message, simply execute <code class="language-plaintext highlighter-rouge">git commit --amend</code>. This will bring up a text editor with the previous message at the beginning of the document. Make your edits, save and close the document, and the log will reflect your changes.</p>
 
-<p>To rename commits between the root and where you are currently, use <code class="highlighter-rouge">git rebase -i HEAD~...</code>, replacing <code class="highlighter-rouge">...</code> with how many commits back you’d like to reach. This will bring up a text editor listing all of the commits in the range between there and where you are now. Before each one, you’ll see the word <code class="highlighter-rouge">pick</code>. Replace that with <code class="highlighter-rouge">reword</code> for the messages you’d like to change. Save and close the dcoument, and you’ll see a document for each of those commits. Save and close those documents with revised messages, and the log will reflect your changes.</p>
+<p>To rename commits between the root and where you are currently, use <code class="language-plaintext highlighter-rouge">git rebase -i HEAD~...</code>, replacing <code class="language-plaintext highlighter-rouge">...</code> with how many commits back you’d like to reach. This will bring up a text editor listing all of the commits in the range between there and where you are now. Before each one, you’ll see the word <code class="language-plaintext highlighter-rouge">pick</code>. Replace that with <code class="language-plaintext highlighter-rouge">reword</code> for the messages you’d like to change. Save and close the dcoument, and you’ll see a document for each of those commits. Save and close those documents with revised messages, and the log will reflect your changes.</p>
 
-<p>To rename the root commit message, run <code class="highlighter-rouge">git rebase -i --root</code>. This will take you make to the moment immediately following your initial commit, where <code class="highlighter-rouge">git commit --amend</code> will allow you to edit it as if it were your actual most recent commit. To complete this step, run <code class="highlighter-rouge">git rebase --continue</code>, which will bring you back to the end of your project’s history<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>.</p>
+<p>To rename the root commit message, run <code class="language-plaintext highlighter-rouge">git rebase -i --root</code>. This will take you make to the moment immediately following your initial commit, where <code class="language-plaintext highlighter-rouge">git commit --amend</code> will allow you to edit it as if it were your actual most recent commit. To complete this step, run <code class="language-plaintext highlighter-rouge">git rebase --continue</code>, which will bring you back to the end of your project’s history<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>.</p>
 
 <p><strong>Modular Code, Modular Commits: Changing Content</strong></p>
 
@@ -113,15 +113,15 @@
 
 <p>Luckily, making revisions here is within your reach.</p>
 
-<p>If you need to adjust the content of your most recent commit, you can do so as if you were staging a brand new commit. Simply use <code class="highlighter-rouge">git add ...</code> and/or <code class="highlighter-rouge">git rm ...</code> (replacing <code class="highlighter-rouge">...</code> with the paths for files you’d like to add or remove) and then follow it up with <code class="highlighter-rouge">git commit --amend</code>. Saving and closing the document that pops up will revise the previous commit to reflect the changes.</p>
+<p>If you need to adjust the content of your most recent commit, you can do so as if you were staging a brand new commit. Simply use <code class="language-plaintext highlighter-rouge">git add ...</code> and/or <code class="language-plaintext highlighter-rouge">git rm ...</code> (replacing <code class="language-plaintext highlighter-rouge">...</code> with the paths for files you’d like to add or remove) and then follow it up with <code class="language-plaintext highlighter-rouge">git commit --amend</code>. Saving and closing the document that pops up will revise the previous commit to reflect the changes.</p>
 
-<p>If you need to alter content between the root and where you are currently, <code class="highlighter-rouge">git rebase -i HEAD~...</code> lets you do so. This time, for the commits you want to modify, replace <code class="highlighter-rouge">pick</code> with <code class="highlighter-rouge">edit</code>. You’ll be taken back to the moment following the earliest commit you marked for edit, where you can make changes just like you were tackling your most recent commit (<code class="highlighter-rouge">git add ...</code>, <code class="highlighter-rouge">git rm ...</code>, and then <code class="highlighter-rouge">git commit --amend</code>).</p>
+<p>If you need to alter content between the root and where you are currently, <code class="language-plaintext highlighter-rouge">git rebase -i HEAD~...</code> lets you do so. This time, for the commits you want to modify, replace <code class="language-plaintext highlighter-rouge">pick</code> with <code class="language-plaintext highlighter-rouge">edit</code>. You’ll be taken back to the moment following the earliest commit you marked for edit, where you can make changes just like you were tackling your most recent commit (<code class="language-plaintext highlighter-rouge">git add ...</code>, <code class="language-plaintext highlighter-rouge">git rm ...</code>, and then <code class="language-plaintext highlighter-rouge">git commit --amend</code>).</p>
 
-<p>After you’ve amended commits earlier in your project’s history, you’ll need to run <code class="highlighter-rouge">git rebase --continue</code> to proceed. If you only opted to edit one commit, this should bring you back to the future (the end of your project’s history). Otherwise, it will roll you forward to the next commit marked for edit.</p>
+<p>After you’ve amended commits earlier in your project’s history, you’ll need to run <code class="language-plaintext highlighter-rouge">git rebase --continue</code> to proceed. If you only opted to edit one commit, this should bring you back to the future (the end of your project’s history). Otherwise, it will roll you forward to the next commit marked for edit.</p>
 
-<p>However, this is where things can get hairy. If you make revisions that conflict with later commits, git will stop in its tracks to ask you what to do. To deal with that, you’ll need to edit the files in question as you see fit (you can see which files encountered a conflict as well as the specific lines in tension by running <code class="highlighter-rouge">git diff</code>), merge the changes (<code class="highlighter-rouge">git add ...</code>), and then proceed with <code class="highlighter-rouge">git rebase --continue</code><sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup>.</p>
+<p>However, this is where things can get hairy. If you make revisions that conflict with later commits, git will stop in its tracks to ask you what to do. To deal with that, you’ll need to edit the files in question as you see fit (you can see which files encountered a conflict as well as the specific lines in tension by running <code class="language-plaintext highlighter-rouge">git diff</code>), merge the changes (<code class="language-plaintext highlighter-rouge">git add ...</code>), and then proceed with <code class="language-plaintext highlighter-rouge">git rebase --continue</code><sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup>.</p>
 
-<p>To alter the content at the root, <code class="highlighter-rouge">git rebase -i --root</code> to get there, <code class="highlighter-rouge">git commit --amend</code> to edit, and <code class="highlighter-rouge">git rebase --continue</code> to proceed.</p>
+<p>To alter the content at the root, <code class="language-plaintext highlighter-rouge">git rebase -i --root</code> to get there, <code class="language-plaintext highlighter-rouge">git commit --amend</code> to edit, and <code class="language-plaintext highlighter-rouge">git rebase --continue</code> to proceed.</p>
 
 <p><strong>Where Once There Was Nothing: Inserting New Commits Into Your Project’s History</strong></p>
 
@@ -131,9 +131,9 @@
 
 <p>The good news is, inserting a commit deep in your project’s history isn’t all that different.</p>
 
-<p>Say you have an earlier commit that you want to break up into several separate commits so as to reflect a number of distinct changes. We know that we can use <code class="highlighter-rouge">git rebase -i HEAD~...</code> (or <code class="highlighter-rouge">git rebase -i --root</code>) to get there. We know you can strip out unwanted content and/or reword the message with <code class="highlighter-rouge">git commit --amend</code>. And we know how to make new commits.</p>
+<p>Say you have an earlier commit that you want to break up into several separate commits so as to reflect a number of distinct changes. We know that we can use <code class="language-plaintext highlighter-rouge">git rebase -i HEAD~...</code> (or <code class="language-plaintext highlighter-rouge">git rebase -i --root</code>) to get there. We know you can strip out unwanted content and/or reword the message with <code class="language-plaintext highlighter-rouge">git commit --amend</code>. And we know how to make new commits.</p>
 
-<p>Put all the pieces together, and you have your answer. Simply adding new commits (literally <code class="highlighter-rouge">git commit -m "..."</code>) before running <code class="highlighter-rouge">git rebase --continue</code> will cause those commits to live at an intermediary point in your project’s history. You can break up a mammoth of a commit into a series of bite-size chunks without losing any of the files we want later commits to know about.</p>
+<p>Put all the pieces together, and you have your answer. Simply adding new commits (literally <code class="language-plaintext highlighter-rouge">git commit -m "..."</code>) before running <code class="language-plaintext highlighter-rouge">git rebase --continue</code> will cause those commits to live at an intermediary point in your project’s history. You can break up a mammoth of a commit into a series of bite-size chunks without losing any of the files we want later commits to know about.</p>
 
 <p><strong>Conclusion</strong></p>
 
@@ -163,13 +163,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -207,7 +207,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

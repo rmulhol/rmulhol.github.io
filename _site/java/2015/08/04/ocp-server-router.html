@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Doing More Stuff More Easily: Implementing the Open-Closed Principle in Server Architecture</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//java/2015/08/04/ocp-server-router.html">
+    <link rel="canonical" href="http://rmulhol.github.io/java/2015/08/04/ocp-server-router.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -89,7 +89,7 @@
   <span class="k">return</span> <span class="k">new</span> <span class="nf">FourOhFourResponse</span><span class="o">();</span>
 <span class="o">}</span></code></pre></figure>
 
-<p>This seems to work OK with a small amount of relatively simple requests, but you’re probably already starting to notice the issue: what about when things get more complicated? Say I’ve got to deal with 100 different requests, sometimes checking things in the header (<code class="highlighter-rouge">request.isAuthorized()</code>, <code class="highlighter-rouge">request.hasRange()</code>, etc.). That conditional is going to get pretty nasty.</p>
+<p>This seems to work OK with a small amount of relatively simple requests, but you’re probably already starting to notice the issue: what about when things get more complicated? Say I’ve got to deal with 100 different requests, sometimes checking things in the header (<code class="language-plaintext highlighter-rouge">request.isAuthorized()</code>, <code class="language-plaintext highlighter-rouge">request.hasRange()</code>, etc.). That conditional is going to get pretty nasty.</p>
 
 <p>And, conveniently, this problem even has a name: it’s an illustration of what happens when you violate the Open-Closed Principle. That is to say, this approach is not open for extension but closed for modification. Every new request is going to require that you go in an edit that conditional.</p>
 
@@ -107,25 +107,25 @@
   <span class="o">...</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>That’s the beginning of the <code class="highlighter-rouge">config/routes.rb</code> file from Michael Hartl’s <a href="https://www.railstutorial.org/">Rails Tutorial</a>, and it’s accomplishing precisely the task we’ve set out to tackle. It’s also pretty straightforward and elegant - <code class="highlighter-rouge">x</code> request maps to <code class="highlighter-rouge">y</code> controller action.</p>
+<p>That’s the beginning of the <code class="language-plaintext highlighter-rouge">config/routes.rb</code> file from Michael Hartl’s <a href="https://www.railstutorial.org/">Rails Tutorial</a>, and it’s accomplishing precisely the task we’ve set out to tackle. It’s also pretty straightforward and elegant - <code class="language-plaintext highlighter-rouge">x</code> request maps to <code class="language-plaintext highlighter-rouge">y</code> controller action.</p>
 
-<p>That’s a pretty important verb: “map”. It’s also a data structure. In Java, we might think about a <code class="highlighter-rouge">HashMap</code>, where keys could be requests corresponding to values that designate appropriate controllers.</p>
+<p>That’s a pretty important verb: “map”. It’s also a data structure. In Java, we might think about a <code class="language-plaintext highlighter-rouge">HashMap</code>, where keys could be requests corresponding to values that designate appropriate controllers.</p>
 
 <p>In retrospect, it’s got this sort of facepalm-eliciting simplicity: associate routes with controllers in a map, then make calls to that map whenever you need to route a request.</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Routes</span> <span class="o">{</span>
 
-    <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Controller</span><span class="o">&gt;</span> <span class="n">routes</span><span class="o">;</span>
+    <span class="nc">HashMap</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Controller</span><span class="o">&gt;</span> <span class="n">routes</span><span class="o">;</span>
 
-    <span class="n">Routes</span><span class="o">()</span> <span class="o">{</span>
-      <span class="k">this</span><span class="o">.</span><span class="na">routes</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Controller</span><span class="o">&gt;();</span>
+    <span class="nc">Routes</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">routes</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Controller</span><span class="o">&gt;();</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addRoute</span><span class="o">(</span><span class="n">String</span> <span class="n">request</span><span class="o">,</span> <span class="n">Controller</span> <span class="n">controller</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addRoute</span><span class="o">(</span><span class="nc">String</span> <span class="n">request</span><span class="o">,</span> <span class="nc">Controller</span> <span class="n">controller</span><span class="o">)</span> <span class="o">{</span>
       <span class="k">this</span><span class="o">.</span><span class="na">routes</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="n">controller</span><span class="o">);</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="n">Controller</span> <span class="nf">getRoute</span><span class="o">(</span><span class="n">String</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">Controller</span> <span class="nf">getRoute</span><span class="o">(</span><span class="nc">String</span> <span class="n">request</span><span class="o">)</span> <span class="o">{</span>
       <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">routes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span></code></pre></figure>
@@ -144,13 +144,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -188,7 +188,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

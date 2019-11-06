@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Rob Learns Programming</title>
-    <description>Notes from a journey on the path toward becoming proficient in computer programming.
+    <title>Rob Writes Code</title>
+    <description>Random thoughts and musings.
 </description>
-    <link>http://rmulhol.github.io//</link>
-    <atom:link href="http://rmulhol.github.io//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 14 Jun 2019 16:05:20 -0500</pubDate>
-    <lastBuildDate>Fri, 14 Jun 2019 16:05:20 -0500</lastBuildDate>
+    <link>http://rmulhol.github.io/</link>
+    <atom:link href="http://rmulhol.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Wed, 06 Nov 2019 15:34:46 -0600</pubDate>
+    <lastBuildDate>Wed, 06 Nov 2019 15:34:46 -0600</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -18,7 +18,7 @@
 
 &lt;p&gt;In this post, we’ll get started with nurturing that sort of familiarity by discussing how to accomplish a simple task in PostgreSQL: deriving new data from the combination and/or evaluation of fields in a database.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Combination: &lt;code class=&quot;highlighter-rouge&quot;&gt;UNION&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Combination: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UNION&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Accessing data from a table’s columns is fairly straightforward:&lt;/p&gt;
 
@@ -33,7 +33,7 @@
 
 &lt;p&gt;These queries allow us access data that’s either identical to or a subset of existing columns. But what if we want our query’s results to &lt;em&gt;combine&lt;/em&gt; data from several columns?&lt;/p&gt;
 
-&lt;p&gt;For example, imagine that you have a table &lt;code class=&quot;highlighter-rouge&quot;&gt;people&lt;/code&gt; that stores the name, favorite actor, and favorite actress of several individuals.&lt;/p&gt;
+&lt;p&gt;For example, imagine that you have a table &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;people&lt;/code&gt; that stores the name, favorite actor, and favorite actress of several individuals.&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -98,7 +98,7 @@
 
 &lt;p&gt;The simple queries listed at the top of this section won’t work, since they return columns as they are represented in our database.&lt;/p&gt;
 
-&lt;p&gt;To query for a combination of data from several columns, we can take advantage of the &lt;code class=&quot;highlighter-rouge&quot;&gt;UNION&lt;/code&gt; operation.&lt;/p&gt;
+&lt;p&gt;To query for a combination of data from several columns, we can take advantage of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UNION&lt;/code&gt; operation.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;favorite_actor&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;movie_star&lt;/span&gt;
 	&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;people&lt;/span&gt;
@@ -106,15 +106,15 @@
 &lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;favorite_actress&lt;/span&gt;
 	&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;people&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;UNION&lt;/code&gt; operation lets us combine the results of several queries, allowing us to aggregate data both within and across tables.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UNION&lt;/code&gt; operation lets us combine the results of several queries, allowing us to aggregate data both within and across tables.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Derivation: &lt;code class=&quot;highlighter-rouge&quot;&gt;CASE&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Derivation: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CASE&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;In the case of a &lt;code class=&quot;highlighter-rouge&quot;&gt;UNION&lt;/code&gt; operation, our query returns results with a new column header, but merely a combination of contents - they all correspond to existing fields in our database.&lt;/p&gt;
+&lt;p&gt;In the case of a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UNION&lt;/code&gt; operation, our query returns results with a new column header, but merely a combination of contents - they all correspond to existing fields in our database.&lt;/p&gt;
 
-&lt;p&gt;If we want to query for results that yield both a new header and new contents, we can take advantage of the &lt;code class=&quot;highlighter-rouge&quot;&gt;CASE&lt;/code&gt; operation.&lt;/p&gt;
+&lt;p&gt;If we want to query for results that yield both a new header and new contents, we can take advantage of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CASE&lt;/code&gt; operation.&lt;/p&gt;
 
-&lt;p&gt;For example, still working with our &lt;code class=&quot;highlighter-rouge&quot;&gt;people&lt;/code&gt; table, say  we want to derive a column that tells us whether the person in question loves &lt;em&gt;Titanic&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;For example, still working with our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;people&lt;/code&gt; table, say  we want to derive a column that tells us whether the person in question loves &lt;em&gt;Titanic&lt;/em&gt;.&lt;/p&gt;
 
 &lt;p&gt;We can’t really be sure that any of them don’t love &lt;em&gt;Titanic&lt;/em&gt;, but we feel comfortable predicting that they do love the film if their favorite actor is Leonardo DiCaprio and their favorite actress is Kate Winslet.&lt;/p&gt;
 
@@ -151,18 +151,18 @@
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;Here, our query returns results without a 1-to-1 mapping to our database. By including a &lt;code class=&quot;highlighter-rouge&quot;&gt;CASE&lt;/code&gt; operation that behaves differently depending on the contents of existing fields in our database, we’re able to derive new information.&lt;/p&gt;
+&lt;p&gt;Here, our query returns results without a 1-to-1 mapping to our database. By including a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CASE&lt;/code&gt; operation that behaves differently depending on the contents of existing fields in our database, we’re able to derive new information.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Conclusion&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;We haven’t come close to exhausting the range of techniques you can use to derive new and sophisticated information from tables in a database, much less other information that you’ll want to possess to accomplish other tasks, but we have covered some important ground.&lt;/p&gt;
 
-&lt;p&gt;If you’re in an environment where you’re likely to find yourself working with a relational database, the &lt;code class=&quot;highlighter-rouge&quot;&gt;UNION&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;CASE&lt;/code&gt; operations are two techniques with which you’ll want to be familiar.&lt;/p&gt;
+&lt;p&gt;If you’re in an environment where you’re likely to find yourself working with a relational database, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UNION&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CASE&lt;/code&gt; operations are two techniques with which you’ll want to be familiar.&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 16 Oct 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//sql/2015/10/16/sql-union-case.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//sql/2015/10/16/sql-union-case.html</guid>
+        <link>http://rmulhol.github.io/sql/2015/10/16/sql-union-case.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io/sql/2015/10/16/sql-union-case.html</guid>
         
         <category>union</category>
         
@@ -183,16 +183,16 @@
 
 &lt;p&gt;Luckily, this sort of error is not the end of the world. Not at all.&lt;/p&gt;
 
-&lt;p&gt;There are number of ways to deal with inadvertent force pushes; I’d recommend &lt;a href=&quot;https://blog.8thlight.com/sandro-padin/2015/06/08/help-i-just-force-pushed-to-master.html&quot;&gt;this blog post&lt;/a&gt; if you haven’t come across it already. But in this case, a very simple solution is to take advantage of &lt;a href=&quot;https://git-scm.com/docs/git-reflog&quot;&gt;the &lt;code class=&quot;highlighter-rouge&quot;&gt;reflog&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;There are number of ways to deal with inadvertent force pushes; I’d recommend &lt;a href=&quot;https://blog.8thlight.com/sandro-padin/2015/06/08/help-i-just-force-pushed-to-master.html&quot;&gt;this blog post&lt;/a&gt; if you haven’t come across it already. But in this case, a very simple solution is to take advantage of &lt;a href=&quot;https://git-scm.com/docs/git-reflog&quot;&gt;the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reflog&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;If you’re in your project’s directory and you type &lt;code class=&quot;highlighter-rouge&quot;&gt;git reflog&lt;/code&gt; on the command line, you’ll see a history of actions you’ve taken within the project: moving between branches, making commits, etc.&lt;/p&gt;
+&lt;p&gt;If you’re in your project’s directory and you type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git reflog&lt;/code&gt; on the command line, you’ll see a history of actions you’ve taken within the project: moving between branches, making commits, etc.&lt;/p&gt;
 
-&lt;p&gt;If you pinpoint the &lt;a href=&quot;https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection&quot;&gt;SHA&lt;/a&gt; corresponding to the place where everything went awry (e.g. the place right before where you began the faulty rebase), you can &lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout&lt;/code&gt; that SHA and begin again. Or just breathe a sigh of relief as you push it up un-catastrophically-rebased.&lt;/p&gt;
+&lt;p&gt;If you pinpoint the &lt;a href=&quot;https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection&quot;&gt;SHA&lt;/a&gt; corresponding to the place where everything went awry (e.g. the place right before where you began the faulty rebase), you can &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git checkout&lt;/code&gt; that SHA and begin again. Or just breathe a sigh of relief as you push it up un-catastrophically-rebased.&lt;/p&gt;
 
 </description>
         <pubDate>Wed, 07 Oct 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//general/2015/10/07/git-reflog.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/10/07/git-reflog.html</guid>
+        <link>http://rmulhol.github.io/general/2015/10/07/git-reflog.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io/general/2015/10/07/git-reflog.html</guid>
         
         <category>git</category>
         
@@ -204,7 +204,7 @@
       <item>
         <title>Backbone + React: Render Components With `Render`</title>
         <description>&lt;blockquote&gt;
-  &lt;p&gt;tl;dr - Use &lt;code class=&quot;highlighter-rouge&quot;&gt;React.render()&lt;/code&gt; in place of &lt;code class=&quot;highlighter-rouge&quot;&gt;React.renderComponent()&lt;/code&gt; when rendering React components from Backbone views&lt;/p&gt;
+  &lt;p&gt;tl;dr - Use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.render()&lt;/code&gt; in place of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.renderComponent()&lt;/code&gt; when rendering React components from Backbone views&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;If you’re looking to start bringing React into a project you’ve set up in Backbone, you’re in luck. It can be done. There are even some nice posts out there to help get you started.&lt;/p&gt;
@@ -221,21 +221,21 @@
 
 &lt;p&gt;So, in this post, I want to highlight one place where the API has changed, and what you can do to keep making progress.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Goodbye &lt;code class=&quot;highlighter-rouge&quot;&gt;renderComponent()&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Goodbye &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;renderComponent()&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Both of the posts linked to above render React components from Backbone views with &lt;code class=&quot;highlighter-rouge&quot;&gt;React.renderComponent()&lt;/code&gt;. This function takes two arguments: the component to render and the DOM element that it should occupy.&lt;/p&gt;
+&lt;p&gt;Both of the posts linked to above render React components from Backbone views with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.renderComponent()&lt;/code&gt;. This function takes two arguments: the component to render and the DOM element that it should occupy.&lt;/p&gt;
 
-&lt;p&gt;The trouble is, that function &lt;a href=&quot;https://facebook.github.io/react/blog/2014/10/28/react-v0.12.html&quot;&gt;is now deprecated&lt;/a&gt;. If you give it a try with a recent version of React, you’ll be met with an unwelcome surprise in the console: &lt;code class=&quot;highlighter-rouge&quot;&gt;Uncaught TypeError: React.renderComponent is not a function&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The trouble is, that function &lt;a href=&quot;https://facebook.github.io/react/blog/2014/10/28/react-v0.12.html&quot;&gt;is now deprecated&lt;/a&gt;. If you give it a try with a recent version of React, you’ll be met with an unwelcome surprise in the console: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Uncaught TypeError: React.renderComponent is not a function&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;If you read through the documentation, you’ll see that &lt;code class=&quot;highlighter-rouge&quot;&gt;React.renderComponent()&lt;/code&gt; has been replaced by &lt;code class=&quot;highlighter-rouge&quot;&gt;React.render()&lt;/code&gt;. And that’s the replacement you should use (see the “tl;dr”), but there are reasons you might be tempted to not do so.&lt;/p&gt;
+&lt;p&gt;If you read through the documentation, you’ll see that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.renderComponent()&lt;/code&gt; has been replaced by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.render()&lt;/code&gt;. And that’s the replacement you should use (see the “tl;dr”), but there are reasons you might be tempted to not do so.&lt;/p&gt;
 
-&lt;p&gt;Just like &lt;code class=&quot;highlighter-rouge&quot;&gt;React.renderComponent()&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;React.render()&lt;/code&gt; requires that you pass in a DOM element identifying where on the page your component should be rendered. When the component is rendered to that DOM element, it replaces the existing contents of that container.&lt;/p&gt;
+&lt;p&gt;Just like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.renderComponent()&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.render()&lt;/code&gt; requires that you pass in a DOM element identifying where on the page your component should be rendered. When the component is rendered to that DOM element, it replaces the existing contents of that container.&lt;/p&gt;
 
 &lt;p&gt;This means that rendering your React component can delete existing page contents. When you’re displaying something like a modal, that can be a real pain.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;So Many Renders&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Taking a look through the documentation, you can see that &lt;code class=&quot;highlighter-rouge&quot;&gt;React.render()&lt;/code&gt; is supplemented by &lt;code class=&quot;highlighter-rouge&quot;&gt;React.renderToString()&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;React.renderToStaticMarkup()&lt;/code&gt;. These functions have the advantage of only taking one argument: the component you want to render.&lt;/p&gt;
+&lt;p&gt;Taking a look through the documentation, you can see that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.render()&lt;/code&gt; is supplemented by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.renderToString()&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.renderToStaticMarkup()&lt;/code&gt;. These functions have the advantage of only taking one argument: the component you want to render.&lt;/p&gt;
 
 &lt;p&gt;The benefit of not taking control of a DOM element is that you don’t have to cede control of that container over to React. Simply generate the contents you want to display, then add or remove them at will with jQuery; it creates no problems for your existing content.&lt;/p&gt;
 
@@ -243,7 +243,7 @@
 
 &lt;p&gt;&lt;strong&gt;Render Under Control&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;In order to access functions defined on your React components, you’ll want to stick with &lt;code class=&quot;highlighter-rouge&quot;&gt;React.render()&lt;/code&gt;, handing over control of the DOM element. That’s the most simple way to get your content on the page while also taking advantage of React’s event handling.&lt;/p&gt;
+&lt;p&gt;In order to access functions defined on your React components, you’ll want to stick with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.render()&lt;/code&gt;, handing over control of the DOM element. That’s the most simple way to get your content on the page while also taking advantage of React’s event handling.&lt;/p&gt;
 
 &lt;p&gt;If you’re worried about losing existing content, a simple solution is to append a new DOM element where you want the component to render, passing that in as the container.&lt;/p&gt;
 
@@ -261,8 +261,8 @@
 
 </description>
         <pubDate>Mon, 14 Sep 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//javascript/2015/09/14/backbone-react-render.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/09/14/backbone-react-render.html</guid>
+        <link>http://rmulhol.github.io/javascript/2015/09/14/backbone-react-render.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io/javascript/2015/09/14/backbone-react-render.html</guid>
         
         <category>react</category>
         
@@ -337,8 +337,8 @@
 
 </description>
         <pubDate>Tue, 25 Aug 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//general/2015/08/25/character-commitment-team-work-hard-work.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/08/25/character-commitment-team-work-hard-work.html</guid>
+        <link>http://rmulhol.github.io/general/2015/08/25/character-commitment-team-work-hard-work.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io/general/2015/08/25/character-commitment-team-work-hard-work.html</guid>
         
         <category>craftsmanship</category>
         
@@ -367,7 +367,7 @@
 
 &lt;p&gt;1) Static - the Chicago Beaches page is a static site. All API requests are made through the browser (thanks, Chicago, for supporting cross-origin resource sharing). This probably makes it pretty uninteresting if you’re browsing without JavaScript enabled and/or on an old browser, but it also means I get …&lt;/p&gt;
 
-&lt;p&gt;2) Hosting - via GitHub pages. Just pushed up my &lt;code class=&quot;highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch, and the site was live within minutes. It’s amazing how easy it is to deploy a little React app with these kinds of tools.&lt;/p&gt;
+&lt;p&gt;2) Hosting - via GitHub pages. Just pushed up my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; branch, and the site was live within minutes. It’s amazing how easy it is to deploy a little React app with these kinds of tools.&lt;/p&gt;
 
 &lt;p&gt;There’s a few more things I could imagine doing to improve this site, but I’m even more excited at the possibilities that lie ahead working with the tools I’ve used.&lt;/p&gt;
 
@@ -375,8 +375,8 @@
 
 </description>
         <pubDate>Thu, 20 Aug 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//general/2015/08/20/chicago-beaches-data.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//general/2015/08/20/chicago-beaches-data.html</guid>
+        <link>http://rmulhol.github.io/general/2015/08/20/chicago-beaches-data.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io/general/2015/08/20/chicago-beaches-data.html</guid>
         
         <category>react</category>
         
@@ -389,7 +389,7 @@
     
       <item>
         <title>Working With APIs: Rolling a Proxy Server</title>
-        <description>&lt;p&gt;In &lt;a href=&quot;/javascript/2015/08/11/cross-origin-resource-sharing.html&quot;&gt;yesterday’s post&lt;/a&gt;, we talked about the difficulties one can encounter when making AJAX requests to an API that doesn’t support cross-origin resource sharing (CORS). Unless the response includes the required &lt;code class=&quot;highlighter-rouge&quot;&gt;Access-Control-Allow-Origin&lt;/code&gt; header, you’ll be getting an error message in the console - and not much else.&lt;/p&gt;
+        <description>&lt;p&gt;In &lt;a href=&quot;/javascript/2015/08/11/cross-origin-resource-sharing.html&quot;&gt;yesterday’s post&lt;/a&gt;, we talked about the difficulties one can encounter when making AJAX requests to an API that doesn’t support cross-origin resource sharing (CORS). Unless the response includes the required &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Access-Control-Allow-Origin&lt;/code&gt; header, you’ll be getting an error message in the console - and not much else.&lt;/p&gt;
 
 &lt;p&gt;One way to get around this is to write your own proxy server. Instead of waiting for your API’s maintainers to implement support for CORS, simply fetch the content with your own proxy and pass it along with the required header tacked on.&lt;/p&gt;
 
@@ -403,19 +403,19 @@
   &lt;p&gt;XMLHttpRequest cannot load https://api.imgflip.com/get_memes. No ‘Access-Control-Allow-Origin’ header is present on the requested resource. Origin ‘http://localhost:8080’ is therefore not allowed access.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;If you wanted to hit it by proxy, say at &lt;code class=&quot;highlighter-rouge&quot;&gt;localhost:3000/get_memes&lt;/code&gt;, you could do so with this script:&lt;/p&gt;
+&lt;p&gt;If you wanted to hit it by proxy, say at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;localhost:3000/get_memes&lt;/code&gt;, you could do so with this script:&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'http'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
 &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createServer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;proxyImgflip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
 &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;proxyImgflip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Serving up &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;method&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Serving up &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;method&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
-  &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setHeader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Access-Control-Allow-Origin'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'*'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setHeader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Access-Control-Allow-Origin&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
   &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;proxyRequest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;hostname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'api.imgflip.com'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;hostname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;api.imgflip.com&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;na&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;method&lt;/span&gt;
@@ -428,13 +428,13 @@
   &lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;proxyResponse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Listening on 3000&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Listening on 3000&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Assuming you’ve got Node installed, you can run this script with &lt;code class=&quot;highlighter-rouge&quot;&gt;node &amp;lt;filename.js&amp;gt;&lt;/code&gt;, and you’re good to go. To access &lt;code class=&quot;highlighter-rouge&quot;&gt;https://api.imgflip.com/get_memes&lt;/code&gt; in a cross-domain request, you could just hit &lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost:3000/get_memes&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Assuming you’ve got Node installed, you can run this script with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;node &amp;lt;filename.js&amp;gt;&lt;/code&gt;, and you’re good to go. To access &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://api.imgflip.com/get_memes&lt;/code&gt; in a cross-domain request, you could just hit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://localhost:3000/get_memes&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;How does it work?&lt;/p&gt;
 
-&lt;p&gt;We use Node’s &lt;code class=&quot;highlighter-rouge&quot;&gt;http&lt;/code&gt; API to create a server, passing in a callback and setting it to listen on port 3000.&lt;/p&gt;
+&lt;p&gt;We use Node’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http&lt;/code&gt; API to create a server, passing in a callback and setting it to listen on port 3000.&lt;/p&gt;
 
 &lt;p&gt;Within the callback, we log the request, affix the required header to our response, and pass along the incoming request to Imgflip’s API, piping the data we get back into our response.&lt;/p&gt;
 
@@ -442,8 +442,8 @@
 
 </description>
         <pubDate>Wed, 12 Aug 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//javascript/2015/08/12/api-proxy-server.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/08/12/api-proxy-server.html</guid>
+        <link>http://rmulhol.github.io/javascript/2015/08/12/api-proxy-server.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io/javascript/2015/08/12/api-proxy-server.html</guid>
         
         <category>node</category>
         
@@ -474,7 +474,7 @@
 
 &lt;p&gt;That doesn’t mean that cross-domain requests are off limits. But to carry them out, you need to satisfy a few conditions.&lt;/p&gt;
 
-&lt;p&gt;Check out &lt;a href=&quot;http://www.html5rocks.com/en/tutorials/cors/&quot;&gt;this page&lt;/a&gt; for a much more thorough exploration of CORS and its implications for both the client and the server, but for now the most important thing to know is this: in order for a cross-origin request to succeed, the server needs to include an ‘Access-Control-Allow-Origin’ header, and that header needs to authorize the requesting URL (either specifically or via a &lt;code class=&quot;highlighter-rouge&quot;&gt;'*'&lt;/code&gt; value).&lt;/p&gt;
+&lt;p&gt;Check out &lt;a href=&quot;http://www.html5rocks.com/en/tutorials/cors/&quot;&gt;this page&lt;/a&gt; for a much more thorough exploration of CORS and its implications for both the client and the server, but for now the most important thing to know is this: in order for a cross-origin request to succeed, the server needs to include an ‘Access-Control-Allow-Origin’ header, and that header needs to authorize the requesting URL (either specifically or via a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;'*'&lt;/code&gt; value).&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Cool, but I don’t control the API’s response headers…&lt;/strong&gt;&lt;/p&gt;
 
@@ -486,7 +486,7 @@
 
 &lt;p&gt;The second is to roll your own proxy server. Even if you can’t get the API host to support cross-origin requests, you can make your own server that does - and then use it to hit the target API outside of the browser.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;p&gt;The third is to take advantage of other services that do the work for you. &lt;a href=&quot;https://jsonp.afeld.me/&quot;&gt;This site&lt;/a&gt;, for example, will act as a proxy server for you, without any coding on your behalf. Simply append the target url to &lt;code class=&quot;highlighter-rouge&quot;&gt;https://jsonp.afeld.me/?url=&lt;/code&gt;, and the CORS request will succeed.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;The third is to take advantage of other services that do the work for you. &lt;a href=&quot;https://jsonp.afeld.me/&quot;&gt;This site&lt;/a&gt;, for example, will act as a proxy server for you, without any coding on your behalf. Simply append the target url to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://jsonp.afeld.me/?url=&lt;/code&gt;, and the CORS request will succeed.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;That’s pretty easy…&lt;/strong&gt;&lt;/p&gt;
 
@@ -504,8 +504,8 @@
 &lt;/div&gt;
 </description>
         <pubDate>Tue, 11 Aug 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//javascript/2015/08/11/cross-origin-resource-sharing.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/08/11/cross-origin-resource-sharing.html</guid>
+        <link>http://rmulhol.github.io/javascript/2015/08/11/cross-origin-resource-sharing.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io/javascript/2015/08/11/cross-origin-resource-sharing.html</guid>
         
         <category>ajax</category>
         
@@ -530,7 +530,7 @@
   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FourOhFourResponse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;This seems to work OK with a small amount of relatively simple requests, but you’re probably already starting to notice the issue: what about when things get more complicated? Say I’ve got to deal with 100 different requests, sometimes checking things in the header (&lt;code class=&quot;highlighter-rouge&quot;&gt;request.isAuthorized()&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;request.hasRange()&lt;/code&gt;, etc.). That conditional is going to get pretty nasty.&lt;/p&gt;
+&lt;p&gt;This seems to work OK with a small amount of relatively simple requests, but you’re probably already starting to notice the issue: what about when things get more complicated? Say I’ve got to deal with 100 different requests, sometimes checking things in the header (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;request.isAuthorized()&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;request.hasRange()&lt;/code&gt;, etc.). That conditional is going to get pretty nasty.&lt;/p&gt;
 
 &lt;p&gt;And, conveniently, this problem even has a name: it’s an illustration of what happens when you violate the Open-Closed Principle. That is to say, this approach is not open for extension but closed for modification. Every new request is going to require that you go in an edit that conditional.&lt;/p&gt;
 
@@ -548,25 +548,25 @@
   &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;That’s the beginning of the &lt;code class=&quot;highlighter-rouge&quot;&gt;config/routes.rb&lt;/code&gt; file from Michael Hartl’s &lt;a href=&quot;https://www.railstutorial.org/&quot;&gt;Rails Tutorial&lt;/a&gt;, and it’s accomplishing precisely the task we’ve set out to tackle. It’s also pretty straightforward and elegant - &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; request maps to &lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt; controller action.&lt;/p&gt;
+&lt;p&gt;That’s the beginning of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;config/routes.rb&lt;/code&gt; file from Michael Hartl’s &lt;a href=&quot;https://www.railstutorial.org/&quot;&gt;Rails Tutorial&lt;/a&gt;, and it’s accomplishing precisely the task we’ve set out to tackle. It’s also pretty straightforward and elegant - &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt; request maps to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;y&lt;/code&gt; controller action.&lt;/p&gt;
 
-&lt;p&gt;That’s a pretty important verb: “map”. It’s also a data structure. In Java, we might think about a &lt;code class=&quot;highlighter-rouge&quot;&gt;HashMap&lt;/code&gt;, where keys could be requests corresponding to values that designate appropriate controllers.&lt;/p&gt;
+&lt;p&gt;That’s a pretty important verb: “map”. It’s also a data structure. In Java, we might think about a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HashMap&lt;/code&gt;, where keys could be requests corresponding to values that designate appropriate controllers.&lt;/p&gt;
 
 &lt;p&gt;In retrospect, it’s got this sort of facepalm-eliciting simplicity: associate routes with controllers in a map, then make calls to that map whenever you need to route a request.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Routes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
 
-    &lt;span class=&quot;n&quot;&gt;HashMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;HashMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 
-    &lt;span class=&quot;n&quot;&gt;Routes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;routes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HashMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;();&lt;/span&gt;
+    &lt;span class=&quot;nc&quot;&gt;Routes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;routes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;HashMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;();&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;addRoute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Controller&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;addRoute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Controller&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
       &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;controller&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Controller&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getRoute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Controller&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getRoute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
       &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -575,8 +575,8 @@
 
 </description>
         <pubDate>Tue, 04 Aug 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//java/2015/08/04/ocp-server-router.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//java/2015/08/04/ocp-server-router.html</guid>
+        <link>http://rmulhol.github.io/java/2015/08/04/ocp-server-router.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io/java/2015/08/04/ocp-server-router.html</guid>
         
         <category>server</category>
         
@@ -601,55 +601,55 @@
 
 &lt;p&gt;If you’ve just starting to follow along with this post, you can catch up with the progress we’ve made so far by checking out the third commit of &lt;a href=&quot;https://github.com/rmulhol/demo-react-app&quot;&gt;the demo react app Github repo&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Once you’re up to date, you’ll want to install Flux by running &lt;code class=&quot;highlighter-rouge&quot;&gt;npm install --save flux&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Once you’re up to date, you’ll want to install Flux by running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save flux&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Adding Flux to our project’s dependencies gives us access to the dispatcher, an important tool in the unidirectional data flow that characterizes the Flux architecture. The dispatcher mediates between the actions that are fired by components and the stores that update components.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/flux-architecture.png&quot; alt=&quot;flux-architecture&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io/assets/flux-architecture.png&quot; alt=&quot;flux-architecture&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;In this post, we’ll be implementing the Flux architecture to duplicate our app’s existing behavior. Though we won’t be adding any new features for the user, we’ll be tidying up the backend so as to lay the groundwork for future additions.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Step 1: Add a Dispatcher&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;The first thing we’ll want to do is create a dispatcher. It can live at &lt;code class=&quot;highlighter-rouge&quot;&gt;js/dispatcher/dispatcher.js&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The first thing we’ll want to do is create a dispatcher. It can live at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/dispatcher/dispatcher.js&lt;/code&gt;.&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/7fe46f4f9cea3780eacf.js&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;With this in place, we’ll be able to &lt;code class=&quot;highlighter-rouge&quot;&gt;require&lt;/code&gt; and call the dispatcher from other parts of our application.&lt;/p&gt;
+&lt;p&gt;With this in place, we’ll be able to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;require&lt;/code&gt; and call the dispatcher from other parts of our application.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Step 2: Create an Action&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;After we’ve got a dispatcher, we’ll want to &lt;code class=&quot;highlighter-rouge&quot;&gt;require&lt;/code&gt; and use it in a file designated to contain our actions. Create the following file at &lt;code class=&quot;highlighter-rouge&quot;&gt;js/actions/demo_app_actions.js&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;After we’ve got a dispatcher, we’ll want to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;require&lt;/code&gt; and use it in a file designated to contain our actions. Create the following file at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/actions/demo_app_actions.js&lt;/code&gt;.&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/73355cb3dca6fd138fd8.js&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;Here, the &lt;code class=&quot;highlighter-rouge&quot;&gt;toggleLogo()&lt;/code&gt; method uses the dispatcher to broadcast a payload to the rest of our application. In this case, the payload includes keys for &lt;code class=&quot;highlighter-rouge&quot;&gt;actionType&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt;, which correspond to a string and a boolean, respectively.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;Here, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;toggleLogo()&lt;/code&gt; method uses the dispatcher to broadcast a payload to the rest of our application. In this case, the payload includes keys for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;actionType&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt;, which correspond to a string and a boolean, respectively.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;p&gt;Note  the bang (!) before &lt;code class=&quot;highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt;, which means we’re dispatching a value for &lt;code class=&quot;highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt; that reflects the opposite of whatever’s passed in. As will become more clear shortly, this is an example of handling state manipulation in the actions rather than the components.&lt;/p&gt;
+&lt;p&gt;Note  the bang (!) before &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt;, which means we’re dispatching a value for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt; that reflects the opposite of whatever’s passed in. As will become more clear shortly, this is an example of handling state manipulation in the actions rather than the components.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Step 3: Open a Store&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Once we’ve got actions that invoke the dispatcher to issue payloads to our application, we’ll want to register some callbacks with the dispatcher to handle those payloads. We do this on a store, which we’ll put at &lt;code class=&quot;highlighter-rouge&quot;&gt;js/stores/demo_app_store.js&lt;/code&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;Once we’ve got actions that invoke the dispatcher to issue payloads to our application, we’ll want to register some callbacks with the dispatcher to handle those payloads. We do this on a store, which we’ll put at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/stores/demo_app_store.js&lt;/code&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/9e236715490835053a8c.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;Let’s unpack what’s going on here.&lt;/p&gt;
 
-&lt;p&gt;In addition to the dispatcher, we’re requiring the &lt;code class=&quot;highlighter-rouge&quot;&gt;EventEmitter&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;utils&lt;/code&gt; package from Node.js, which will enable us to inherit features that allow us to run callbacks and handle dispatched payloads.&lt;/p&gt;
+&lt;p&gt;In addition to the dispatcher, we’re requiring the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EventEmitter&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;utils&lt;/code&gt; package from Node.js, which will enable us to inherit features that allow us to run callbacks and handle dispatched payloads.&lt;/p&gt;
 
-&lt;p&gt;We’ve also got an &lt;code class=&quot;highlighter-rouge&quot;&gt;addLogoListener()&lt;/code&gt; method that registers a callback to be invoked whenever a “toggle-logo” event is emitted. We’ll use it in our component to complete state modifications initiated by the actions.&lt;/p&gt;
+&lt;p&gt;We’ve also got an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addLogoListener()&lt;/code&gt; method that registers a callback to be invoked whenever a “toggle-logo” event is emitted. We’ll use it in our component to complete state modifications initiated by the actions.&lt;/p&gt;
 
-&lt;p&gt;Finally, we’ve got a &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatchToken()&lt;/code&gt; method that contains a &lt;code class=&quot;highlighter-rouge&quot;&gt;switch&lt;/code&gt; statement.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; The only &lt;code class=&quot;highlighter-rouge&quot;&gt;case&lt;/code&gt; we’ve included so far corresponds to the &lt;code class=&quot;highlighter-rouge&quot;&gt;actionType&lt;/code&gt; of our only action (“toggle-logo”), and it emits an event of that type storing the value that corresponds to the payload’s &lt;code class=&quot;highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt; key.&lt;/p&gt;
+&lt;p&gt;Finally, we’ve got a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dispatchToken()&lt;/code&gt; method that contains a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;switch&lt;/code&gt; statement.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; The only &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;case&lt;/code&gt; we’ve included so far corresponds to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;actionType&lt;/code&gt; of our only action (“toggle-logo”), and it emits an event of that type storing the value that corresponds to the payload’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt; key.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Step 4: Refactor - add Constants&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;At this point, a lot of the behavior we’ve implemented depends on the &lt;code class=&quot;highlighter-rouge&quot;&gt;actionType&lt;/code&gt; “toggle-logo”, and we’ve duplicated that string at several places in our code. It would be shame if something went wrong because of a typo in one of those places.&lt;/p&gt;
+&lt;p&gt;At this point, a lot of the behavior we’ve implemented depends on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;actionType&lt;/code&gt; “toggle-logo”, and we’ve duplicated that string at several places in our code. It would be shame if something went wrong because of a typo in one of those places.&lt;/p&gt;
 
-&lt;p&gt;For this reason, it can be helpful to keep track of certain constants in a &lt;code class=&quot;highlighter-rouge&quot;&gt;js/constants/constants.js&lt;/code&gt; file. We’ll be using this file to store values for the &lt;code class=&quot;highlighter-rouge&quot;&gt;actionType&lt;/code&gt; of dispatched payloads right now, but we could also put any other important constants here as we go.&lt;/p&gt;
+&lt;p&gt;For this reason, it can be helpful to keep track of certain constants in a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/constants/constants.js&lt;/code&gt; file. We’ll be using this file to store values for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;actionType&lt;/code&gt; of dispatched payloads right now, but we could also put any other important constants here as we go.&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/66eaec512c7a94252a27.js&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;With this in place, we can change how we refer to the “toggle-logo” value for our &lt;code class=&quot;highlighter-rouge&quot;&gt;actionType&lt;/code&gt; key in our action:&lt;/p&gt;
+&lt;p&gt;With this in place, we can change how we refer to the “toggle-logo” value for our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;actionType&lt;/code&gt; key in our action:&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/7190e9eff411565edb29.js&quot;&gt; &lt;/script&gt;
 
@@ -663,15 +663,15 @@
 
 &lt;p&gt;Now that stores are emitting events that carry values from our actions’ payloads, we can add listeners on our components to initiate change in response to emitted events. This is the logic that replaces the existing state transitions on our components.&lt;/p&gt;
 
-&lt;p&gt;The revised &lt;code class=&quot;highlighter-rouge&quot;&gt;js/components/body.js&lt;/code&gt; file should be modified to look like this:&lt;/p&gt;
+&lt;p&gt;The revised &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/components/body.js&lt;/code&gt; file should be modified to look like this:&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/a34fdef63bc0e79d9731.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;The important changes we’ve made here are twofold:&lt;/p&gt;
 
-&lt;p&gt;1) We’ve added a &lt;code class=&quot;highlighter-rouge&quot;&gt;componentDidMount()&lt;/code&gt; method, which will be invoked automatically after the component renders, to register a callback via our &lt;code class=&quot;highlighter-rouge&quot;&gt;addLogoListener()&lt;/code&gt; method from the store. That callback alters the component’s state to correspond to the emitted value of &lt;code class=&quot;highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;1) We’ve added a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;componentDidMount()&lt;/code&gt; method, which will be invoked automatically after the component renders, to register a callback via our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addLogoListener()&lt;/code&gt; method from the store. That callback alters the component’s state to correspond to the emitted value of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;2) We’ve updated our &lt;code class=&quot;highlighter-rouge&quot;&gt;toggleImage()&lt;/code&gt; method to fire an action instead of directly setting state on the component. No longer is our component manipulating state directly; instead, it passes much of that work off to the action, dispatcher, and store.&lt;/p&gt;
+&lt;p&gt;2) We’ve updated our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;toggleImage()&lt;/code&gt; method to fire an action instead of directly setting state on the component. No longer is our component manipulating state directly; instead, it passes much of that work off to the action, dispatcher, and store.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Wrap Up&lt;/strong&gt;&lt;/p&gt;
 
@@ -691,14 +691,14 @@
       &lt;p&gt;It might feel a little redundant to be creating directories each time we’re adding a file here, and that’s fair. But dividing up our application into separate directories for components, actions, stores, and so forth initiates a nice organizational structure we’ll appreciate if and when we start accumulating more files of each type. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:4&quot;&gt;
-      &lt;p&gt;We’ve called this method &lt;code class=&quot;highlighter-rouge&quot;&gt;dispatchToken()&lt;/code&gt; because it returns a token that we can use for controlling the order of execution of registered callbacks, but it’s also worth noting that this method is doing much more than that. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;We’ve called this method &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dispatchToken()&lt;/code&gt; because it returns a token that we can use for controlling the order of execution of registered callbacks, but it’s also worth noting that this method is doing much more than that. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
 </description>
         <pubDate>Mon, 27 Jul 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//javascript/2015/07/27/react-flux-architecture.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/07/27/react-flux-architecture.html</guid>
+        <link>http://rmulhol.github.io/javascript/2015/07/27/react-flux-architecture.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io/javascript/2015/07/27/react-flux-architecture.html</guid>
         
         <category>react</category>
         
@@ -713,11 +713,11 @@
         <title>Getting Started With React - Part 2: Exploring Components</title>
         <description>&lt;p&gt;React is a library for building user interfaces, but most of the work we’ve done so far has only laid the groundwork for actually carrying out that task. The UI we left off with doesn’t exactly expose React’s power.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/browser-view-hello-world.png&quot; alt=&quot;browser-view-hello-world&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io/assets/browser-view-hello-world.png&quot; alt=&quot;browser-view-hello-world&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;If we want to start building something that looks better and does more, we should start to get a handle on React’s tool for generating views: components.&lt;/p&gt;
 
-&lt;p&gt;Components are modules that include a &lt;code class=&quot;highlighter-rouge&quot;&gt;render()&lt;/code&gt; method that tells the program what to display. They can generate content dynamically, responding to data passed in by other components or the user.&lt;/p&gt;
+&lt;p&gt;Components are modules that include a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;render()&lt;/code&gt; method that tells the program what to display. They can generate content dynamically, responding to data passed in by other components or the user.&lt;/p&gt;
 
 &lt;p&gt;Once you start taking advantage of their numerous features and piecing them together, components provide a valuable tool for constructing sophisticated user interfaces.&lt;/p&gt;
 
@@ -727,31 +727,31 @@
 
 &lt;p&gt;If you’re just hopping on now, you can access the source code for the work we’ve done so far in the second commit of the &lt;a href=&quot;https://github.com/rmulhol/demo-react-app&quot;&gt;demo-react-app Github repo&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Before we begin coding up components, we’ll want to install a few additional tools. The first is &lt;a href=&quot;http://react-bootstrap.github.io/&quot;&gt;react-bootstrap&lt;/a&gt;, which will provide a quick and easy way to add some styling. You can install it by running &lt;code class=&quot;highlighter-rouge&quot;&gt;npm install --save react-bootstrap&lt;/code&gt;. You’ll also want to add a link to the Bootstrap stylesheet in the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;head&amp;gt;&lt;/code&gt; of your &lt;code class=&quot;highlighter-rouge&quot;&gt;index.html&lt;/code&gt; file:&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;Before we begin coding up components, we’ll want to install a few additional tools. The first is &lt;a href=&quot;http://react-bootstrap.github.io/&quot;&gt;react-bootstrap&lt;/a&gt;, which will provide a quick and easy way to add some styling. You can install it by running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save react-bootstrap&lt;/code&gt;. You’ll also want to add a link to the Bootstrap stylesheet in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;head&amp;gt;&lt;/code&gt; of your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;index.html&lt;/code&gt; file:&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/index-with-bootstrap.png&quot; alt=&quot;index-with-bootstrap&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io/assets/index-with-bootstrap.png&quot; alt=&quot;index-with-bootstrap&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Next, we’ll want to install &lt;a href=&quot;https://github.com/substack/watchify&quot;&gt;Watchify&lt;/a&gt;, which will enable us to automatically recompile our &lt;code class=&quot;highlighter-rouge&quot;&gt;js/bundle.js&lt;/code&gt; file each time we make an edit to our source code. Add it by running &lt;code class=&quot;highlighter-rouge&quot;&gt;npm install --save-dev watchify&lt;/code&gt;, and then add a &lt;code class=&quot;highlighter-rouge&quot;&gt;start&lt;/code&gt; script to your &lt;code class=&quot;highlighter-rouge&quot;&gt;package.json&lt;/code&gt; file:&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;Next, we’ll want to install &lt;a href=&quot;https://github.com/substack/watchify&quot;&gt;Watchify&lt;/a&gt;, which will enable us to automatically recompile our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/bundle.js&lt;/code&gt; file each time we make an edit to our source code. Add it by running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev watchify&lt;/code&gt;, and then add a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;start&lt;/code&gt; script to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;package.json&lt;/code&gt; file:&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/pkg-with-start-script.png&quot; alt=&quot;pkg-with-start-script&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io/assets/pkg-with-start-script.png&quot; alt=&quot;pkg-with-start-script&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Now we can run &lt;code class=&quot;highlighter-rouge&quot;&gt;npm run start&lt;/code&gt; to initiate our &lt;code class=&quot;highlighter-rouge&quot;&gt;watchify&lt;/code&gt; script, spin up an &lt;code class=&quot;highlighter-rouge&quot;&gt;http-server&lt;/code&gt; in our project directory, and see changes reflected in the browser almost immediately as we save them.&lt;/p&gt;
+&lt;p&gt;Now we can run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm run start&lt;/code&gt; to initiate our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;watchify&lt;/code&gt; script, spin up an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http-server&lt;/code&gt; in our project directory, and see changes reflected in the browser almost immediately as we save them.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Step 1: Extract A Component&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Where last left off, we were including the full view for our app in the &lt;code class=&quot;highlighter-rouge&quot;&gt;js/app.js&lt;/code&gt; file:&lt;/p&gt;
+&lt;p&gt;Where last left off, we were including the full view for our app in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/app.js&lt;/code&gt; file:&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/dfcb2fd783ada9654894.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;This works fine when we’ve got so little display, but it quickly becomes unmanageable as our view becomes more substantial. The solution, in React, is to delegate the work to components.&lt;/p&gt;
 
-&lt;p&gt;Let’s start by moving the JSX code we’ve got in the &lt;code class=&quot;highlighter-rouge&quot;&gt;js/app.js&lt;/code&gt; file over to a new &lt;code class=&quot;highlighter-rouge&quot;&gt;js/components/home_page.js&lt;/code&gt; file. Now our &lt;code class=&quot;highlighter-rouge&quot;&gt;js/app.js&lt;/code&gt; file can look like this:&lt;/p&gt;
+&lt;p&gt;Let’s start by moving the JSX code we’ve got in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/app.js&lt;/code&gt; file over to a new &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/components/home_page.js&lt;/code&gt; file. Now our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/app.js&lt;/code&gt; file can look like this:&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/8e7a24fddd37ab15ff70.js&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;HomePage /&amp;gt;&lt;/code&gt; call exhibits React’s syntax for instantiating components in JSX - they exist as their own element on the page (with whatever components reside on them nested further down).&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;HomePage /&amp;gt;&lt;/code&gt; call exhibits React’s syntax for instantiating components in JSX - they exist as their own element on the page (with whatever components reside on them nested further down).&lt;/p&gt;
 
-&lt;p&gt;To make this work the same as before, we need the &lt;code class=&quot;highlighter-rouge&quot;&gt;js/components/home_page.js&lt;/code&gt; file to look like this:&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;To make this work the same as before, we need the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/components/home_page.js&lt;/code&gt; file to look like this:&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/7cee0ed45ea4620b7310.js&quot;&gt; &lt;/script&gt;
 
@@ -763,27 +763,27 @@
 
 &lt;p&gt;Instead of having the home page store all of the content for the site, it could instantiate several other components that would each handle one part of the view.&lt;/p&gt;
 
-&lt;p&gt;To do so, we want to change our &lt;code class=&quot;highlighter-rouge&quot;&gt;js/components/home_page.js&lt;/code&gt; file to contain the three subordinate components: &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;Header /&amp;gt;&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;Body /&amp;gt;&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/Footer&amp;gt;&lt;/code&gt;.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;To do so, we want to change our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/components/home_page.js&lt;/code&gt; file to contain the three subordinate components: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Header /&amp;gt;&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Body /&amp;gt;&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;/Footer&amp;gt;&lt;/code&gt;.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/cdef870ab3a9deca4967.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;Once that’s in place, we need to create the subordinate components.&lt;/p&gt;
 
-&lt;p&gt;Here’s a &lt;code class=&quot;highlighter-rouge&quot;&gt;js/components/header.js&lt;/code&gt; file that takes advantage of some react-bootstrap components to create a Navbar that’s fixed to the top of the page:&lt;/p&gt;
+&lt;p&gt;Here’s a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/components/header.js&lt;/code&gt; file that takes advantage of some react-bootstrap components to create a Navbar that’s fixed to the top of the page:&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/4d5e127a79a56f24ce07.js&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;A &lt;code class=&quot;highlighter-rouge&quot;&gt;js/components/body.js&lt;/code&gt; file to welcome our users:&lt;/p&gt;
+&lt;p&gt;A &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/components/body.js&lt;/code&gt; file to welcome our users:&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/27f433cba607631a9346.js&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;And a &lt;code class=&quot;highlighter-rouge&quot;&gt;/js/component/footer.js&lt;/code&gt; file to round things out:&lt;/p&gt;
+&lt;p&gt;And a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/js/component/footer.js&lt;/code&gt; file to round things out:&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/4dbfee934b2fa85249fa.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;At this point, our page starts looking a lot better:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/browser-view-with-header-and-footer.png&quot; alt=&quot;browser-view-with-header-and-footer&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io/assets/browser-view-with-header-and-footer.png&quot; alt=&quot;browser-view-with-header-and-footer&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;And we’ve got the added bonus that things are increasingly separated out from one another: we can independently edit the header, body, or footer for the page without too much concern about the others.&lt;/p&gt;
 
@@ -793,19 +793,19 @@
 
 &lt;p&gt;Say we wanted to add a button that would toggle the image users see on the body of the page. Instead of always seeing the React logo, they could click the button to see the JavaScript logo (and back and forth ad infinitum).&lt;/p&gt;
 
-&lt;p&gt;An easy way to implement this in React is to use the component’s properties and state. Properties are values which should never change, while state is explicitly mutable via the &lt;code class=&quot;highlighter-rouge&quot;&gt;setState()&lt;/code&gt; method.&lt;/p&gt;
+&lt;p&gt;An easy way to implement this in React is to use the component’s properties and state. Properties are values which should never change, while state is explicitly mutable via the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setState()&lt;/code&gt; method.&lt;/p&gt;
 
-&lt;p&gt;Properties can be passed into a component when it’s instantiated, but they can also be set with the &lt;code class=&quot;highlighter-rouge&quot;&gt;getDefaultProps()&lt;/code&gt; method. Similarly, initial state can be set via &lt;code class=&quot;highlighter-rouge&quot;&gt;getInitialState()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Properties can be passed into a component when it’s instantiated, but they can also be set with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;getDefaultProps()&lt;/code&gt; method. Similarly, initial state can be set via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;getInitialState()&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;If we wanted to add this new functionality entirely within the body component, we could do so like so:&lt;/p&gt;
 
 &lt;script src=&quot;https://gist.github.com/c11e477b504fe2b552e0.js&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;Here, we set the urls of the two image logos as properties of our Body component (since they will never change), then set the initial state with &lt;code class=&quot;highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt; set to &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;. When the user clicks the button, we call &lt;code class=&quot;highlighter-rouge&quot;&gt;toggleImage()&lt;/code&gt; to set &lt;code class=&quot;highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt; to the opposite state of whatever it was. Within our &lt;code class=&quot;highlighter-rouge&quot;&gt;render()&lt;/code&gt; call, we determine which image to show based on current state.&lt;/p&gt;
+&lt;p&gt;Here, we set the urls of the two image logos as properties of our Body component (since they will never change), then set the initial state with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt; set to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;true&lt;/code&gt;. When the user clicks the button, we call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;toggleImage()&lt;/code&gt; to set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt; to the opposite state of whatever it was. Within our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;render()&lt;/code&gt; call, we determine which image to show based on current state.&lt;/p&gt;
 
 &lt;p&gt;The result is that users can toggle the image back and forth by clicking our button. Our app is reacting to something!&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io//assets/browser-view-with-image-toggle.png&quot; alt=&quot;browser-view-with-image-toggle&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io/assets/browser-view-with-image-toggle.png&quot; alt=&quot;browser-view-with-image-toggle&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Wrap Up&lt;/strong&gt;&lt;/p&gt;
 
@@ -819,10 +819,10 @@
       &lt;p&gt;To access the latest version of the Bootstrap stylesheet, head over to &lt;a href=&quot;http://getbootstrap.com/getting-started/&quot;&gt;Bootstrap’s Getting Started page&lt;/a&gt; and check out the Bootstrap CDN. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;I’ve added the most simple version of the &lt;code class=&quot;highlighter-rouge&quot;&gt;start&lt;/code&gt; script here, but you may find it helpful to add the &lt;code class=&quot;highlighter-rouge&quot;&gt;-v&lt;/code&gt; flag to get more verbose output each time your &lt;code class=&quot;highlighter-rouge&quot;&gt;js/bundle.js&lt;/code&gt; file is recompiled. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;I’ve added the most simple version of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;start&lt;/code&gt; script here, but you may find it helpful to add the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-v&lt;/code&gt; flag to get more verbose output each time your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/bundle.js&lt;/code&gt; file is recompiled. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:3&quot;&gt;
-      &lt;p&gt;Note our use of &lt;code class=&quot;highlighter-rouge&quot;&gt;React.createClass()&lt;/code&gt; - this is a constructor for React components. Check out the &lt;a href=&quot;https://facebook.github.io/react/docs/top-level-api.html&quot;&gt;React Top-Level API&lt;/a&gt; for info on React methods you’ll want to know. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;Note our use of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.createClass()&lt;/code&gt; - this is a constructor for React components. Check out the &lt;a href=&quot;https://facebook.github.io/react/docs/top-level-api.html&quot;&gt;React Top-Level API&lt;/a&gt; for info on React methods you’ll want to know. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:4&quot;&gt;
       &lt;p&gt;Note the closing tags - JSX requires closing tags even in places where you might normally be able to get away with leaving them off. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
@@ -831,8 +831,8 @@
 &lt;/div&gt;
 </description>
         <pubDate>Thu, 23 Jul 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io//javascript/2015/07/23/starting-react-components.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io//javascript/2015/07/23/starting-react-components.html</guid>
+        <link>http://rmulhol.github.io/javascript/2015/07/23/starting-react-components.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io/javascript/2015/07/23/starting-react-components.html</guid>
         
         <category>react</category>
         

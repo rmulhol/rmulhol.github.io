@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>More on Mocks: Passing in Input</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//ruby/2014/10/09/mocks-with-input.html">
+    <link rel="canonical" href="http://rmulhol.github.io/ruby/2014/10/09/mocks-with-input.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -89,7 +89,7 @@
   <span class="k">end</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>I find this formatting helpful because it does what I want and not more - I test that <code class="highlighter-rouge">print</code> and <code class="highlighter-rouge">gets</code> are called, but I don’t get things printing to the screen and/or prompting for input (as I would with the real versions). As a bonus, the unique identifiers assure me that I’m calling the <em>right</em> methods; I don’t have to worry about the possibility that my tests are just confirming that <em>a</em> method was called (i.e. if I set all the methods in my mock to return a boolean, I could get a <code class="highlighter-rouge">true</code> returned even if I called the wrong method).</p>
+<p>I find this formatting helpful because it does what I want and not more - I test that <code class="language-plaintext highlighter-rouge">print</code> and <code class="language-plaintext highlighter-rouge">gets</code> are called, but I don’t get things printing to the screen and/or prompting for input (as I would with the real versions). As a bonus, the unique identifiers assure me that I’m calling the <em>right</em> methods; I don’t have to worry about the possibility that my tests are just confirming that <em>a</em> method was called (i.e. if I set all the methods in my mock to return a boolean, I could get a <code class="language-plaintext highlighter-rouge">true</code> returned even if I called the wrong method).</p>
 
 <p>Recently, however, I’ve run into a problem: some of the logic of my program relies on taking and using user input. In order to test that, I want to make sure that those methods continue prompting for user input until the get an appropriate response. For example:</p>
 
@@ -100,9 +100,9 @@
   <span class="k">end</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>Putting aside the numerous refactorings that could make this code better (I’ve put in several responsibilities to clarify the context), the irreducible nature of my problem is that my standard mock is going to break the test. <code class="highlighter-rouge">get_input</code> keeps waiting and waiting for an integer between 0 and 4, but my mock <code class="highlighter-rouge">gets</code> only ever returns “gets was called”.</p>
+<p>Putting aside the numerous refactorings that could make this code better (I’ve put in several responsibilities to clarify the context), the irreducible nature of my problem is that my standard mock is going to break the test. <code class="language-plaintext highlighter-rouge">get_input</code> keeps waiting and waiting for an integer between 0 and 4, but my mock <code class="language-plaintext highlighter-rouge">gets</code> only ever returns “gets was called”.</p>
 
-<p>So, of course, I could separate out the code following the <code class="highlighter-rouge">until</code> statement and test that, but I’m still going to want some way of verifying that the loop keeps going until it receives valid input (and I’m also going to want that test to eventually <em>provide</em> valid input, so that the test doesn’t keep waiting indefinitely).</p>
+<p>So, of course, I could separate out the code following the <code class="language-plaintext highlighter-rouge">until</code> statement and test that, but I’m still going to want some way of verifying that the loop keeps going until it receives valid input (and I’m also going to want that test to eventually <em>provide</em> valid input, so that the test doesn’t keep waiting indefinitely).</p>
 
 <p>One way I’ve come up with to do that is to pass in input to my mock. Now the mockIO can look like this:</p>
 
@@ -120,7 +120,7 @@
   <span class="k">end</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>Now, when I initialize an instance of my main class in the tests, I can inject in an instance of my mockIO with whatever input I want to execute. For example, if I pass in <code class="highlighter-rouge">['-7', '13', '2']</code> to my mockIO and run tests on <code class="highlighter-rouge">get_input</code>, I can expect that method to return 2.</p>
+<p>Now, when I initialize an instance of my main class in the tests, I can inject in an instance of my mockIO with whatever input I want to execute. For example, if I pass in <code class="language-plaintext highlighter-rouge">['-7', '13', '2']</code> to my mockIO and run tests on <code class="language-plaintext highlighter-rouge">get_input</code>, I can expect that method to return 2.</p>
 
 
   </article>
@@ -134,13 +134,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -178,7 +178,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

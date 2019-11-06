@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Getting Started With React - Part 3: The Flux Architecture</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//javascript/2015/07/27/react-flux-architecture.html">
+    <link rel="canonical" href="http://rmulhol.github.io/javascript/2015/07/27/react-flux-architecture.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -89,55 +89,55 @@
 
 <p>If you’ve just starting to follow along with this post, you can catch up with the progress we’ve made so far by checking out the third commit of <a href="https://github.com/rmulhol/demo-react-app">the demo react app Github repo</a>.</p>
 
-<p>Once you’re up to date, you’ll want to install Flux by running <code class="highlighter-rouge">npm install --save flux</code>.</p>
+<p>Once you’re up to date, you’ll want to install Flux by running <code class="language-plaintext highlighter-rouge">npm install --save flux</code>.</p>
 
 <p>Adding Flux to our project’s dependencies gives us access to the dispatcher, an important tool in the unidirectional data flow that characterizes the Flux architecture. The dispatcher mediates between the actions that are fired by components and the stores that update components.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
 
-<p><img src="http://rmulhol.github.io//assets/flux-architecture.png" alt="flux-architecture" /></p>
+<p><img src="http://rmulhol.github.io/assets/flux-architecture.png" alt="flux-architecture" /></p>
 
 <p>In this post, we’ll be implementing the Flux architecture to duplicate our app’s existing behavior. Though we won’t be adding any new features for the user, we’ll be tidying up the backend so as to lay the groundwork for future additions.</p>
 
 <p><strong>Step 1: Add a Dispatcher</strong></p>
 
-<p>The first thing we’ll want to do is create a dispatcher. It can live at <code class="highlighter-rouge">js/dispatcher/dispatcher.js</code>.</p>
+<p>The first thing we’ll want to do is create a dispatcher. It can live at <code class="language-plaintext highlighter-rouge">js/dispatcher/dispatcher.js</code>.</p>
 
 <script src="https://gist.github.com/7fe46f4f9cea3780eacf.js"> </script>
 
-<p>With this in place, we’ll be able to <code class="highlighter-rouge">require</code> and call the dispatcher from other parts of our application.</p>
+<p>With this in place, we’ll be able to <code class="language-plaintext highlighter-rouge">require</code> and call the dispatcher from other parts of our application.</p>
 
 <p><strong>Step 2: Create an Action</strong></p>
 
-<p>After we’ve got a dispatcher, we’ll want to <code class="highlighter-rouge">require</code> and use it in a file designated to contain our actions. Create the following file at <code class="highlighter-rouge">js/actions/demo_app_actions.js</code>.</p>
+<p>After we’ve got a dispatcher, we’ll want to <code class="language-plaintext highlighter-rouge">require</code> and use it in a file designated to contain our actions. Create the following file at <code class="language-plaintext highlighter-rouge">js/actions/demo_app_actions.js</code>.</p>
 
 <script src="https://gist.github.com/73355cb3dca6fd138fd8.js"> </script>
 
-<p>Here, the <code class="highlighter-rouge">toggleLogo()</code> method uses the dispatcher to broadcast a payload to the rest of our application. In this case, the payload includes keys for <code class="highlighter-rouge">actionType</code> and <code class="highlighter-rouge">showReactLogo</code>, which correspond to a string and a boolean, respectively.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
+<p>Here, the <code class="language-plaintext highlighter-rouge">toggleLogo()</code> method uses the dispatcher to broadcast a payload to the rest of our application. In this case, the payload includes keys for <code class="language-plaintext highlighter-rouge">actionType</code> and <code class="language-plaintext highlighter-rouge">showReactLogo</code>, which correspond to a string and a boolean, respectively.<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></p>
 
-<p>Note  the bang (!) before <code class="highlighter-rouge">showReactLogo</code>, which means we’re dispatching a value for <code class="highlighter-rouge">showReactLogo</code> that reflects the opposite of whatever’s passed in. As will become more clear shortly, this is an example of handling state manipulation in the actions rather than the components.</p>
+<p>Note  the bang (!) before <code class="language-plaintext highlighter-rouge">showReactLogo</code>, which means we’re dispatching a value for <code class="language-plaintext highlighter-rouge">showReactLogo</code> that reflects the opposite of whatever’s passed in. As will become more clear shortly, this is an example of handling state manipulation in the actions rather than the components.</p>
 
 <p><strong>Step 3: Open a Store</strong></p>
 
-<p>Once we’ve got actions that invoke the dispatcher to issue payloads to our application, we’ll want to register some callbacks with the dispatcher to handle those payloads. We do this on a store, which we’ll put at <code class="highlighter-rouge">js/stores/demo_app_store.js</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
+<p>Once we’ve got actions that invoke the dispatcher to issue payloads to our application, we’ll want to register some callbacks with the dispatcher to handle those payloads. We do this on a store, which we’ll put at <code class="language-plaintext highlighter-rouge">js/stores/demo_app_store.js</code>.<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup></p>
 
 <script src="https://gist.github.com/9e236715490835053a8c.js"> </script>
 
 <p>Let’s unpack what’s going on here.</p>
 
-<p>In addition to the dispatcher, we’re requiring the <code class="highlighter-rouge">EventEmitter</code> and <code class="highlighter-rouge">utils</code> package from Node.js, which will enable us to inherit features that allow us to run callbacks and handle dispatched payloads.</p>
+<p>In addition to the dispatcher, we’re requiring the <code class="language-plaintext highlighter-rouge">EventEmitter</code> and <code class="language-plaintext highlighter-rouge">utils</code> package from Node.js, which will enable us to inherit features that allow us to run callbacks and handle dispatched payloads.</p>
 
-<p>We’ve also got an <code class="highlighter-rouge">addLogoListener()</code> method that registers a callback to be invoked whenever a “toggle-logo” event is emitted. We’ll use it in our component to complete state modifications initiated by the actions.</p>
+<p>We’ve also got an <code class="language-plaintext highlighter-rouge">addLogoListener()</code> method that registers a callback to be invoked whenever a “toggle-logo” event is emitted. We’ll use it in our component to complete state modifications initiated by the actions.</p>
 
-<p>Finally, we’ve got a <code class="highlighter-rouge">dispatchToken()</code> method that contains a <code class="highlighter-rouge">switch</code> statement.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup> The only <code class="highlighter-rouge">case</code> we’ve included so far corresponds to the <code class="highlighter-rouge">actionType</code> of our only action (“toggle-logo”), and it emits an event of that type storing the value that corresponds to the payload’s <code class="highlighter-rouge">showReactLogo</code> key.</p>
+<p>Finally, we’ve got a <code class="language-plaintext highlighter-rouge">dispatchToken()</code> method that contains a <code class="language-plaintext highlighter-rouge">switch</code> statement.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup> The only <code class="language-plaintext highlighter-rouge">case</code> we’ve included so far corresponds to the <code class="language-plaintext highlighter-rouge">actionType</code> of our only action (“toggle-logo”), and it emits an event of that type storing the value that corresponds to the payload’s <code class="language-plaintext highlighter-rouge">showReactLogo</code> key.</p>
 
 <p><strong>Step 4: Refactor - add Constants</strong></p>
 
-<p>At this point, a lot of the behavior we’ve implemented depends on the <code class="highlighter-rouge">actionType</code> “toggle-logo”, and we’ve duplicated that string at several places in our code. It would be shame if something went wrong because of a typo in one of those places.</p>
+<p>At this point, a lot of the behavior we’ve implemented depends on the <code class="language-plaintext highlighter-rouge">actionType</code> “toggle-logo”, and we’ve duplicated that string at several places in our code. It would be shame if something went wrong because of a typo in one of those places.</p>
 
-<p>For this reason, it can be helpful to keep track of certain constants in a <code class="highlighter-rouge">js/constants/constants.js</code> file. We’ll be using this file to store values for the <code class="highlighter-rouge">actionType</code> of dispatched payloads right now, but we could also put any other important constants here as we go.</p>
+<p>For this reason, it can be helpful to keep track of certain constants in a <code class="language-plaintext highlighter-rouge">js/constants/constants.js</code> file. We’ll be using this file to store values for the <code class="language-plaintext highlighter-rouge">actionType</code> of dispatched payloads right now, but we could also put any other important constants here as we go.</p>
 
 <script src="https://gist.github.com/66eaec512c7a94252a27.js"> </script>
 
-<p>With this in place, we can change how we refer to the “toggle-logo” value for our <code class="highlighter-rouge">actionType</code> key in our action:</p>
+<p>With this in place, we can change how we refer to the “toggle-logo” value for our <code class="language-plaintext highlighter-rouge">actionType</code> key in our action:</p>
 
 <script src="https://gist.github.com/7190e9eff411565edb29.js"> </script>
 
@@ -151,15 +151,15 @@
 
 <p>Now that stores are emitting events that carry values from our actions’ payloads, we can add listeners on our components to initiate change in response to emitted events. This is the logic that replaces the existing state transitions on our components.</p>
 
-<p>The revised <code class="highlighter-rouge">js/components/body.js</code> file should be modified to look like this:</p>
+<p>The revised <code class="language-plaintext highlighter-rouge">js/components/body.js</code> file should be modified to look like this:</p>
 
 <script src="https://gist.github.com/a34fdef63bc0e79d9731.js"> </script>
 
 <p>The important changes we’ve made here are twofold:</p>
 
-<p>1) We’ve added a <code class="highlighter-rouge">componentDidMount()</code> method, which will be invoked automatically after the component renders, to register a callback via our <code class="highlighter-rouge">addLogoListener()</code> method from the store. That callback alters the component’s state to correspond to the emitted value of <code class="highlighter-rouge">showReactLogo</code>.</p>
+<p>1) We’ve added a <code class="language-plaintext highlighter-rouge">componentDidMount()</code> method, which will be invoked automatically after the component renders, to register a callback via our <code class="language-plaintext highlighter-rouge">addLogoListener()</code> method from the store. That callback alters the component’s state to correspond to the emitted value of <code class="language-plaintext highlighter-rouge">showReactLogo</code>.</p>
 
-<p>2) We’ve updated our <code class="highlighter-rouge">toggleImage()</code> method to fire an action instead of directly setting state on the component. No longer is our component manipulating state directly; instead, it passes much of that work off to the action, dispatcher, and store.</p>
+<p>2) We’ve updated our <code class="language-plaintext highlighter-rouge">toggleImage()</code> method to fire an action instead of directly setting state on the component. No longer is our component manipulating state directly; instead, it passes much of that work off to the action, dispatcher, and store.</p>
 
 <p><strong>Wrap Up</strong></p>
 
@@ -179,7 +179,7 @@
       <p>It might feel a little redundant to be creating directories each time we’re adding a file here, and that’s fair. But dividing up our application into separate directories for components, actions, stores, and so forth initiates a nice organizational structure we’ll appreciate if and when we start accumulating more files of each type. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:4">
-      <p>We’ve called this method <code class="highlighter-rouge">dispatchToken()</code> because it returns a token that we can use for controlling the order of execution of registered callbacks, but it’s also worth noting that this method is doing much more than that. <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
+      <p>We’ve called this method <code class="language-plaintext highlighter-rouge">dispatchToken()</code> because it returns a token that we can use for controlling the order of execution of registered callbacks, but it’s also worth noting that this method is doing much more than that. <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -195,13 +195,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -239,7 +239,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

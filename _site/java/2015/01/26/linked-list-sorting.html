@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Sort a LinkedList? Revisiting Insertion Sort in Java</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//java/2015/01/26/linked-list-sorting.html">
+    <link rel="canonical" href="http://rmulhol.github.io/java/2015/01/26/linked-list-sorting.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -81,7 +81,7 @@
 
 <p><em>Almost</em> verbatim. While the pseudocode doesn’t include any type declarations, my Java code does. Specifically, I chose to work with a <a href="http://docs.oracle.com/javase/7/docs/api/java/util/LinkedList.html">LinkedList</a>, since a data structure that allows for <a href="http://en.wikipedia.org/wiki/Linked_list#Advantages">easy <em>insertion</em> and deletion of elements</a> felt like a natural fit for an algorithm named <em>insertion</em> sort. The code ended up looking like this:</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">mySort</span><span class="o">(</span><span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nc">LinkedList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">mySort</span><span class="o">(</span><span class="nc">LinkedList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
     <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
         <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">j</span><span class="o">);</span>
         <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
@@ -100,13 +100,13 @@
 
 <p>Upon deeper investigation, I found some <a href="https://kjellkod.wordpress.com/2012/02/25/why-you-should-never-ever-ever-use-linked-list-in-your-code-again/">virulent criticism of the linked list</a>, and decided it was time to revisit my implementation of insertion sort, taking note of a few things:</p>
 
-<p>– Retrieving elements from a linked list by index, it turns out, is computationally expensive. Specifically, the <code class="highlighter-rouge">.get()</code> operation I use to access values <a href="http://java-performance.info/linkedlist-performance/">is an O(n) operation</a>; since a LinkedList is a <a href="http://docs.oracle.com/javase/7/docs/api/java/util/AbstractSequentialList.html">sequential access list</a>, accessing elements by index <a href="http://www.cs.rpi.edu/~musser/gp/List/lists1.html">takes linear time</a> (i.e. you have to traverse all prior elements in the list until the desired index is reached).</p>
+<p>– Retrieving elements from a linked list by index, it turns out, is computationally expensive. Specifically, the <code class="language-plaintext highlighter-rouge">.get()</code> operation I use to access values <a href="http://java-performance.info/linkedlist-performance/">is an O(n) operation</a>; since a LinkedList is a <a href="http://docs.oracle.com/javase/7/docs/api/java/util/AbstractSequentialList.html">sequential access list</a>, accessing elements by index <a href="http://www.cs.rpi.edu/~musser/gp/List/lists1.html">takes linear time</a> (i.e. you have to traverse all prior elements in the list until the desired index is reached).</p>
 
-<p>By contrast, <code class="highlighter-rouge">.get()</code> <a href="http://beginnersbook.com/2013/12/difference-between-arraylist-and-linkedlist-in-java/">is an O(1) operation</a> for an <a href="http://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html">ArrayList</a>; elements can be accessed by index <a href="http://docs.oracle.com/javase/tutorial/collections/implementations/list.html">in constant time</a> since this data structure is a <a href="http://docs.oracle.com/javase/7/docs/api/java/util/RandomAccess.html">random access list</a>.</p>
+<p>By contrast, <code class="language-plaintext highlighter-rouge">.get()</code> <a href="http://beginnersbook.com/2013/12/difference-between-arraylist-and-linkedlist-in-java/">is an O(1) operation</a> for an <a href="http://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html">ArrayList</a>; elements can be accessed by index <a href="http://docs.oracle.com/javase/tutorial/collections/implementations/list.html">in constant time</a> since this data structure is a <a href="http://docs.oracle.com/javase/7/docs/api/java/util/RandomAccess.html">random access list</a>.</p>
 
-<p>– My algorithm doesn’t actually require <em>inserting</em> and <em>deleting</em> elements. Though the name “insertion sort” might suggest otherwise, what’s really happening is that values are being <em>swapped</em> (replaced, rather than inserted and deleted). <a href="http://www.programcreek.com/2013/03/arraylist-vs-linkedlist-vs-vector/">An ArrayList excels with <code class="highlighter-rouge">.get()</code> and <code class="highlighter-rouge">.set()</code> methods, while a LinkedList excels with <code class="highlighter-rouge">.add()</code> and <code class="highlighter-rouge">.remove()</code></a> — and I’m only using the former pair!</p>
+<p>– My algorithm doesn’t actually require <em>inserting</em> and <em>deleting</em> elements. Though the name “insertion sort” might suggest otherwise, what’s really happening is that values are being <em>swapped</em> (replaced, rather than inserted and deleted). <a href="http://www.programcreek.com/2013/03/arraylist-vs-linkedlist-vs-vector/">An ArrayList excels with <code class="language-plaintext highlighter-rouge">.get()</code> and <code class="language-plaintext highlighter-rouge">.set()</code> methods, while a LinkedList excels with <code class="language-plaintext highlighter-rouge">.add()</code> and <code class="language-plaintext highlighter-rouge">.remove()</code></a> — and I’m only using the former pair!</p>
 
-<p>So in the interest of performance, I decided it might be better to use an ArrayList. That’s a quick fix: just change the method return and parameter types from <code class="highlighter-rouge">LinkedList&lt;Integer&gt;</code> to <code class="highlighter-rouge">ArrayList&lt;Integer&gt;</code>.</p>
+<p>So in the interest of performance, I decided it might be better to use an ArrayList. That’s a quick fix: just change the method return and parameter types from <code class="language-plaintext highlighter-rouge">LinkedList&lt;Integer&gt;</code> to <code class="language-plaintext highlighter-rouge">ArrayList&lt;Integer&gt;</code>.</p>
 
 <p>But, upon reflection, even this data structure felt unnecessary. I don’t need to dynamically modify the size of the input, so I can just work with a simple <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html">array</a>.</p>
 
@@ -139,13 +139,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -183,7 +183,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

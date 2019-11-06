@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Backbone + React: Render Components With `Render`</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//javascript/2015/09/14/backbone-react-render.html">
+    <link rel="canonical" href="http://rmulhol.github.io/javascript/2015/09/14/backbone-react-render.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -78,7 +78,7 @@
 
   <article class="post-content">
     <blockquote>
-  <p>tl;dr - Use <code class="highlighter-rouge">React.render()</code> in place of <code class="highlighter-rouge">React.renderComponent()</code> when rendering React components from Backbone views</p>
+  <p>tl;dr - Use <code class="language-plaintext highlighter-rouge">React.render()</code> in place of <code class="language-plaintext highlighter-rouge">React.renderComponent()</code> when rendering React components from Backbone views</p>
 </blockquote>
 
 <p>If you’re looking to start bringing React into a project you’ve set up in Backbone, you’re in luck. It can be done. There are even some nice posts out there to help get you started.</p>
@@ -95,21 +95,21 @@
 
 <p>So, in this post, I want to highlight one place where the API has changed, and what you can do to keep making progress.</p>
 
-<p><strong>Goodbye <code class="highlighter-rouge">renderComponent()</code></strong></p>
+<p><strong>Goodbye <code class="language-plaintext highlighter-rouge">renderComponent()</code></strong></p>
 
-<p>Both of the posts linked to above render React components from Backbone views with <code class="highlighter-rouge">React.renderComponent()</code>. This function takes two arguments: the component to render and the DOM element that it should occupy.</p>
+<p>Both of the posts linked to above render React components from Backbone views with <code class="language-plaintext highlighter-rouge">React.renderComponent()</code>. This function takes two arguments: the component to render and the DOM element that it should occupy.</p>
 
-<p>The trouble is, that function <a href="https://facebook.github.io/react/blog/2014/10/28/react-v0.12.html">is now deprecated</a>. If you give it a try with a recent version of React, you’ll be met with an unwelcome surprise in the console: <code class="highlighter-rouge">Uncaught TypeError: React.renderComponent is not a function</code>.</p>
+<p>The trouble is, that function <a href="https://facebook.github.io/react/blog/2014/10/28/react-v0.12.html">is now deprecated</a>. If you give it a try with a recent version of React, you’ll be met with an unwelcome surprise in the console: <code class="language-plaintext highlighter-rouge">Uncaught TypeError: React.renderComponent is not a function</code>.</p>
 
-<p>If you read through the documentation, you’ll see that <code class="highlighter-rouge">React.renderComponent()</code> has been replaced by <code class="highlighter-rouge">React.render()</code>. And that’s the replacement you should use (see the “tl;dr”), but there are reasons you might be tempted to not do so.</p>
+<p>If you read through the documentation, you’ll see that <code class="language-plaintext highlighter-rouge">React.renderComponent()</code> has been replaced by <code class="language-plaintext highlighter-rouge">React.render()</code>. And that’s the replacement you should use (see the “tl;dr”), but there are reasons you might be tempted to not do so.</p>
 
-<p>Just like <code class="highlighter-rouge">React.renderComponent()</code>, <code class="highlighter-rouge">React.render()</code> requires that you pass in a DOM element identifying where on the page your component should be rendered. When the component is rendered to that DOM element, it replaces the existing contents of that container.</p>
+<p>Just like <code class="language-plaintext highlighter-rouge">React.renderComponent()</code>, <code class="language-plaintext highlighter-rouge">React.render()</code> requires that you pass in a DOM element identifying where on the page your component should be rendered. When the component is rendered to that DOM element, it replaces the existing contents of that container.</p>
 
 <p>This means that rendering your React component can delete existing page contents. When you’re displaying something like a modal, that can be a real pain.</p>
 
 <p><strong>So Many Renders</strong></p>
 
-<p>Taking a look through the documentation, you can see that <code class="highlighter-rouge">React.render()</code> is supplemented by <code class="highlighter-rouge">React.renderToString()</code> and <code class="highlighter-rouge">React.renderToStaticMarkup()</code>. These functions have the advantage of only taking one argument: the component you want to render.</p>
+<p>Taking a look through the documentation, you can see that <code class="language-plaintext highlighter-rouge">React.render()</code> is supplemented by <code class="language-plaintext highlighter-rouge">React.renderToString()</code> and <code class="language-plaintext highlighter-rouge">React.renderToStaticMarkup()</code>. These functions have the advantage of only taking one argument: the component you want to render.</p>
 
 <p>The benefit of not taking control of a DOM element is that you don’t have to cede control of that container over to React. Simply generate the contents you want to display, then add or remove them at will with jQuery; it creates no problems for your existing content.</p>
 
@@ -117,7 +117,7 @@
 
 <p><strong>Render Under Control</strong></p>
 
-<p>In order to access functions defined on your React components, you’ll want to stick with <code class="highlighter-rouge">React.render()</code>, handing over control of the DOM element. That’s the most simple way to get your content on the page while also taking advantage of React’s event handling.</p>
+<p>In order to access functions defined on your React components, you’ll want to stick with <code class="language-plaintext highlighter-rouge">React.render()</code>, handing over control of the DOM element. That’s the most simple way to get your content on the page while also taking advantage of React’s event handling.</p>
 
 <p>If you’re worried about losing existing content, a simple solution is to append a new DOM element where you want the component to render, passing that in as the container.</p>
 
@@ -145,13 +145,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -189,7 +189,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

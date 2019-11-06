@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Programmer Beware: Potential Problems Getting User Input in Ruby</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//ruby/2014/10/11/problems-with-input.html">
+    <link rel="canonical" href="http://rmulhol.github.io/ruby/2014/10/11/problems-with-input.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -109,34 +109,34 @@
   <span class="n">input</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">downcase</span> <span class="o">==</span> <span class="s2">"y"</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>This all works well and good until a user decides to stonewall your program. Your <code class="highlighter-rouge">input_confirmed?</code> method calls <code class="highlighter-rouge">.downcase</code> on the first element of <code class="highlighter-rouge">user_confirmation</code>, but the absence of a response will equate to <code class="highlighter-rouge">nil</code>. Your attempt to call <code class="highlighter-rouge">.downcase</code> on <code class="highlighter-rouge">nil</code> will provoke an unfortunate message: <code class="highlighter-rouge">undefined method 'downcase' for nil:NilClass (NoMethodError)</code>.</p>
+<p>This all works well and good until a user decides to stonewall your program. Your <code class="language-plaintext highlighter-rouge">input_confirmed?</code> method calls <code class="language-plaintext highlighter-rouge">.downcase</code> on the first element of <code class="language-plaintext highlighter-rouge">user_confirmation</code>, but the absence of a response will equate to <code class="language-plaintext highlighter-rouge">nil</code>. Your attempt to call <code class="language-plaintext highlighter-rouge">.downcase</code> on <code class="language-plaintext highlighter-rouge">nil</code> will provoke an unfortunate message: <code class="language-plaintext highlighter-rouge">undefined method 'downcase' for nil:NilClass (NoMethodError)</code>.</p>
 
-<p>Of course, the easiest way to hedge against this error would simply be to avoid calling <code class="highlighter-rouge">.downcase</code> on a value that might return <code class="highlighter-rouge">nil</code>:</p>
+<p>Of course, the easiest way to hedge against this error would simply be to avoid calling <code class="language-plaintext highlighter-rouge">.downcase</code> on a value that might return <code class="language-plaintext highlighter-rouge">nil</code>:</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">input_confirmed?</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
   <span class="n">input</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"y"</span> <span class="o">||</span> <span class="n">input</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"Y"</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>This program will continue running until the user enters a string that starts with a ‘y’ (which, hopefully, confirms that they intended to enter the integer you received), without throwing the <code class="highlighter-rouge">NoMethodError</code> you get by calling <code class="highlighter-rouge">.downcase</code> on <code class="highlighter-rouge">nil</code>.</p>
+<p>This program will continue running until the user enters a string that starts with a ‘y’ (which, hopefully, confirms that they intended to enter the integer you received), without throwing the <code class="language-plaintext highlighter-rouge">NoMethodError</code> you get by calling <code class="language-plaintext highlighter-rouge">.downcase</code> on <code class="language-plaintext highlighter-rouge">nil</code>.</p>
 
 <p><strong>Thing You Should Know #2: Strings Evaluate to Zero</strong></p>
 
 <p>Say you want to add another layer of confirmation to your program. You want to validate not only that the user has entered what <em>they</em> intended to enter, but also that the input conforms to what <em>you</em> are expecting (in this case, an integer).</p>
 
-<p>You know you can’t just check whether the value you get returned from <code class="highlighter-rouge">gets</code> is an integer, since that method always returns a string. So you might opt to call <code class="highlighter-rouge">.to_i</code> on the string, and then check whether that call returns a valid integer.</p>
+<p>You know you can’t just check whether the value you get returned from <code class="language-plaintext highlighter-rouge">gets</code> is an integer, since that method always returns a string. So you might opt to call <code class="language-plaintext highlighter-rouge">.to_i</code> on the string, and then check whether that call returns a valid integer.</p>
 
-<p>This, however, will get you into trouble. The method <code class="highlighter-rouge">.to_i</code>, unfortunately (fortunately?), is set to move along happily converting strings that are not integers into 0. This saves you from a pesky exception near the <code class="highlighter-rouge">.to_i</code> call, but it can result in some faulty calculations when you use that 0 elsewhere.</p>
+<p>This, however, will get you into trouble. The method <code class="language-plaintext highlighter-rouge">.to_i</code>, unfortunately (fortunately?), is set to move along happily converting strings that are not integers into 0. This saves you from a pesky exception near the <code class="language-plaintext highlighter-rouge">.to_i</code> call, but it can result in some faulty calculations when you use that 0 elsewhere.</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&gt;</span> <span class="s2">"not an integer"</span><span class="p">.</span><span class="nf">to_i</span>
 <span class="o">=&gt;</span> <span class="mi">0</span></code></pre></figure>
 
-<p>Possible solution: check that a 0 returned by <code class="highlighter-rouge">.to_i</code> is actually the result of the string “0”:</p>
+<p>Possible solution: check that a 0 returned by <code class="language-plaintext highlighter-rouge">.to_i</code> is actually the result of the string “0”:</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">user_input_is_valid?</span><span class="p">(</span><span class="n">user_input</span><span class="p">)</span>
   <span class="n">user_input</span><span class="p">.</span><span class="nf">to_i</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">?</span> <span class="n">user_input</span><span class="p">.</span><span class="nf">strip</span> <span class="o">==</span> <span class="s2">"0"</span> <span class="p">:</span> <span class="kp">true</span>
 <span class="k">end</span></code></pre></figure>
 
-<p>This method will validate that a 0 you get from <code class="highlighter-rouge">.to_i</code> was a 0 to begin with, and allow other integers to proceed unheeded.</p>
+<p>This method will validate that a 0 you get from <code class="language-plaintext highlighter-rouge">.to_i</code> was a 0 to begin with, and allow other integers to proceed unheeded.</p>
 
 <p><strong>Takeaway: Trust No One</strong></p>
 
@@ -153,13 +153,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -197,7 +197,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

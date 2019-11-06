@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>What the Heck? Being Confused About Asynchronous Execution in JavaScript</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//javascript/2015/06/25/confusing-javascript-var.html">
+    <link rel="canonical" href="http://rmulhol.github.io/javascript/2015/06/25/confusing-javascript-var.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -80,17 +80,17 @@
     <p>As I’ve been working on using my Java server as a web interface for my Clojure tic tac toe game, I’ve found JavaScript very helpful. I use it for form validation on the game configuration page:</p>
 
 <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">validateGameConfig</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">player1Move</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'player-1-move'</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
-    <span class="kd">var</span> <span class="nx">player2Move</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'player-2-move'</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">player1Move</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">player-1-move</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">player2Move</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">player-2-move</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
 
-    <span class="k">if</span><span class="p">(</span><span class="nx">player1Move</span> <span class="o">==</span> <span class="s2">" "</span> <span class="o">||</span> <span class="nx">player1Move</span> <span class="o">==</span> <span class="s2">""</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">alert</span><span class="p">(</span><span class="s2">"Must enter a move signature for player 1."</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">player1Move</span> <span class="o">==</span> <span class="dl">"</span><span class="s2"> </span><span class="dl">"</span> <span class="o">||</span> <span class="nx">player1Move</span> <span class="o">==</span> <span class="dl">""</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Must enter a move signature for player 1.</span><span class="dl">"</span><span class="p">);</span>
         <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">player2Move</span> <span class="o">==</span> <span class="s2">" "</span> <span class="o">||</span> <span class="nx">player2Move</span> <span class="o">==</span> <span class="s2">""</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">alert</span><span class="p">(</span><span class="s2">"Must enter a move signature for player 2."</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">player2Move</span> <span class="o">==</span> <span class="dl">"</span><span class="s2"> </span><span class="dl">"</span> <span class="o">||</span> <span class="nx">player2Move</span> <span class="o">==</span> <span class="dl">""</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Must enter a move signature for player 2.</span><span class="dl">"</span><span class="p">);</span>
         <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
     <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">player1Move</span> <span class="o">==</span> <span class="nx">player2Move</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">alert</span><span class="p">(</span><span class="s2">"Player move signatures must be distinct."</span><span class="p">);</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Player move signatures must be distinct.</span><span class="dl">"</span><span class="p">);</span>
         <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
         <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
@@ -125,9 +125,9 @@
 <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
 <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">thisForm</span> <span class="o">=</span> <span class="s1">'form-'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">thisForm</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">form-</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">;</span>
 
-        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'square-'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"click"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">square-</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
             <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">thisForm</span><span class="p">).</span><span class="nx">submit</span><span class="p">();</span>
         <span class="p">});</span>
     <span class="p">}())</span>
@@ -138,15 +138,15 @@
 
 <p>The first example wasn’t much trouble - it’s relatively straightforward.</p>
 
-<p>But the second was a different story. I had to manually declare the variable <code class="highlighter-rouge">thisForm</code>; I couldn’t just inline <code class="highlighter-rouge">'form-' + i</code> on the <code class="highlighter-rouge">getElementById</code> call.</p>
+<p>But the second was a different story. I had to manually declare the variable <code class="language-plaintext highlighter-rouge">thisForm</code>; I couldn’t just inline <code class="language-plaintext highlighter-rouge">'form-' + i</code> on the <code class="language-plaintext highlighter-rouge">getElementById</code> call.</p>
 
 <p>Try it for yourself. If you replace the above code with this:</p>
 
 <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
 <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'square-'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"click"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'form-'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">).</span><span class="nx">submit</span><span class="p">();</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">square-</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">form-</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">).</span><span class="nx">submit</span><span class="p">();</span>
         <span class="p">});</span>
     <span class="p">}())</span>
 <span class="p">}</span>
@@ -156,15 +156,15 @@
 
 <p>So, what’s going on here?</p>
 
-<p>The problem relates to the nature of asynchronous listeners in JavaScript. Inside of the <code class="highlighter-rouge">for</code> loop, the var <code class="highlighter-rouge">i</code> is set to some integer between 1 and 9. As that’s happening, the elements defined by the id <code class="highlighter-rouge">'square-' + i</code> are receiving event listeners that trigger when clicked.</p>
+<p>The problem relates to the nature of asynchronous listeners in JavaScript. Inside of the <code class="language-plaintext highlighter-rouge">for</code> loop, the var <code class="language-plaintext highlighter-rouge">i</code> is set to some integer between 1 and 9. As that’s happening, the elements defined by the id <code class="language-plaintext highlighter-rouge">'square-' + i</code> are receiving event listeners that trigger when clicked.</p>
 
 <p>But the listener is not triggered at that moment - otherwise all the forms would be submitted when the script ran. Instead, the function to submit the form lies in wait for the event listener to trigger.</p>
 
-<p>But there’s a problem. When the event triggers, the var <code class="highlighter-rouge">i</code> is no longer set to the value it was when the <code class="highlighter-rouge">for</code> loop was executing - now it’s at 10 (mutable data, good stuff).<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> So when you click on a cell, you get the following error in the console:</p>
+<p>But there’s a problem. When the event triggers, the var <code class="language-plaintext highlighter-rouge">i</code> is no longer set to the value it was when the <code class="language-plaintext highlighter-rouge">for</code> loop was executing - now it’s at 10 (mutable data, good stuff).<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> So when you click on a cell, you get the following error in the console:</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Uncaught</span> <span class="nx">TypeError</span><span class="p">:</span> <span class="nx">Cannot</span> <span class="nx">read</span> <span class="nx">property</span> <span class="s1">'submit'</span> <span class="k">of</span> <span class="kc">null</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">Uncaught</span> <span class="nx">TypeError</span><span class="p">:</span> <span class="nx">Cannot</span> <span class="nx">read</span> <span class="nx">property</span> <span class="dl">'</span><span class="s1">submit</span><span class="dl">'</span> <span class="k">of</span> <span class="kc">null</span></code></pre></figure>
 
-<p>By the time the asynchronous listener is called, the object returned by <code class="highlighter-rouge">getElementById</code> is null, since <code class="highlighter-rouge">'form-' + i</code> evaluates to <code class="highlighter-rouge">'form-' + 10</code> (or just <code class="highlighter-rouge">'form-10'</code>), which doesn’t correspond to any ID on the page.</p>
+<p>By the time the asynchronous listener is called, the object returned by <code class="language-plaintext highlighter-rouge">getElementById</code> is null, since <code class="language-plaintext highlighter-rouge">'form-' + i</code> evaluates to <code class="language-plaintext highlighter-rouge">'form-' + 10</code> (or just <code class="language-plaintext highlighter-rouge">'form-10'</code>), which doesn’t correspond to any ID on the page.</p>
 
 <p>Asynchronous callbacks can be tremendously confusing - they can lead you into the pit of <a href="http://callbackhell.com/">callback hell</a>.</p>
 
@@ -191,13 +191,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -235,7 +235,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>

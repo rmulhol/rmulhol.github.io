@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Idiomatic Functional Programming: The Importance of Immersion</title>
-    <meta name="description" content="Notes from a journey on the path toward becoming proficient in computer programming.
+    <meta name="description" content="Random thoughts and musings.
 ">
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="canonical" href="http://rmulhol.github.io//clojure/2015/05/15/idiomatic-functional-programming.html">
+    <link rel="canonical" href="http://rmulhol.github.io/clojure/2015/05/15/idiomatic-functional-programming.html">
     <link href='http://rmulhol.github.io/feed.xml' rel='alternate' type='application/rss+xml'>
 
     <script>
@@ -34,7 +34,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="/">Rob Learns Programming</a>
+    <a class="site-title" href="/">Rob Writes Code</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -110,7 +110,7 @@
       </span><span class="p">(</span><span class="nf">empty?</span><span class="w"> </span><span class="n">backlog</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">recur</span><span class="w"> </span><span class="p">(</span><span class="nb">rest</span><span class="w"> </span><span class="n">input-list</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">concat</span><span class="w"> </span><span class="n">output-list</span><span class="w"> </span><span class="p">[[</span><span class="n">last-element</span><span class="p">]])</span><span class="w"> </span><span class="p">(</span><span class="nb">first</span><span class="w"> </span><span class="n">input-list</span><span class="p">)</span><span class="w"> </span><span class="p">[])</span><span class="w">
       </span><span class="no">:else</span><span class="w"> </span><span class="p">(</span><span class="nf">recur</span><span class="w"> </span><span class="p">(</span><span class="nb">rest</span><span class="w"> </span><span class="n">input-list</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nb">concat</span><span class="w"> </span><span class="n">output-list</span><span class="w"> </span><span class="p">[</span><span class="n">backlog</span><span class="p">])</span><span class="w"> </span><span class="p">(</span><span class="nb">first</span><span class="w"> </span><span class="n">input-list</span><span class="p">)</span><span class="w"> </span><span class="p">[]))))</span></code></pre></figure>
 
-<p>It’s so ugly that it doesn’t really merit further comment. Suffice it to say I’m basically replicating a <code class="highlighter-rouge">for</code> loop where a set of variables are slowly pieced together to generate the data I’d like to return.</p>
+<p>It’s so ugly that it doesn’t really merit further comment. Suffice it to say I’m basically replicating a <code class="language-plaintext highlighter-rouge">for</code> loop where a set of variables are slowly pieced together to generate the data I’d like to return.</p>
 
 <p>Letting my partner do the driving, we came up with a much nicer solution:</p>
 
@@ -126,7 +126,7 @@
         </span><span class="p">(</span><span class="nb">cons</span><span class="w"> </span><span class="p">(</span><span class="nb">take</span><span class="w"> </span><span class="n">similar-elements-count</span><span class="w"> </span><span class="n">coll</span><span class="p">)</span><span class="w">
           </span><span class="p">(</span><span class="nf">pack</span><span class="w"> </span><span class="p">(</span><span class="nb">drop</span><span class="w"> </span><span class="n">similar-elements-count</span><span class="w"> </span><span class="n">coll</span><span class="p">))))))</span></code></pre></figure>
 
-<p>The key to this (much more elegant) solution is it’s effective use of the <code class="highlighter-rouge">take</code> and <code class="highlighter-rouge">drop</code> functions - something we found relevant in approaching numerous other problems:</p>
+<p>The key to this (much more elegant) solution is it’s effective use of the <code class="language-plaintext highlighter-rouge">take</code> and <code class="language-plaintext highlighter-rouge">drop</code> functions - something we found relevant in approaching numerous other problems:</p>
 
 <figure class="highlight"><pre><code class="language-clojure" data-lang="clojure"><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">rotate-seq</span><span class="w"> </span><span class="p">[</span><span class="n">rotate-by</span><span class="w"> </span><span class="n">coll</span><span class="p">]</span><span class="w">
   </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">rotate-by</span><span class="w"> </span><span class="p">(</span><span class="nf">mod</span><span class="w"> </span><span class="n">rotate-by</span><span class="w"> </span><span class="p">(</span><span class="nb">count</span><span class="w"> </span><span class="n">coll</span><span class="p">))]</span><span class="w">
@@ -136,7 +136,7 @@
   </span><span class="p">(</span><span class="nb">when</span><span class="w"> </span><span class="p">(</span><span class="nb">&lt;=</span><span class="w"> </span><span class="n">part-by</span><span class="w"> </span><span class="p">(</span><span class="nb">count</span><span class="w"> </span><span class="n">coll</span><span class="p">))</span><span class="w"> 
     </span><span class="p">(</span><span class="nb">cons</span><span class="w"> </span><span class="p">(</span><span class="nb">take</span><span class="w"> </span><span class="n">part-by</span><span class="w"> </span><span class="n">coll</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">my-partition</span><span class="w"> </span><span class="n">part-by</span><span class="w"> </span><span class="p">(</span><span class="nb">drop</span><span class="w"> </span><span class="n">part-by</span><span class="w"> </span><span class="n">coll</span><span class="p">)))))</span></code></pre></figure>
 
-<p>The lesson I’ve taken away is that learning new things in programming means fully immersing yourself in the idioms of the language/model with which you’re working. With a bit of creativity, it’s usually possible to replicate familiar ways of solving problems - even if they take away your <code class="highlighter-rouge">for</code> loops and mutable data. But replicating old ways of doing things stands in the way of learning other ways that are new and better. In this case, I’m super happy to have had the chance to pair with a colleague able to show me some new and better ways of doing things.</p>
+<p>The lesson I’ve taken away is that learning new things in programming means fully immersing yourself in the idioms of the language/model with which you’re working. With a bit of creativity, it’s usually possible to replicate familiar ways of solving problems - even if they take away your <code class="language-plaintext highlighter-rouge">for</code> loops and mutable data. But replicating old ways of doing things stands in the way of learning other ways that are new and better. In this case, I’m super happy to have had the chance to pair with a colleague able to show me some new and better ways of doing things.</p>
 
   </article>
 
@@ -149,13 +149,13 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">Rob Learns Programming</h2>
+    <h2 class="footer-heading">Rob Writes Code</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col  footer-col-1">
         <ul class="contact-list">
-          <li>Rob Learns Programming</li>
-          <li><a href="mailto:robmulholand@gmail.com">robmulholand@gmail.com</a></li>
+          <li>Rob Writes Code</li>
+          <li><a href="mailto:"></a></li>
         </ul>
       </div>
 
@@ -193,7 +193,7 @@
       </div>
 
       <div class="footer-col  footer-col-3">
-        <p class="text">Notes from a journey on the path toward becoming proficient in computer programming.
+        <p class="text">Random thoughts and musings.
 </p>
       </div>
     </div>
