@@ -6,9 +6,71 @@
 </description>
     <link>http://rmulhol.github.io/</link>
     <atom:link href="http://rmulhol.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 06 Nov 2019 15:34:46 -0600</pubDate>
-    <lastBuildDate>Wed, 06 Nov 2019 15:34:46 -0600</lastBuildDate>
+    <pubDate>Wed, 06 Nov 2019 15:41:18 -0600</pubDate>
+    <lastBuildDate>Wed, 06 Nov 2019 15:41:18 -0600</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>Caching Ethereum Data: Events vs Storage</title>
+        <description>&lt;p&gt;One core challenge in the Ethereum ecosystem is accessing historical data.
+Want to know what your token balance was last week?
+Hopefully you’ve allocated &lt;a href=&quot;https://etherscan.io/chartsync/chainarchive&quot;&gt;over 3TB of disk&lt;/a&gt; to running an archive node, or else that data’s likely been pruned.&lt;/p&gt;
+
+&lt;p&gt;Historical state pruning is no accident.
+A full node’s goal is to validate the current state of the network, which only requires applying transactions to the most recent state.
+If your objective is to enable performant queries against previous states, it makes sense to use a tool that’s specifically devoted to that task.&lt;/p&gt;
+
+&lt;p&gt;But how would one build such a tool?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Events&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;A common technique for caching historical data is track &lt;a href=&quot;https://solidity.readthedocs.io/en/latest/contracts.html#events&quot;&gt;events&lt;/a&gt;.
+During execution, contracts can emit events that provide a window into the contract’s internal state at that point in time.
+Full nodes currently retain all events indefinitely, and the &lt;a href=&quot;https://github.com/ethereum/wiki/wiki/JSON-RPC&quot;&gt;JSON RPC API&lt;/a&gt; enables subscribing to desired events in real time - so building a cache derived from events minimizes resource usage.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, this approach has several drawbacks.&lt;/p&gt;
+
+&lt;p&gt;For one, you’re depending on contract authors to include all the data you desire in the events they emit.
+If they decide that some data points are not worthy of events (and the gas costs they incur), then you’re out of luck - your cache will have to exclude that data.&lt;/p&gt;
+
+&lt;p&gt;Additionally, there’s no guarantee that the data in an event is accurate.
+If you haven’t inspected the contract’s source code to verify that an event’s payload is correctly derived from the expected storage slot(s), it could be coming from anywhere.&lt;/p&gt;
+
+&lt;p&gt;In many cases, an event doesn’t even capture a contract’s state per se, but rather the delta between old and new values.
+In that case, your cache depends on capturing &lt;em&gt;every&lt;/em&gt; relevant event (with handling for events pruned by reorgs) and then correctly applying arithmetic to derive the product of the deltas.&lt;/p&gt;
+
+&lt;p&gt;Oh yeah, and node developers have &lt;a href=&quot;https://gist.github.com/karalabe/60be7bef184c8ec286fc7ee2b35b0b5b&quot;&gt;signaled&lt;/a&gt; that retaining all historical events may not remain viable - events may eventually be pruned along with previous states.&lt;/p&gt;
+
+&lt;p&gt;This is clearly not a very good situation.
+Events can alert you to the fact that something happened, but they should not be considered a reliable proxy for reconstructing historical state.&lt;/p&gt;
+
+&lt;p&gt;So where does that leave us?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Storage&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The place to go for accessing historical contract storage values is, wait for it… storage!
+The aforementioned JSON RPC API includes a &lt;a href=&quot;https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getstorageat&quot;&gt;function for accessing storage slots directly&lt;/a&gt;.
+If you query for data at a given storage slot, then you know that you’re getting an accurate representation of the data you desire.
+You can even &lt;a href=&quot;https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getproof&quot;&gt;get proof&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;There are a couple of hurdles.
+Accessing storage at previous blocks means running an archive node, and building up keys for storage slots in mappings and dynamic arrays is no picnic.&lt;/p&gt;
+
+&lt;p&gt;But, on the whole, if you want to build a reliable cache - this is currently the cost of doing business.
+Looking forward to covering how you can minimize those costs and get your queries right in upcoming posts!&lt;/p&gt;
+</description>
+        <pubDate>Wed, 06 Nov 2019 00:00:00 -0600</pubDate>
+        <link>http://rmulhol.github.io/blockchain/2019/11/06/ethereum-caching-events-vs-storage.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io/blockchain/2019/11/06/ethereum-caching-events-vs-storage.html</guid>
+        
+        <category>ethereum</category>
+        
+        <category>rpc</category>
+        
+        
+        <category>blockchain</category>
+        
+      </item>
     
       <item>
         <title>Working With SQL: Deriving New Data From Existing Columns</title>
@@ -703,140 +765,6 @@
         <category>react</category>
         
         <category>flux</category>
-        
-        
-        <category>javascript</category>
-        
-      </item>
-    
-      <item>
-        <title>Getting Started With React - Part 2: Exploring Components</title>
-        <description>&lt;p&gt;React is a library for building user interfaces, but most of the work we’ve done so far has only laid the groundwork for actually carrying out that task. The UI we left off with doesn’t exactly expose React’s power.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io/assets/browser-view-hello-world.png&quot; alt=&quot;browser-view-hello-world&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;If we want to start building something that looks better and does more, we should start to get a handle on React’s tool for generating views: components.&lt;/p&gt;
-
-&lt;p&gt;Components are modules that include a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;render()&lt;/code&gt; method that tells the program what to display. They can generate content dynamically, responding to data passed in by other components or the user.&lt;/p&gt;
-
-&lt;p&gt;Once you start taking advantage of their numerous features and piecing them together, components provide a valuable tool for constructing sophisticated user interfaces.&lt;/p&gt;
-
-&lt;p&gt;Let’s take a look at how components can help us transform our little “hello, world” app into something a bit more visually appealing…&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Before We Begin: Housekeeping&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;If you’re just hopping on now, you can access the source code for the work we’ve done so far in the second commit of the &lt;a href=&quot;https://github.com/rmulhol/demo-react-app&quot;&gt;demo-react-app Github repo&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Before we begin coding up components, we’ll want to install a few additional tools. The first is &lt;a href=&quot;http://react-bootstrap.github.io/&quot;&gt;react-bootstrap&lt;/a&gt;, which will provide a quick and easy way to add some styling. You can install it by running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save react-bootstrap&lt;/code&gt;. You’ll also want to add a link to the Bootstrap stylesheet in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;head&amp;gt;&lt;/code&gt; of your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;index.html&lt;/code&gt; file:&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io/assets/index-with-bootstrap.png&quot; alt=&quot;index-with-bootstrap&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Next, we’ll want to install &lt;a href=&quot;https://github.com/substack/watchify&quot;&gt;Watchify&lt;/a&gt;, which will enable us to automatically recompile our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/bundle.js&lt;/code&gt; file each time we make an edit to our source code. Add it by running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save-dev watchify&lt;/code&gt;, and then add a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;start&lt;/code&gt; script to your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;package.json&lt;/code&gt; file:&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io/assets/pkg-with-start-script.png&quot; alt=&quot;pkg-with-start-script&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Now we can run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm run start&lt;/code&gt; to initiate our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;watchify&lt;/code&gt; script, spin up an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http-server&lt;/code&gt; in our project directory, and see changes reflected in the browser almost immediately as we save them.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 1: Extract A Component&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Where last left off, we were including the full view for our app in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/app.js&lt;/code&gt; file:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/dfcb2fd783ada9654894.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;This works fine when we’ve got so little display, but it quickly becomes unmanageable as our view becomes more substantial. The solution, in React, is to delegate the work to components.&lt;/p&gt;
-
-&lt;p&gt;Let’s start by moving the JSX code we’ve got in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/app.js&lt;/code&gt; file over to a new &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/components/home_page.js&lt;/code&gt; file. Now our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/app.js&lt;/code&gt; file can look like this:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/8e7a24fddd37ab15ff70.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;HomePage /&amp;gt;&lt;/code&gt; call exhibits React’s syntax for instantiating components in JSX - they exist as their own element on the page (with whatever components reside on them nested further down).&lt;/p&gt;
-
-&lt;p&gt;To make this work the same as before, we need the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/components/home_page.js&lt;/code&gt; file to look like this:&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/7cee0ed45ea4620b7310.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;If we load the page in the browser, everything will look the same. But we’ve introduced a valuable tool: now we can apply the same technique to nest multiple components.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 2: Nesting Components&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Say, for example, we want to add a header, a body, and a footer to our site. This is a great opportunity to start nesting components.&lt;/p&gt;
-
-&lt;p&gt;Instead of having the home page store all of the content for the site, it could instantiate several other components that would each handle one part of the view.&lt;/p&gt;
-
-&lt;p&gt;To do so, we want to change our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/components/home_page.js&lt;/code&gt; file to contain the three subordinate components: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Header /&amp;gt;&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;Body /&amp;gt;&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;/Footer&amp;gt;&lt;/code&gt;.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/cdef870ab3a9deca4967.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;Once that’s in place, we need to create the subordinate components.&lt;/p&gt;
-
-&lt;p&gt;Here’s a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/components/header.js&lt;/code&gt; file that takes advantage of some react-bootstrap components to create a Navbar that’s fixed to the top of the page:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/4d5e127a79a56f24ce07.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;A &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/components/body.js&lt;/code&gt; file to welcome our users:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/27f433cba607631a9346.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;And a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/js/component/footer.js&lt;/code&gt; file to round things out:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/4dbfee934b2fa85249fa.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;At this point, our page starts looking a lot better:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io/assets/browser-view-with-header-and-footer.png&quot; alt=&quot;browser-view-with-header-and-footer&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;And we’ve got the added bonus that things are increasingly separated out from one another: we can independently edit the header, body, or footer for the page without too much concern about the others.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 3: Dynamic Content&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;The page is starting to look a little better, but it still isn’t very “reactive” - we basically could have put everything together with some HTML and CSS. What more can we get out of components?&lt;/p&gt;
-
-&lt;p&gt;Say we wanted to add a button that would toggle the image users see on the body of the page. Instead of always seeing the React logo, they could click the button to see the JavaScript logo (and back and forth ad infinitum).&lt;/p&gt;
-
-&lt;p&gt;An easy way to implement this in React is to use the component’s properties and state. Properties are values which should never change, while state is explicitly mutable via the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setState()&lt;/code&gt; method.&lt;/p&gt;
-
-&lt;p&gt;Properties can be passed into a component when it’s instantiated, but they can also be set with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;getDefaultProps()&lt;/code&gt; method. Similarly, initial state can be set via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;getInitialState()&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;If we wanted to add this new functionality entirely within the body component, we could do so like so:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/c11e477b504fe2b552e0.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;Here, we set the urls of the two image logos as properties of our Body component (since they will never change), then set the initial state with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt; set to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;true&lt;/code&gt;. When the user clicks the button, we call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;toggleImage()&lt;/code&gt; to set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt; to the opposite state of whatever it was. Within our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;render()&lt;/code&gt; call, we determine which image to show based on current state.&lt;/p&gt;
-
-&lt;p&gt;The result is that users can toggle the image back and forth by clicking our button. Our app is reacting to something!&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io/assets/browser-view-with-image-toggle.png&quot; alt=&quot;browser-view-with-image-toggle&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Wrap Up&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;We’ve definitely made some improvements to our demo app by starting to work with components. We’re now displaying formatted text, incorporating images, and changing things on the fly. We’ve also locked down a less intrusive build process for faster feedback loops.&lt;/p&gt;
-
-&lt;p&gt;But we’ve still barely scratched the surface of all we can do with React. Stay tuned for part 3!&lt;/p&gt;
-
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;To access the latest version of the Bootstrap stylesheet, head over to &lt;a href=&quot;http://getbootstrap.com/getting-started/&quot;&gt;Bootstrap’s Getting Started page&lt;/a&gt; and check out the Bootstrap CDN. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;I’ve added the most simple version of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;start&lt;/code&gt; script here, but you may find it helpful to add the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-v&lt;/code&gt; flag to get more verbose output each time your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/bundle.js&lt;/code&gt; file is recompiled. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:3&quot;&gt;
-      &lt;p&gt;Note our use of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;React.createClass()&lt;/code&gt; - this is a constructor for React components. Check out the &lt;a href=&quot;https://facebook.github.io/react/docs/top-level-api.html&quot;&gt;React Top-Level API&lt;/a&gt; for info on React methods you’ll want to know. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:4&quot;&gt;
-      &lt;p&gt;Note the closing tags - JSX requires closing tags even in places where you might normally be able to get away with leaving them off. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Thu, 23 Jul 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io/javascript/2015/07/23/starting-react-components.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io/javascript/2015/07/23/starting-react-components.html</guid>
-        
-        <category>react</category>
-        
-        <category>components</category>
         
         
         <category>javascript</category>
