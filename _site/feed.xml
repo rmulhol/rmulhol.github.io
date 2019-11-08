@@ -6,9 +6,150 @@
 </description>
     <link>http://rmulhol.github.io/</link>
     <atom:link href="http://rmulhol.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 06 Nov 2019 15:41:18 -0600</pubDate>
-    <lastBuildDate>Wed, 06 Nov 2019 15:41:18 -0600</lastBuildDate>
+    <pubDate>Fri, 08 Nov 2019 13:01:21 -0600</pubDate>
+    <lastBuildDate>Fri, 08 Nov 2019 13:01:21 -0600</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>Querying Ethereum Storage: Understanding Positions and Packing</title>
+        <description>&lt;p&gt;One advantage of Ethereum’s decentralized applications is their transparency: you don’t have to trust anyone because you can verify everything for yourself.
+Unfortunately, it’s not often clear &lt;em&gt;how&lt;/em&gt; to perform that verification.&lt;/p&gt;
+
+&lt;p&gt;Ethereum nodes assist in this effort by verifying the validity of state transitions, but a “valid” state transition might still yield unexpected results.
+In order to verify that the state of the network matches your expectations, you need to be able to perform queries that access that state.&lt;/p&gt;
+
+&lt;p&gt;How do you do that?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Querying Storage&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The obvious query for accessing contract state is &lt;a href=&quot;https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getstorageat&quot;&gt;eth_getStorageAt&lt;/a&gt;.
+This enables you to lookup the value assigned to any variable on a deployed contract at any block.&lt;/p&gt;
+
+&lt;p&gt;Any time you use this query, the first and third arguments are obvious: the contract address and the block number.
+You want to access the value of a variable on a given contract at a given block, so plug in that contract’s address and the desired block number (or “latest” for the most recent value).&lt;/p&gt;
+
+&lt;p&gt;The tricky part comes in constructing the second argument: the storage key.
+&lt;a href=&quot;https://solidity.readthedocs.io/en/latest/miscellaneous.html#layout-of-state-variables-in-storage&quot;&gt;The Solidity docs&lt;/a&gt; cover how to build this key for Solidity contracts, but the devil is in the details.&lt;/p&gt;
+
+&lt;p&gt;The first topic to understand in building storage keys for Solidity contracts is variable positioning.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Variable Positions&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;For contract variables that are neither a mapping nor a dynamic array, the storage key is the zero-indexed position of the variable on the contract.
+This means that the first variable usually has a storage key of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0&lt;/code&gt;, the second &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt;, the third &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2&lt;/code&gt;, and so forth.&lt;/p&gt;
+
+&lt;p&gt;The main quirk that can get in the way here is packing.
+Variables that do not occupy an entire storage slot (32 bytes) will be packed together if they are ordered contiguously (and both fit in a single slot).&lt;/p&gt;
+
+&lt;p&gt;Let’s take a look at an example contract:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;pragma solidity 0.5.12;
+
+contract PackingExample {
+    uint256 callCount;
+    uint128 numberOne;
+    uint128 numberTwo;
+
+    function setNumberOne(uint128 n) public {
+        callCount++;
+        numberOne = n;
+    }
+
+    function setNumberTwo(uint128 n) public {
+        callCount++;
+        numberTwo = n;
+    }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;There are three variables on this contract, but only two storage slot positions.
+Since a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uint128&lt;/code&gt; only occupies 16 bytes and we have two of them arranged contiguously following a completely occupied slot, they are packed into the same position: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Suppose that we execute two transactions against this contract:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setNumberOne(1)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setNumberTwo(2)&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In that case, we would expect a call to get the latest storage at position &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt; on this contract to return &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0000000000000000000000000000000200000000000000000000000000000001&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Since items in a storage slot are lower-order aligned, the 16 bytes to the right represent the value for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;numberOne&lt;/code&gt; and the 16 bytes to the left represent &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;numberTwo&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let’s take a look at one more example:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;pragma solidity 0.5.12;
+
+contract PackingExampleTwo {
+    uint64 callCount;
+    uint128 numberOne;
+    uint128 numberTwo;
+    uint64 numberThree;
+    uint64 numberFour;
+
+    function setNumberOne(uint128 n) public {
+        callCount++;
+        numberOne = n;
+    }
+
+    function setNumberTwo(uint128 n) public {
+        callCount++;
+        numberTwo = n;
+    }
+
+    function setNumberThree(uint64 n) public {
+        callCount++;
+        numberThree = n;
+    }
+
+    function setNumberFour(uint64 n) public {
+        callCount++;
+        numberFour = n;
+    }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Can you guess how many storage slots this contract uses?
+Which variables will go into which position?&lt;/p&gt;
+
+&lt;p&gt;This contract also requires only two storage slot positions, but the contiguously arranged &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uint128&lt;/code&gt; variables do not occupy the same slot.
+Instead, position &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0&lt;/code&gt; contains &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;callCount&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;numberOne&lt;/code&gt;, and position &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt; contains &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;numberTwo&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;numberThree&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;numberFour&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;A &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uint64&lt;/code&gt; only requires 8 bytes, which means space remains for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;numberOne&lt;/code&gt; to be packed into the same slot as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;callCount&lt;/code&gt;.
+At that point, the slot at position &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0&lt;/code&gt; has utilized 24 of the 32 available bytes, and cannot accommodate the 16 bytes required for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;numberTwo&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Instead, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;numberTwo&lt;/code&gt; occupies 16 bytes in the next position, which also has space to accommodate the two following &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uint64&lt;/code&gt; values.&lt;/p&gt;
+
+&lt;p&gt;Suppose we execute four transactions against this contract:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setNumberOne(1)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setNumberTwo(2)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setNumberThree(3)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setNumberFour(4)&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In that case, we would expect a call to get the latest storage at position &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0&lt;/code&gt; to return &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0000000000000000000000000000000000000000000000010000000000000004&lt;/code&gt;, indicating that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;callCount&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;numberOne&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt;.
+Note that the first 8 bytes in this storage slot are not used - the first 8 bytes can be discarded when parsing this payload.&lt;/p&gt;
+
+&lt;p&gt;Similarly, the latest storage at position &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt; would be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0000000000000004000000000000000300000000000000000000000000000002&lt;/code&gt;, indicating that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;numberTwo&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;numberThree&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;numberFour&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Further Considerations&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Being able to correctly identify the positions of variables on a contract is the first step to correctly building storage keys for desired state.
+Hopefully, this post has provided some insight into how to correctly identify the positions of variables given storage packing.&lt;/p&gt;
+
+&lt;p&gt;Additional knowledge is required to identify the values for more complex types - entries in mappings and dynamic arrays, structs, etc.
+Look forward to future posts on those topics!&lt;/p&gt;
+</description>
+        <pubDate>Fri, 08 Nov 2019 00:00:00 -0600</pubDate>
+        <link>http://rmulhol.github.io/blockchain/2019/11/08/storage-positions-and-packing.html</link>
+        <guid isPermaLink="true">http://rmulhol.github.io/blockchain/2019/11/08/storage-positions-and-packing.html</guid>
+        
+        <category>ethereum</category>
+        
+        <category>rpc</category>
+        
+        
+        <category>blockchain</category>
+        
+      </item>
     
       <item>
         <title>Caching Ethereum Data: Events vs Storage</title>
@@ -646,128 +787,6 @@ Looking forward to covering how you can minimize those costs and get your querie
         
         
         <category>Java</category>
-        
-      </item>
-    
-      <item>
-        <title>Getting Started With React - Part 3: The Flux Architecture</title>
-        <description>&lt;p&gt;So we’ve got some sense about how we can work with React components to generate some nice looking views, and even how we can change them up in response to user input. Pretty nifty.&lt;/p&gt;
-
-&lt;p&gt;But what if we want to initiate more broad sweeping changes across numerous components? Or if we want to react to larger chunks of data from an API call? We might figure out a way to do so with what we already have, but our code could get pretty not-so-clean pretty quickly.&lt;/p&gt;
-
-&lt;p&gt;Luckily, there’s no need to indulge such indiscretions, thanks to &lt;a href=&quot;https://facebook.github.io/flux/docs/overview.html&quot;&gt;the Flux architecture&lt;/a&gt;. Flux is a pattern for implementing a unidirectional data flow, one that makes it simple to implement significant and far-reaching changes to our views reliably and efficiently.&lt;/p&gt;
-
-&lt;p&gt;To get a sense for what we can do with the Flux architecture, we’re going to take a run at fitting it into our demo app. Since Flux is a pattern rather than a framework, we’ll be looking at &lt;em&gt;a&lt;/em&gt; way to implement it rather than &lt;em&gt;the&lt;/em&gt; way, but we’ll end up with a nice foundation for implementing further changes.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Before We Begin: Overview&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;If you’ve just starting to follow along with this post, you can catch up with the progress we’ve made so far by checking out the third commit of &lt;a href=&quot;https://github.com/rmulhol/demo-react-app&quot;&gt;the demo react app Github repo&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Once you’re up to date, you’ll want to install Flux by running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;npm install --save flux&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Adding Flux to our project’s dependencies gives us access to the dispatcher, an important tool in the unidirectional data flow that characterizes the Flux architecture. The dispatcher mediates between the actions that are fired by components and the stores that update components.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://rmulhol.github.io/assets/flux-architecture.png&quot; alt=&quot;flux-architecture&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;In this post, we’ll be implementing the Flux architecture to duplicate our app’s existing behavior. Though we won’t be adding any new features for the user, we’ll be tidying up the backend so as to lay the groundwork for future additions.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 1: Add a Dispatcher&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;The first thing we’ll want to do is create a dispatcher. It can live at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/dispatcher/dispatcher.js&lt;/code&gt;.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/7fe46f4f9cea3780eacf.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;With this in place, we’ll be able to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;require&lt;/code&gt; and call the dispatcher from other parts of our application.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 2: Create an Action&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;After we’ve got a dispatcher, we’ll want to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;require&lt;/code&gt; and use it in a file designated to contain our actions. Create the following file at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/actions/demo_app_actions.js&lt;/code&gt;.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/73355cb3dca6fd138fd8.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;Here, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;toggleLogo()&lt;/code&gt; method uses the dispatcher to broadcast a payload to the rest of our application. In this case, the payload includes keys for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;actionType&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt;, which correspond to a string and a boolean, respectively.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;Note  the bang (!) before &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt;, which means we’re dispatching a value for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt; that reflects the opposite of whatever’s passed in. As will become more clear shortly, this is an example of handling state manipulation in the actions rather than the components.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 3: Open a Store&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Once we’ve got actions that invoke the dispatcher to issue payloads to our application, we’ll want to register some callbacks with the dispatcher to handle those payloads. We do this on a store, which we’ll put at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/stores/demo_app_store.js&lt;/code&gt;.&lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/9e236715490835053a8c.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;Let’s unpack what’s going on here.&lt;/p&gt;
-
-&lt;p&gt;In addition to the dispatcher, we’re requiring the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EventEmitter&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;utils&lt;/code&gt; package from Node.js, which will enable us to inherit features that allow us to run callbacks and handle dispatched payloads.&lt;/p&gt;
-
-&lt;p&gt;We’ve also got an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addLogoListener()&lt;/code&gt; method that registers a callback to be invoked whenever a “toggle-logo” event is emitted. We’ll use it in our component to complete state modifications initiated by the actions.&lt;/p&gt;
-
-&lt;p&gt;Finally, we’ve got a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dispatchToken()&lt;/code&gt; method that contains a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;switch&lt;/code&gt; statement.&lt;sup id=&quot;fnref:4&quot;&gt;&lt;a href=&quot;#fn:4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; The only &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;case&lt;/code&gt; we’ve included so far corresponds to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;actionType&lt;/code&gt; of our only action (“toggle-logo”), and it emits an event of that type storing the value that corresponds to the payload’s &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt; key.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 4: Refactor - add Constants&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;At this point, a lot of the behavior we’ve implemented depends on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;actionType&lt;/code&gt; “toggle-logo”, and we’ve duplicated that string at several places in our code. It would be shame if something went wrong because of a typo in one of those places.&lt;/p&gt;
-
-&lt;p&gt;For this reason, it can be helpful to keep track of certain constants in a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/constants/constants.js&lt;/code&gt; file. We’ll be using this file to store values for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;actionType&lt;/code&gt; of dispatched payloads right now, but we could also put any other important constants here as we go.&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/66eaec512c7a94252a27.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;With this in place, we can change how we refer to the “toggle-logo” value for our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;actionType&lt;/code&gt; key in our action:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/7190e9eff411565edb29.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;And in our store:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/908f2256eb04baba12b3.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;It’s only a minor detour but, like much of what we’re doing in this post, it will make life easier down the line.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 5: Edit Components&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Now that stores are emitting events that carry values from our actions’ payloads, we can add listeners on our components to initiate change in response to emitted events. This is the logic that replaces the existing state transitions on our components.&lt;/p&gt;
-
-&lt;p&gt;The revised &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;js/components/body.js&lt;/code&gt; file should be modified to look like this:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/a34fdef63bc0e79d9731.js&quot;&gt; &lt;/script&gt;
-
-&lt;p&gt;The important changes we’ve made here are twofold:&lt;/p&gt;
-
-&lt;p&gt;1) We’ve added a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;componentDidMount()&lt;/code&gt; method, which will be invoked automatically after the component renders, to register a callback via our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;addLogoListener()&lt;/code&gt; method from the store. That callback alters the component’s state to correspond to the emitted value of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;showReactLogo&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;2) We’ve updated our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;toggleImage()&lt;/code&gt; method to fire an action instead of directly setting state on the component. No longer is our component manipulating state directly; instead, it passes much of that work off to the action, dispatcher, and store.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Wrap Up&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;At this point, our app is working exactly the same as it did at the beginning of the post. Exciting!&lt;/p&gt;
-
-&lt;p&gt;In all seriousness, though, we’ve just laid down an implementation of the Flux architecture which sets us up to make further changes with the reliability of unidirectional data flow at our backs. In future posts, we’ll take a look at some of the cool things we can accomplish with that in place.&lt;/p&gt;
-
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;For a more comprehensive description of the Flux architecture, check out &lt;a href=&quot;https://www.npmjs.com/package/flux&quot;&gt;the npm page for the Flux package&lt;/a&gt;. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;In subsequent posts, we’ll discuss how to pass and use more sophisticated data, like JSON data from an API call. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:3&quot;&gt;
-      &lt;p&gt;It might feel a little redundant to be creating directories each time we’re adding a file here, and that’s fair. But dividing up our application into separate directories for components, actions, stores, and so forth initiates a nice organizational structure we’ll appreciate if and when we start accumulating more files of each type. &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:4&quot;&gt;
-      &lt;p&gt;We’ve called this method &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dispatchToken()&lt;/code&gt; because it returns a token that we can use for controlling the order of execution of registered callbacks, but it’s also worth noting that this method is doing much more than that. &lt;a href=&quot;#fnref:4&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Mon, 27 Jul 2015 00:00:00 -0500</pubDate>
-        <link>http://rmulhol.github.io/javascript/2015/07/27/react-flux-architecture.html</link>
-        <guid isPermaLink="true">http://rmulhol.github.io/javascript/2015/07/27/react-flux-architecture.html</guid>
-        
-        <category>react</category>
-        
-        <category>flux</category>
-        
-        
-        <category>javascript</category>
         
       </item>
     
