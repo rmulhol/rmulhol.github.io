@@ -6,9 +6,9 @@
 </description>
     <link>http://rmulhol.github.io/</link>
     <atom:link href="http://rmulhol.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 08 Nov 2019 13:01:21 -0600</pubDate>
-    <lastBuildDate>Fri, 08 Nov 2019 13:01:21 -0600</lastBuildDate>
-    <generator>Jekyll v3.8.5</generator>
+    <pubDate>Sat, 17 Oct 2020 16:31:22 -0500</pubDate>
+    <lastBuildDate>Sat, 17 Oct 2020 16:31:22 -0500</lastBuildDate>
+    <generator>Jekyll v3.9.0</generator>
     
       <item>
         <title>Querying Ethereum Storage: Understanding Positions and Packing</title>
@@ -687,21 +687,21 @@ Looking forward to covering how you can minimize those costs and get your querie
 
 &lt;p&gt;The first is to get in touch with people who host the API and request that they support cross-origin requests. It may be ignored or take awhile, but it’s a path of least resistance that they have little reason to turn down beyond not having the time (an admittedly fair obstacle).&lt;/p&gt;
 
-&lt;p&gt;The second is to roll your own proxy server. Even if you can’t get the API host to support cross-origin requests, you can make your own server that does - and then use it to hit the target API outside of the browser.&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;The second is to roll your own proxy server. Even if you can’t get the API host to support cross-origin requests, you can make your own server that does - and then use it to hit the target API outside of the browser.&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;p&gt;The third is to take advantage of other services that do the work for you. &lt;a href=&quot;https://jsonp.afeld.me/&quot;&gt;This site&lt;/a&gt;, for example, will act as a proxy server for you, without any coding on your behalf. Simply append the target url to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://jsonp.afeld.me/?url=&lt;/code&gt;, and the CORS request will succeed.&lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;The third is to take advantage of other services that do the work for you. &lt;a href=&quot;https://jsonp.afeld.me/&quot;&gt;This site&lt;/a&gt;, for example, will act as a proxy server for you, without any coding on your behalf. Simply append the target url to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://jsonp.afeld.me/?url=&lt;/code&gt;, and the CORS request will succeed.&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;That’s pretty easy…&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Indeed, it’s not very difficult to get around the barriers to cross-origin requests. The main question is simply how much work you’re willing/need to do given your use case.&lt;/p&gt;
 
-&lt;div class=&quot;footnotes&quot;&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
   &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;A &lt;a href=&quot;http://edgeguides.rubyonrails.org/api_app.html&quot;&gt;Rails API&lt;/a&gt; could do the trick. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;A &lt;a href=&quot;http://edgeguides.rubyonrails.org/api_app.html&quot;&gt;Rails API&lt;/a&gt; could do the trick. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
-    &lt;li id=&quot;fn:2&quot;&gt;
-      &lt;p&gt;One thing to note about this solution is that it creates some security concerns. Since you’ll be passing your data through a proxy you don’t control, you’ll probably want to exercise discretion concerning what sort of information you pass through. The proxy could intercept (a) sensitive data from the API, or (b) private API keys in the URL (which could be a &lt;a href=&quot;https://rosspenman.com/api-key-exposure/&quot;&gt;major problem&lt;/a&gt;). &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;One thing to note about this solution is that it creates some security concerns. Since you’ll be passing your data through a proxy you don’t control, you’ll probably want to exercise discretion concerning what sort of information you pass through. The proxy could intercept (a) sensitive data from the API, or (b) private API keys in the URL (which could be a &lt;a href=&quot;https://rosspenman.com/api-key-exposure/&quot;&gt;major problem&lt;/a&gt;). &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
