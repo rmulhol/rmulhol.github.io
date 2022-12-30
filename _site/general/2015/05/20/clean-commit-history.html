@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>To Change the Past: Cleaning Up Your Git Commit History | Rob Writes Code</title>
-<meta name="generator" content="Jekyll v3.9.0" />
+<meta name="generator" content="Jekyll v3.9.2" />
 <meta property="og:title" content="To Change the Past: Cleaning Up Your Git Commit History" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="As I’ve been working to improve my Git etiquette, one thing I’ve been doing is revisiting my projects’ histories and cleaning up their commits to be more modular and expressive. Having had a tendency to batch together collections of unrelated modifications under unhelpful commit messages, my work was cut out for me." />
@@ -15,26 +15,44 @@
 <meta property="og:site_name" content="Rob Writes Code" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2015-05-20T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="To Change the Past: Cleaning Up Your Git Commit History" />
 <script type="application/ld+json">
-{"url":"http://rmulhol.github.io/general/2015/05/20/clean-commit-history.html","headline":"To Change the Past: Cleaning Up Your Git Commit History","dateModified":"2015-05-20T00:00:00-05:00","datePublished":"2015-05-20T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://rmulhol.github.io/general/2015/05/20/clean-commit-history.html"},"description":"As I’ve been working to improve my Git etiquette, one thing I’ve been doing is revisiting my projects’ histories and cleaning up their commits to be more modular and expressive. Having had a tendency to batch together collections of unrelated modifications under unhelpful commit messages, my work was cut out for me.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2015-05-20T00:00:00-05:00","datePublished":"2015-05-20T00:00:00-05:00","description":"As I’ve been working to improve my Git etiquette, one thing I’ve been doing is revisiting my projects’ histories and cleaning up their commits to be more modular and expressive. Having had a tendency to batch together collections of unrelated modifications under unhelpful commit messages, my work was cut out for me.","headline":"To Change the Past: Cleaning Up Your Git Commit History","mainEntityOfPage":{"@type":"WebPage","@id":"http://rmulhol.github.io/general/2015/05/20/clean-commit-history.html"},"url":"http://rmulhol.github.io/general/2015/05/20/clean-commit-history.html"}</script>
 <!-- End Jekyll SEO tag -->
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
-    <link rel="stylesheet" href="/assets/css/style.css?v=c0c7372694d841537bf7338f2b258248ec26b260">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=36a5d893aec9d40acf7ab1bba5b5820c6de6b166">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
   </head>
   <body>
-    <section class="page-header">
-      <h1 class="project-name">Rob Writes Code</h1>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">To Change the Past: Cleaning Up Your Git Commit History</h1>
       <h2 class="project-tagline">Random thoughts and musings.
 </h2>
       
         <a href="https://github.com/rmulhol/rmulhol.github.io" class="btn">View on GitHub</a>
       
       
-    </section>
+    </header>
 
-    <section class="main-content">
+    <main id="content" class="main-content" role="main">
       <div class="post">
 
   <header class="post-header">
@@ -71,7 +89,7 @@
 
 <p>To rename commits between the root and where you are currently, use <code class="language-plaintext highlighter-rouge">git rebase -i HEAD~...</code>, replacing <code class="language-plaintext highlighter-rouge">...</code> with how many commits back you’d like to reach. This will bring up a text editor listing all of the commits in the range between there and where you are now. Before each one, you’ll see the word <code class="language-plaintext highlighter-rouge">pick</code>. Replace that with <code class="language-plaintext highlighter-rouge">reword</code> for the messages you’d like to change. Save and close the dcoument, and you’ll see a document for each of those commits. Save and close those documents with revised messages, and the log will reflect your changes.</p>
 
-<p>To rename the root commit message, run <code class="language-plaintext highlighter-rouge">git rebase -i --root</code>. This will take you make to the moment immediately following your initial commit, where <code class="language-plaintext highlighter-rouge">git commit --amend</code> will allow you to edit it as if it were your actual most recent commit. To complete this step, run <code class="language-plaintext highlighter-rouge">git rebase --continue</code>, which will bring you back to the end of your project’s history<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup>.</p>
+<p>To rename the root commit message, run <code class="language-plaintext highlighter-rouge">git rebase -i --root</code>. This will take you make to the moment immediately following your initial commit, where <code class="language-plaintext highlighter-rouge">git commit --amend</code> will allow you to edit it as if it were your actual most recent commit. To complete this step, run <code class="language-plaintext highlighter-rouge">git rebase --continue</code>, which will bring you back to the end of your project’s history<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</p>
 
 <p><strong>Modular Code, Modular Commits: Changing Content</strong></p>
 
@@ -85,7 +103,7 @@
 
 <p>After you’ve amended commits earlier in your project’s history, you’ll need to run <code class="language-plaintext highlighter-rouge">git rebase --continue</code> to proceed. If you only opted to edit one commit, this should bring you back to the future (the end of your project’s history). Otherwise, it will roll you forward to the next commit marked for edit.</p>
 
-<p>However, this is where things can get hairy. If you make revisions that conflict with later commits, git will stop in its tracks to ask you what to do. To deal with that, you’ll need to edit the files in question as you see fit (you can see which files encountered a conflict as well as the specific lines in tension by running <code class="language-plaintext highlighter-rouge">git diff</code>), merge the changes (<code class="language-plaintext highlighter-rouge">git add ...</code>), and then proceed with <code class="language-plaintext highlighter-rouge">git rebase --continue</code><sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote">2</a></sup>.</p>
+<p>However, this is where things can get hairy. If you make revisions that conflict with later commits, git will stop in its tracks to ask you what to do. To deal with that, you’ll need to edit the files in question as you see fit (you can see which files encountered a conflict as well as the specific lines in tension by running <code class="language-plaintext highlighter-rouge">git diff</code>), merge the changes (<code class="language-plaintext highlighter-rouge">git add ...</code>), and then proceed with <code class="language-plaintext highlighter-rouge">git rebase --continue</code><sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>.</p>
 
 <p>To alter the content at the root, <code class="language-plaintext highlighter-rouge">git rebase -i --root</code> to get there, <code class="language-plaintext highlighter-rouge">git commit --amend</code> to edit, and <code class="language-plaintext highlighter-rouge">git rebase --continue</code> to proceed.</p>
 
@@ -129,8 +147,6 @@
         
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
       </footer>
-    </section>
-
-    
+    </main>
   </body>
 </html>

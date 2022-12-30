@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Give and Take: Writing a Simple Server in Java | Rob Writes Code</title>
-<meta name="generator" content="Jekyll v3.9.0" />
+<meta name="generator" content="Jekyll v3.9.2" />
 <meta property="og:title" content="Give and Take: Writing a Simple Server in Java" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="As I’ve been working to put together an HTTP server in Java, there’s been a lot to learn. Correctly parsing and handling HTTP requests is a challenge. If you’d like to try for yourself, check out the Cob Spec Firnesse suite." />
@@ -15,26 +15,44 @@
 <meta property="og:site_name" content="Rob Writes Code" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2015-06-06T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Give and Take: Writing a Simple Server in Java" />
 <script type="application/ld+json">
-{"url":"http://rmulhol.github.io/java/2015/06/06/simple-java-server.html","headline":"Give and Take: Writing a Simple Server in Java","dateModified":"2015-06-06T00:00:00-05:00","datePublished":"2015-06-06T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://rmulhol.github.io/java/2015/06/06/simple-java-server.html"},"description":"As I’ve been working to put together an HTTP server in Java, there’s been a lot to learn. Correctly parsing and handling HTTP requests is a challenge. If you’d like to try for yourself, check out the Cob Spec Firnesse suite.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2015-06-06T00:00:00-05:00","datePublished":"2015-06-06T00:00:00-05:00","description":"As I’ve been working to put together an HTTP server in Java, there’s been a lot to learn. Correctly parsing and handling HTTP requests is a challenge. If you’d like to try for yourself, check out the Cob Spec Firnesse suite.","headline":"Give and Take: Writing a Simple Server in Java","mainEntityOfPage":{"@type":"WebPage","@id":"http://rmulhol.github.io/java/2015/06/06/simple-java-server.html"},"url":"http://rmulhol.github.io/java/2015/06/06/simple-java-server.html"}</script>
 <!-- End Jekyll SEO tag -->
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
-    <link rel="stylesheet" href="/assets/css/style.css?v=c0c7372694d841537bf7338f2b258248ec26b260">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=36a5d893aec9d40acf7ab1bba5b5820c6de6b166">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
   </head>
   <body>
-    <section class="page-header">
-      <h1 class="project-name">Rob Writes Code</h1>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Give and Take: Writing a Simple Server in Java</h1>
       <h2 class="project-tagline">Random thoughts and musings.
 </h2>
       
         <a href="https://github.com/rmulhol/rmulhol.github.io" class="btn">View on GitHub</a>
       
       
-    </section>
+    </header>
 
-    <section class="main-content">
+    <main id="content" class="main-content" role="main">
       <div class="post">
 
   <header class="post-header">
@@ -69,7 +87,7 @@
 
 <p>The body of the <code class="language-plaintext highlighter-rouge">while</code> loop sets up a protocol for dealing with client requests. First, we acknowledge any client that makes a request by allocating it a <code class="language-plaintext highlighter-rouge">Socket</code> object. Second, we identify the input and output streams for that client. While we might expect that our client will normally be a browser, it could also be other things (like a command line issuing a <code class="language-plaintext highlighter-rouge">curl</code> request).</p>
 
-<p>Once we’ve identified a client and its attendant input and output streams, we’re ready to read a request<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup> and write a response. This is the meat of our server’s functionality. After we’ve received a request, we return a <code class="language-plaintext highlighter-rouge">200 OK</code> response header with a body that displays the request we received.</p>
+<p>Once we’ve identified a client and its attendant input and output streams, we’re ready to read a request<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> and write a response. This is the meat of our server’s functionality. After we’ve received a request, we return a <code class="language-plaintext highlighter-rouge">200 OK</code> response header with a body that displays the request we received.</p>
 
 <p>But the work isn’t finished there, as we still have to close the output stream to signal that the HTTP request/response cycle is complete.</p>
 
@@ -96,8 +114,6 @@
         
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
       </footer>
-    </section>
-
-    
+    </main>
   </body>
 </html>

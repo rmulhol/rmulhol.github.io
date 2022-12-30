@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Show Your Work: Recording Data With Java’s Logging Utility | Rob Writes Code</title>
-<meta name="generator" content="Jekyll v3.9.0" />
+<meta name="generator" content="Jekyll v3.9.2" />
 <meta property="og:title" content="Show Your Work: Recording Data With Java’s Logging Utility" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="As I’ve been putting together an HTTP server in Java to pass the Cob Spec Fitnesse suite, one task I’ve had to carry out is building a log of incoming requests that could be served up to authorized users attempting to access the /logs uri.1 Cob Spec tests basic authorization functionality by checking whether attempts to access the /logs uri are allowed only when the request includes an authorization header. &#8617;" />
@@ -15,26 +15,44 @@
 <meta property="og:site_name" content="Rob Writes Code" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2015-06-19T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Show Your Work: Recording Data With Java’s Logging Utility" />
 <script type="application/ld+json">
-{"url":"http://rmulhol.github.io/java/2015/06/19/java-logging-utility.html","headline":"Show Your Work: Recording Data With Java’s Logging Utility","dateModified":"2015-06-19T00:00:00-05:00","datePublished":"2015-06-19T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://rmulhol.github.io/java/2015/06/19/java-logging-utility.html"},"description":"As I’ve been putting together an HTTP server in Java to pass the Cob Spec Fitnesse suite, one task I’ve had to carry out is building a log of incoming requests that could be served up to authorized users attempting to access the /logs uri.1 Cob Spec tests basic authorization functionality by checking whether attempts to access the /logs uri are allowed only when the request includes an authorization header. &#8617;","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2015-06-19T00:00:00-05:00","datePublished":"2015-06-19T00:00:00-05:00","description":"As I’ve been putting together an HTTP server in Java to pass the Cob Spec Fitnesse suite, one task I’ve had to carry out is building a log of incoming requests that could be served up to authorized users attempting to access the /logs uri.1 Cob Spec tests basic authorization functionality by checking whether attempts to access the /logs uri are allowed only when the request includes an authorization header. &#8617;","headline":"Show Your Work: Recording Data With Java’s Logging Utility","mainEntityOfPage":{"@type":"WebPage","@id":"http://rmulhol.github.io/java/2015/06/19/java-logging-utility.html"},"url":"http://rmulhol.github.io/java/2015/06/19/java-logging-utility.html"}</script>
 <!-- End Jekyll SEO tag -->
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
-    <link rel="stylesheet" href="/assets/css/style.css?v=c0c7372694d841537bf7338f2b258248ec26b260">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=36a5d893aec9d40acf7ab1bba5b5820c6de6b166">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
   </head>
   <body>
-    <section class="page-header">
-      <h1 class="project-name">Rob Writes Code</h1>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Show Your Work: Recording Data With Java's Logging Utility</h1>
       <h2 class="project-tagline">Random thoughts and musings.
 </h2>
       
         <a href="https://github.com/rmulhol/rmulhol.github.io" class="btn">View on GitHub</a>
       
       
-    </section>
+    </header>
 
-    <section class="main-content">
+    <main id="content" class="main-content" role="main">
       <div class="post">
 
   <header class="post-header">
@@ -43,11 +61,11 @@
   </header>
 
   <article class="post-content">
-    <p>As I’ve been putting together <a href="https://github.com/rmulhol/httpServer">an HTTP server</a> in Java to pass <a href="https://github.com/8thlight/cob_spec">the Cob Spec Fitnesse suite</a>, one task I’ve had to carry out is building a log of incoming requests that could be served up to authorized users attempting to access the <code class="language-plaintext highlighter-rouge">/logs</code> uri.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup></p>
+    <p>As I’ve been putting together <a href="https://github.com/rmulhol/httpServer">an HTTP server</a> in Java to pass <a href="https://github.com/8thlight/cob_spec">the Cob Spec Fitnesse suite</a>, one task I’ve had to carry out is building a log of incoming requests that could be served up to authorized users attempting to access the <code class="language-plaintext highlighter-rouge">/logs</code> uri.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
 
-<p>My initial solution to this challenge was to build and manage my own log, writing all incoming requests to a text file and then serving up the contents of that file to authorized users.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote">2</a></sup></p>
+<p>My initial solution to this challenge was to build and manage my own log, writing all incoming requests to a text file and then serving up the contents of that file to authorized users.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup></p>
 
-<p>This solution worked, but it overlooked a built-in feature of the JDK that could have aided me along the path: <code class="language-plaintext highlighter-rouge">java.util.logging</code>.<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote">3</a></sup></p>
+<p>This solution worked, but it overlooked a built-in feature of the JDK that could have aided me along the path: <code class="language-plaintext highlighter-rouge">java.util.logging</code>.<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup></p>
 
 <p>This package provides a simple and easy-to-implement solution to your logging needs. All it requires is that you set up a logger and tell it when and where to log data.</p>
 
@@ -147,7 +165,7 @@
 
 <p>There are two other places where data is logged in the application above, on lines 11 and 34. Those happen whenever an <code class="language-plaintext highlighter-rouge">IOException</code> is caught, and they’re attributed <code class="language-plaintext highlighter-rouge">Level.SEVERE</code> since something has gone very wrong if they’re ever triggered.</p>
 
-<p>So that’s pretty much it - <code class="language-plaintext highlighter-rouge">java.util.logging</code> provides all you need to get some basic logging work done.<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote">4</a></sup></p>
+<p>So that’s pretty much it - <code class="language-plaintext highlighter-rouge">java.util.logging</code> provides all you need to get some basic logging work done.<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup></p>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
@@ -177,8 +195,6 @@
         
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
       </footer>
-    </section>
-
-    
+    </main>
   </body>
 </html>

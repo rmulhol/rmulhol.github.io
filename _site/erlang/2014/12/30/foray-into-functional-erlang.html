@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>My Foray into Functional Programming: Getting Started with Erlang | Rob Writes Code</title>
-<meta name="generator" content="Jekyll v3.9.0" />
+<meta name="generator" content="Jekyll v3.9.2" />
 <meta property="og:title" content="My Foray into Functional Programming: Getting Started with Erlang" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="One of the things that I’ve been working on lately is wrapping my head around functional programming. Having completed most of my projects so far in Ruby and Java (languages that support the object-oriented programming paradigm), beginning to work with a language that encourages the functional programming style felt like a logical next step. Enter Erlang." />
@@ -15,26 +15,44 @@
 <meta property="og:site_name" content="Rob Writes Code" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2014-12-30T00:00:00-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="My Foray into Functional Programming: Getting Started with Erlang" />
 <script type="application/ld+json">
-{"url":"http://rmulhol.github.io/erlang/2014/12/30/foray-into-functional-erlang.html","headline":"My Foray into Functional Programming: Getting Started with Erlang","dateModified":"2014-12-30T00:00:00-06:00","datePublished":"2014-12-30T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://rmulhol.github.io/erlang/2014/12/30/foray-into-functional-erlang.html"},"description":"One of the things that I’ve been working on lately is wrapping my head around functional programming. Having completed most of my projects so far in Ruby and Java (languages that support the object-oriented programming paradigm), beginning to work with a language that encourages the functional programming style felt like a logical next step. Enter Erlang.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2014-12-30T00:00:00-06:00","datePublished":"2014-12-30T00:00:00-06:00","description":"One of the things that I’ve been working on lately is wrapping my head around functional programming. Having completed most of my projects so far in Ruby and Java (languages that support the object-oriented programming paradigm), beginning to work with a language that encourages the functional programming style felt like a logical next step. Enter Erlang.","headline":"My Foray into Functional Programming: Getting Started with Erlang","mainEntityOfPage":{"@type":"WebPage","@id":"http://rmulhol.github.io/erlang/2014/12/30/foray-into-functional-erlang.html"},"url":"http://rmulhol.github.io/erlang/2014/12/30/foray-into-functional-erlang.html"}</script>
 <!-- End Jekyll SEO tag -->
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
-    <link rel="stylesheet" href="/assets/css/style.css?v=c0c7372694d841537bf7338f2b258248ec26b260">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=36a5d893aec9d40acf7ab1bba5b5820c6de6b166">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
   </head>
   <body>
-    <section class="page-header">
-      <h1 class="project-name">Rob Writes Code</h1>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">My Foray into Functional Programming: Getting Started with Erlang</h1>
       <h2 class="project-tagline">Random thoughts and musings.
 </h2>
       
         <a href="https://github.com/rmulhol/rmulhol.github.io" class="btn">View on GitHub</a>
       
       
-    </section>
+    </header>
 
-    <section class="main-content">
+    <main id="content" class="main-content" role="main">
       <div class="post">
 
   <header class="post-header">
@@ -78,7 +96,7 @@
 <figure class="highlight"><pre><code class="language-erlang" data-lang="erlang"><span class="nf">sum</span><span class="p">(</span><span class="nv">Num</span><span class="p">)</span> <span class="o">-&gt;</span>
   <span class="nn">lists</span><span class="p">:</span><span class="nf">sum</span><span class="p">(</span><span class="nn">lists</span><span class="p">:</span><span class="nf">seq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nv">Num</span><span class="p">)).</span></code></pre></figure>
 
-<p>Well, that’s elegant. I’ve tackled the same problem without immutable data, and it actually made my code shorter.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup></p>
+<p>Well, that’s elegant. I’ve tackled the same problem without immutable data, and it actually made my code shorter.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
 
 <p>So, what’s going on here? Well, my sum function takes an argument, converts that argument into a list of all of the integers from 1 to that argument, and then provides a sum of all of the values in the list. It achieves the same result as my <code class="language-plaintext highlighter-rouge">for</code> loop without iteration or variable reassignment.</p>
 
@@ -94,7 +112,7 @@
 <span class="nf">sum</span><span class="p">(</span><span class="nv">Num</span><span class="p">)</span> <span class="o">-&gt;</span>
   <span class="nv">Num</span> <span class="o">+</span> <span class="nf">sum</span><span class="p">(</span><span class="nv">Num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">).</span></code></pre></figure>
 
-<p>Here, we make use of <a href="http://learnyousomeerlang.com/syntax-in-functions">pattern matching</a> to declare a function with two clauses. The first clause says, “when the argument passed in is 0, return 0”. The second function clause says, “for any other value, return the sum of the argument with a recursive call to sum where the argument is decremented by 1.”<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote">2</a></sup></p>
+<p>Here, we make use of <a href="http://learnyousomeerlang.com/syntax-in-functions">pattern matching</a> to declare a function with two clauses. The first clause says, “when the argument passed in is 0, return 0”. The second function clause says, “for any other value, return the sum of the argument with a recursive call to sum where the argument is decremented by 1.”<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup></p>
 
 <p>With this function declaration, a call to sum(3) would play out like this:</p>
 
@@ -109,7 +127,7 @@
 
 <p>The solution works, but, as you can see, it can also take up a lot of memory. Since each recursive call adds a new stack frame to the call stack, there’s a risk that, when generating the sum for a very large number, your stack could get too deep.</p>
 
-<p>One way to address this problem is to use <a href="http://en.wikipedia.org/wiki/Tail_call">tail recursion</a>.<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote">3</a></sup> With tail recursion, you eliminate the need for adding a new stack frame for every call by storing the value up to that point as an argument. For example, we could generate a sum with this function:</p>
+<p>One way to address this problem is to use <a href="http://en.wikipedia.org/wiki/Tail_call">tail recursion</a>.<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> With tail recursion, you eliminate the need for adding a new stack frame for every call by storing the value up to that point as an argument. For example, we could generate a sum with this function:</p>
 
 <figure class="highlight"><pre><code class="language-erlang" data-lang="erlang"><span class="nf">sum</span><span class="p">(</span><span class="nv">Num</span><span class="p">)</span> <span class="o">-&gt;</span>
   <span class="nf">sum</span><span class="p">(</span><span class="nv">Num</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span>
@@ -160,8 +178,6 @@
         
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
       </footer>
-    </section>
-
-    
+    </main>
   </body>
 </html>
